@@ -1,0 +1,72 @@
+---
+title: 'Successful Product Development, part 4: Working with your team'
+date: '2016-11-02T12:18:27.183Z'
+path: '/blog/successful-product-development-part-4-working-with-your-team'
+image: slap.gif
+author: 'Brains&Beards'
+---
+
+At this point, you have your MVP speced out, you gathered your team (be it in-house developers and designers or an outsourcing partner) and you’re ready to push hard to get the job done. Congratulations!
+
+However, you still need to beware of pitfalls. We’ll talk today a bit about **managing your project** to make sure you’re focusing your efforts correctly and getting the most of your time. For this, we’ll need to introduce some tools:
+
+<div class="gif-container">
+
+![Simone Giertz](slap.gif)
+#####Simone Giertz
+
+</div>
+
+#### Backlog
+
+A backlog is just a list of tasks which still need doing. The way you create it is you take a list of features you want implemented, split them into smaller tasks — it could be single application screens, could be examples of “user stories” (that’s a big topic on its own — let’s just say it’s a written down detailed account on what steps the user needs to do to get the value they want), could be something even smaller.
+
+For example if we wanted to build the above alarm we could have following tasks:
+
+- activates at a particular time
+- slaps user consistently until turned off
+- stops slapping when turned off
+
+After splitting the tasks you write them down and call it the official backlog. You can send it in an email as “The Official Project Plan v.13”, but it’s usually better to use some **project management tool** to keep track of that. You could use Trello, JIRA, whatever you like. Just make sure you decide on one and commit to it.
+
+From now on this is a **single source of the project’s scope and state**. If it’s not in the backlog, it’s not your current focus. It’s okay to jot down some ideas for the future from time to time, but backlog is here to make sure you concentrate your effort on delivering what’s important. If it’s done, it should be noted as well.
+
+#### Priorities
+
+You should make sure the tasks in your backlog is **prioritised**. That means that the more important stuff is on the top and less important on the bottom. Of course, I know **all** of it is important, but usually you’re able to say something is more important than some other thing. This will make sure that stuff is being done in the **most valuable order**.
+
+Let’s say you’re building an app that lets you compare ticket prices for various trains and later book them through your platform earning you some commission money. Of course, you’d like to have two basic features: finding a train and booking a train. However, how would you prioritise them?
+
+One way of doing that is **asking yourself a question**: would my app still be useful if it only allowed to find a train connection, but you’d have to book it on another webiste? And the other way round: would my app still be useful if you could book connections only, but you’d need to look for them on another website first? Remember we’re trying to **make the app great** and that means we’re focusing on what the user wants (find a train that goes from A to B) and not what we want (roll around in heaps of money). So, the priority would be — first let’s build the search, then the booking system.
+
+#### Why prioritise?
+
+One reason would be **user-testing.** In case of our train tickets application when we’re half-way done we’ll already have the search part ready. Then we can show it to potential users to test your UX. If we only had the payment part (or both of them half-done) it’d be difficult to get any useful feedback from those user tests.
+
+Another reason might be that we suddenly need to launch “**something that works**” (maybe because investors want to brag about it, somebody will take our name in the app store, or we want to get the first downloads) — if we prioritised the most valuable features first, we can easier get to something of value. Even if it’s not the whole MVP we wanted to have.
+
+This also makes sure that in case something happens and you can’t continue with the project (for example, your budget got cut) you have your most important features already implemented.
+
+#### Changing backlog
+
+Because priorities might change and life is not stable, the backlog is not set in stone and it might change. However, there are some things you need to keep in mind.
+
+If you’re changing the backlog too much, it means you’re probably **losing your focus**. Maybe it’s time to go back for a while to the drawing board and make sure what you’re building really is the MVP you want and nothing can be removed nor added to it? Thinking is much cheaper than development time, so it’s usually a good investment.
+
+Don’t change anything that your team is already working on. It’ll make it difficult for them to finish, make the process more confusing (and longer!) and diminish their morale. Sometimes you really need to do it and it’s okay, just don’t make it a habit. If you want to fiddle with current tasks a lot, it can be a sign of wanting to **control too many details** and micro managing your team. Usually it’s better to trust they’ll get the job done and just revise the final effect. Also, don’t get too attached to your opinions on what the users want. You still need to put your product in front of the user to see what happens, you shouldn’t be just changing stuff on a whim.
+
+#### Communicate changes
+
+Never keep your team in the dark. If something they committed too suddenly **became a deadline** — let them know, they need to be aware of that. If you got a nice business deal that will give you a significant foothold in a particular market — let them know, they might have some extra ideas.
+
+The same goes for any **bigger scope changes** — if you want to reorganise the backlog for some reason — talk to them. Be transparent, a team only can get fully behind your ideas if they understand the reasons. Tell them about new user research that just came in.
+
+#### But not too much
+
+Remember that the focus is on shipping the product. Once you’ve figured out what you want done, focus on it. It’s not beneficial if you’re asking your team to estimate other solutions, just because you “had this crazy idea”. Your role is to make sure they can carry on working as fast as possible.
+
+#### Final note
+
+And most important: **you don’t need to know everything**. It’s completely fine to let other people guide you in case you don’t understand some particular technology aspect. Or if you’ve never created an application like that before.
+
+Managaing the process of creating a great product is not easy and we should get all the help that we can!

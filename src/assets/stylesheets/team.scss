@@ -1,0 +1,220 @@
+.no-outsourcing {
+  @include mobile-version {
+    text-align: center;
+    width: auto;
+    display: block;
+
+    .gatsby-image-wrapper {
+      max-width: 282px;
+      width: auto;
+    }
+
+    section {
+      width: auto;
+    }
+  }
+
+  @include tablet-version {
+    text-align: center;
+    width: auto;
+    display: block;
+
+    .gatsby-image-wrapper {
+      display: block;
+      height: auto;
+      max-width: 300px;
+      width: auto;
+    }
+
+    section {
+      width: auto;
+    }
+  }
+
+  @include desktop-version {
+    width: 75%;
+    margin: auto;
+    padding: 0;
+    display: flex;
+    section {
+      width: 60%;
+    }
+
+    h3 {
+      margin-bottom: 24px;
+    }
+
+    .gatsby-image-wrapper {
+      position: relative;
+      top: -25px;
+      height: 300px;
+      width: 300px;
+    }
+  }
+}
+
+.column-400 {
+  @extend .column;
+  max-width: 400px;
+  width: auto;
+  margin-right: 10px;
+  margin-left: 10px;
+
+  @include mobile-version {
+    width: auto;
+    max-width: 400px;
+  }
+}
+
+.movies {
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+@include mobile-version {
+  .youtube-wrapper {
+    position: relative;
+    width: 100%;
+    height: 0;
+    padding-bottom: 56%;
+    margin-bottom: 24px;
+  }
+
+  .youtube {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+@include desktop-version {
+  .youtube {
+    width: 400px;
+    height: 230px;
+    margin-top: 72px;
+    margin-bottom: 32px;
+  }
+}
+
+.team-swiper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  @include mobile-version {
+    width: 100vw;
+  }
+  .swiper-container {
+    width: 100%;
+  }
+
+  .swiper-wrapper {
+    width: 60%;
+  }
+
+  .swiper {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    @include desktop-version {
+      padding-bottom: 80px;
+    }
+    .row {
+      margin: 40px 0 40px;
+    }
+  }
+}
+
+.content.members-box {
+  @extend .row;
+  @extend .wrap;
+  justify-content: space-around;
+  padding-left: 50px;
+  padding-right: 50px;
+  margin-bottom: -100px;
+
+  @include mobile-version {
+    display: none;
+  }
+}
+
+.team-member {
+  text-align: left;
+  max-width: 280px;
+  width: 100%;
+  padding-bottom: 80px;
+
+  @include mobile-version {
+    width: 100%;
+    padding-bottom: 40px;
+    align-items: center;
+    text-align: center;
+  }
+
+  img {
+    object-fit: cover;
+    width: 280px;
+    height: 384px;
+    filter: grayscale(1);
+    transition: all 0.35s ease-in-out;
+
+    @include mobile-version {
+      width: 60vw;
+      height: 83vw;
+    }
+
+    &.colour {
+      display: none;
+    }
+
+    &.isFocused {
+      filter: grayscale(0);
+    }
+  }
+
+  .sub1 {
+    font-size: 18px;
+  }
+
+  .overlay {
+    opacity: 1;
+    position: 'absolute';
+    top: -300px;
+    right: 30px;
+  }
+
+  &:hover {
+    img {
+      filter: grayscale(0);
+    }
+  }
+}
+
+.team-traits {
+  .quote {
+    margin-bottom: 100px;
+  }
+}
+
+.youtube-container {
+  @include tablet-version {
+    text-align: center;
+  }
+
+  @include mobile-version {
+    text-align: center;
+  }
+
+  @include desktop-version {
+    text-align: left;
+    align-self: flex-start;
+  }
+}
+
+.content-page .testimonial .content {
+  margin-bottom: 0px;
+}

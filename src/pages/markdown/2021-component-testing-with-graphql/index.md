@@ -1,0 +1,157 @@
+---
+path: '/blog/component-testing-with-graphql'
+date: '2021-02-10T08:15:36.253Z'
+title: 'Tips & tricks for testing GraphQL-powered components'
+image: header.jpg
+author: Wojciech Ogrodowczyk
+---
+
+In the last couple of weeks, I've been helping to switch an application from a REST API to GraphQL. I've noticed a few quirks around writing component tests that are worth writing down, because they'll apply to virtually any GraphQL-backed React (Native) component.
+
+### Example component
+
+So, let's start by imagining a component that displays a list of ToDos (how original!):
+
+```javascript {numberLines: true}
+import React, { useCallback } from 'react'
+import { FlatList } from 'react-native'
+import { ActivityIndicator } from 'react-native-paper'
+
+import { useTodosQuery } from '../api/generated/graphql'
+import TodoItem from './TodoItem'
+import { keyExtractorFromID } from '../utilities/Utils'
+
+const TodosList = () => {
+  const { loading, data } = useTodosQuery()
+
+  const renderItem = useCallback(({ item }) => <TodoItem item={item} />, [])
+
+  return loading ? (
+    <ActivityIndicator testID={'LoadingSpinner'} />
+  ) : (
+    <FlatList
+      data={data.todos}
+      renderItem={renderItem}
+      keyExtractor={keyExtractorFromID}
+    />
+  )
+}
+
+export default TodosList
+```
+
+### Deciding what to test
+
+As I've written in [another blog post](/blog/snapshot-testing) I believe in testing the behaviour, so let's ask ourselves what does this component do?
+
+- Fetches GraphQL data
+- Displays it in a list
+- Shows a loading spinner while data is being fetched
+
+We're not going to test the first task, because that would mean testing a 3rd party dependency (and ain't nobody got time for that!). Also, in this particular case we'll mock it out anyway, because it's network traffic.
+
+### Example test file
+
+So, we can end up with a test file that tests the two other assumptions:
+
+```javascript {numberLines: true}
+import { render, waitFor } from '@testing-library/react-native';
+import React from 'react';
+import { Text } from 'react-native';
+import { MockedProvider } from '@apollo/client/testing';
+
+import TodoList from '../TodoList';
+import TodoItem from '../TodoItem';
+import { TodosDocument } from '../../api/generated/graphql';
+
+jest.mock('../TodoItem');
+(TodoItem as jest.MockedFunction<typeof TodoItem>).
+  mockImplementation(({ item }) => {
+    return <Text>{item.name}</Text>;
+  });
+
+const mocks = [
+  {
+    request: { query: TodosDocument },
+    result: {
+      data: {
+        todos: [
+          { id: '1', name: 'Mow lawn' },
+          { id: '2', name: 'Plant daffodils' }
+        ],
+      },
+    },
+  },
+];
+
+describe('TodoList component', () => {
+  test('renders all todo elements', async () => {
+    const { getByText } = render(
+      <MockedProvider mocks={mocks} addTypename={false}>
+        <TodoList />
+      </MockedProvider>,
+    );
+
+    await waitFor(() => {
+      expect(getByText('Mow lawn')).toBeDefined();
+    });
+  });
+
+  test('shows the loading spinner while loading data', async () => {
+    const { queryByTestId } = render(
+      <MockedProvider mocks={mocks} addTypename={false}>
+        <TodoList />
+      </MockedProvider>,
+    );
+    expect(queryByTestId('LoadingSpinner')).toBeDefined();
+
+    await waitFor(() => {});
+  });
+});
+```
+
+Okay, problem solved. You can just copy this test to your graphql-powered todo application and call it a day! 🏝
+
+Seriously, though, let's look at it closely to see why it looks a bit weird…
+
+### Gotcha #1: Getting a hold of the loading spinner
+
+Testing components backed by a Redux-store is relatively easy. We create a mock store, wrap a component with a provider and render it. On the first render we'd already get all the values from the store.
+
+However, GraphQL works async, so even with mocked queries on the first render we'll still get a loading state and only after a re-render we'd get the mocked out query results.
+
+This let's us grab the loading spinner straight away (check line #41) to check if we're displaying it correctly. Also, make sure you're using a _sync_ matcher (`getBy*`, or `queryBy*`) to get the result from this initial render.
+
+### Gotcha #2: Waiting for cleanup
+
+In line #43 we seem to have a useless `waitFor` that doesn't contain any expectations. Why is it there?
+
+Remember a moment ago how we talked about GraphQL that its _async_ way of work triggers re-renders on the tested components? In case of this test we already get the loading spinner in the initial render and have no need for any later checks. However, this re-render will still happen and we'll probably get a Jest warning about it:
+
+> Warning: An update to TodosList inside a test was not wrapped in act(…)
+
+In order to avoid it and let Jest clean up properly, we use this empty `waitFor` trick to make sure this re-render is cleanly taken care of.
+
+### Gotcha #3: Remember to `await` your waits
+
+Take a look at line 53 where we do `await waitFor(…)`. It's immensely important to make sure we wait for the execution of this async code. Otherwise, a Promise would be returned and test would end before we get a chance to actually check our expectations.
+
+The only clue that something like this is happening would be a log message in your test runner:
+
+> Jest did not exit one second after the test run has completed.
+
+### Gotcha #4: Mocking out child dependencies
+
+In lines 10-13 we mock out completely the TodoItem component. Why is that?
+
+First, a sidenote. We're not testing TodoItem here (just the list), so it's prefectly fine to mock it out. Also, it allows us to make sure the tests for the list are passing, no matter how the list items are rendered. We just want to make sure we're displaying them.
+
+Finally, and most importantly: the list item can have GraphQL queries of its own that trigger on render. We don't want to write any special code that would wait for those sub-sequent re-renders to finish and the simplest solution for it is to mock out the component with a simpler version that doesn't run any queries.
+
+### Gotcha #5: GraphQL fragments
+
+It's not visible in this particular example, but I think one more _gotcha_ is worth noting.
+
+If you're using [GraphQL Fragments](https://www.apollographql.com/docs/react/data/fragments/) you might trip up over your mocked queries not being recognised. Unfortunately, it seems like you need to manually add the `__typename` property to your mocked query. Contrary to [what documentation says](https://www.apollographql.com/docs/react/development-testing/testing/#setting-addtypename).
+
+I'm just leaving it as a side-note, because I'm not entirely sure what's the reason. Probably once I do, a PR will be a better way of addressing it then a blog post, so don't expect one!

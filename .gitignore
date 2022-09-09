@@ -1,0 +1,11 @@
+.cache
+node_modules
+yarn-error.log
+.merlin
+public/*
+!public/rss
+lib
+src/**/*.bs.js
+*.code-workspace
+.expo
+.DS_Store

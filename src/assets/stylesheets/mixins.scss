@@ -1,0 +1,32 @@
+@mixin mobile-version() {
+  @media screen and (max-width: 690px) {
+    @content;
+  }
+}
+
+@mixin desktop-version() {
+  @media screen and (min-width: 1200px) {
+    @content;
+  }
+}
+
+@mixin tablet-version() {
+  @media screen and (min-width: 691px) {
+    @content;
+  }
+}
+
+@mixin underlined-link {
+  padding-bottom: 5px;
+  border-bottom: 2px solid $black;
+  color: inherit;
+}
+
+@mixin darken-link-on-hover($amount: 5%) {
+  a:hover {
+    border: none;
+  }
+  &:hover {
+    filter: brightness(100% - $amount);
+  }
+}

@@ -1,0 +1,275 @@
+---
+title: 'Advanced Redux Patterns: Selectors'
+date: '2019-02-26T12:01:02.109Z'
+path: '/blog/advanced-redux-patterns-selectors'
+image: indiana.gif
+author: 'Wojciech Ogrodowczyk'
+---
+
+In our [previous blog post on using Redux responsibly](https://brainsandbeards.com/blog/advanced-redux-patterns-normalisation) we talked about state normalisation and its advantages. Some people have suggested that adopting a data schema like that might make it more difficult to access the data that we need, when everything is sorted by ID and stored in a separate _table_. Today, we’ll talk about best practises around accessing this data.
+
+#### Selectors
+
+This term is pretty descriptive — it’s something that you’d use to select the data that you want from the store. You’ve probably already seen code like this:
+
+```
+const SomeConnectedComponent = connect(
+  state => ({
+    lang: state.i18n.locale,
+  }),
+  dispatch => ({})
+)(SomeComponent);
+```
+
+As you can see we use `state.i18n.locale` to _select_ the data that we want (the user’s locale) from the global state. This works fine and on the surface it looks like everything is great.
+
+However, it does couple the internal implementation of the component to a particular data schema used. For instance, it depends on the application state looking like that:
+
+```
+{
+  i18n: {
+    locale: 'en'
+  }
+}
+```
+
+But in the future we might want to change the format to something a bit different. For example, we might want to make it a richer object, to contain some meta-data:
+
+```
+{
+  i18n: {
+    locale: {
+      name: 'English',
+      simpleCode: 'en',
+      fancyCode: 'en\_EN'
+    }
+  }
+}
+```
+
+This would mean we’d have to track down all the `state.i18n.locale` uses in the app and adjust them to the new format and this might be tricky and error-prone. How about if we had a helper function that we could use instead? 🤔
+
+It could be something as simple as:
+
+```
+getLocaleCode = (state) => state.i18n.locale;
+```
+
+This would be our selector.
+
+#### Advantages of using explicit selectors
+
+There are a few advantages of using explicit selectors. Let’s go through them one by one.
+
+#### Clear API
+
+There’s no need for every component in your app to know the internal schema of our data store.
+
+If we were writing backend code, it would be wildly considered an anti-pattern and we’d be advised to follow a _Single Responsibility Principle_ and create a separate class / service to take care of extracting data from our “database”, or somebody might even mention using a _Query service_ in a code review.
+
+In the frontend world we tend to think much lighter of software architecture, which sometimes can be an advantage (when we can deploy simple projects much faster), but with the project’s growth it might turn into a nightmare (where we introduce bugs every time we try to change anything).
+
+Creating (even simple) selectors from the beginning of the project helps us to keep a separation between the data layer (the Redux state) and the UI layer (our React components). Our code is read many times, while we write it just once. It’s silly to optimise for writes in such a read-heavy environment. (Oh look, a database pun! 🤗 )
+
+#### Easier refactoring
+
+As in the example above, using selector functions helps us refactor our store schema much easier. We can keep the same API (the selector functions that we use to access the state), but just change them internally to operate on a new data format.
+
+Selectors add a new level of abstraction, separating the data from the code that accesses it. New levels of abstraction are not always beneficial, but this one is easy to understand and not leaky, so I think that’s as good as they get.
+
+![Thrills of refactoring when not using selectors](indiana.gif)
+
+#### Performance
+
+Finally, we can use the new level of abstraction to offer something that every engineer likes: generalised performance improvements.
+
+In a codebase where every component queries its data directly it’s very difficult to offer performance improvements to data fetching. You’d have to think of a fix that would work everywhere and then go through each of your components one by one, implementing it. That’s definitely not a fun way to spend your day.
+
+Instead, using selectors we have a single interface that they all use, so we can implement our performance fixes directly at this level. The obvious thing to do would be to offer data caching — if more components ask for the same thing, we can keep its value cached / memoized to serve it quicker, as long as the underlying data doesn’t change.
+
+As the old joke says, there are only a couple hard problems in computer science, with caching being one of them, so let’s dive into this subject a bit deeper.
+
+#### Caching selector results: `reselect`
+
+Of course, we’re not the first ones with this problem, so [there’s an NPM module for that](https://www.npmjs.com/package/reselect). `Reselect` lets you easily add level of caching (also called _memoization_ when we talk about caching function output) to your Redux store queries. You could try to use it to memoize your _locale_ selector, but… After implementing such change we’d probably run our app again and notice that _nothing changed_ 🤔
+
+After a brief consideration you might reach a (quite reasonable) conclusion that it didn’t magically speed up your app, because getting user’s locale probably isn’t the performance bottleneck of your app. The performance bottlenecks lie in more elaborate data queries.
+
+For example let’s take our article-writing app that we talked about in our [Normalisation blog post](https://brainsandbeards.com/blog/advanced-redux-patterns-normalisation). We can imagine that for such a simple app we quickly run out of reasonable features to implement and we start working on tasks that are as… let’s say _sophisticated_ as “user can see the list of the last tags they used”.
+
+How would we get such a list if we don’t keep track of when tags are used? Let’s say we choose to implement it like this:
+
+- get all the articles
+- sort them by when they were modified last
+- map them into a list of tags that were used
+- clear up this list from duplicates
+- pick a few of the first ones as our “last tags used”
+
+Now, this definitely feels much more like a performance bottleneck! 🧐
+
+In such a case we could use `reselect` to cache the result like this:
+
+```javascript {numberLines: true}
+import { createSelector } from 'reselect'
+import _ from 'lodash'
+
+import localState from './articles'
+
+const getArticles = (state) => state.articles
+const getTags = (state) => state.tags
+
+const getRecentTags = createSelector(getArticles, getTags, (articles, tags) => {
+  console.log('Computing recent tags…')
+  const nestedTagIDs = _.sortBy(articles, [
+    function (o) {
+      return o.lastModifiedOn
+    },
+  ]).map((article) => article.tags)
+  const flatTagIDs = _.flatten(nestedTagIDs)
+  const uniqueTagIDs = _.uniq(flatTagIDs)
+  const recentTagNames = uniqueTagIDs.map((tagId) => tags[tagId].name)
+
+  return recentTagNames
+})
+
+const run = () => {
+  console.log(getRecentTags(localState))
+  console.log(getRecentTags(localState))
+  console.log(getRecentTags(localState))
+}
+
+export default run
+```
+
+The crucial line is the `createSelector(…)` method call. This creates a _cached_ selector for us to use. This means that the result it computes is going to be saved, along with the parameters that were used to compute it. At any subsequent call it will compare whether any of the state values that we use there has changed. If they didn’t, it will return the same value that it calculated earlier, without going through the expensive process again.
+
+So, running this code give us the following result:
+
+```
+Computing recent tags…
+\[ 'old ones', 'short story', 'insanity', 'novel' \]
+\[ 'old ones', 'short story', 'insanity', 'novel' \]
+\[ 'old ones', 'short story', 'insanity', 'novel' \]
+```
+
+We can see that the calculations has been done only once, the second and third results are served from cache.
+
+That works pretty well in case of our simple (if a little crazy) example. However, when we face more complicated real-world uses, we’ll probably find `reselect`’s caching mechanism to be a little bit limiting and we’d want more control over when and how do we cache the results. In such a case we’d go one step deeper (or one level of abstraction higher) and use `re-reselect`.
+
+#### Hand-crafting your caching with re-reselect
+
+`Reselect` seems like a great plug-and-play generalised solution for the problem of selector caching. It’s simple to use and easy to start with (which is wonderful!), but with this simplicity come some usage limitations.
+
+#### Caching more results
+
+One of the problems that you’ll probably hit with `reselect` pretty soon is connected to the fact that each selector has a cache limit of one. Instead of keeping a small store of cache results (for argument A the results was X, for argument B it was Y, etc.) we can only keep track of the last computed argument — result pair.
+
+Let’s look at a simple feature where this might be a problem. Imaging that in our article writing app we would like to be able to see which tags have been used in a particular year. Using `reselect` this gets a bit complicated, because we’re basically limited to only passing one argument (the app state) into our selector (only the first argument is used to check for caching). That means that if we wanted to cache that we’d need to create multiple selectors, one for each year, like this:
+
+```
+const tagsFrom1918 = createSelector(…);
+const tagsFrom1919 = createSelector(…);
+const tagsFrom1920 = createSelector(…);
+```
+
+As you can see, that seems a bit over the top. Of course, we could create a _selector factory_:
+
+```
+const makeYearlyTagSelector = year => {
+  return createSelector(
+   // custom selector definition for a particular year
+  );
+}
+
+const tagsFrom1918 = makeYearlyTagSelector(1918);
+const tagsFrom1919 = makeYearlyTagSelector(1919);
+const tagsFrom1920 = makeYearlyTagSelector(1920);
+```
+
+This is not only a bit verbose, but comes with a strong disadvantage. Because such selectors would be dynamically created in each component that uses them, they wouldn’t share the cache between themselves (because they’re different selectors that just coincidentally work the same way). This means that if we want to get the same information in two different components, we’d have to instantiate two selectors and compute it twice, not once.
+
+With `re-reselect`, you can handle this problem in a better way. Let’s first take a look at the solution and we’ll break down the differences afterwards:
+
+```javascript {numberLines: true}
+import createCachedSelector from 're-reselect'
+import _ from 'lodash'
+
+import localState from './articles'
+
+const getArticles = (state) => state.articles
+const getTags = (state) => state.tags
+
+const tagsFromYear = createCachedSelector(
+  [getArticles, getTags, (_state, year) => year],
+  (articles, tags, year) => {
+    console.log('Computing recent tags with re-reselect…')
+    const nestedTagIDs = _.filter(
+      articles,
+      (article) => article.lastModifiedOn === year
+    ).map((article) => article.tags)
+    const flatTagIDs = _.flatten(nestedTagIDs)
+    const uniqueTagIDs = _.uniq(flatTagIDs)
+    const tagNames = uniqueTagIDs.map((tagId) => tags[tagId].name)
+
+    return tagNames
+  }
+)((_state, year) => year)
+
+const run = () => {
+  console.log(tagsFromYear(localState, 1917))
+  console.log(tagsFromYear(localState, 1936))
+  console.log(tagsFromYear(localState, 1917))
+}
+
+export default run
+```
+
+The output of this code is the following (notice that we only compute the values twice and the last function call hits the already existing cache):
+
+```
+Computing recent tags with re-reselect…
+\[ 'old ones', 'short story' \]
+Computing recent tags with re-reselect…
+\[ 'insanity', 'novel' \]
+\[ 'old ones', 'short story' \]
+```
+
+There are two big differences worth noting here. Let’s take a look how it looks in a more general form:
+
+```
+const someSelector = createCachedSelector(
+  \[selectorA, selectorB, functionThatExtractsAnArgument\],
+  (valueA, valueB, selectorArgument) => {
+   // Selector magic goes here
+  }
+)((state, someArgument) => {
+ // We compute the cache key here
+});
+```
+
+- When we’re using the `createCachedSelector` function, it not only defines the selector, but also the way we determine the cache key for it. We have two specify both. See how it’s broken down into two parts above.
+- Take a closer look what arguments `createCachedSelector` takes. In `reselect` we had a bunch of state selectors (for narrowing down what parts of state we’re dealing with) and at the end we had a function that takes all the values that came out of those state selectors to compute the result. In `re-reselect`, apart from state, we also get arguments from the selector function call itself (like we are passing `year` for our tag computation), so we also need additional _input selectors_ to extract those. They will be later passed to the final _computation function_ in the same way as the values from the state selectors.
+
+**What’s the benefit again?**
+
+Let me rehash the biggest advantage that we get. Using `re-reselect` we get _parametrised cached selectors_ that we can reuse all over our app, but still getting the advantage of the common cache that they share.
+
+All of this with, arguably, cleaner syntax than a selector factory that we’d have to use otherwise.
+
+#### Getting more control with custom cache keys
+
+With `re-reselect` we need to define a cache key to use when creating our cached selector. It’s no longer computed automatically (as it is when using pure `reselect`) and we have full control over how it’s created.
+
+Most often, you’d use a string or a number as the cache key (as in the example above). This would be typically a parameter (or a string being a unique combination of different parameters) for the selector. However, for more elaborate cases you have also an option to use a [Map object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map).
+
+Of course, there are also various caching strategies (around cache size and which values get expired first) available for you to use and even a possibility to create your own. It’s all controlled by the ([`cacheObject` option](https://github.com/toomuchdesign/re-reselect/#optionscacheobject)).
+
+![Low-level cache management possible with re-reselect](1.png)
+
+#### Summary
+
+After reading this blog post you’ve read how and why to use custom selectors for your Redux store. We hope it motivated you to give a closer look at how it’s implemented in your applications and make sure you take advantage of caching to memoize any of the expensive transformations that you make 💪
+
+If that’s a topic that you found interesting, you should probably check out also our blog post on [data normalisation in Redux stores](https://brainsandbeards.com/blog/advanced-redux-patterns-normalisation). As you have probably noticed, those two subjects go closely together.
+
+Also, stay tuned and make sure you subscribe to this blog to get our weekly tips for creating better mobile applications faster 🚀
