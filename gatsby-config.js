@@ -283,12 +283,7 @@ module.exports = {
         offset: -100,
       },
     },
-    {
-      resolve: `gatsby-plugin-sass`,
-      options: {
-        implementation: require('node-sass'),
-      },
-    },
+    'gatsby-plugin-sass',
     {
       resolve: 'gatsby-plugin-matomo',
       options: {
