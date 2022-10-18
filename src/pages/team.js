@@ -47,6 +47,12 @@ let teamMembers = [
       'Mobile apps developer. He fell in love with React Native. Self-improver, golf enthusiast. In his house you can always count on being welcomed with a good Scotch.',
   },
   {
+    name: 'Asia',
+    imageUrl: require('../assets/team/open-positions.jpg'), // TODO: Update photo
+    bio:
+      "React Native developer with web experience. Movie buff. Cooking enthusiast always willing to taste new food. Supporter of the statement that you're only one swim away from a good mood.",
+  },
+  {
     name: 'This could be you',
     imageUrl: require('../assets/team/open-positions.jpg'),
     bio:
