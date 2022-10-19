@@ -8,12 +8,13 @@ import Visca from '../assets/client-logos/visca.png'
 import Clincase from '../assets/client-logos/clincase.png'
 import Saloodo from '../assets/client-logos/saloodo.png'
 import Metro from '../assets/client-logos/metro.png'
-import Kidpick from '../assets/client-logos/kidpick.png'
+import Bsdex from '../assets/client-logos/bsdex.png'
 import LokalPortal from '../assets/client-logos/lokalportal.png'
 import Donut from '../assets/client-logos/donut.png'
-import Ree from '../assets/client-logos/ree.png'
 import ManoMano from '../assets/client-logos/mano-mano.png'
 import Femtasy from '../assets/client-logos/femtasy.png'
+import Vay from '../assets/client-logos/vay.png'
+import LiveArt from '../assets/client-logos/live-art.png'
 
 const featuredClients = [
   { image: Rakuten, height: 50, name: 'Rakuten' },
@@ -26,7 +27,7 @@ const allClients = [
   featuredClients,
   [
     { image: Mobilab, height: 27, name: 'Mobilab' },
-    { image: Kidpick, height: 70, name: 'KidPick' },
+    { image: Bsdex, height: 70, name: 'BSDEX' },
     { image: Visca, height: 45, name: 'Visca' },
     { image: Saloodo, height: 65, name: 'Saloodo' },
   ],
@@ -37,9 +38,10 @@ const allClients = [
     { image: Donut, height: 40, name: 'Donut' },
   ],
   [
-    { image: Ree, height: 30, name: 'Ree' },
+    { image: Vay, height: 30, name: 'Vay' },
     { image: ManoMano, height: 50, name: 'ManoMano' },
     { image: Femtasy, height: 50, name: 'Femtasy' },
+    { image: LiveArt, height: 50, name: 'LiveArt' },
   ],
 ]
 
@@ -50,12 +52,12 @@ function ClientLogos({ short }) {
     <div className="clients">
       {clientRows.map((clients) => (
         <div className="logos">
-          {clients.map((client) => (
-            <div className="logo" key={`logo-${client.name}`}>
+          {clients.map(({name, image, height}) => (
+            <div className="logo" key={`logo-${name}`}>
               <img
-                src={client.image}
-                height={client.height}
-                alt={client.name}
+                src={image}
+                height={height}
+                alt={name}
               />
             </div>
           ))}
@@ -65,4 +67,4 @@ function ClientLogos({ short }) {
   )
 }
 
-export default ClientLogos
+export default ClientLogos;

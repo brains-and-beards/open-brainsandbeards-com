@@ -9,3 +9,7 @@ src/**/*.bs.js
 *.code-workspace
 .expo
 .DS_Store
+
+# IDE
+.idea/
+.vscode/
