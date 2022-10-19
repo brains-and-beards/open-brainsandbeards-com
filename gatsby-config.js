@@ -3,27 +3,27 @@ const { slashify } = require('./src/helpers/path_helpers')
 module.exports = {
   siteMetadata: {
     title: 'Home',
-    siteUrl: `https://brainsandbeards.com`,
+    siteUrl: 'https://brainsandbeards.com',
     titleTemplate: '%s · Brains & Beards',
     description:
       'Brains & Beards is an unpretentious mobile studio that solves business problems through a mix of design and technology.',
     url: 'https://brainsandbeards.com',
     // No trailing slash allowed!
-    image: '/bb.png',
+    image: 'favicon.png',
     // Path to your image you placed in the 'static' folder
     twitterUsername: '@brainsandbeards',
   },
   plugins: [
     'gatsby-plugin-next-seo',
     {
-      resolve: `gatsby-plugin-sitemap`,
+      resolve: 'gatsby-plugin-sitemap',
       options: {
         serialize: ({ site, allSitePage }) =>
           allSitePage.edges.map((edge) => {
-            const { path } = edge.node
+            const { path } = edge.node;
             return {
               url: `${site.siteMetadata.siteUrl}${slashify(path)}`,
-              changefreq: `daily`,
+              changefreq: 'daily',
               priority: 0.7,
             }
           }),
@@ -49,14 +49,14 @@ module.exports = {
             serialize: ({ query: { site, allMarkdownRemark } }) => {
               return allMarkdownRemark.edges.map((edge) => {
                 const url =
-                  site.siteMetadata.siteUrl + edge.node.frontmatter.path
+                  site.siteMetadata.siteUrl + edge.node.frontmatter.path;
                 const {
                   image: { size, extension, childImageSharp },
-                } = edge.node.frontmatter
+                } = edge.node.frontmatter;
 
                 const imageUrl = childImageSharp
                   ? site.siteMetadata.siteUrl + childImageSharp.fixed.src
-                  : null
+                  : null;
 
                 return Object.assign({}, edge.node.frontmatter, {
                   author: edge.node.frontmatter.author,
@@ -119,10 +119,9 @@ module.exports = {
             `,
             output: '/blog/feed.xml',
             title: 'Brains & Beards Insights',
-            image_url:
-              'https://brainsandbeards.com/icons-300434af9be6b5c7fe50245bf5c94f93/favicon.ico',
-            feed_url: 'https//brainsandbeards.com/blog/feed.xml',
-            site_url: 'https//brainsandbeards.com/',
+            image_url: 'https://brainsandbeards.com/favicon.png',
+            feed_url: 'https://brainsandbeards.com/blog/feed.xml',
+            site_url: 'https://brainsandbeards.com',
             custom_namespaces: {
               webfeeds: 'http://webfeeds.org/rss/1.0',
               media: 'http://search.yahoo.com/mrss/',
@@ -130,7 +129,7 @@ module.exports = {
             custom_elements: [
               {
                 'webfeeds:logo':
-                  'https://brainsandbeards.com/icons-300434af9be6b5c7fe50245bf5c94f93/favicon.ico',
+                  'https://brainsandbeards.com/favicon.png',
               },
               {
                 'webfeeds:cover': {
@@ -152,7 +151,7 @@ module.exports = {
     {
       resolve: 'gatsby-plugin-favicon',
       options: {
-        logo: './src/favicon.png',
+        logo: './src/assets/images/favicon.png',
         injectHTML: true,
         icons: {
           android: true,
@@ -168,35 +167,35 @@ module.exports = {
       },
     },
     {
-      resolve: `gatsby-source-filesystem`,
+      resolve: 'gatsby-source-filesystem',
       options: {
         path: `${__dirname}/src/pages/markdown`,
         name: 'markdown-pages',
       },
     },
     {
-      resolve: `gatsby-source-filesystem`,
+      resolve: 'gatsby-source-filesystem',
       options: {
         path: `${__dirname}/src/assets/illustrations`,
         name: 'illustrations',
       },
     },
     {
-      resolve: `gatsby-source-filesystem`,
+      resolve: 'gatsby-source-filesystem',
       options: {
         path: `${__dirname}/src/assets/photos`,
         name: 'photos',
       },
     },
     {
-      resolve: `gatsby-source-filesystem`,
+      resolve: 'gatsby-source-filesystem',
       options: {
         path: `${__dirname}/src/assets/images`,
         name: 'photos',
       },
     },
     {
-      resolve: `gatsby-source-filesystem`,
+      resolve: 'gatsby-source-filesystem',
       options: {
         path: `${__dirname}/src/assets/case-studies`,
         name: 'case-studies',
@@ -205,7 +204,7 @@ module.exports = {
     'gatsby-plugin-sharp',
     'gatsby-transformer-sharp',
     {
-      resolve: `gatsby-remark-images`,
+      resolve: 'gatsby-remark-images',
       options: {
         maxWidth: 890,
       },
@@ -223,9 +222,9 @@ module.exports = {
             },
           },
           {
-            resolve: `gatsby-remark-copy-linked-files`,
+            resolve: 'gatsby-remark-copy-linked-files',
             options: {
-              ignoreFileExtensions: [`png`, `jpg`, `jpeg`, `bmp`, `tiff`],
+              ignoreFileExtensions: ['png', 'jpg', 'jpeg', 'bmp', 'tiff'],
             },
           },
           {
@@ -244,7 +243,7 @@ module.exports = {
             },
           },
           {
-            resolve: `gatsby-remark-prismjs`,
+            resolve: 'gatsby-remark-prismjs',
             options: {
               classPrefix: 'language-',
               inlineCodeMarker: null,
@@ -273,7 +272,7 @@ module.exports = {
               escapeEntities: {},
             },
           },
-          `gatsby-remark-responsive-iframe`,
+          'gatsby-remark-responsive-iframe',
         ],
       },
     },
