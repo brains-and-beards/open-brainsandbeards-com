@@ -15,6 +15,7 @@ module.exports = {
   },
   plugins: [
     'gatsby-plugin-next-seo',
+    'gatsby-plugin-image',
     {
       resolve: `gatsby-plugin-sitemap`,
       options: {
@@ -202,7 +203,14 @@ module.exports = {
         name: 'case-studies',
       },
     },
-    'gatsby-plugin-sharp',
+    {
+      resolve: 'gatsby-plugin-sharp',
+      options: {
+        defaults: {
+          breakpoints: [750, 1080, 1366, 1920],
+        },
+      },
+    },
     'gatsby-transformer-sharp',
     {
       resolve: `gatsby-remark-images`,

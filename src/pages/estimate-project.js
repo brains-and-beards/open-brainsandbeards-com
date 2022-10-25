@@ -1,23 +1,24 @@
 import React from 'react'
 import { graphql } from 'gatsby'
+import { getImage } from 'gatsby-plugin-image'
 
 import Layout from '../templates/layout'
 import EstimateProjectForm from '../components/forms/EstimateProjectForm'
 
-const EstimateProject = (props) => {
-  const { heroImage } = props.data
+const EstimateProject = ({ data }) => {
+  const { heroImage } = data
 
   return (
     <Layout
       headerTitle="Get an estimate"
       headerSub="Let us know what you need, we'll contact you promptly to discuss how we can help with your project."
-      headerImage={heroImage.childImageSharp.fixed}
+      headerImage={getImage(heroImage)}
       headerColumns
       simpleNavbar
     >
       <div className="estimate-project-form">
         <div className="content">
-          <EstimateProjectForm imageData={props.data} />
+          <EstimateProjectForm imageData={data} />
         </div>
       </div>
     </Layout>
@@ -27,9 +28,12 @@ const EstimateProject = (props) => {
 export const _imageProps = graphql`
   fragment illustrationIconImageProps on File {
     childImageSharp {
-      fixed(height: 192, quality: 90, traceSVG: { color: "#333" }) {
-        ...GatsbyImageSharpFixed_tracedSVG
-      }
+      gatsbyImageData(
+        height: 192
+        quality: 90
+        placeholder: TRACED_SVG
+        layout: FIXED
+      )
     }
   }
 `
@@ -37,9 +41,12 @@ export const _imageProps = graphql`
 export const _fluidIllustration = graphql`
   fragment fluidIllustration on File {
     childImageSharp {
-      fluid(maxHeight: 192, quality: 90, traceSVG: { color: "#333" }) {
-        ...GatsbyImageSharpFluid_tracedSVG
-      }
+      gatsbyImageData(
+        height: 192
+        quality: 90
+        placeholder: TRACED_SVG
+        layout: FULL_WIDTH
+      )
     }
   }
 `

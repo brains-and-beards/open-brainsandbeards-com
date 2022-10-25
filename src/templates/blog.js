@@ -1,12 +1,34 @@
 import React from 'react'
 import { graphql, Link } from 'gatsby'
-import Img from 'gatsby-image'
+import { Helmet } from 'react-helmet-async'
+import { getImage } from 'gatsby-plugin-image'
 
 import Layout from './layout'
 import PostLink from '../components/PostLink'
 import FirstPostLink from '../components/FirstPostLink'
 import ContactForm from '../components/forms/ContactForm'
-import { Helmet } from 'react-helmet-async'
+import BlogSubtitle from '../components/blog/BlogSubtitle'
+
+const preparePageLinks = (page, numPages) => {
+  const firstPageLink = Math.max(page - 2, 1)
+  const lastPageLink = Math.min(firstPageLink + 4, numPages)
+  const pageLinks = []
+
+  for (let p = firstPageLink; p <= lastPageLink; p++) {
+    const path = p === 1 ? '/blog' : `/blog/${p}`
+    pageLinks.push(
+      <Link
+        key={`page_link-${p}`}
+        to={`${path}#posts-list`}
+        className={`page-link right sub2 ${p === page ? 'current' : ''}`}
+      >
+        <span>{p}</span>
+      </Link>
+    )
+  }
+
+  return pageLinks
+}
 
 const IndexPage = ({
   data: {
@@ -18,55 +40,32 @@ const IndexPage = ({
   },
   pageContext: { page, numPages },
 }) => {
-  const posts = edges.filter((edge) => !!edge.node.frontmatter.date)
-  const firstPost = firstElement.edges[0]
-
-  const firstPageLink = Math.max(page - 2, 1)
-  const lastPageLink = Math.min(firstPageLink + 4, numPages)
-  const pageLinks = []
-  for (let p = firstPageLink; p <= lastPageLink; p++) {
-    const path = p === 1 ? '/blog' : `/blog/${p}`
-    pageLinks.push(
-      <Link
-        to={`${path}#posts-list`}
-        className={`page-link right sub2 ${p === page ? 'current' : ''}`}
-      >
-        <span>{p}</span>
-      </Link>
-    )
-  }
-
   const subtitle = (
     <div className="row header-subtitle">
-      <div className="one-third">
-        <Img
-          fixed={technologyImage.childImageSharp.fixed}
-          className="small-image"
-          alt="Technology"
-        />
-        <p className="sub2">Technology</p>
-      </div>
-      <div className="one-third">
-        <Img
-          fixed={shippingImage.childImageSharp.fixed}
-          className="small-image"
-          alt="Shipping products"
-        />
-        <p className="sub2">Shipping great products</p>
-      </div>
-      <div className="one-third">
-        <Img
-          fixed={teamsImage.childImageSharp.fixed}
-          className="small-image"
-          alt="Building teams"
-        />
-        <p className="sub2">Building successful teams</p>
-      </div>
+      <BlogSubtitle
+        subtitle="Technology"
+        fixedImg={getImage(technologyImage)}
+      />
+      <BlogSubtitle
+        alt="Shipping products"
+        subtitle="Shipping great products"
+        fixedImg={getImage(shippingImage)}
+      />
+      <BlogSubtitle
+        alt="Building teams"
+        subtitle="Building successful teams"
+        fixedImg={getImage(teamsImage)}
+      />
     </div>
   )
 
-  if (process.env.SHOW_BLOG !== 'true')
+  if (process.env.SHOW_BLOG !== 'true') {
     return <Layout headerTitle="Read our insights" headerSub={subtitle} />
+  }
+
+  const posts = edges.filter((edge) => !!edge.node.frontmatter.date)
+  const firstPost = firstElement.edges[0]
+  const pageLinks = preparePageLinks(page, numPages)
 
   return (
     <Layout headerTitle="Read our insights" headerSub={subtitle}>
@@ -92,11 +91,11 @@ const IndexPage = ({
               />
             </div>
 
-            <div id="posts-list">
-              {posts.map((edge) => (
-                <PostLink key={edge.node.id} post={edge.node} />
+            <ul id="posts-list">
+              {posts.map(({ node }) => (
+                <PostLink key={node.id} post={node} />
               ))}
-            </div>
+            </ul>
           </div>
         </div>
 
@@ -137,7 +136,7 @@ const IndexPage = ({
       </div>
       <ContactForm
         title="Get in touch"
-        subtitle=" If you'd like to get in touch with us about something we wrote on our blog, please do!"
+        subtitle="If you'd like to get in touch with us about something we wrote on our blog, please do!"
       />
     </Layout>
   )
@@ -148,9 +147,13 @@ export default IndexPage
 export const _imageProps = graphql`
   fragment smallIllustrationIconImageProps on File {
     childImageSharp {
-      fixed(height: 80, width: 80, quality: 90, traceSVG: { color: "#333" }) {
-        ...GatsbyImageSharpFixed_tracedSVG
-      }
+      gatsbyImageData(
+        height: 80
+        width: 80
+        quality: 90
+        placeholder: TRACED_SVG
+        layout: FIXED
+      )
     }
   }
 `
@@ -173,9 +176,12 @@ export const pageQuery = graphql`
             image {
               relativePath
               childImageSharp {
-                fluid(maxWidth: 672, quality: 90, traceSVG: { color: "#333" }) {
-                  ...GatsbyImageSharpFluid_tracedSVG
-                }
+                gatsbyImageData(
+                  width: 672
+                  quality: 90
+                  placeholder: TRACED_SVG
+                  layout: CONSTRAINED
+                )
               }
             }
             imagePosition
@@ -201,15 +207,14 @@ export const pageQuery = graphql`
             image {
               relativePath
               childImageSharp {
-                fluid(
-                  maxHeight: 200
-                  maxWidth: 280
+                gatsbyImageData(
+                  height: 200
+                  width: 280
                   quality: 90
-                  cropFocus: CENTER
-                  traceSVG: { color: "#333" }
-                ) {
-                  ...GatsbyImageSharpFluid_tracedSVG
-                }
+                  placeholder: TRACED_SVG
+                  transformOptions: { cropFocus: CENTER }
+                  layout: CONSTRAINED
+                )
               }
             }
             imagePosition

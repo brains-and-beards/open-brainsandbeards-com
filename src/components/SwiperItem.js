@@ -19,7 +19,7 @@ const SwiperItem = ({
           alt="arrow"
         />
       </a>
-      <img src={photo} height="152px" className="round" />
+      <img src={photo} alt="photo" height="152px" className="round" />
       <a href="#" onClick={onNext} className="reference next">
         <img
           src={require('../assets/images/chevron.svg')}

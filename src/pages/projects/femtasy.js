@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { graphql } from 'gatsby'
-import Img from 'gatsby-image'
+import { GatsbyImage, getImage } from 'gatsby-plugin-image'
 
 import Layout from '../../templates/layout'
 import EstimateProjectBar from '../../components/EstimateProjectBar'
@@ -19,8 +19,8 @@ class FemtasyCaseStudy extends Component {
       >
         <div id="case-study">
           <div className="big-part-yellow">
-            <Img
-              fluid={heroImage.childImageSharp.fluid}
+            <GatsbyImage
+              image={getImage(heroImage)}
               className="heading-pic"
               alt="LokalPortal main page"
             />
@@ -28,7 +28,11 @@ class FemtasyCaseStudy extends Component {
 
           <div className="narrow-column text-format">
             <p>
-              <a href="https://www.femtasy.com" target="_blank">
+              <a
+                href="https://www.femtasy.com"
+                target="_blank"
+                rel="noreferrer"
+              >
                 Femtasy
               </a>{' '}
               is a streaming platform for erotic audio stories for women (and
@@ -158,8 +162,8 @@ class FemtasyCaseStudy extends Component {
               straight 5,0 score on App Store on the first 20 app reviews 🎉
             </p>
             <div>
-              <Img
-                fluid={reviewsImage.childImageSharp.fluid}
+              <GatsbyImage
+                image={getImage(reviewsImage)}
                 alt="Femtasy reviews"
               />
               <figcaption>
@@ -192,6 +196,7 @@ class FemtasyCaseStudy extends Component {
               <a
                 href="https://www.linkedin.com/company/femtasy/jobs/"
                 target="_blank"
+                rel="noreferrer"
               >
                 open positions in Femtasy
               </a>
@@ -219,9 +224,7 @@ class FemtasyCaseStudy extends Component {
 export const mobileScreenshots = graphql`
   fragment mobileScreenshots on File {
     childImageSharp {
-      fluid(maxWidth: 500, traceSVG: { color: "#333" }) {
-        ...GatsbyImageSharpFluid_tracedSVG
-      }
+      gatsbyImageData(width: 500, placeholder: TRACED_SVG, layout: CONSTRAINED)
     }
   }
 `

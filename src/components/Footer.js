@@ -1,13 +1,16 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { graphql, useStaticQuery, Link } from 'gatsby'
-import Img from 'gatsby-image'
+import { GatsbyImage, getImage } from 'gatsby-plugin-image'
 
 export const footerImageProps = graphql`
   fragment footerImageProps on File {
     childImageSharp {
-      fixed(width: 88, quality: 90, traceSVG: { color: "#333" }) {
-        ...GatsbyImageSharpFixed_tracedSVG
-      }
+      gatsbyImageData(
+        width: 88
+        quality: 90
+        placeholder: TRACED_SVG
+        layout: FIXED
+      )
     }
   }
 `
@@ -61,17 +64,21 @@ const Footer = (props) => {
         </div>
 
         <div className="col">
-          <Img
+          <GatsbyImage
+            image={getImage(footerImage)}
             className="binoculars"
-            fixed={footerImage.childImageSharp.fixed}
             alt="peeping computer"
           />
+
           <p className="nerd-text">
             If you're a bit of a technical nerd (like us!) you can keep on
             reading. This site has been built in React, using GatsbyJS. The data
             layer is managed through GraphQL. The whole thing is hosted using
             Netlify. All of those products are great and we're so happy to be
-            able to use them 💯❤️🚀
+            able to use them{' '}
+            <span role="img" aria-label="emojis">
+              💯❤️🚀
+            </span>
           </p>
         </div>
       </div>

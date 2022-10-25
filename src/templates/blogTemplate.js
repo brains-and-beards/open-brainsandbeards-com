@@ -1,5 +1,6 @@
 import React from 'react'
 import { graphql } from 'gatsby'
+import { GatsbyImage, getImage } from 'gatsby-plugin-image'
 import { ArticleJsonLd } from 'gatsby-plugin-next-seo'
 
 import Layout from './layout'
@@ -17,7 +18,7 @@ export default function Template({
 }) {
   const {
     markdownRemark,
-    smallPic,
+    picture,
     allMarkdownRemark: { edges },
   } = data // data.markdownRemark holds our post data
   const {
@@ -32,7 +33,7 @@ export default function Template({
     return <PostLink key={node.id} post={node} />
   })
 
-  const { childImageSharp } = smallPic.frontmatter.image
+  const { childImageSharp } = picture.frontmatter.image
   const gatsbySmallSrc = childImageSharp?.fixed?.src
 
   const thumbnailUrl =
@@ -62,18 +63,19 @@ export default function Template({
         {image && (
           <div className="top-part-yellow">
             <div className="content">
-              {image.childImageSharp ? (
-                <img
-                  srcSet={image.childImageSharp.fluid.srcSet}
-                  src={image.childImageSharp.fluid.src}
-                  alt={imageCaption}
-                  className="main-blog-image webfeedsFeaturedVisual"
-                />
+              {image ? (
+                <>
+                  <GatsbyImage
+                    alt={imageCaption}
+                    image={getImage(picture.frontmatter.image)}
+                    className="main-blog-image-l"
+                  />
+                </>
               ) : (
                 <img
                   src={require(`../pages/markdown/${image.relativePath}`)}
                   alt={imageCaption}
-                  className="main-blog-image webfeedsFeaturedVisual"
+                  className="main-blog-image"
                 />
               )}
               {imageCaption ? (
@@ -90,7 +92,7 @@ export default function Template({
           {demo === 'AnimatedInput' && <ReactNativeAnimatedCodeInput />}
           <SubscribeFootnote />
           <HiringFootnote />
-          <AuthorWithPictureAndText author={author} text={'WRITTEN BY'} />
+          <AuthorWithPictureAndText author={author} text="WRITTEN BY" />
         </div>
         <BlogNewsletter />
         <div className="narrow-column">
@@ -126,14 +128,13 @@ export const pageQuery = graphql`
         image {
           relativePath
           childImageSharp {
-            fluid(
-              maxHeight: 1400
+            gatsbyImageData(
+              height: 1400
               quality: 92
-              srcSetBreakpoints: [350, 500, 700, 1400]
-            ) {
-              src
-              srcSet
-            }
+              breakpoints: [350, 500, 700, 1400]
+              placeholder: BLURRED
+              layout: FULL_WIDTH
+            )
           }
         }
         path
@@ -142,19 +143,17 @@ export const pageQuery = graphql`
         demo
       }
     }
-    smallPic: markdownRemark(frontmatter: { path: { eq: $path } }) {
+    picture: markdownRemark(frontmatter: { path: { eq: $path } }) {
       frontmatter {
         image {
           childImageSharp {
-            fixed(
-              height: 300
-              width: 300
+            gatsbyImageData(
               quality: 90
-              fit: CONTAIN
-              cropFocus: CENTER
-            ) {
-              src
-            }
+              placeholder: BLURRED
+              breakpoints: [320, 690, 1200]
+              transformOptions: { fit: CONTAIN, cropFocus: CENTER }
+              layout: CONSTRAINED
+            )
           }
         }
         path
@@ -173,16 +172,14 @@ export const pageQuery = graphql`
             title
             image {
               childImageSharp {
-                fluid(
-                  maxWidth: 280
-                  maxHeight: 200
+                gatsbyImageData(
+                  width: 280
+                  height: 200
                   quality: 90
-                  cropFocus: CENTER
-                  traceSVG: { color: "#333" }
-                ) {
-                  ...GatsbyImageSharpFluid_tracedSVG
-                  src
-                }
+                  placeholder: TRACED_SVG
+                  transformOptions: { cropFocus: CENTER }
+                  layout: CONSTRAINED
+                )
               }
               relativePath
             }

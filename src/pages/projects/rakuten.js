@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { graphql } from 'gatsby'
-import Img from 'gatsby-image'
+import { GatsbyImage, getImage } from 'gatsby-plugin-image'
 
 import Layout from '../../templates/layout'
 import EstimateProjectBar from '../../components/EstimateProjectBar'
@@ -20,8 +20,8 @@ class RakutenCaseStudy extends Component {
       >
         <div id="case-study">
           <div className="big-part-yellow">
-            <Img
-              fluid={heroImage.childImageSharp.fluid}
+            <GatsbyImage
+              image={getImage(heroImage)}
               className="heading-pic"
               alt="Rakuten team"
             />

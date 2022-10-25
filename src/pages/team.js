@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import Img from 'gatsby-image'
+import { GatsbyImage, getImage } from 'gatsby-plugin-image'
 import { graphql } from 'gatsby'
 
 import Swiper from '../components/Swiper'
@@ -13,55 +13,44 @@ let teamMembers = [
   {
     name: 'Patryk',
     imageUrl: require('../assets/team/patryk.jpg'),
-    bio:
-      'Ideas machine. Reading too much. Teaching (functional) mobile and desktop development. I do funny faces on YouTube.',
+    bio: 'Ideas machine. Reading too much. Teaching (functional) mobile and desktop development. I do funny faces on YouTube.',
   },
   {
     name: 'Wojciech',
     imageUrl: require('../assets/team/wojtek.jpg'),
-    bio:
-      'Polyglot software developer. Climber. Interested in renewable energy, electric vehicles, and reforestation. The easiest way to pronounce my name is: boy - tech.',
+    bio: 'Polyglot software developer. Climber. Interested in renewable energy, electric vehicles, and reforestation. The easiest way to pronounce my name is: boy - tech.',
   },
   {
     name: 'Marek',
     imageUrl: require('../assets/team/marek.jpg'),
-    bio:
-      'React Native developer with Ruby on Rails backend experience. Ex-chemist. Enjoys climbing and travelling to remote places.',
+    bio: 'React Native developer with Ruby on Rails backend experience. Ex-chemist. Enjoys climbing and travelling to remote places.',
   },
   {
     name: 'Szymon',
     imageUrl: require('../assets/team/szymon.jpg'),
-    bio:
-      'React Native developer with native Android and iOS experience. Always curious and eager to try new technologies. Often tinkers with electronics or rides a bike.',
+    bio: 'React Native developer with native Android and iOS experience. Always curious and eager to try new technologies. Often tinkers with electronics or rides a bike.',
   },
   {
     name: 'Łukasz',
     imageUrl: require('../assets/team/lukasz.jpg'),
-    bio:
-      'React Native developer with web experience. Enthusiast of functional programming. Always on the lookout for performance gains, never stops asking why. Can be found skating down the streets.',
+    bio: 'React Native developer with web experience. Enthusiast of functional programming. Always on the lookout for performance gains, never stops asking why. Can be found skating down the streets.',
   },
   {
     name: 'Błażej',
     imageUrl: require('../assets/team/blazej.jpg'),
-    bio:
-      'Mobile apps developer. He fell in love with React Native. Self-improver, golf enthusiast. In his house you can always count on being welcomed with a good Scotch.',
+    bio: 'Mobile apps developer. He fell in love with React Native. Self-improver, golf enthusiast. In his house you can always count on being welcomed with a good Scotch.',
   },
   {
     name: 'This could be you',
     imageUrl: require('../assets/team/open-positions.jpg'),
-    bio:
-      'Ready to take the next step in your career? Drop us a message to see if you could join our team.',
+    bio: 'Ready to take the next step in your career? Drop us a message to see if you could join our team.',
   },
 ]
 
 class TeamPage extends Component {
   render() {
-    const {
-      versatilityIcon,
-      reliabilityIcon,
-      diversityIcon,
-      outsourcingIcon,
-    } = this.props.data
+    const { versatilityIcon, reliabilityIcon, diversityIcon, outsourcingIcon } =
+      this.props.data
 
     return (
       <Layout
@@ -79,8 +68,8 @@ class TeamPage extends Component {
               <Swiper
                 ContentClass={TeamMember}
                 items={teamMembers}
-                slidesPerView={'auto'}
-                spaceBetween={'15%'}
+                slidesPerView="auto"
+                spaceBetween="15%"
               />
             </div>
           </div>
@@ -101,7 +90,7 @@ class TeamPage extends Component {
             </p>
             <ul className="picture-list">
               <PictureListItem
-                image={versatilityIcon.childImageSharp.fixed}
+                image={getImage(versatilityIcon)}
                 title="Versatility"
               >
                 <p>
@@ -113,7 +102,7 @@ class TeamPage extends Component {
                 </p>
               </PictureListItem>
               <PictureListItem
-                image={reliabilityIcon.childImageSharp.fixed}
+                image={getImage(reliabilityIcon)}
                 title="Reliability"
               >
                 <p>
@@ -124,7 +113,7 @@ class TeamPage extends Component {
                 </p>
               </PictureListItem>
               <PictureListItem
-                image={diversityIcon.childImageSharp.fixed}
+                image={getImage(diversityIcon)}
                 title="Diversity"
               >
                 <p>
@@ -150,8 +139,8 @@ class TeamPage extends Component {
                     parties.
                   </p>
                 </section>
-                <Img
-                  fixed={outsourcingIcon.childImageSharp.fixed}
+                <GatsbyImage
+                  image={getImage(outsourcingIcon)}
                   alt="No outsourcing policy"
                 />
               </div>
@@ -210,9 +199,12 @@ class TeamPage extends Component {
 export const teamOutsourcingIconImageProps = graphql`
   fragment teamOutsourcingIconImageProps on File {
     childImageSharp {
-      fixed(height: 320, quality: 90, traceSVG: { color: "#333" }) {
-        ...GatsbyImageSharpFixed_tracedSVG
-      }
+      gatsbyImageData(
+        height: 320
+        quality: 90
+        placeholder: TRACED_SVG
+        layout: FIXED
+      )
     }
   }
 `

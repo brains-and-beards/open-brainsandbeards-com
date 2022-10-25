@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { graphql } from 'gatsby'
-import Img from 'gatsby-image'
+import { GatsbyImage, getImage } from 'gatsby-plugin-image'
 
 import Layout from '../../templates/layout'
 import EstimateProjectBar from '../../components/EstimateProjectBar'
@@ -19,8 +19,8 @@ class SharooCaseStudy extends Component {
       >
         <div id="case-study">
           <div className="big-part-yellow">
-            <Img
-              fluid={heroImage.childImageSharp.fluid}
+            <GatsbyImage
+              image={getImage(heroImage)}
               className="heading-pic"
               alt="Sharoo ad"
             />
@@ -99,11 +99,12 @@ class SharooCaseStudy extends Component {
               <a
                 href="https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93viewmodel"
                 target="_blank"
+                rel="noreferrer"
               >
                 MVVM
               </a>
               , declarative programming and{' '}
-              <a href="http://reactivex.io/" target="_blank">
+              <a href="http://reactivex.io/" target="_blank" rel="noreferrer">
                 Rx
               </a>{' '}
               to help us keep the project clean and improve state management of
@@ -122,8 +123,8 @@ class SharooCaseStudy extends Component {
               time and money.
             </p>
             <div>
-              <Img
-                fluid={sharooIOS.childImageSharp.fluid}
+              <GatsbyImage
+                image={getImage(sharooIOS)}
                 title="sharoo iOS app is rated 4.6 stars"
                 alt="Sharoo rankings"
               />
@@ -158,13 +159,14 @@ class SharooCaseStudy extends Component {
               <a
                 href="https://github.com/RxSwiftCommunity/RxRealm"
                 target="_blank"
+                rel="noreferrer"
               >
                 RxRealm.
               </a>
             </p>
             <div>
-              <Img
-                fluid={sharooAndroid.childImageSharp.fluid}
+              <GatsbyImage
+                image={getImage(sharooAndroid)}
                 title="sharoo Android app is rated 4.1 stars"
                 alt="Sharoo ranking - android"
               />
@@ -193,6 +195,7 @@ class SharooCaseStudy extends Component {
               <a
                 href="https://github.com/SwiftyBeaver/SwiftyBeaver"
                 target="_blank"
+                rel="noreferrer"
               >
                 SwiftyBeaver
               </a>
@@ -213,8 +216,8 @@ class SharooCaseStudy extends Component {
               posting a letter.
             </p>
             <div>
-              <Img
-                fluid={sharooAward.childImageSharp.fluid}
+              <GatsbyImage
+                image={getImage(sharooAward)}
                 title="sharoo European P2P Carsharing Price/Performance Value
                 Leadership Award from Frost & Sullivan"
                 alt="award"
@@ -240,6 +243,7 @@ class SharooCaseStudy extends Component {
               <a
                 href="https://www2.deloitte.com/content/dam/Deloitte/ch/Documents/consumer-business/ch-de-cb-sharing-economy-teile-und-verdiene.pdf"
                 target="_blank"
+                rel="noreferrer"
               >
                 Sharing Economy report
               </a>
@@ -254,9 +258,15 @@ class SharooCaseStudy extends Component {
               Price/Performance Value Leadership Award from Frost & Sullivan.
             </p>
             <p className="effect">
-              Everyone has learned a lot from this project, and so have
-              we&nbsp;💪 A&nbsp;mutual growth opportunity and partnership is
-              what Brains&nbsp;&amp;&nbsp;Beards is all about 🙇‍♂️
+              Everyone has learned a lot from this project, and so have we&nbsp;
+              <span role="img" aria-labelledby="emoji">
+                💪
+              </span>{' '}
+              A&nbsp;mutual growth opportunity and partnership is what
+              Brains&nbsp;&amp;&nbsp;Beards is all about{' '}
+              <span role="img" aria-labelledby="emojis">
+                🙇‍♂️
+              </span>
             </p>
           </div>
         </div>

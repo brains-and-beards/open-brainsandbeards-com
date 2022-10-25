@@ -219,14 +219,17 @@ section {
 .our-story-header {
   @include mobile-version {
     width: 300px;
+    height: 174px;
   }
 
   @include tablet-version {
     width: 500px;
+    height: 290px;
   }
 
   @include desktop-version {
     width: 1024px;
+    height: 592px;
   }
 }
 

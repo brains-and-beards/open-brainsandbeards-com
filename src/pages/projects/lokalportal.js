@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { graphql } from 'gatsby'
-import Img from 'gatsby-image'
+import { GatsbyImage, getImage } from 'gatsby-plugin-image'
 
 import Layout from '../../templates/layout'
 import EstimateProjectBar from '../../components/EstimateProjectBar'
@@ -20,8 +20,8 @@ class LokalportalCaseStudy extends Component {
       >
         <div id="case-study">
           <div className="big-part-yellow">
-            <Img
-              fluid={heroImage.childImageSharp.fluid}
+            <GatsbyImage
+              image={getImage(heroImage)}
               className="heading-pic"
               alt="LokalPortal main page"
             />
@@ -90,11 +90,14 @@ class LokalportalCaseStudy extends Component {
               We started with the lengthy agile processes. The first thing to do
               when you optimize performance is to measure. So we did measure.
               Every team meeting was accounted for. Once we had those numbers we
-              hijacked (a tad 😇) the role of the scrum master for the team. We
-              applied time limits for the meetings’ length, made sure they start
-              on time, and that everybody was coming prepared. Everything
-              possible to prevent wasting each other's and the client's company
-              time.
+              hijacked (a tad{' '}
+              <span role="img" aria-labelledby="emoji">
+                😇
+              </span>
+              ) the role of the scrum master for the team. We applied time
+              limits for the meetings’ length, made sure they start on time, and
+              that everybody was coming prepared. Everything possible to prevent
+              wasting each other's and the client's company time.
             </p>
             <p>
               One of the very positive changes that we've introduced was a daily
@@ -115,8 +118,8 @@ class LokalportalCaseStudy extends Component {
               nice, smooth, and efficient.
             </p>
             <div className="mobileScreenshots">
-              <Img
-                fluid={lokalportalIos.childImageSharp.fluid}
+              <GatsbyImage
+                image={getImage(lokalportalIos)}
                 alt="iOS screenshot"
               />
             </div>
@@ -170,8 +173,8 @@ class LokalportalCaseStudy extends Component {
               <a href="https://eslint.org/">eslint</a>.
             </p>
             <div className="mobileScreenshots">
-              <Img
-                fluid={lokalportalAndroid.childImageSharp.fluid}
+              <GatsbyImage
+                image={getImage(lokalportalAndroid)}
                 alt="Android screenshot"
               />
             </div>
@@ -220,12 +223,21 @@ class LokalportalCaseStudy extends Component {
               <strong className="highlight">
                 cut down detox running time by half
               </strong>
-              , from ~40 down to ~15 minutes. 🍒🎂
+              , from ~40 down to ~15 minutes.{' '}
+              <span role="img" aria-labelledby="emojis">
+                🍒🎂
+              </span>
             </p>
             <p className="effect">
-              Everyone has learned a lot from this project, and so have
-              we&nbsp;💪 A&nbsp;mutual growth opportunity and partnership is
-              what Brains&nbsp;&amp;&nbsp;Beards is all about 🙇‍♂️
+              Everyone has learned a lot from this project, and so have we&nbsp;
+              <span role="img" aria-labelledby="emoji">
+                💪
+              </span>{' '}
+              A&nbsp;mutual growth opportunity and partnership is what
+              Brains&nbsp;&amp;&nbsp;Beards is all about{' '}
+              <span role="img" aria-labelledby="emojis">
+                🙇‍♂️
+              </span>
             </p>
           </div>
         </div>
@@ -242,9 +254,7 @@ class LokalportalCaseStudy extends Component {
 export const mobileScreenshots = graphql`
   fragment mobileScreenshots on File {
     childImageSharp {
-      fluid(maxWidth: 500, traceSVG: { color: "#333" }) {
-        ...GatsbyImageSharpFluid_tracedSVG
-      }
+      gatsbyImageData(width: 500, placeholder: TRACED_SVG, layout: CONSTRAINED)
     }
   }
 `

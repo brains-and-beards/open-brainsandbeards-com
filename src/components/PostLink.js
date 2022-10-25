@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'gatsby'
-import Img from 'gatsby-image'
+import { GatsbyImage, getImage } from 'gatsby-plugin-image'
 
 import AuthorWithPicture from './AuthorWithPicture'
 
@@ -10,23 +10,21 @@ const PostLink = ({ post, showExcerpt }) => {
     excerpt,
   } = post
 
-  const { childImageSharp, relativePath } = image
-
   const style = imagePosition ? { 'object-position': imagePosition } : {}
 
   return (
-    <div className="blogpost-preview">
+    <li className="blogpost-preview">
       <Link to={path}>
         <div className="post-container">
-          {childImageSharp ? (
-            <Img
-              fluid={childImageSharp.fluid}
+          {image ? (
+            <GatsbyImage
+              image={getImage(image)}
               className="post-link"
               alt={title}
             />
           ) : (
             <img
-              src={require(`../pages/markdown/${relativePath}`)}
+              src={require(`../pages/markdown/${image?.relativePath}`)}
               style={style}
               alt={title}
             />
@@ -40,7 +38,7 @@ const PostLink = ({ post, showExcerpt }) => {
 
         <p className="caption blog-list-item-date">{date}</p>
       </Link>
-    </div>
+    </li>
   )
 }
 

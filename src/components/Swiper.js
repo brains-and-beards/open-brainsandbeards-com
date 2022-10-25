@@ -18,7 +18,9 @@ class Swiper extends Component {
     const fakeFirstSlide = slides[slides.length - 1]
     const fakeLastSlide = slides[0]
 
-    if (!fakeFirstSlide.querySelector('.back')) return
+    if (!fakeFirstSlide.querySelector('.back')) {
+      return
+    }
 
     fakeLastSlide
       .querySelector('.reference.back')
@@ -36,18 +38,22 @@ class Swiper extends Component {
 
   goNext = (e) => {
     e.preventDefault()
-    if (this.swiper) this.swiper.slideNext()
+    if (this.swiper) {
+      this.swiper.slideNext()
+    }
   }
 
   goPrev = (e) => {
     e.preventDefault()
-    if (this.swiper) this.swiper.slidePrev()
+    if (this.swiper) {
+      this.swiper.slidePrev()
+    }
   }
 
   renderItems = () => {
     const { items, ContentClass } = this.props
 
-    return items.map((i) => (
+    return items?.map((i) => (
       <div key={`reference-${i.company}`}>
         <ContentClass {...i} onNext={this.goNext} onPrev={this.goPrev} />
       </div>
@@ -60,7 +66,9 @@ class Swiper extends Component {
     return (
       <ReactSwiper
         ref={(node) => {
-          if (node) this.swiper = node.swiper
+          if (node) {
+            this.swiper = node.swiper
+          }
         }}
         pagination={{
           el: '.swiper-pagination',

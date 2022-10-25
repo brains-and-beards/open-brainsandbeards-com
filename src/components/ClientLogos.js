@@ -50,15 +50,11 @@ function ClientLogos({ short }) {
 
   return (
     <div className="clients">
-      {clientRows.map((clients) => (
-        <div className="logos">
-          {clients.map(({name, image, height}) => (
+      {clientRows.map((clients, index) => (
+        <div key={`client_no-${index}`} className="logos">
+          {clients.map(({ name, image, height }) => (
             <div className="logo" key={`logo-${name}`}>
-              <img
-                src={image}
-                height={height}
-                alt={name}
-              />
+              <img src={image} height={height} alt={name} />
             </div>
           ))}
         </div>
@@ -67,4 +63,4 @@ function ClientLogos({ short }) {
   )
 }
 
-export default ClientLogos;
+export default ClientLogos

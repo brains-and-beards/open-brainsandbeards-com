@@ -1,6 +1,6 @@
 import React from 'react'
 import { graphql, useStaticQuery, navigate } from 'gatsby'
-import Img from 'gatsby-image'
+import { GatsbyImage, getImage } from 'gatsby-plugin-image'
 import { validateEmail } from './forms/utils'
 import { useState, useCallback } from 'react'
 import addToMailchimp from 'gatsby-plugin-mailchimp'
@@ -10,9 +10,12 @@ import Modal from './Modal'
 export const imageProps = graphql`
   fragment imageProps on File {
     childImageSharp {
-      fluid(maxHeight: 400, quality: 90, traceSVG: { color: "#333" }) {
-        ...GatsbyImageSharpFluid_tracedSVG
-      }
+      gatsbyImageData(
+        height: 400
+        quality: 90
+        placeholder: TRACED_SVG
+        layout: FULL_WIDTH
+      )
     }
   }
 `
@@ -21,6 +24,8 @@ const BlogNewsletter = () => {
   const [submitEnabled, setSubmitEnabled] = useState(false)
   const [submittedEmail, setSubmittedEmail] = useState('')
   const [submittedName, setSubmittedName] = useState('')
+  const [showModal, setShowModal] = useState(false)
+  const [modalText, setModalText] = useState('')
 
   const { leftImage, rightImage } = useStaticQuery(graphql`
     query NewsLetterImageQuery {
@@ -35,21 +40,19 @@ const BlogNewsletter = () => {
     }
   `)
 
-  const [showModal, setShowModal] = useState(false)
-  const [modalText, setModalText] = useState('')
+  useEffect(() => {
+    setSubmitEnabled(validateEmail(submittedEmail) && submittedName.length > 0)
+  }, [submittedEmail, submittedName])
 
   const showErrorModal = (error) => {
     setModalText(typeof error === 'string' ? error : error.message)
     setShowModal(true)
   }
 
-  const handleModalClose = useCallback(() => setShowModal(false), [
-    setShowModal,
-  ])
-
-  useEffect(() => {
-    setSubmitEnabled(validateEmail(submittedEmail) && submittedName.length > 0)
-  }, [submittedEmail, submittedName])
+  const handleModalClose = useCallback(
+    () => setShowModal(false),
+    [setShowModal]
+  )
 
   const handleInputChange = useCallback((event) => {
     const email = event.target.value
@@ -70,9 +73,9 @@ const BlogNewsletter = () => {
         EMAIL: submittedEmail,
       })
         .then((data) => {
-          if (data.result == 'success') {
+          if (data.result === 'success') {
             navigate('/newsletter-subscribed')
-          } else if (data.result == 'error') {
+          } else if (data.result === 'error') {
             if (
               data.msg.includes(
                 'The username portion of the email address is invalid'
@@ -93,9 +96,9 @@ const BlogNewsletter = () => {
   return (
     <section className="estimateProject">
       <div className="content row">
-        <Img
+        <GatsbyImage
+          image={getImage(leftImage)}
           className="center-mobile cta-bar-image desktop-only"
-          fluid={leftImage.childImageSharp.fluid}
           alt="Happy puzzle phone"
         />
         <div className="center newsletter-content">
@@ -121,7 +124,8 @@ const BlogNewsletter = () => {
 
                 <div className="form col">
                   <input
-                    type_="text"
+                    type="text"
+                    id="email"
                     name="email"
                     onChange={handleInputChange}
                   />
@@ -131,12 +135,14 @@ const BlogNewsletter = () => {
 
                     <input
                       type="text"
-                      onChange={handleNameInputChange}
+                      id="name"
                       name="name"
+                      onChange={handleNameInputChange}
                     />
                   </div>
 
                   <button
+                    type="submit"
                     className="newsletter-button"
                     disabled={!submitEnabled}
                   >
@@ -147,9 +153,9 @@ const BlogNewsletter = () => {
             </div>
           </div>
         </div>
-        <Img
+        <GatsbyImage
+          image={getImage(rightImage)}
           className="cta-bar-image desktop-only newsletter-image-right"
-          fluid={rightImage.childImageSharp.fluid}
           alt="Happy puzzle phone"
         />
       </div>
@@ -164,7 +170,7 @@ const BlogNewsletter = () => {
       <Modal
         onClose={handleModalClose}
         show={showModal}
-        title={'Error'}
+        title="Error"
         mainText={modalText}
       />
     </section>

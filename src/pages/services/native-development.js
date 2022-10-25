@@ -5,20 +5,17 @@ import Layout from '../../templates/layout'
 import TonedDownEstimateProject from '../../components/TonedDownEstimateProject'
 import CaseStudyBar from '../../components/CaseStudyBar'
 import PictureListItem from '../../components/PictureListItem'
+import { getImage } from 'gatsby-plugin-image'
 
 const NativeDevService = (props) => {
-  const {
-    heroImage,
-    experienceImage,
-    mobileFocusImage,
-    reliabilityImage,
-  } = props.data
+  const { heroImage, experienceImage, mobileFocusImage, reliabilityImage } =
+    props.data
 
   return (
     <Layout
       headerTitle="Get the mobile app that your business deserves"
       headerSub="Native development is the gold standard of quality for mobile applications. And we are all about quality."
-      headerImage={heroImage.childImageSharp.fluid}
+      headerImage={getImage(heroImage)}
       headerColumns
       simpleNavbar
     >
@@ -31,7 +28,7 @@ const NativeDevService = (props) => {
           </h3>
           <ul className="picture-list">
             <PictureListItem
-              image={mobileFocusImage.childImageSharp.fixed}
+              image={getImage(mobileFocusImage)}
               title="Focus on mobile"
             >
               <p>
@@ -48,7 +45,7 @@ const NativeDevService = (props) => {
             </PictureListItem>
 
             <PictureListItem
-              image={experienceImage.childImageSharp.fixed}
+              image={getImage(experienceImage)}
               title="Experience"
             >
               <p>
@@ -65,7 +62,7 @@ const NativeDevService = (props) => {
             </PictureListItem>
 
             <PictureListItem
-              image={reliabilityImage.childImageSharp.fixed}
+              image={getImage(reliabilityImage)}
               title="Reliability"
             >
               <p>
