@@ -129,7 +129,6 @@ export const pageQuery = graphql`
           relativePath
           childImageSharp {
             gatsbyImageData(
-              height: 1400
               quality: 92
               breakpoints: [350, 500, 700, 1400]
               placeholder: BLURRED
@@ -148,13 +147,11 @@ export const pageQuery = graphql`
         image {
           childImageSharp {
             gatsbyImageData(
-              height: 300
-              width: 300
               quality: 90
               placeholder: BLURRED
               breakpoints: [320, 690, 1200]
               transformOptions: { fit: CONTAIN, cropFocus: CENTER }
-              layout: CONSTRAINED
+              layout: FULL_WIDTH
             )
           }
         }

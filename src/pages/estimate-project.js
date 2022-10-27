@@ -39,12 +39,7 @@ export const _imageProps = graphql`
 export const _fluidIllustration = graphql`
   fragment fluidIllustration on File {
     childImageSharp {
-      gatsbyImageData(
-        height: 192
-        quality: 90
-        placeholder: TRACED_SVG
-        layout: FULL_WIDTH
-      )
+      gatsbyImageData(quality: 90, placeholder: TRACED_SVG, layout: FULL_WIDTH)
     }
   }
 `

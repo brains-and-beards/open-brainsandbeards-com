@@ -5,12 +5,7 @@ import { GatsbyImage, getImage } from 'gatsby-plugin-image'
 export const imageProps = graphql`
   fragment imageProps on File {
     childImageSharp {
-      gatsbyImageData(
-        height: 400
-        quality: 90
-        placeholder: TRACED_SVG
-        layout: FULL_WIDTH
-      )
+      gatsbyImageData(quality: 90, placeholder: TRACED_SVG, layout: FULL_WIDTH)
     }
   }
 `

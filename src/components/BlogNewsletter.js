@@ -7,19 +7,6 @@ import addToMailchimp from 'gatsby-plugin-mailchimp'
 import { useEffect } from 'react'
 import Modal from './Modal'
 
-export const imageProps = graphql`
-  fragment imageProps on File {
-    childImageSharp {
-      gatsbyImageData(
-        height: 400
-        quality: 90
-        placeholder: TRACED_SVG
-        layout: FULL_WIDTH
-      )
-    }
-  }
-`
-
 const BlogNewsletter = () => {
   const [submitEnabled, setSubmitEnabled] = useState(false)
   const [submittedEmail, setSubmittedEmail] = useState('')
