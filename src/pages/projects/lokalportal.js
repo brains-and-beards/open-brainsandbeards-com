@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { graphql } from 'gatsby'
-import Img from 'gatsby-image'
+import { GatsbyImage } from 'gatsby-plugin-image'
 
 import Layout from '../../templates/layout'
 import EstimateProjectBar from '../../components/EstimateProjectBar'
@@ -20,8 +20,8 @@ class LokalportalCaseStudy extends Component {
       >
         <div id="case-study">
           <div className="big-part-yellow">
-            <Img
-              fluid={heroImage.childImageSharp.fluid}
+            <GatsbyImage
+              image={heroImage.childImageSharp.gatsbyImageData}
               className="heading-pic"
               alt="LokalPortal main page"
             />
@@ -115,8 +115,8 @@ class LokalportalCaseStudy extends Component {
               nice, smooth, and efficient.
             </p>
             <div className="mobileScreenshots">
-              <Img
-                fluid={lokalportalIos.childImageSharp.fluid}
+              <GatsbyImage
+                image={lokalportalIos.childImageSharp.gatsbyImageData}
                 alt="iOS screenshot"
               />
             </div>
@@ -170,8 +170,8 @@ class LokalportalCaseStudy extends Component {
               <a href="https://eslint.org/">eslint</a>.
             </p>
             <div className="mobileScreenshots">
-              <Img
-                fluid={lokalportalAndroid.childImageSharp.fluid}
+              <GatsbyImage
+                image={lokalportalAndroid.childImageSharp.gatsbyImageData}
                 alt="Android screenshot"
               />
             </div>
@@ -242,9 +242,7 @@ class LokalportalCaseStudy extends Component {
 export const mobileScreenshots = graphql`
   fragment mobileScreenshots on File {
     childImageSharp {
-      fluid(maxWidth: 500, traceSVG: { color: "#333" }) {
-        ...GatsbyImageSharpFluid_tracedSVG
-      }
+      gatsbyImageData(width: 500, placeholder: TRACED_SVG, layout: CONSTRAINED)
     }
   }
 `

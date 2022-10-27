@@ -11,7 +11,7 @@ const EstimateProject = (props) => {
     <Layout
       headerTitle="Get an estimate"
       headerSub="Let us know what you need, we'll contact you promptly to discuss how we can help with your project."
-      headerImage={heroImage.childImageSharp.fixed}
+      headerImage={heroImage.childImageSharp.gatsbyImageData}
       headerColumns
       simpleNavbar
     >
@@ -27,9 +27,12 @@ const EstimateProject = (props) => {
 export const _imageProps = graphql`
   fragment illustrationIconImageProps on File {
     childImageSharp {
-      fixed(height: 192, quality: 90, traceSVG: { color: "#333" }) {
-        ...GatsbyImageSharpFixed_tracedSVG
-      }
+      gatsbyImageData(
+        height: 192
+        quality: 90
+        placeholder: TRACED_SVG
+        layout: FIXED
+      )
     }
   }
 `
@@ -37,9 +40,12 @@ export const _imageProps = graphql`
 export const _fluidIllustration = graphql`
   fragment fluidIllustration on File {
     childImageSharp {
-      fluid(maxHeight: 192, quality: 90, traceSVG: { color: "#333" }) {
-        ...GatsbyImageSharpFluid_tracedSVG
-      }
+      gatsbyImageData(
+        height: 192
+        quality: 90
+        placeholder: TRACED_SVG
+        layout: FULL_WIDTH
+      )
     }
   }
 `

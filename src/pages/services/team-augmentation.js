@@ -13,7 +13,7 @@ const TeamAugmentationService = (props) => {
     <Layout
       headerTitle="Bring your team to the next level"
       headerSub="We're happy to work hand-in-hand with your existing team to give them the support they need to deliver great apps."
-      headerImage={heroImage.childImageSharp.fluid}
+      headerImage={heroImage.childImageSharp.gatsbyImageData}
       headerColumns
       simpleNavbar
     >
@@ -27,7 +27,7 @@ const TeamAugmentationService = (props) => {
 
           <ul className="picture-list">
             <PictureListItem
-              image={fasterImage.childImageSharp.fixed}
+              image={fasterImage.childImageSharp.gatsbyImageData}
               title="Getting work done faster"
             >
               <p>
@@ -39,7 +39,7 @@ const TeamAugmentationService = (props) => {
             </PictureListItem>
 
             <PictureListItem
-              image={learningImage.childImageSharp.fixed}
+              image={learningImage.childImageSharp.gatsbyImageData}
               title="Learning new skills"
             >
               <p>
@@ -50,7 +50,7 @@ const TeamAugmentationService = (props) => {
             </PictureListItem>
 
             <PictureListItem
-              image={scalingImage.childImageSharp.fixed}
+              image={scalingImage.childImageSharp.gatsbyImageData}
               title="Quickly scaling your team"
             >
               <p>
@@ -101,7 +101,7 @@ const TeamAugmentationService = (props) => {
         </div>
       </div>
     </Layout>
-  )
+  );
 }
 
 export const query = graphql`

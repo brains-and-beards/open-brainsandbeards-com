@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react'
 import { graphql, Link } from 'gatsby'
-import Img from 'gatsby-image'
+import { GatsbyImage } from 'gatsby-plugin-image'
 
 import ContactForm from '../components/forms/ContactForm'
 import Layout from '../templates/layout'
@@ -47,9 +47,9 @@ class MainPage extends Component {
   subtitle = (image) => (
     <Fragment>
       {image && (
-        <Img
+        <GatsbyImage
+          image={image.childImageSharp.gatsbyImageData}
           className="mobile-only hero-image"
-          fluid={image.childImageSharp.fluid}
           alt="Mobile phone user"
         />
       )}
@@ -68,9 +68,9 @@ class MainPage extends Component {
     <Fragment>
       {renderRNSticker()}
       {image && (
-        <Img
+        <GatsbyImage
+          image={image.childImageSharp.gatsbyImageData}
           className={`hero-image ${this.state.heroImage}`}
-          fluid={image.childImageSharp.fluid}
           alt="Mobile phone user"
         />
       )}
@@ -101,8 +101,10 @@ class MainPage extends Component {
           <div className="row">
             <div className="serviceContainer">
               <Link to="/services/cross-platform">
-                <Img
-                  fixed={serviceIconCrossPlatform.childImageSharp.fixed}
+                <GatsbyImage
+                  image={
+                    serviceIconCrossPlatform.childImageSharp.gatsbyImageData
+                  }
                   alt="Cross platform"
                 />
                 <p className="quote">Cross-platform</p>
@@ -115,8 +117,8 @@ class MainPage extends Component {
             </div>
             <div className="serviceContainer">
               <Link to="/services/native-development">
-                <Img
-                  fixed={serviceIconNative.childImageSharp.fixed}
+                <GatsbyImage
+                  image={serviceIconNative.childImageSharp.gatsbyImageData}
                   alt="Native mobile development"
                 />
                 <p className="quote">iOS and Android</p>
@@ -129,8 +131,8 @@ class MainPage extends Component {
             </div>
             <div className="serviceContainer">
               <Link to="/services/team-augmentation/">
-                <Img
-                  fixed={serviceIconStaff.childImageSharp.fixed}
+                <GatsbyImage
+                  image={serviceIconStaff.childImageSharp.gatsbyImageData}
                   alt="Staff augmentation"
                 />
                 <p className="quote">Staff Augmentation</p>
@@ -174,16 +176,15 @@ class MainPage extends Component {
 export const _homepageHeroImageProps = graphql`
   fragment homepageHeroImageProps on File {
     childImageSharp {
-      fluid(
-        maxHeight: 710
-        maxWidth: 819
+      gatsbyImageData(
+        height: 710
+        width: 819
         quality: 90
-        fit: CONTAIN
-        background: "rgba(0,0,0,0)"
-        traceSVG: { color: "#333" }
-      ) {
-        ...GatsbyImageSharpFluid_tracedSVG
-      }
+        backgroundColor: "rgba(0,0,0,0)"
+        placeholder: TRACED_SVG
+        transformOptions: { fit: CONTAIN }
+        layout: CONSTRAINED
+      )
     }
   }
 `

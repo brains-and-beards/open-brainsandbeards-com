@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { graphql } from 'gatsby'
-import Img from 'gatsby-image'
+import { GatsbyImage } from 'gatsby-plugin-image'
 
 import Layout from '../../templates/layout'
 import EstimateProjectBar from '../../components/EstimateProjectBar'
@@ -19,8 +19,8 @@ class SharooCaseStudy extends Component {
       >
         <div id="case-study">
           <div className="big-part-yellow">
-            <Img
-              fluid={heroImage.childImageSharp.fluid}
+            <GatsbyImage
+              image={heroImage.childImageSharp.gatsbyImageData}
               className="heading-pic"
               alt="Sharoo ad"
             />
@@ -122,8 +122,8 @@ class SharooCaseStudy extends Component {
               time and money.
             </p>
             <div>
-              <Img
-                fluid={sharooIOS.childImageSharp.fluid}
+              <GatsbyImage
+                image={sharooIOS.childImageSharp.gatsbyImageData}
                 title="sharoo iOS app is rated 4.6 stars"
                 alt="Sharoo rankings"
               />
@@ -163,8 +163,8 @@ class SharooCaseStudy extends Component {
               </a>
             </p>
             <div>
-              <Img
-                fluid={sharooAndroid.childImageSharp.fluid}
+              <GatsbyImage
+                image={sharooAndroid.childImageSharp.gatsbyImageData}
                 title="sharoo Android app is rated 4.1 stars"
                 alt="Sharoo ranking - android"
               />
@@ -213,8 +213,8 @@ class SharooCaseStudy extends Component {
               posting a letter.
             </p>
             <div>
-              <Img
-                fluid={sharooAward.childImageSharp.fluid}
+              <GatsbyImage
+                image={sharooAward.childImageSharp.gatsbyImageData}
                 title="sharoo European P2P Carsharing Price/Performance Value
                 Leadership Award from Frost & Sullivan"
                 alt="award"

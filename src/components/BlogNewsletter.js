@@ -1,6 +1,6 @@
 import React from 'react'
 import { graphql, useStaticQuery, navigate } from 'gatsby'
-import Img from 'gatsby-image'
+import { GatsbyImage } from 'gatsby-plugin-image'
 import { validateEmail } from './forms/utils'
 import { useState, useCallback } from 'react'
 import addToMailchimp from 'gatsby-plugin-mailchimp'
@@ -10,9 +10,12 @@ import Modal from './Modal'
 export const imageProps = graphql`
   fragment imageProps on File {
     childImageSharp {
-      fluid(maxHeight: 400, quality: 90, traceSVG: { color: "#333" }) {
-        ...GatsbyImageSharpFluid_tracedSVG
-      }
+      gatsbyImageData(
+        height: 400
+        quality: 90
+        placeholder: TRACED_SVG
+        layout: FULL_WIDTH
+      )
     }
   }
 `
@@ -93,9 +96,9 @@ const BlogNewsletter = () => {
   return (
     <section className="estimateProject">
       <div className="content row">
-        <Img
+        <GatsbyImage
+          image={leftImage.childImageSharp.gatsbyImageData}
           className="center-mobile cta-bar-image desktop-only"
-          fluid={leftImage.childImageSharp.fluid}
           alt="Happy puzzle phone"
         />
         <div className="center newsletter-content">
@@ -147,9 +150,9 @@ const BlogNewsletter = () => {
             </div>
           </div>
         </div>
-        <Img
+        <GatsbyImage
+          image={rightImage.childImageSharp.gatsbyImageData}
           className="cta-bar-image desktop-only newsletter-image-right"
-          fluid={rightImage.childImageSharp.fluid}
           alt="Happy puzzle phone"
         />
       </div>

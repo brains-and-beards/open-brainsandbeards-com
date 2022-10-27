@@ -1,13 +1,16 @@
 import React from 'react'
 import { graphql, Link, useStaticQuery } from 'gatsby'
-import Img from 'gatsby-image'
+import { GatsbyImage } from 'gatsby-plugin-image'
 
 export const imageProps = graphql`
   fragment imageProps on File {
     childImageSharp {
-      fluid(maxHeight: 400, quality: 90, traceSVG: { color: "#333" }) {
-        ...GatsbyImageSharpFluid_tracedSVG
-      }
+      gatsbyImageData(
+        height: 400
+        quality: 90
+        placeholder: TRACED_SVG
+        layout: FULL_WIDTH
+      )
     }
   }
 `
@@ -31,9 +34,9 @@ const EstimateProjectBar = (props) => {
   return (
     <section className="estimateProject">
       <div className="content row">
-        <Img
+        <GatsbyImage
+          image={leftImage.childImageSharp.gatsbyImageData}
           className="center-mobile cta-bar-image"
-          fluid={leftImage.childImageSharp.fluid}
           alt="Happy phone"
         />
         <div className="center">
@@ -43,9 +46,9 @@ const EstimateProjectBar = (props) => {
             <Link to="/estimate-project/">{buttonText}</Link>
           </div>
         </div>
-        <Img
+        <GatsbyImage
+          image={rightImage.childImageSharp.gatsbyImageData}
           className="cta-bar-image desktop-only"
-          fluid={rightImage.childImageSharp.fluid}
           alt="Happy phone"
         />
       </div>

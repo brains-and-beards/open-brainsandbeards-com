@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'gatsby'
-import Img from 'gatsby-image'
+import { GatsbyImage } from 'gatsby-plugin-image'
 
 import AuthorWithPicture from './AuthorWithPicture'
 
@@ -19,8 +19,8 @@ const PostLink = ({ post, showExcerpt }) => {
       <Link to={path}>
         <div className="post-container">
           {childImageSharp ? (
-            <Img
-              fluid={childImageSharp.fluid}
+            <GatsbyImage
+              image={childImageSharp.gatsbyImageData}
               className="post-link"
               alt={title}
             />

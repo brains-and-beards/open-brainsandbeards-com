@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import Img from 'gatsby-image'
+import { GatsbyImage } from 'gatsby-plugin-image'
 
 import { validateEmail } from './utils'
 
@@ -36,27 +36,27 @@ class EstimateProjectForm extends Component {
             <div className="row">
               <input type="radio" id="android" name="system" value="android" />
               <label htmlFor="android">
-                <Img
+                <GatsbyImage
+                  image={androidIcon.childImageSharp.gatsbyImageData}
                   className="image-wrapper"
-                  fluid={androidIcon.childImageSharp.fluid}
                   alt="Android platform"
                 />
                 <p className="image-label">Android</p>
               </label>
               <input type="radio" id="ios" name="system" value="ios" />
               <label htmlFor="ios">
-                <Img
+                <GatsbyImage
+                  image={iosIcon.childImageSharp.gatsbyImageData}
                   className="image-wrapper"
-                  fluid={iosIcon.childImageSharp.fluid}
                   alt="iOS platform"
                 />
                 <p className="image-label">iOS</p>
               </label>
               <input type="radio" id="both" name="system" value="both" />
               <label htmlFor="both">
-                <Img
+                <GatsbyImage
+                  image={bothIcon.childImageSharp.gatsbyImageData}
                   className="image-wrapper"
-                  fluid={bothIcon.childImageSharp.fluid}
                   alt="Android & iOS platforms"
                 />
                 <p className="image-label">Both</p>
@@ -77,9 +77,9 @@ class EstimateProjectForm extends Component {
                   value="greenfield"
                 />
                 <label htmlFor="greenfield">
-                  <Img
+                  <GatsbyImage
+                    image={scratchIcon.childImageSharp.gatsbyImageData}
                     className="image-wrapper"
-                    fluid={scratchIcon.childImageSharp.fluid}
                     alt="From scratch"
                   />
                   <p className="image-label">Starting from scratch</p>
@@ -88,9 +88,9 @@ class EstimateProjectForm extends Component {
               <div>
                 <input type="radio" id="legacy" name="state" value="legacy" />
                 <label htmlFor="legacy">
-                  <Img
+                  <GatsbyImage
+                    image={legacyIcon.childImageSharp.gatsbyImageData}
                     className="image-wrapper"
-                    fluid={legacyIcon.childImageSharp.fluid}
                     alt="Legacy project"
                   />
                   <p className="image-label">There's an app already</p>

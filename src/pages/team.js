@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import Img from 'gatsby-image'
+import { GatsbyImage } from 'gatsby-plugin-image'
 import { graphql } from 'gatsby'
 
 import Swiper from '../components/Swiper'
@@ -101,7 +101,7 @@ class TeamPage extends Component {
             </p>
             <ul className="picture-list">
               <PictureListItem
-                image={versatilityIcon.childImageSharp.fixed}
+                image={versatilityIcon.childImageSharp.gatsbyImageData}
                 title="Versatility"
               >
                 <p>
@@ -113,7 +113,7 @@ class TeamPage extends Component {
                 </p>
               </PictureListItem>
               <PictureListItem
-                image={reliabilityIcon.childImageSharp.fixed}
+                image={reliabilityIcon.childImageSharp.gatsbyImageData}
                 title="Reliability"
               >
                 <p>
@@ -124,7 +124,7 @@ class TeamPage extends Component {
                 </p>
               </PictureListItem>
               <PictureListItem
-                image={diversityIcon.childImageSharp.fixed}
+                image={diversityIcon.childImageSharp.gatsbyImageData}
                 title="Diversity"
               >
                 <p>
@@ -150,8 +150,8 @@ class TeamPage extends Component {
                     parties.
                   </p>
                 </section>
-                <Img
-                  fixed={outsourcingIcon.childImageSharp.fixed}
+                <GatsbyImage
+                  image={outsourcingIcon.childImageSharp.gatsbyImageData}
                   alt="No outsourcing policy"
                 />
               </div>
@@ -210,9 +210,12 @@ class TeamPage extends Component {
 export const teamOutsourcingIconImageProps = graphql`
   fragment teamOutsourcingIconImageProps on File {
     childImageSharp {
-      fixed(height: 320, quality: 90, traceSVG: { color: "#333" }) {
-        ...GatsbyImageSharpFixed_tracedSVG
-      }
+      gatsbyImageData(
+        height: 320
+        quality: 90
+        placeholder: TRACED_SVG
+        layout: FIXED
+      )
     }
   }
 `

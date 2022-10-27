@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { graphql } from 'gatsby'
-import Img from 'gatsby-image'
+import { GatsbyImage } from 'gatsby-plugin-image'
 
 import Layout from '../../templates/layout'
 import EstimateProjectBar from '../../components/EstimateProjectBar'
@@ -19,8 +19,8 @@ class FemtasyCaseStudy extends Component {
       >
         <div id="case-study">
           <div className="big-part-yellow">
-            <Img
-              fluid={heroImage.childImageSharp.fluid}
+            <GatsbyImage
+              image={heroImage.childImageSharp.gatsbyImageData}
               className="heading-pic"
               alt="LokalPortal main page"
             />
@@ -158,8 +158,8 @@ class FemtasyCaseStudy extends Component {
               straight 5,0 score on App Store on the first 20 app reviews 🎉
             </p>
             <div>
-              <Img
-                fluid={reviewsImage.childImageSharp.fluid}
+              <GatsbyImage
+                image={reviewsImage.childImageSharp.gatsbyImageData}
                 alt="Femtasy reviews"
               />
               <figcaption>
@@ -219,9 +219,7 @@ class FemtasyCaseStudy extends Component {
 export const mobileScreenshots = graphql`
   fragment mobileScreenshots on File {
     childImageSharp {
-      fluid(maxWidth: 500, traceSVG: { color: "#333" }) {
-        ...GatsbyImageSharpFluid_tracedSVG
-      }
+      gatsbyImageData(width: 500, placeholder: TRACED_SVG, layout: CONSTRAINED)
     }
   }
 `

@@ -11,11 +11,11 @@ class EstimateRequested extends Component {
       <Layout
         headerTitle="Thanks!"
         headerSub="Thanks for considering us for your project. We'll get back to you soon!"
-        headerImage={heroImage.childImageSharp.fluid}
+        headerImage={heroImage.childImageSharp.gatsbyImageData}
         headerColumns
         simpleNavbar
       />
-    )
+    );
   }
 }
 

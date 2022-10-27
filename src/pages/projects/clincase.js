@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { graphql } from 'gatsby'
-import Img from 'gatsby-image'
+import { GatsbyImage } from 'gatsby-plugin-image'
 
 import Layout from '../../templates/layout'
 import EstimateProjectBar from '../../components/EstimateProjectBar'
@@ -19,8 +19,8 @@ class ClincaseCaseStudy extends Component {
       >
         <div id="case-study">
           <div className="big-part-yellow">
-            <Img
-              fluid={heroImage.childImageSharp.fluid}
+            <GatsbyImage
+              image={heroImage.childImageSharp.gatsbyImageData}
               className="heading-pic"
               alt="Clincase"
             />
@@ -56,9 +56,9 @@ class ClincaseCaseStudy extends Component {
                 with the right experience to help. That's where we came in.
               </p>
 
-              <Img
+              <GatsbyImage
+                image={signInError.childImageSharp.gatsbyImageData}
                 className="screenshot"
-                fluid={signInError.childImageSharp.fluid}
                 alt="screenshot"
               />
 
@@ -101,9 +101,9 @@ class ClincaseCaseStudy extends Component {
                 </li>
               </ul>
 
-              <Img
+              <GatsbyImage
+                image={tutorialBack.childImageSharp.gatsbyImageData}
                 className="screenshot"
-                fluid={tutorialBack.childImageSharp.fluid}
                 alt="Screenshot"
               />
 
@@ -181,9 +181,7 @@ class ClincaseCaseStudy extends Component {
 export const _headingImageProps = graphql`
   fragment headingImageProps on File {
     childImageSharp {
-      fluid(maxWidth: 1024, quality: 80, traceSVG: { color: "#333" }) {
-        ...GatsbyImageSharpFluid_tracedSVG
-      }
+      gatsbyImageData(quality: 80, placeholder: TRACED_SVG, layout: FULL_WIDTH)
     }
   }
 `
@@ -191,9 +189,12 @@ export const _headingImageProps = graphql`
 export const _embeddedImageProps = graphql`
   fragment embeddedImageProps on File {
     childImageSharp {
-      fluid(maxWidth: 600, quality: 80, traceSVG: { color: "#333" }) {
-        ...GatsbyImageSharpFluid_tracedSVG
-      }
+      gatsbyImageData(
+        width: 600
+        quality: 80
+        placeholder: TRACED_SVG
+        layout: CONSTRAINED
+      )
     }
   }
 `

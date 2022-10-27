@@ -64,8 +64,8 @@ export default function Template({
             <div className="content">
               {image.childImageSharp ? (
                 <img
-                  srcSet={image.childImageSharp.fluid.srcSet}
-                  src={image.childImageSharp.fluid.src}
+                  srcSet={image.childImageSharp.gatsbyImageData.srcSet}
+                  src={image.childImageSharp.gatsbyImageData.src}
                   alt={imageCaption}
                   className="main-blog-image webfeedsFeaturedVisual"
                 />
@@ -126,14 +126,13 @@ export const pageQuery = graphql`
         image {
           relativePath
           childImageSharp {
-            fluid(
-              maxHeight: 1400
+            gatsbyImageData(
+              height: 1400
               quality: 92
-              srcSetBreakpoints: [350, 500, 700, 1400]
-            ) {
-              src
-              srcSet
-            }
+              breakpoints: [350, 500, 700, 1400]
+              placeholder: BLURRED
+              layout: FULL_WIDTH
+            )
           }
         }
         path
@@ -146,15 +145,14 @@ export const pageQuery = graphql`
       frontmatter {
         image {
           childImageSharp {
-            fixed(
+            gatsbyImageData(
               height: 300
               width: 300
               quality: 90
-              fit: CONTAIN
-              cropFocus: CENTER
-            ) {
-              src
-            }
+              placeholder: BLURRED
+              transformOptions: { fit: CONTAIN, cropFocus: CENTER }
+              layout: FIXED
+            )
           }
         }
         path
@@ -173,16 +171,14 @@ export const pageQuery = graphql`
             title
             image {
               childImageSharp {
-                fluid(
-                  maxWidth: 280
-                  maxHeight: 200
+                gatsbyImageData(
+                  width: 280
+                  height: 200
                   quality: 90
-                  cropFocus: CENTER
-                  traceSVG: { color: "#333" }
-                ) {
-                  ...GatsbyImageSharpFluid_tracedSVG
-                  src
-                }
+                  placeholder: TRACED_SVG
+                  transformOptions: { cropFocus: CENTER }
+                  layout: CONSTRAINED
+                )
               }
               relativePath
             }

@@ -18,7 +18,7 @@ const NativeDevService = (props) => {
     <Layout
       headerTitle="Get the mobile app that your business deserves"
       headerSub="Native development is the gold standard of quality for mobile applications. And we are all about quality."
-      headerImage={heroImage.childImageSharp.fluid}
+      headerImage={heroImage.childImageSharp.gatsbyImageData}
       headerColumns
       simpleNavbar
     >
@@ -31,7 +31,7 @@ const NativeDevService = (props) => {
           </h3>
           <ul className="picture-list">
             <PictureListItem
-              image={mobileFocusImage.childImageSharp.fixed}
+              image={mobileFocusImage.childImageSharp.gatsbyImageData}
               title="Focus on mobile"
             >
               <p>
@@ -48,7 +48,7 @@ const NativeDevService = (props) => {
             </PictureListItem>
 
             <PictureListItem
-              image={experienceImage.childImageSharp.fixed}
+              image={experienceImage.childImageSharp.gatsbyImageData}
               title="Experience"
             >
               <p>
@@ -65,7 +65,7 @@ const NativeDevService = (props) => {
             </PictureListItem>
 
             <PictureListItem
-              image={reliabilityImage.childImageSharp.fixed}
+              image={reliabilityImage.childImageSharp.gatsbyImageData}
               title="Reliability"
             >
               <p>
@@ -161,7 +161,7 @@ const NativeDevService = (props) => {
         </div>
       </div>
     </Layout>
-  )
+  );
 }
 
 export const query = graphql`

@@ -20,7 +20,7 @@ const ReactNativeService = (props) => {
     <Layout
       headerTitle="Build your product faster using cross-platform tools"
       headerSub="We have already delivered successful React Native applications for our clients back in 2016. You can't beat experience."
-      headerImage={heroImage.childImageSharp.fluid}
+      headerImage={heroImage.childImageSharp.gatsbyImageData}
       headerColumns
       simpleNavbar
     >
@@ -57,7 +57,7 @@ const ReactNativeService = (props) => {
           <h3>Pros of modern cross platform solutions</h3>
           <ul className="picture-list">
             <PictureListItem
-              image={fasterImage.childImageSharp.fixed}
+              image={fasterImage.childImageSharp.gatsbyImageData}
               title="Faster development"
             >
               <p>
@@ -70,7 +70,7 @@ const ReactNativeService = (props) => {
             </PictureListItem>
 
             <PictureListItem
-              image={reuseImage.childImageSharp.fixed}
+              image={reuseImage.childImageSharp.gatsbyImageData}
               title="Code reuse"
             >
               <p>
@@ -81,7 +81,7 @@ const ReactNativeService = (props) => {
               </p>
             </PictureListItem>
             <PictureListItem
-              image={teamImage.childImageSharp.fixed}
+              image={teamImage.childImageSharp.gatsbyImageData}
               title="Single team"
             >
               <p>
@@ -93,7 +93,7 @@ const ReactNativeService = (props) => {
               </p>
             </PictureListItem>
             <PictureListItem
-              image={codebaseImage.childImageSharp.fixed}
+              image={codebaseImage.childImageSharp.gatsbyImageData}
               title="Accessible codebase"
             >
               <p>
@@ -153,9 +153,7 @@ const ReactNativeService = (props) => {
 export const _headerHeroImage = graphql`
   fragment headerHeroImage on File {
     childImageSharp {
-      fluid(maxWidth: 504, traceSVG: { color: "#333" }) {
-        ...GatsbyImageSharpFluid_tracedSVG
-      }
+      gatsbyImageData(width: 504, placeholder: TRACED_SVG, layout: CONSTRAINED)
     }
   }
 `

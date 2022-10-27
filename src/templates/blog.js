@@ -1,6 +1,6 @@
 import React from 'react'
 import { graphql, Link } from 'gatsby'
-import Img from 'gatsby-image'
+import { GatsbyImage } from 'gatsby-plugin-image'
 
 import Layout from './layout'
 import PostLink from '../components/PostLink'
@@ -39,24 +39,24 @@ const IndexPage = ({
   const subtitle = (
     <div className="row header-subtitle">
       <div className="one-third">
-        <Img
-          fixed={technologyImage.childImageSharp.fixed}
+        <GatsbyImage
+          image={technologyImage.childImageSharp.gatsbyImageData}
           className="small-image"
           alt="Technology"
         />
         <p className="sub2">Technology</p>
       </div>
       <div className="one-third">
-        <Img
-          fixed={shippingImage.childImageSharp.fixed}
+        <GatsbyImage
+          image={shippingImage.childImageSharp.gatsbyImageData}
           className="small-image"
           alt="Shipping products"
         />
         <p className="sub2">Shipping great products</p>
       </div>
       <div className="one-third">
-        <Img
-          fixed={teamsImage.childImageSharp.fixed}
+        <GatsbyImage
+          image={teamsImage.childImageSharp.gatsbyImageData}
           className="small-image"
           alt="Building teams"
         />
@@ -148,9 +148,13 @@ export default IndexPage
 export const _imageProps = graphql`
   fragment smallIllustrationIconImageProps on File {
     childImageSharp {
-      fixed(height: 80, width: 80, quality: 90, traceSVG: { color: "#333" }) {
-        ...GatsbyImageSharpFixed_tracedSVG
-      }
+      gatsbyImageData(
+        height: 80
+        width: 80
+        quality: 90
+        placeholder: TRACED_SVG
+        layout: FIXED
+      )
     }
   }
 `
@@ -173,9 +177,12 @@ export const pageQuery = graphql`
             image {
               relativePath
               childImageSharp {
-                fluid(maxWidth: 672, quality: 90, traceSVG: { color: "#333" }) {
-                  ...GatsbyImageSharpFluid_tracedSVG
-                }
+                gatsbyImageData(
+                  width: 672
+                  quality: 90
+                  placeholder: TRACED_SVG
+                  layout: CONSTRAINED
+                )
               }
             }
             imagePosition
@@ -184,7 +191,6 @@ export const pageQuery = graphql`
         }
       }
     }
-
     allMarkdownRemark: allMarkdownRemark(
       sort: { order: DESC, fields: [frontmatter___date] }
       limit: $limit
@@ -201,15 +207,14 @@ export const pageQuery = graphql`
             image {
               relativePath
               childImageSharp {
-                fluid(
-                  maxHeight: 200
-                  maxWidth: 280
+                gatsbyImageData(
+                  height: 200
+                  width: 280
                   quality: 90
-                  cropFocus: CENTER
-                  traceSVG: { color: "#333" }
-                ) {
-                  ...GatsbyImageSharpFluid_tracedSVG
-                }
+                  placeholder: TRACED_SVG
+                  transformOptions: { cropFocus: CENTER }
+                  layout: CONSTRAINED
+                )
               }
             }
             imagePosition
@@ -218,7 +223,6 @@ export const pageQuery = graphql`
         }
       }
     }
-
     technologyImage: file(relativePath: { regex: "/technology/" }) {
       ...smallIllustrationIconImageProps
     }

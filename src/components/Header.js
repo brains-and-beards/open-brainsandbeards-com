@@ -1,13 +1,13 @@
 import React from 'react'
-import Img from 'gatsby-image'
+import { GatsbyImage } from 'gatsby-plugin-image'
 
 const renderSubtitle = (subtitleContent, image) => {
   return typeof subtitleContent === 'string' ? (
     <div>
       {image && (
         <div>
-          <Img
-            fluid={image}
+          <GatsbyImage
+            image={image}
             className="right-header-image mobile-only"
             alt={subtitleContent}
           />
@@ -34,7 +34,9 @@ const Header = ({ title, subtitle, columns, image, rightContent }) => {
         </div>
         <div className="hero-right-col center" key="header-right">
           {rightContent ||
-            (image && <Img fluid={image} className="right-header-image" />)}
+            (image && (
+              <GatsbyImage image={image} className="right-header-image" />
+            ))}
         </div>
       </div>
     )

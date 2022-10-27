@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { graphql } from 'gatsby'
-import Img from 'gatsby-image'
+import { GatsbyImage } from 'gatsby-plugin-image'
 
 import Layout from '../templates/layout'
 import PictureListItem from '../components/PictureListItem'
@@ -24,9 +24,9 @@ class About extends Component {
       >
         <div className="content-page">
           <div className="big-part-yellow">
-            <Img
+            <GatsbyImage
+              image={heroImage.childImageSharp.gatsbyImageData}
               className="our-story-header"
-              fluid={heroImage.childImageSharp.fluid}
               alt="Wojciech and Patryk with motorbikes"
             />
           </div>
@@ -62,7 +62,7 @@ class About extends Component {
               </section>
               <ul className="picture-list">
                 <PictureListItem
-                  image={teamIcon.childImageSharp.fixed}
+                  image={teamIcon.childImageSharp.gatsbyImageData}
                   title="Building a great team"
                 >
                   Our employees are our greatest asset, so we do our best to
@@ -72,7 +72,7 @@ class About extends Component {
                   many points of view.
                 </PictureListItem>
                 <PictureListItem
-                  image={workflowIcon.childImageSharp.fixed}
+                  image={workflowIcon.childImageSharp.gatsbyImageData}
                   title="Finding the best workflow"
                 >
                   As there are no silver bullets, similarly there are no perfect
@@ -156,9 +156,9 @@ class About extends Component {
               <section className="center">
                 <div className="row">
                   <div className="serviceContainer">
-                    <Img
+                    <GatsbyImage
+                      image={brainsIcon.childImageSharp.gatsbyImageData}
                       className="image-wrapper"
-                      fluid={brainsIcon.childImageSharp.fixed}
                       alt="Brains"
                     />
                     <p className="sub1">Brains</p>
@@ -169,9 +169,9 @@ class About extends Component {
                     </p>
                   </div>
                   <div className="serviceContainer">
-                    <Img
+                    <GatsbyImage
+                      image={beardsIcon.childImageSharp.gatsbyImageData}
                       className="image-wrapper"
-                      fluid={beardsIcon.childImageSharp.fixed}
                       alt="Beards"
                     />
                     <p className="sub1">Beards</p>
@@ -184,9 +184,9 @@ class About extends Component {
                     </p>
                   </div>
                   <div className="serviceContainer">
-                    <Img
+                    <GatsbyImage
+                      image={handsIcon.childImageSharp.gatsbyImageData}
                       className="image-wrapper"
-                      fluid={handsIcon.childImageSharp.fixed}
                       alt="Hands"
                     />
                     <p className="sub1">Hands</p>

@@ -10,11 +10,11 @@ class NewsletterSubscribed extends Component {
       <Layout
         headerTitle="Thank you for subscribing!"
         headerSub="Almost finished... We need to confirm your email address. To complete the subscription process, please click the link in the email we just sent you. And see you soon!"
-        headerImage={heroImage.childImageSharp.fluid}
+        headerImage={heroImage.childImageSharp.gatsbyImageData}
         headerColumns
         simpleNavbar
       />
-    )
+    );
   }
 }
 
