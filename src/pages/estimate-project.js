@@ -23,27 +23,6 @@ const EstimateProject = ({ data }) => {
   )
 }
 
-export const _imageProps = graphql`
-  fragment illustrationIconImageProps on File {
-    childImageSharp {
-      gatsbyImageData(
-        height: 192
-        quality: 90
-        placeholder: TRACED_SVG
-        layout: FIXED
-      )
-    }
-  }
-`
-
-export const _fluidIllustration = graphql`
-  fragment fluidIllustration on File {
-    childImageSharp {
-      gatsbyImageData(quality: 90, placeholder: TRACED_SVG, layout: FULL_WIDTH)
-    }
-  }
-`
-
 export const query = graphql`
   query estimatePageQuery {
     heroImage: file(relativePath: { regex: "/estimate-hero/" }) {

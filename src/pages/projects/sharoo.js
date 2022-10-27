@@ -276,13 +276,13 @@ export const query = graphql`
       ...headingImageProps
     }
     sharooIOS: file(relativePath: { regex: "/sharoo-ios/" }) {
-      ...embeddedImageProps
+      ...embeddedImageFragment
     }
     sharooAndroid: file(relativePath: { regex: "/sharoo-android/" }) {
-      ...embeddedImageProps
+      ...embeddedImageFragment
     }
     sharooAward: file(relativePath: { regex: "/sharoo-award/" }) {
-      ...embeddedImageProps
+      ...embeddedImageFragment
     }
   }
 `

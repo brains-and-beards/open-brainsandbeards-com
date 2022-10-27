@@ -148,7 +148,7 @@ export const pageQuery = graphql`
           childImageSharp {
             gatsbyImageData(
               quality: 90
-              placeholder: BLURRED
+              placeholder: TRACED_SVG
               breakpoints: [320, 690, 1200]
               transformOptions: { fit: CONTAIN, cropFocus: CENTER }
               layout: FULL_WIDTH
@@ -172,7 +172,7 @@ export const pageQuery = graphql`
             image {
               childImageSharp {
                 gatsbyImageData(
-                  width: 280
+                  width: 270
                   height: 200
                   quality: 90
                   placeholder: TRACED_SVG

@@ -178,37 +178,16 @@ class ClincaseCaseStudy extends Component {
   }
 }
 
-export const _headingImageProps = graphql`
-  fragment headingImageProps on File {
-    childImageSharp {
-      gatsbyImageData(quality: 80, placeholder: TRACED_SVG, layout: FULL_WIDTH)
-    }
-  }
-`
-
-export const _embeddedImageProps = graphql`
-  fragment embeddedImageProps on File {
-    childImageSharp {
-      gatsbyImageData(
-        width: 600
-        quality: 80
-        placeholder: TRACED_SVG
-        layout: CONSTRAINED
-      )
-    }
-  }
-`
-
 export const query = graphql`
   query clincaseCaseStudyPageQuery {
     heroImage: file(relativePath: { regex: "/clincase-warning-modal/" }) {
       ...headingImageProps
     }
     signInError: file(relativePath: { regex: "/clincase-sign-in-error/" }) {
-      ...embeddedImageProps
+      ...embeddedImageFragment
     }
     tutorialBack: file(relativePath: { regex: "/clincase-tutorial-back/" }) {
-      ...embeddedImageProps
+      ...embeddedImageFragment
     }
   }
 `

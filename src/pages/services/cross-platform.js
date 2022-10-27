@@ -145,14 +145,6 @@ const ReactNativeService = (props) => {
   )
 }
 
-export const _headerHeroImage = graphql`
-  fragment headerHeroImage on File {
-    childImageSharp {
-      gatsbyImageData(width: 504, placeholder: TRACED_SVG, layout: CONSTRAINED)
-    }
-  }
-`
-
 export const query = graphql`
   query ServiceCrossPlatformPage {
     heroImage: file(relativePath: { regex: "/services-cross-platform-hero/" }) {

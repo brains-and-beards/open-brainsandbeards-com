@@ -20,7 +20,7 @@ module.exports = {
       options: {
         serialize: ({ site, allSitePage }) =>
           allSitePage.edges.map((edge) => {
-            const { path } = edge.node;
+            const { path } = edge.node
             return {
               url: `${site.siteMetadata.siteUrl}${slashify(path)}`,
               changefreq: 'daily',
@@ -49,14 +49,14 @@ module.exports = {
             serialize: ({ query: { site, allMarkdownRemark } }) => {
               return allMarkdownRemark.edges.map((edge) => {
                 const url =
-                  site.siteMetadata.siteUrl + edge.node.frontmatter.path;
+                  site.siteMetadata.siteUrl + edge.node.frontmatter.path
                 const {
                   image: { size, extension, childImageSharp },
-                } = edge.node.frontmatter;
+                } = edge.node.frontmatter
 
                 const imageUrl = childImageSharp
                   ? site.siteMetadata.siteUrl + childImageSharp.fixed.src
-                  : null;
+                  : null
 
                 return Object.assign({}, edge.node.frontmatter, {
                   author: edge.node.frontmatter.author,
@@ -102,7 +102,7 @@ module.exports = {
                           childImageSharp{
                             fixed(
                               height: 200
-                              width: 280
+                              width: 270
                               quality: 90
                             ) {
                               src
@@ -128,8 +128,7 @@ module.exports = {
             },
             custom_elements: [
               {
-                'webfeeds:logo':
-                  'https://brainsandbeards.com/favicon.png',
+                'webfeeds:logo': 'https://brainsandbeards.com/favicon.png',
               },
               {
                 'webfeeds:cover': {
@@ -201,6 +200,7 @@ module.exports = {
         name: 'case-studies',
       },
     },
+    'gatsby-plugin-image',
     'gatsby-plugin-sharp',
     'gatsby-transformer-sharp',
     {

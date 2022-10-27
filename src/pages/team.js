@@ -207,19 +207,6 @@ class TeamPage extends Component {
   }
 }
 
-export const teamOutsourcingIconImageProps = graphql`
-  fragment teamOutsourcingIconImageProps on File {
-    childImageSharp {
-      gatsbyImageData(
-        height: 320
-        quality: 90
-        placeholder: TRACED_SVG
-        layout: FIXED
-      )
-    }
-  }
-`
-
 export const query = graphql`
   query teamPageQuery {
     versatilityIcon: file(relativePath: { regex: "/team-versatility-icon/" }) {
