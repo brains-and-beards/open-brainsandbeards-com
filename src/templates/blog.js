@@ -1,12 +1,12 @@
 import React from 'react'
 import { graphql, Link } from 'gatsby'
-import { GatsbyImage } from 'gatsby-plugin-image'
+import { Helmet } from 'react-helmet-async'
+import { GatsbyImage, getImage } from 'gatsby-plugin-image'
 
 import Layout from './layout'
 import PostLink from '../components/PostLink'
 import FirstPostLink from '../components/FirstPostLink'
 import ContactForm from '../components/forms/ContactForm'
-import { Helmet } from 'react-helmet-async'
 
 const IndexPage = ({
   data: {
@@ -40,7 +40,7 @@ const IndexPage = ({
     <div className="row header-subtitle">
       <div className="one-third">
         <GatsbyImage
-          image={technologyImage.childImageSharp.gatsbyImageData}
+          image={getImage(technologyImage)}
           className="small-image"
           alt="Technology"
         />
@@ -48,7 +48,7 @@ const IndexPage = ({
       </div>
       <div className="one-third">
         <GatsbyImage
-          image={shippingImage.childImageSharp.gatsbyImageData}
+          image={getImage(shippingImage)}
           className="small-image"
           alt="Shipping products"
         />
@@ -56,7 +56,7 @@ const IndexPage = ({
       </div>
       <div className="one-third">
         <GatsbyImage
-          image={teamsImage.childImageSharp.gatsbyImageData}
+          image={getImage(teamsImage)}
           className="small-image"
           alt="Building teams"
         />

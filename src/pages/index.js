@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react'
 import { graphql, Link } from 'gatsby'
-import { GatsbyImage } from 'gatsby-plugin-image'
+import { GatsbyImage, getImage } from 'gatsby-plugin-image'
 
 import ContactForm from '../components/forms/ContactForm'
 import Layout from '../templates/layout'
@@ -48,7 +48,7 @@ class MainPage extends Component {
     <Fragment>
       {image && (
         <GatsbyImage
-          image={image.childImageSharp.gatsbyImageData}
+          image={getImage(image)}
           className="mobile-only hero-image"
           alt="Mobile phone user"
         />
@@ -69,7 +69,7 @@ class MainPage extends Component {
       {renderRNSticker()}
       {image && (
         <GatsbyImage
-          image={image.childImageSharp.gatsbyImageData}
+          image={getImage(image)}
           className={`hero-image ${this.state.heroImage}`}
           alt="Mobile phone user"
         />
@@ -102,9 +102,7 @@ class MainPage extends Component {
             <div className="serviceContainer">
               <Link to="/services/cross-platform">
                 <GatsbyImage
-                  image={
-                    serviceIconCrossPlatform.childImageSharp.gatsbyImageData
-                  }
+                  image={getImage(serviceIconCrossPlatform)}
                   alt="Cross platform"
                 />
                 <p className="quote">Cross-platform</p>
@@ -118,7 +116,7 @@ class MainPage extends Component {
             <div className="serviceContainer">
               <Link to="/services/native-development">
                 <GatsbyImage
-                  image={serviceIconNative.childImageSharp.gatsbyImageData}
+                  image={getImage(serviceIconNative)}
                   alt="Native mobile development"
                 />
                 <p className="quote">iOS and Android</p>
@@ -132,7 +130,7 @@ class MainPage extends Component {
             <div className="serviceContainer">
               <Link to="/services/team-augmentation/">
                 <GatsbyImage
-                  image={serviceIconStaff.childImageSharp.gatsbyImageData}
+                  image={getImage(serviceIconStaff)}
                   alt="Staff augmentation"
                 />
                 <p className="quote">Staff Augmentation</p>

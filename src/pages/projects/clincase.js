@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { graphql } from 'gatsby'
-import { GatsbyImage } from 'gatsby-plugin-image'
+import { GatsbyImage, getImage } from 'gatsby-plugin-image'
 
 import Layout from '../../templates/layout'
 import EstimateProjectBar from '../../components/EstimateProjectBar'
@@ -20,7 +20,7 @@ class ClincaseCaseStudy extends Component {
         <div id="case-study">
           <div className="big-part-yellow">
             <GatsbyImage
-              image={heroImage.childImageSharp.gatsbyImageData}
+              image={getImage(heroImage)}
               className="heading-pic"
               alt="Clincase"
             />
@@ -57,7 +57,7 @@ class ClincaseCaseStudy extends Component {
               </p>
 
               <GatsbyImage
-                image={signInError.childImageSharp.gatsbyImageData}
+                image={getImage(signInError)}
                 className="screenshot"
                 alt="screenshot"
               />
@@ -102,7 +102,7 @@ class ClincaseCaseStudy extends Component {
               </ul>
 
               <GatsbyImage
-                image={tutorialBack.childImageSharp.gatsbyImageData}
+                image={getImage(tutorialBack)}
                 className="screenshot"
                 alt="Screenshot"
               />

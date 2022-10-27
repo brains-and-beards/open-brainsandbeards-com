@@ -1,5 +1,6 @@
 import React from 'react'
 import { graphql } from 'gatsby'
+import { getImage } from 'gatsby-plugin-image'
 
 import Layout from '../../templates/layout'
 import TonedDownEstimateProject from '../../components/TonedDownEstimateProject'
@@ -13,7 +14,7 @@ const TeamAugmentationService = (props) => {
     <Layout
       headerTitle="Bring your team to the next level"
       headerSub="We're happy to work hand-in-hand with your existing team to give them the support they need to deliver great apps."
-      headerImage={heroImage.childImageSharp.gatsbyImageData}
+      headerImage={getImage(heroImage)}
       headerColumns
       simpleNavbar
     >
@@ -27,7 +28,7 @@ const TeamAugmentationService = (props) => {
 
           <ul className="picture-list">
             <PictureListItem
-              image={fasterImage.childImageSharp.gatsbyImageData}
+              image={getImage(fasterImage)}
               title="Getting work done faster"
             >
               <p>
@@ -39,7 +40,7 @@ const TeamAugmentationService = (props) => {
             </PictureListItem>
 
             <PictureListItem
-              image={learningImage.childImageSharp.gatsbyImageData}
+              image={getImage(learningImage)}
               title="Learning new skills"
             >
               <p>
@@ -50,7 +51,7 @@ const TeamAugmentationService = (props) => {
             </PictureListItem>
 
             <PictureListItem
-              image={scalingImage.childImageSharp.gatsbyImageData}
+              image={getImage(scalingImage)}
               title="Quickly scaling your team"
             >
               <p>
@@ -101,7 +102,7 @@ const TeamAugmentationService = (props) => {
         </div>
       </div>
     </Layout>
-  );
+  )
 }
 
 export const query = graphql`

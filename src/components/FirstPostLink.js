@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'gatsby'
-import { GatsbyImage } from 'gatsby-plugin-image'
+import { GatsbyImage, getImage } from 'gatsby-plugin-image'
 
 import ReadMore from './ReadMore'
 import AuthorWithPicture from './AuthorWithPicture'
@@ -9,21 +9,20 @@ const FirstPostLink = ({ post }) => {
   const {
     frontmatter: { author, path, title, date, image },
   } = post
-  const { childImageSharp, relativePath } = image
 
   return (
     <div className="content">
       <Link to={path}>
         <div className="first-post">
-          {childImageSharp ? (
+          {image ? (
             <GatsbyImage
-              image={childImageSharp.gatsbyImageData}
+              image={getImage(image)}
               className="blog-image"
               alt={title}
             />
           ) : (
             <img
-              src={require(`../pages/markdown/${relativePath}`)}
+              src={require(`../pages/markdown/${image.relativePath}`)}
               className="blog-image"
               alt={title}
             />

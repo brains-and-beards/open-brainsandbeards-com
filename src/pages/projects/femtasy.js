@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { graphql } from 'gatsby'
-import { GatsbyImage } from 'gatsby-plugin-image'
+import { GatsbyImage, getImage } from 'gatsby-plugin-image'
 
 import Layout from '../../templates/layout'
 import EstimateProjectBar from '../../components/EstimateProjectBar'
@@ -20,7 +20,7 @@ class FemtasyCaseStudy extends Component {
         <div id="case-study">
           <div className="big-part-yellow">
             <GatsbyImage
-              image={heroImage.childImageSharp.gatsbyImageData}
+              image={getImage(heroImage)}
               className="heading-pic"
               alt="LokalPortal main page"
             />
@@ -159,7 +159,7 @@ class FemtasyCaseStudy extends Component {
             </p>
             <div>
               <GatsbyImage
-                image={reviewsImage.childImageSharp.gatsbyImageData}
+                image={getImage(reviewsImage)}
                 alt="Femtasy reviews"
               />
               <figcaption>

@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { graphql } from 'gatsby'
+import { getImage } from 'gatsby-plugin-image'
 
 import Layout from '../templates/layout'
 
@@ -11,11 +12,11 @@ class EstimateRequested extends Component {
       <Layout
         headerTitle="Thanks!"
         headerSub="Thanks for considering us for your project. We'll get back to you soon!"
-        headerImage={heroImage.childImageSharp.gatsbyImageData}
+        headerImage={getImage(heroImage)}
         headerColumns
         simpleNavbar
       />
-    );
+    )
   }
 }
 

@@ -1,6 +1,6 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { graphql, useStaticQuery, Link } from 'gatsby'
-import { GatsbyImage } from 'gatsby-plugin-image'
+import { GatsbyImage, getImage } from 'gatsby-plugin-image'
 
 export const footerImageProps = graphql`
   fragment footerImageProps on File {
@@ -65,7 +65,7 @@ const Footer = (props) => {
 
         <div className="col">
           <GatsbyImage
-            image={footerImage.childImageSharp.gatsbyImageData}
+            image={getImage(footerImage)}
             className="binoculars"
             alt="peeping computer"
           />

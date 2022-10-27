@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import { GatsbyImage } from 'gatsby-plugin-image'
 import { graphql } from 'gatsby'
+import { GatsbyImage, getImage } from 'gatsby-plugin-image'
 
 import Swiper from '../components/Swiper'
 import Layout from '../templates/layout'
@@ -101,7 +101,7 @@ class TeamPage extends Component {
             </p>
             <ul className="picture-list">
               <PictureListItem
-                image={versatilityIcon.childImageSharp.gatsbyImageData}
+                image={getImage(versatilityIcon)}
                 title="Versatility"
               >
                 <p>
@@ -113,7 +113,7 @@ class TeamPage extends Component {
                 </p>
               </PictureListItem>
               <PictureListItem
-                image={reliabilityIcon.childImageSharp.gatsbyImageData}
+                image={getImage(reliabilityIcon)}
                 title="Reliability"
               >
                 <p>
@@ -124,7 +124,7 @@ class TeamPage extends Component {
                 </p>
               </PictureListItem>
               <PictureListItem
-                image={diversityIcon.childImageSharp.gatsbyImageData}
+                image={getImage(diversityIcon)}
                 title="Diversity"
               >
                 <p>
@@ -151,7 +151,7 @@ class TeamPage extends Component {
                   </p>
                 </section>
                 <GatsbyImage
-                  image={outsourcingIcon.childImageSharp.gatsbyImageData}
+                  image={getImage(outsourcingIcon)}
                   alt="No outsourcing policy"
                 />
               </div>

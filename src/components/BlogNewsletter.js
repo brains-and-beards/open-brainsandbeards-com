@@ -1,6 +1,6 @@
 import React from 'react'
 import { graphql, useStaticQuery, navigate } from 'gatsby'
-import { GatsbyImage } from 'gatsby-plugin-image'
+import { GatsbyImage, getImage } from 'gatsby-plugin-image'
 import { validateEmail } from './forms/utils'
 import { useState, useCallback } from 'react'
 import addToMailchimp from 'gatsby-plugin-mailchimp'
@@ -97,7 +97,7 @@ const BlogNewsletter = () => {
     <section className="estimateProject">
       <div className="content row">
         <GatsbyImage
-          image={leftImage.childImageSharp.gatsbyImageData}
+          image={getImage(leftImage)}
           className="center-mobile cta-bar-image desktop-only"
           alt="Happy puzzle phone"
         />
@@ -151,7 +151,7 @@ const BlogNewsletter = () => {
           </div>
         </div>
         <GatsbyImage
-          image={rightImage.childImageSharp.gatsbyImageData}
+          image={getImage(rightImage)}
           className="cta-bar-image desktop-only newsletter-image-right"
           alt="Happy puzzle phone"
         />

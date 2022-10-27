@@ -1,23 +1,22 @@
 import React from 'react'
 import { graphql } from 'gatsby'
+import { getImage } from 'gatsby-plugin-image'
 
 import Layout from '../templates/layout'
 import EstimateProjectForm from '../components/forms/EstimateProjectForm'
 
-const EstimateProject = (props) => {
-  const { heroImage } = props.data
-
+const EstimateProject = ({ data }) => {
   return (
     <Layout
       headerTitle="Get an estimate"
       headerSub="Let us know what you need, we'll contact you promptly to discuss how we can help with your project."
-      headerImage={heroImage.childImageSharp.gatsbyImageData}
+      headerImage={getImage(data.heroImage)}
       headerColumns
       simpleNavbar
     >
       <div className="estimate-project-form">
         <div className="content">
-          <EstimateProjectForm imageData={props.data} />
+          <EstimateProjectForm imageData={data} />
         </div>
       </div>
     </Layout>

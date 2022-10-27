@@ -1,6 +1,6 @@
 import React from 'react'
 import { graphql, Link, useStaticQuery } from 'gatsby'
-import { GatsbyImage } from 'gatsby-plugin-image'
+import { GatsbyImage, getImage } from 'gatsby-plugin-image'
 
 export const imageProps = graphql`
   fragment imageProps on File {
@@ -35,7 +35,7 @@ const EstimateProjectBar = (props) => {
     <section className="estimateProject">
       <div className="content row">
         <GatsbyImage
-          image={leftImage.childImageSharp.gatsbyImageData}
+          image={getImage(leftImage)}
           className="center-mobile cta-bar-image"
           alt="Happy phone"
         />
@@ -47,7 +47,7 @@ const EstimateProjectBar = (props) => {
           </div>
         </div>
         <GatsbyImage
-          image={rightImage.childImageSharp.gatsbyImageData}
+          image={getImage(rightImage)}
           className="cta-bar-image desktop-only"
           alt="Happy phone"
         />

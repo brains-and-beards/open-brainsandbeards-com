@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import { graphql } from 'gatsby'
+import { getImage } from 'gatsby-plugin-image'
+
 import Layout from '../templates/layout'
 
 class NewsletterSubscribed extends Component {
@@ -10,11 +12,11 @@ class NewsletterSubscribed extends Component {
       <Layout
         headerTitle="Thank you for subscribing!"
         headerSub="Almost finished... We need to confirm your email address. To complete the subscription process, please click the link in the email we just sent you. And see you soon!"
-        headerImage={heroImage.childImageSharp.gatsbyImageData}
+        headerImage={getImage(heroImage)}
         headerColumns
         simpleNavbar
       />
-    );
+    )
   }
 }
 

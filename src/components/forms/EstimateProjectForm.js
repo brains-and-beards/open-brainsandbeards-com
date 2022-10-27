@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { GatsbyImage } from 'gatsby-plugin-image'
+import { GatsbyImage, getImage } from 'gatsby-plugin-image'
 
 import { validateEmail } from './utils'
 
@@ -37,7 +37,7 @@ class EstimateProjectForm extends Component {
               <input type="radio" id="android" name="system" value="android" />
               <label htmlFor="android">
                 <GatsbyImage
-                  image={androidIcon.childImageSharp.gatsbyImageData}
+                  image={getImage(androidIcon)}
                   className="image-wrapper"
                   alt="Android platform"
                 />
@@ -46,7 +46,7 @@ class EstimateProjectForm extends Component {
               <input type="radio" id="ios" name="system" value="ios" />
               <label htmlFor="ios">
                 <GatsbyImage
-                  image={iosIcon.childImageSharp.gatsbyImageData}
+                  image={getImage(iosIcon)}
                   className="image-wrapper"
                   alt="iOS platform"
                 />
@@ -55,7 +55,7 @@ class EstimateProjectForm extends Component {
               <input type="radio" id="both" name="system" value="both" />
               <label htmlFor="both">
                 <GatsbyImage
-                  image={bothIcon.childImageSharp.gatsbyImageData}
+                  image={getImage(bothIcon)}
                   className="image-wrapper"
                   alt="Android & iOS platforms"
                 />
@@ -78,7 +78,7 @@ class EstimateProjectForm extends Component {
                 />
                 <label htmlFor="greenfield">
                   <GatsbyImage
-                    image={scratchIcon.childImageSharp.gatsbyImageData}
+                    image={getImage(scratchIcon)}
                     className="image-wrapper"
                     alt="From scratch"
                   />
@@ -89,7 +89,7 @@ class EstimateProjectForm extends Component {
                 <input type="radio" id="legacy" name="state" value="legacy" />
                 <label htmlFor="legacy">
                   <GatsbyImage
-                    image={legacyIcon.childImageSharp.gatsbyImageData}
+                    image={getImage(legacyIcon)}
                     className="image-wrapper"
                     alt="Legacy project"
                   />

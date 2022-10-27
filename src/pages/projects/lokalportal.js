@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { graphql } from 'gatsby'
-import { GatsbyImage } from 'gatsby-plugin-image'
+import { GatsbyImage, getImage } from 'gatsby-plugin-image'
 
 import Layout from '../../templates/layout'
 import EstimateProjectBar from '../../components/EstimateProjectBar'
@@ -21,7 +21,7 @@ class LokalportalCaseStudy extends Component {
         <div id="case-study">
           <div className="big-part-yellow">
             <GatsbyImage
-              image={heroImage.childImageSharp.gatsbyImageData}
+              image={getImage(heroImage)}
               className="heading-pic"
               alt="LokalPortal main page"
             />
@@ -116,7 +116,7 @@ class LokalportalCaseStudy extends Component {
             </p>
             <div className="mobileScreenshots">
               <GatsbyImage
-                image={lokalportalIos.childImageSharp.gatsbyImageData}
+                image={getImage(lokalportalIos)}
                 alt="iOS screenshot"
               />
             </div>
@@ -171,7 +171,7 @@ class LokalportalCaseStudy extends Component {
             </p>
             <div className="mobileScreenshots">
               <GatsbyImage
-                image={lokalportalAndroid.childImageSharp.gatsbyImageData}
+                image={getImage(lokalportalAndroid)}
                 alt="Android screenshot"
               />
             </div>

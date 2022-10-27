@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { graphql } from 'gatsby'
-import { GatsbyImage } from 'gatsby-plugin-image'
+import { GatsbyImage, getImage } from 'gatsby-plugin-image'
 
 import Layout from '../templates/layout'
 import PictureListItem from '../components/PictureListItem'
@@ -25,7 +25,7 @@ class About extends Component {
         <div className="content-page">
           <div className="big-part-yellow">
             <GatsbyImage
-              image={heroImage.childImageSharp.gatsbyImageData}
+              image={getImage(heroImage)}
               className="our-story-header"
               alt="Wojciech and Patryk with motorbikes"
             />
@@ -62,7 +62,7 @@ class About extends Component {
               </section>
               <ul className="picture-list">
                 <PictureListItem
-                  image={teamIcon.childImageSharp.gatsbyImageData}
+                  image={getImage(teamIcon)}
                   title="Building a great team"
                 >
                   Our employees are our greatest asset, so we do our best to
@@ -72,7 +72,7 @@ class About extends Component {
                   many points of view.
                 </PictureListItem>
                 <PictureListItem
-                  image={workflowIcon.childImageSharp.gatsbyImageData}
+                  image={getImage(workflowIcon)}
                   title="Finding the best workflow"
                 >
                   As there are no silver bullets, similarly there are no perfect
@@ -157,7 +157,7 @@ class About extends Component {
                 <div className="row">
                   <div className="serviceContainer">
                     <GatsbyImage
-                      image={brainsIcon.childImageSharp.gatsbyImageData}
+                      image={getImage(brainsIcon)}
                       className="image-wrapper"
                       alt="Brains"
                     />
@@ -170,7 +170,7 @@ class About extends Component {
                   </div>
                   <div className="serviceContainer">
                     <GatsbyImage
-                      image={beardsIcon.childImageSharp.gatsbyImageData}
+                      image={getImage(beardsIcon)}
                       className="image-wrapper"
                       alt="Beards"
                     />
@@ -185,7 +185,7 @@ class About extends Component {
                   </div>
                   <div className="serviceContainer">
                     <GatsbyImage
-                      image={handsIcon.childImageSharp.gatsbyImageData}
+                      image={getImage(handsIcon)}
                       className="image-wrapper"
                       alt="Hands"
                     />

@@ -1,5 +1,6 @@
 import React from 'react'
 import { graphql } from 'gatsby'
+import { GatsbyImage, getImage } from 'gatsby-plugin-image'
 import { ArticleJsonLd } from 'gatsby-plugin-next-seo'
 
 import Layout from './layout'
@@ -17,7 +18,7 @@ export default function Template({
 }) {
   const {
     markdownRemark,
-    smallPic,
+    picture,
     allMarkdownRemark: { edges },
   } = data // data.markdownRemark holds our post data
   const {
@@ -32,7 +33,7 @@ export default function Template({
     return <PostLink key={node.id} post={node} />
   })
 
-  const { childImageSharp } = smallPic.frontmatter.image
+  const { childImageSharp } = picture.frontmatter.image
   const gatsbySmallSrc = childImageSharp?.fixed?.src
 
   const thumbnailUrl =
@@ -62,13 +63,14 @@ export default function Template({
         {image && (
           <div className="top-part-yellow">
             <div className="content">
-              {image.childImageSharp ? (
-                <img
-                  srcSet={image.childImageSharp.gatsbyImageData.srcSet}
-                  src={image.childImageSharp.gatsbyImageData.src}
-                  alt={imageCaption}
-                  className="main-blog-image webfeedsFeaturedVisual"
-                />
+              {image ? (
+                <>
+                  <GatsbyImage
+                    alt={imageCaption}
+                    image={getImage(picture.frontmatter.image)}
+                    className="main-blog-image-l"
+                  />
+                </>
               ) : (
                 <img
                   src={require(`../pages/markdown/${image.relativePath}`)}
@@ -141,7 +143,7 @@ export const pageQuery = graphql`
         demo
       }
     }
-    smallPic: markdownRemark(frontmatter: { path: { eq: $path } }) {
+    picture: markdownRemark(frontmatter: { path: { eq: $path } }) {
       frontmatter {
         image {
           childImageSharp {
@@ -150,8 +152,9 @@ export const pageQuery = graphql`
               width: 300
               quality: 90
               placeholder: BLURRED
+              breakpoints: [320, 690, 1200]
               transformOptions: { fit: CONTAIN, cropFocus: CENTER }
-              layout: FIXED
+              layout: CONSTRAINED
             )
           }
         }

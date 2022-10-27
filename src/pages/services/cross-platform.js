@@ -1,5 +1,6 @@
 import React from 'react'
 import { graphql } from 'gatsby'
+import { getImage } from 'gatsby-plugin-image'
 
 import Layout from '../../templates/layout'
 import PictureListItem from '../../components/PictureListItem'
@@ -20,7 +21,7 @@ const ReactNativeService = (props) => {
     <Layout
       headerTitle="Build your product faster using cross-platform tools"
       headerSub="We have already delivered successful React Native applications for our clients back in 2016. You can't beat experience."
-      headerImage={heroImage.childImageSharp.gatsbyImageData}
+      headerImage={getImage(heroImage)}
       headerColumns
       simpleNavbar
     >
@@ -57,7 +58,7 @@ const ReactNativeService = (props) => {
           <h3>Pros of modern cross platform solutions</h3>
           <ul className="picture-list">
             <PictureListItem
-              image={fasterImage.childImageSharp.gatsbyImageData}
+              image={getImage(fasterImage)}
               title="Faster development"
             >
               <p>
@@ -69,10 +70,7 @@ const ReactNativeService = (props) => {
               </p>
             </PictureListItem>
 
-            <PictureListItem
-              image={reuseImage.childImageSharp.gatsbyImageData}
-              title="Code reuse"
-            >
+            <PictureListItem image={getImage(reuseImage)} title="Code reuse">
               <p>
                 Cross-platform frameworks let us reuse more and more code
                 between iOS and Android. Currently, for React Native
@@ -80,10 +78,7 @@ const ReactNativeService = (props) => {
                 the two platforms.
               </p>
             </PictureListItem>
-            <PictureListItem
-              image={teamImage.childImageSharp.gatsbyImageData}
-              title="Single team"
-            >
+            <PictureListItem image={getImage(teamImage)} title="Single team">
               <p>
                 Using a cross-platform framework lets us form a single team that
                 works on both applications. This has numerous benefits: from
@@ -93,7 +88,7 @@ const ReactNativeService = (props) => {
               </p>
             </PictureListItem>
             <PictureListItem
-              image={codebaseImage.childImageSharp.gatsbyImageData}
+              image={getImage(codebaseImage)}
               title="Accessible codebase"
             >
               <p>

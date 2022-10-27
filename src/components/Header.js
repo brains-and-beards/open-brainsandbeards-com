@@ -35,7 +35,11 @@ const Header = ({ title, subtitle, columns, image, rightContent }) => {
         <div className="hero-right-col center" key="header-right">
           {rightContent ||
             (image && (
-              <GatsbyImage image={image} className="right-header-image" />
+              <GatsbyImage
+                alt="hero"
+                image={image}
+                className="right-header-image"
+              />
             ))}
         </div>
       </div>
