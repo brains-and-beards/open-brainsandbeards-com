@@ -5,12 +5,7 @@ import { GatsbyImage, getImage } from 'gatsby-plugin-image'
 export const footerImageProps = graphql`
   fragment footerImageProps on File {
     childImageSharp {
-      gatsbyImageData(
-        width: 88
-        quality: 90
-        placeholder: TRACED_SVG
-        layout: FIXED
-      )
+      gatsbyImageData(width: 88, quality: 90, layout: FIXED)
     }
   }
 `

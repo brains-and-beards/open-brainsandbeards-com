@@ -18,7 +18,7 @@ const PostLink = ({ post, showExcerpt }) => {
     <div className="blogpost-preview">
       <Link to={path}>
         <div className="post-container">
-          {image ? (
+          {image.childImageSharp ? (
             <GatsbyImage
               image={getImage(image)}
               className="post-link"

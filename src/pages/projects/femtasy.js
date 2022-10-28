@@ -219,7 +219,7 @@ class FemtasyCaseStudy extends Component {
 export const mobileScreenshots = graphql`
   fragment mobileScreenshots on File {
     childImageSharp {
-      gatsbyImageData(width: 500, placeholder: TRACED_SVG, layout: CONSTRAINED)
+      gatsbyImageData(width: 500, layout: CONSTRAINED)
     }
   }
 `

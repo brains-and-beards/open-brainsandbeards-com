@@ -145,20 +145,6 @@ const IndexPage = ({
 
 export default IndexPage
 
-export const _imageProps = graphql`
-  fragment smallIllustrationIconImageProps on File {
-    childImageSharp {
-      gatsbyImageData(
-        height: 80
-        width: 80
-        quality: 90
-        placeholder: TRACED_SVG
-        layout: FIXED
-      )
-    }
-  }
-`
-
 export const pageQuery = graphql`
   query IndexQuery($limit: Int, $skip: Int) {
     firstElement: allMarkdownRemark(
@@ -177,12 +163,7 @@ export const pageQuery = graphql`
             image {
               relativePath
               childImageSharp {
-                gatsbyImageData(
-                  width: 672
-                  quality: 90
-                  placeholder: TRACED_SVG
-                  layout: CONSTRAINED
-                )
+                gatsbyImageData(width: 672, quality: 90, layout: CONSTRAINED)
               }
             }
             imagePosition
@@ -211,8 +192,7 @@ export const pageQuery = graphql`
                   height: 200
                   width: 280
                   quality: 90
-                  placeholder: TRACED_SVG
-                  transformOptions: { cropFocus: CENTER }
+                  transformOptions: { cropFocus: ATTENTION }
                   layout: CONSTRAINED
                 )
               }

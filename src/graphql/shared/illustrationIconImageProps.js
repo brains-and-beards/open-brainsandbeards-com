@@ -1,6 +1,6 @@
 import { graphql } from 'gatsby'
 
-export const imageProps = graphql`
+export const illustrationIconImageProps = graphql`
   fragment illustrationIconImageProps on File {
     childImageSharp {
       gatsbyImageData(

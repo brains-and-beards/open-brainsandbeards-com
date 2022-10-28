@@ -63,11 +63,11 @@ export default function Template({
         {image && (
           <div className="top-part-yellow">
             <div className="content">
-              {image ? (
+              {image.childImageSharp ? (
                 <>
                   <GatsbyImage
                     alt={imageCaption}
-                    image={getImage(picture.frontmatter.image)}
+                    image={getImage(image)}
                     className="main-blog-image-l"
                   />
                 </>
@@ -148,7 +148,6 @@ export const pageQuery = graphql`
           childImageSharp {
             gatsbyImageData(
               quality: 90
-              placeholder: TRACED_SVG
               breakpoints: [320, 690, 1200]
               transformOptions: { fit: CONTAIN, cropFocus: CENTER }
               layout: FULL_WIDTH
@@ -175,7 +174,6 @@ export const pageQuery = graphql`
                   width: 270
                   height: 200
                   quality: 90
-                  placeholder: TRACED_SVG
                   transformOptions: { cropFocus: CENTER }
                   layout: CONSTRAINED
                 )

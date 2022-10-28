@@ -179,7 +179,6 @@ export const _homepageHeroImageProps = graphql`
         width: 819
         quality: 90
         backgroundColor: "rgba(0,0,0,0)"
-        placeholder: TRACED_SVG
         transformOptions: { fit: CONTAIN }
         layout: CONSTRAINED
       )
