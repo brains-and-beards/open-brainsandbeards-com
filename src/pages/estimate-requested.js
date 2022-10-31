@@ -23,7 +23,7 @@ class EstimateRequested extends Component {
 export const query = graphql`
   query estimateRequestedPageQuery {
     heroImage: file(relativePath: { regex: "/estimate-requested-hero/" }) {
-      ...headerHeroImage
+      ...headerHeroImageFragment
     }
   }
 `

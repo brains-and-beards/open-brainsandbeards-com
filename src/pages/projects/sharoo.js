@@ -60,10 +60,10 @@ class SharooCaseStudy extends Component {
           </div>
 
           <Testimonial
-            quote="“We started working with Brains & Beards back in 2016 and have been a customer ever since. 
-            They are a reliable partner to work with and have helped us bring many solutions to life both on desktop and mobile. 
-            Their expertise and experience shows in many different facets such as project planning, 
-            suggesting solutions and efficient problem solving. We can recommend Brains & Beards 
+            quote="“We started working with Brains & Beards back in 2016 and have been a customer ever since.
+            They are a reliable partner to work with and have helped us bring many solutions to life both on desktop and mobile.
+            Their expertise and experience shows in many different facets such as project planning,
+            suggesting solutions and efficient problem solving. We can recommend Brains & Beards
             to companies that need skilled developers who are not scared of technical challenges.”"
             photo={require('../../assets/testimonials/sharoo-feyyaz.jpg')}
             name="Feyyaz Alingan"
@@ -273,7 +273,7 @@ class SharooCaseStudy extends Component {
 export const query = graphql`
   query sharooCaseStudyPageQuery {
     heroImage: file(relativePath: { regex: "/sharoo-hero/" }) {
-      ...headingImageProps
+      ...headingImageFragment
     }
     sharooIOS: file(relativePath: { regex: "/sharoo-ios/" }) {
       ...embeddedImageFragment

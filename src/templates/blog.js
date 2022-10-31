@@ -204,13 +204,13 @@ export const pageQuery = graphql`
       }
     }
     technologyImage: file(relativePath: { regex: "/technology/" }) {
-      ...smallIllustrationIconImageProps
+      ...smallIllustrationIconImageFragment
     }
     shippingImage: file(relativePath: { regex: "/shipping/" }) {
-      ...smallIllustrationIconImageProps
+      ...smallIllustrationIconImageFragment
     }
     teamsImage: file(relativePath: { regex: "/building-teams/" }) {
-      ...smallIllustrationIconImageProps
+      ...smallIllustrationIconImageFragment
     }
   }
 `

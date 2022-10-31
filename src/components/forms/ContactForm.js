@@ -19,7 +19,7 @@ const ContactForm = (props) => {
   const { image } = useStaticQuery(graphql`
     query contactImageQuery {
       image: file(relativePath: { regex: "/contact-us/" }) {
-        ...illustrationIconImageProps
+        ...illustrationIconImageFragment
       }
     }
   `)

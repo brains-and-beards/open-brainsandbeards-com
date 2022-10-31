@@ -216,21 +216,13 @@ class FemtasyCaseStudy extends Component {
   }
 }
 
-export const mobileScreenshots = graphql`
-  fragment mobileScreenshots on File {
-    childImageSharp {
-      gatsbyImageData(width: 500, layout: CONSTRAINED)
-    }
-  }
-`
-
 export const query = graphql`
   query femtasyCaseStudyPageQuery {
     heroImage: file(relativePath: { regex: "/femtasy-header/" }) {
-      ...headingImageProps
+      ...headingImageFragment
     }
     reviewsImage: file(relativePath: { regex: "/femtasy-reviews/" }) {
-      ...mobileScreenshots
+      ...mobileScreenshotsFragment
     }
   }
 `

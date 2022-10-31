@@ -1,7 +1,7 @@
 import { graphql } from 'gatsby'
 
-export const teamOutsourcingIconImageProps = graphql`
-  fragment teamOutsourcingIconImageProps on File {
+export const teamOutsourcingIconImageFragment = graphql`
+  fragment teamOutsourcingIconImageFragment on File {
     childImageSharp {
       gatsbyImageData(
         height: 320

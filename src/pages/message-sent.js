@@ -23,7 +23,7 @@ class MessageSent extends Component {
 export const query = graphql`
   query messageSentPageQuery {
     heroImage: file(relativePath: { regex: "/estimate-requested-hero/" }) {
-      ...headerHeroImage
+      ...headerHeroImageFragment
     }
   }
 `

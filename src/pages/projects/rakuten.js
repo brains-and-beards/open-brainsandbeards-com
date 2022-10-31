@@ -145,7 +145,7 @@ class RakutenCaseStudy extends Component {
 export const query = graphql`
   query rakutenCaseStudyPageQuery {
     heroImage: file(relativePath: { regex: "/rakuten-team/" }) {
-      ...headingImageProps
+      ...headingImageFragment
     }
   }
 `

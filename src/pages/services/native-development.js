@@ -168,22 +168,22 @@ const NativeDevService = (props) => {
 export const query = graphql`
   query ServiceNativePage {
     heroImage: file(relativePath: { regex: "/services-native-hero/" }) {
-      ...headerHeroImage
+      ...headerHeroImageFragment
     }
     mobileFocusImage: file(
       relativePath: { regex: "/services-native-mobile-focus/" }
     ) {
-      ...illustrationIconImageProps
+      ...illustrationIconImageFragment
     }
     experienceImage: file(
       relativePath: { regex: "/services-native-experience/" }
     ) {
-      ...illustrationIconImageProps
+      ...illustrationIconImageFragment
     }
     reliabilityImage: file(
       relativePath: { regex: "/services-native-reliability/" }
     ) {
-      ...illustrationIconImageProps
+      ...illustrationIconImageFragment
     }
   }
 `

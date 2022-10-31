@@ -250,13 +250,13 @@ export const mobileScreenshots = graphql`
 export const query = graphql`
   query lokalportalCaseStudyPageQuery {
     heroImage: file(relativePath: { regex: "/lokalportal-web/" }) {
-      ...headingImageProps
+      ...headingImageFragment
     }
     lokalportalIos: file(relativePath: { regex: "/lokalportal-ios/" }) {
-      ...mobileScreenshots
+      ...mobileScreenshotsFragment
     }
     lokalportalAndroid: file(relativePath: { regex: "/lokalportal-android/" }) {
-      ...mobileScreenshots
+      ...mobileScreenshotsFragment
     }
   }
 `

@@ -148,25 +148,25 @@ const ReactNativeService = (props) => {
 export const query = graphql`
   query ServiceCrossPlatformPage {
     heroImage: file(relativePath: { regex: "/services-cross-platform-hero/" }) {
-      ...headerHeroImage
+      ...headerHeroImageFragment
     }
     fasterImage: file(
       relativePath: { regex: "/services-cross-platform-faster/" }
     ) {
-      ...illustrationIconImageProps
+      ...illustrationIconImageFragment
     }
     reuseImage: file(
       relativePath: { regex: "/services-cross-platform-reuse/" }
     ) {
-      ...illustrationIconImageProps
+      ...illustrationIconImageFragment
     }
     teamImage: file(relativePath: { regex: "/services-cross-platform-team/" }) {
-      ...illustrationIconImageProps
+      ...illustrationIconImageFragment
     }
     codebaseImage: file(
       relativePath: { regex: "/services-cross-platform-codebase/" }
     ) {
-      ...illustrationIconImageProps
+      ...illustrationIconImageFragment
     }
   }
 `

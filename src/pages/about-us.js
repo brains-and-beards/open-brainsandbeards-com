@@ -223,22 +223,22 @@ class About extends Component {
 export const query = graphql`
   query aboutPageQuery {
     heroImage: file(relativePath: { regex: "/patryk-and-wojtek/" }) {
-      ...headingImageProps
+      ...headingImageFragment
     }
     teamIcon: file(relativePath: { regex: "/about-team-icon/" }) {
-      ...illustrationIconImageProps
+      ...illustrationIconImageFragment
     }
     workflowIcon: file(relativePath: { regex: "/about-workflow-icon/" }) {
-      ...illustrationIconImageProps
+      ...illustrationIconImageFragment
     }
     brainsIcon: file(relativePath: { regex: "/about-brains-icon/" }) {
-      ...illustrationIconImageProps
+      ...illustrationIconImageFragment
     }
     beardsIcon: file(relativePath: { regex: "/about-beards-icon/" }) {
-      ...illustrationIconImageProps
+      ...illustrationIconImageFragment
     }
     handsIcon: file(relativePath: { regex: "/about-hands-icon/" }) {
-      ...illustrationIconImageProps
+      ...illustrationIconImageFragment
     }
   }
 `

@@ -181,7 +181,7 @@ class ClincaseCaseStudy extends Component {
 export const query = graphql`
   query clincaseCaseStudyPageQuery {
     heroImage: file(relativePath: { regex: "/clincase-warning-modal/" }) {
-      ...headingImageProps
+      ...headingImageFragment
     }
     signInError: file(relativePath: { regex: "/clincase-sign-in-error/" }) {
       ...embeddedImageFragment

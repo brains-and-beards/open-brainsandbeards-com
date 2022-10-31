@@ -23,7 +23,7 @@ class NewsletterSubscribed extends Component {
 export const query = graphql`
   query newsletterSubscribedPageQuery {
     heroImage: file(relativePath: { regex: "/estimate-requested-hero/" }) {
-      ...headerHeroImage
+      ...headerHeroImageFragment
     }
   }
 `

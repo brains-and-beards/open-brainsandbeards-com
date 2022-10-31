@@ -200,13 +200,13 @@ export const query = graphql`
     serviceIconCrossPlatform: file(
       relativePath: { regex: "/services-cross-platform-icon/" }
     ) {
-      ...illustrationIconImageProps
+      ...illustrationIconImageFragment
     }
     serviceIconNative: file(relativePath: { regex: "/services-native-icon/" }) {
-      ...illustrationIconImageProps
+      ...illustrationIconImageFragment
     }
     serviceIconStaff: file(relativePath: { regex: "/services-staff-icon/" }) {
-      ...illustrationIconImageProps
+      ...illustrationIconImageFragment
     }
   }
 `

@@ -210,16 +210,16 @@ class TeamPage extends Component {
 export const query = graphql`
   query teamPageQuery {
     versatilityIcon: file(relativePath: { regex: "/team-versatility-icon/" }) {
-      ...illustrationIconImageProps
+      ...illustrationIconImageFragment
     }
     reliabilityIcon: file(relativePath: { regex: "/team-reliability-icon/" }) {
-      ...illustrationIconImageProps
+      ...illustrationIconImageFragment
     }
     diversityIcon: file(relativePath: { regex: "/team-diversity-icon/" }) {
-      ...illustrationIconImageProps
+      ...illustrationIconImageFragment
     }
     outsourcingIcon: file(relativePath: { regex: "/team-no-outsourcing/" }) {
-      ...teamOutsourcingIconImageProps
+      ...teamOutsourcingIconImageFragment
     }
   }
 `

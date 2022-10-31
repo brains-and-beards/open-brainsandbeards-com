@@ -110,22 +110,22 @@ export const query = graphql`
     heroImage: file(
       relativePath: { regex: "/services-team-augmentation-hero/" }
     ) {
-      ...headerHeroImage
+      ...headerHeroImageFragment
     }
     fasterImage: file(
       relativePath: { regex: "/services-team-augmentation-faster/" }
     ) {
-      ...illustrationIconImageProps
+      ...illustrationIconImageFragment
     }
     learningImage: file(
       relativePath: { regex: "/services-team-augmentation-learning/" }
     ) {
-      ...illustrationIconImageProps
+      ...illustrationIconImageFragment
     }
     scalingImage: file(
       relativePath: { regex: "/services-team-augmentation-scaling/" }
     ) {
-      ...illustrationIconImageProps
+      ...illustrationIconImageFragment
     }
   }
 `

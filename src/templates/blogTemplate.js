@@ -131,7 +131,6 @@ export const pageQuery = graphql`
             gatsbyImageData(
               quality: 92
               breakpoints: [350, 500, 700, 1400]
-              placeholder: BLURRED
               layout: FULL_WIDTH
             )
           }

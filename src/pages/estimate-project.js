@@ -26,22 +26,22 @@ const EstimateProject = ({ data }) => {
 export const query = graphql`
   query estimatePageQuery {
     heroImage: file(relativePath: { regex: "/estimate-hero/" }) {
-      ...headerHeroImage
+      ...headerHeroImageFragment
     }
     androidIcon: file(relativePath: { regex: "/estimate-android-icon/" }) {
-      ...fluidIllustration
+      ...fluidIllustrationFragment
     }
     iosIcon: file(relativePath: { regex: "/estimate-ios-icon/" }) {
-      ...fluidIllustration
+      ...fluidIllustrationFragment
     }
     bothIcon: file(relativePath: { regex: "/estimate-both-icon/" }) {
-      ...fluidIllustration
+      ...fluidIllustrationFragment
     }
     scratchIcon: file(relativePath: { regex: "/estimate-scratch-icon/" }) {
-      ...fluidIllustration
+      ...fluidIllustrationFragment
     }
     legacyIcon: file(relativePath: { regex: "/estimate-legacy-icon/" }) {
-      ...fluidIllustration
+      ...fluidIllustrationFragment
     }
   }
 `
