@@ -123,7 +123,7 @@ Each sliding step results in the whole list re-render.
 
 #### Flamegraph chart
 
-To further investigate why it is so, we can use _React DevTools_ profiler. It's available in [_Flipper_](https://fbflipper.com). _Flamegraph_ tab brings especial interest. It contains a timeline of _React_ state changes. We can go step-by-step, and for each step, see a chart with clear indicators:
+To further investigate why it is so, we can use _React DevTools_ profiler. It's available in [_Flipper_](https://fbflipper.com). _Flamegraph_ tab brings special interest. It contains a timeline of _React_ state changes. We can go step-by-step, and for each step, see a chart with clear indicators:
 
  - which component has rendered,
  - why the component has rendered,
