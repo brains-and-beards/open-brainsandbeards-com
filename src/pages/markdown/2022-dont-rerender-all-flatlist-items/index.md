@@ -63,7 +63,7 @@ export const HomeScreen: React.FC = () => {
 
 So we did it. 🔥
 
-As soon as the first users received the new app and started using it, the first negative reviews were coming. Some users were complaining that the app was slow when sliding.
+As soon as the first users received the new app and started using it, the first negative reviews started coming. Some users were complaining that the app was slow when sliding.
 
 Fortunately, we have a slow smartphone waiting specifically for such occasions. Quick testing on this device confirms there is a problem. On some devices, UI is freezing, lagging, and unresponsive. 
 
@@ -144,7 +144,7 @@ Everything green is re-rendering. It's bad.
 
 _React_ re-renders components when _props_ or _state_ change. By default, re-render propagates to all children components. Chart shows the `FlatList` component re-rendered because of the `data` prop change. It's where we pass `answers`.
 
-Here is an example of how the `answers` list (`data` prop) looks like:
+Here is an example of how the `answers` array (`data` prop) looks like:
 
 ```ts
 const answers = [
@@ -176,9 +176,9 @@ However, there is a way to avoid those unnecessary re-renders and save CPU time.
 
 ## Let's give data the shape
 
-What if we could change the shape of the `data` list prop passed to `FlatList` to have the same value always?
+What if we could change the shape of the `data` prop passed to `FlatList` to have the same value always?
 
-In the list `data`, we can store just ids referring to "full" items. It's just a `string[]` list, not a list of complex objects with a `value` field. When the user slides the slider and updates the `value,` it won't change the item `id`. The `data` list will stay unchanged.
+Inside `data`, we can store just ids referring to "full" items. That would make it a `string[]` list, not a list of complex objects with a `value` field. When the user slides the slider and updates the `value`, it won't change the item `id`. The `data` list will stay unchanged.
 
 This will be passed as a `data` prop:
 
