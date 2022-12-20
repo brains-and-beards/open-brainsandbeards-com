@@ -31,7 +31,7 @@ You can [see the app code and tinker with it on _Snack_](https://snack.expo.dev/
 
 It's _just a list_, we said. We tested the app on a simulator, and it looked correct. What can go wrong? Let's publish it! 🚀
 
-```javascript {numberLines: true}
+```tsx {numberLines: true}
 export const HomeScreen: React.FC = () => {
   const { answers, updateAnswer } = useSurveyAnswers();
 
@@ -72,7 +72,7 @@ Fortunately, we have a slow smartphone waiting specifically for such occasions. 
 
 We suspect the issue is somewhere near the list, so we start digging here.
 
-```javascript
+```tsx
 <FlatList
   contentContainerStyle={styles.contentContainer}
   data={answers}
@@ -89,7 +89,7 @@ We suspect the issue is somewhere near the list, so we start digging here.
 
 We know that `answers` is the only prop that sometimes changes value. How is it affecting the app's behavior? Let's add two _console.logs_ in `src/pages/homeScreen.tsx` to investigate:
 
-```javascript
+```tsx
 export const HomeScreen: React.FC = () => {
   // ...
 
@@ -146,7 +146,7 @@ _React_ re-renders components when _props_ or _state_ change. By default, re-ren
 
 Here is an example of how the `answers` list (`data` prop) looks like:
 
-```javascript
+```ts
 const answers = [
   {
     "id": "0",
@@ -182,7 +182,7 @@ In the list `data`, we can store just ids referring to "full" items. It's just a
 
 This will be passed as a `data` prop:
 
-```javascript
+```ts
 const answersIdsList = [
   "0",
   "1",
@@ -192,7 +192,7 @@ const answersIdsList = [
 
 Since now data stored in `state` has this shape:
 
-```javascript
+```ts
 {
   dataIdsList: ["0", "1", "2"], // answersIdsList
   dataById: {
@@ -215,7 +215,7 @@ To get details of a single object, we can use `dataById`. For example, the updat
 
 Old `renderItem` needed a full `answer` object as a param. It can be simplified:
 
-```javascript
+```ts
 // before fixes
 const renderItem: ListRenderItem<SurveyAnswer> = useCallback(
   ({ item: answer }) => {
@@ -232,7 +232,7 @@ const renderItem: ListRenderItem<SurveyAnswer> = useCallback(
 
 The new `renderItem` that supports normalized data now as a param needs only item id (`answerId`) to render complete `NormalizedFormListItem`. There is also no need for `useCallback` anymore because we can now move it out of the `HomeScreen` component:
 
-```javascript
+```ts
 const renderItem: ListRenderItem<string> = ({ item: answerId }) => (
   <NormalizedFormListItem answerId={answerId} />;
 );
