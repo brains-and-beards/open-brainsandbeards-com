@@ -245,7 +245,7 @@ const renderItem: ListRenderItem<string> = ({ item: answerId }) => (
 
 This concept of data shape is called _normalization_. Apart from performance, it improves data structure to eliminate data redundancy. You don't have to write the normalization boilerplate by yourself – libraries are helping with that, but for simplicity, we used no such library in this app.
 
-If you want to know more about normalization and its' advantages, we also have another blog post that goes deeper into this topic: [Advanced Redux Patterns: Normalisation](https://brainsandbeards.com/blog/advanced-redux-patterns-normalisation).
+If you want to know more about normalization and its advantages, we also have another blog post that goes deeper into this topic: [Advanced Redux Patterns: Normalisation](https://brainsandbeards.com/blog/advanced-redux-patterns-normalisation).
 
 For podcast fans, in the [BBS 12: Normalising app state](https://podcast.brainsandbeards.com/episodes/bbs-12-normalising-app-state) episode, Wojciech and Łukasz discussed benefits, implementation tips, and potential pitfalls of normalizing app state in your _React Native_ mobile app.
 
