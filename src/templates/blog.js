@@ -162,9 +162,10 @@ export const pageQuery = graphql`
             title
             image {
               relativePath
-              childImageSharp {
-                gatsbyImageData(width: 672, quality: 90, layout: CONSTRAINED)
-              }
+              publicURL
+              # childImageSharp {
+              #   gatsbyImageData(width: 672, quality: 90, layout: CONSTRAINED)
+              # }
             }
             imagePosition
             author
@@ -187,15 +188,16 @@ export const pageQuery = graphql`
             title
             image {
               relativePath
-              childImageSharp {
-                gatsbyImageData(
-                  height: 200
-                  width: 280
-                  quality: 90
-                  transformOptions: { cropFocus: ATTENTION }
-                  layout: CONSTRAINED
-                )
-              }
+              publicURL
+              # childImageSharp {
+              #   gatsbyImageData(
+              #     height: 200
+              #     width: 280
+              #     quality: 90
+              #     transformOptions: { cropFocus: ATTENTION }
+              #     layout: CONSTRAINED
+              #   )
+              # }
             }
             imagePosition
             author

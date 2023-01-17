@@ -127,13 +127,14 @@ export const pageQuery = graphql`
         title
         image {
           relativePath
-          childImageSharp {
-            gatsbyImageData(
-              quality: 92
-              breakpoints: [350, 500, 700, 1400]
-              layout: FULL_WIDTH
-            )
-          }
+          publicURL
+          # childImageSharp {
+          #   gatsbyImageData(
+          #     quality: 92
+          #     breakpoints: [350, 500, 700, 1400]
+          #     layout: FULL_WIDTH
+          #   )
+          # }
         }
         path
         author
@@ -144,14 +145,15 @@ export const pageQuery = graphql`
     picture: markdownRemark(frontmatter: { path: { eq: $path } }) {
       frontmatter {
         image {
-          childImageSharp {
-            gatsbyImageData(
-              quality: 90
-              breakpoints: [320, 690, 1200]
-              transformOptions: { fit: CONTAIN, cropFocus: CENTER }
-              layout: FULL_WIDTH
-            )
-          }
+          publicURL
+        #   childImageSharp {
+        #     gatsbyImageData(
+        #       quality: 90
+        #       breakpoints: [320, 690, 1200]
+        #       transformOptions: { fit: CONTAIN, cropFocus: CENTER }
+        #       layout: FULL_WIDTH
+        #     )
+        #   }
         }
         path
         author
@@ -168,15 +170,16 @@ export const pageQuery = graphql`
             path
             title
             image {
-              childImageSharp {
-                gatsbyImageData(
-                  width: 270
-                  height: 200
-                  quality: 90
-                  transformOptions: { cropFocus: CENTER }
-                  layout: CONSTRAINED
-                )
-              }
+              publicURL
+            #   childImageSharp {
+            #     gatsbyImageData(
+            #       width: 270
+            #       height: 200
+            #       quality: 90
+            #       transformOptions: { cropFocus: CENTER }
+            #       layout: CONSTRAINED
+            #     )
+            #   }
               relativePath
             }
             author
