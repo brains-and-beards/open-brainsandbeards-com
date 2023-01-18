@@ -11,13 +11,13 @@ export const footerImageProps = graphql`
 `
 
 const Footer = (props) => {
-  const { footerImage } = useStaticQuery(graphql`
-    query footerImageQuery {
-      footerImage: file(relativePath: { regex: "/footer-binoculars/" }) {
-        ...footerImageProps
-      }
-    }
-  `)
+  // const { footerImage } = useStaticQuery(graphql`
+  //   query footerImageQuery {
+  //     footerImage: file(relativePath: { regex: "/footer-binoculars/" }) {
+  //       ...footerImageProps
+  //     }
+  //   }
+  // `)
 
   return (
     <div id="footer">
@@ -59,11 +59,11 @@ const Footer = (props) => {
         </div>
 
         <div className="col">
-          <GatsbyImage
+          {/* <GatsbyImage
             image={getImage(footerImage)}
             className="binoculars"
             alt="peeping computer"
-          />
+          /> */}
           <p className="nerd-text">
             If you're a bit of a technical nerd (like us!) you can keep on
             reading. This site has been built in React, using GatsbyJS. The data

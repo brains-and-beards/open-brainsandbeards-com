@@ -7,23 +7,23 @@ import addToMailchimp from 'gatsby-plugin-mailchimp'
 import { useEffect } from 'react'
 import Modal from './Modal'
 
+// const query = graphql`
+//   query NewsLetterImageQuery {
+//     leftImage: file(relativePath: { regex: "/estimate-project-bar-left/" }) {
+//       ...imageProps
+//     }
+//     rightImage: file(relativePath: { regex: "/estimate-project-bar-right/" }) {
+//       ...imageProps
+//     }
+//   }
+// `
+
 const BlogNewsletter = () => {
   const [submitEnabled, setSubmitEnabled] = useState(false)
   const [submittedEmail, setSubmittedEmail] = useState('')
   const [submittedName, setSubmittedName] = useState('')
 
-  const { leftImage, rightImage } = useStaticQuery(graphql`
-    query NewsLetterImageQuery {
-      leftImage: file(relativePath: { regex: "/estimate-project-bar-left/" }) {
-        ...imageProps
-      }
-      rightImage: file(
-        relativePath: { regex: "/estimate-project-bar-right/" }
-      ) {
-        ...imageProps
-      }
-    }
-  `)
+  // const { leftImage, rightImage } = useStaticQuery(query)
 
   const [showModal, setShowModal] = useState(false)
   const [modalText, setModalText] = useState('')
@@ -33,9 +33,10 @@ const BlogNewsletter = () => {
     setShowModal(true)
   }
 
-  const handleModalClose = useCallback(() => setShowModal(false), [
-    setShowModal,
-  ])
+  const handleModalClose = useCallback(
+    () => setShowModal(false),
+    [setShowModal]
+  )
 
   useEffect(() => {
     setSubmitEnabled(validateEmail(submittedEmail) && submittedName.length > 0)
@@ -83,11 +84,11 @@ const BlogNewsletter = () => {
   return (
     <section className="estimateProject">
       <div className="content row">
-        <GatsbyImage
+        {/* <GatsbyImage
           image={getImage(leftImage)}
           className="center-mobile cta-bar-image desktop-only"
           alt="Happy puzzle phone"
-        />
+        /> */}
         <div className="center newsletter-content">
           <h2>Subscribe to our newsletter</h2>
           <p className="sub2">
@@ -137,11 +138,11 @@ const BlogNewsletter = () => {
             </div>
           </div>
         </div>
-        <GatsbyImage
+        {/* <GatsbyImage
           image={getImage(rightImage)}
           className="cta-bar-image desktop-only newsletter-image-right"
           alt="Happy puzzle phone"
-        />
+        /> */}
       </div>
       <div className="blog-micro">
         <p className=" micro">

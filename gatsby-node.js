@@ -6,6 +6,17 @@ require('dotenv').config({
 })
 const showBlog = process.env.SHOW_BLOG
 
+// exports.onCreateNode = ({ node, getNode, actions }) => {
+//   const { createNodeField } = actions
+//   if (node.internal.type === `MarkdownRemark`) {
+//     const slug = createFilePath({ node, getNode, basePath: `pages` })
+//     createNodeField({
+//       node,
+//       name: `slug`,
+//       value: slug,
+//     })
+//   }
+// }
 exports.createPages = ({ actions, graphql }) => {
   const { createPage, createRedirect } = actions
 

@@ -13,7 +13,7 @@ class Projects extends Component {
         headerTitle="Case studies"
         headerSub="Read in detail about some of the applications that we've built."
       >
-        <div className="case-studies-container">
+        {/* <div className="case-studies-container">
           <CaseStudyBar
             yellowish
             image={require('../assets/case-studies/femtasy/femtasy-header.png')}
@@ -70,7 +70,7 @@ class Projects extends Component {
             </h3>
             <ClientLogos />
           </div>
-        </div>
+        </div> */}
 
         <TrustBar />
         <EstimateProjectBar />

@@ -5,42 +5,42 @@ import { useLocation } from '@reach/router'
 import { useStaticQuery, graphql } from 'gatsby'
 import { GatsbySeo } from 'gatsby-plugin-next-seo'
 
-const query = graphql`
-  query SEO {
-    site {
-      siteMetadata {
-        defaultTitle: title
-        titleTemplate
-        defaultDescription: description
-        siteUrl: url
-        defaultImage: image
-        twitterUsername
-      }
-    }
-  }
-`
+// const query = graphql`
+//   query SEO {
+//     site {
+//       siteMetadata {
+//         defaultTitle: title
+//         titleTemplate
+//         defaultDescription: description
+//         siteUrl: url
+//         defaultImage: image
+//         twitterUsername
+//       }
+//     }
+//   }
+// `
 
 const SEO = ({ title, description, image, article }) => {
   const { pathname } = useLocation()
-  const { site } = useStaticQuery(query)
-  const {
-    defaultTitle,
-    titleTemplate,
-    defaultDescription,
-    siteUrl,
-    defaultImage,
-    twitterUsername,
-  } = site.siteMetadata
-  const seo = {
-    title: (typeof title === 'string' && title) || defaultTitle,
-    description: description || defaultDescription,
-    image: `${siteUrl}${image || defaultImage}`,
-    url: `${siteUrl}${pathname}`,
-  }
+  // const { site } = useStaticQuery(query)
+  // const {
+  //   defaultTitle,
+  //   titleTemplate,
+  //   defaultDescription,
+  //   siteUrl,
+  //   defaultImage,
+  //   twitterUsername,
+  // } = site.siteMetadata
+  // const seo = {
+  //   title: (typeof title === 'string' && title) || defaultTitle,
+  //   description: description || defaultDescription,
+  //   image: `${siteUrl}${image || defaultImage}`,
+  //   url: `${siteUrl}${pathname}`,
+  // }
 
   return (
     <>
-      <GatsbySeo
+      {/* <GatsbySeo
         title={seo.title}
         titleTemplate={titleTemplate}
         description={seo.description}
@@ -71,7 +71,7 @@ const SEO = ({ title, description, image, article }) => {
           name="google-site-verification"
           content="BcbkPGxOMtXOUPAOFSU3DxA3gb_51mPzyidC4VE_mXg"
         />
-      </Helmet>
+      </Helmet> */}
     </>
   )
 }

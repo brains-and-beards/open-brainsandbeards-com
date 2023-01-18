@@ -167,7 +167,7 @@ export const pageQuery = graphql`
               #   gatsbyImageData(width: 672, quality: 90, layout: CONSTRAINED)
               # }
             }
-            imagePosition
+            # imagePosition
             author
           }
         }
@@ -199,7 +199,7 @@ export const pageQuery = graphql`
               #   )
               # }
             }
-            imagePosition
+            # imagePosition
             author
           }
         }

@@ -138,8 +138,8 @@ export const pageQuery = graphql`
         }
         path
         author
-        imageCaption
-        demo
+        # imageCaption
+        # demo
       }
     }
     picture: markdownRemark(frontmatter: { path: { eq: $path } }) {
@@ -157,8 +157,8 @@ export const pageQuery = graphql`
         }
         path
         author
-        imageCaption
-        demo
+        # imageCaption
+        # demo
       }
     }
     allMarkdownRemark(sort: { order: DESC, fields: [frontmatter___date] }) {
@@ -183,7 +183,7 @@ export const pageQuery = graphql`
               relativePath
             }
             author
-            imageCaption
+            # imageCaption
           }
         }
       }

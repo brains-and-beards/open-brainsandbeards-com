@@ -95,7 +95,7 @@ class MainPage extends Component {
       >
         <div className="half-yellow mobile-only">{renderRNSticker()}</div>
 
-        <section className="center homepage-services">
+        {/* <section className="center homepage-services">
           <h2> What can we help you with? </h2>
           <p> Pick a category to learn more: </p>
           <div className="row">
@@ -165,7 +165,7 @@ class MainPage extends Component {
             <ReferenceSwiper />
           </div>
         </section>
-        <ContactForm />
+        <ContactForm /> */}
       </Layout>
     )
   }

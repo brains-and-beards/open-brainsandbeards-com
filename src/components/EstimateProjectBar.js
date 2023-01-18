@@ -13,27 +13,27 @@ export const imageProps = graphql`
 const EstimateProjectBar = (props) => {
   const title = props.title || 'Want to start<br/>a great project?'
   const buttonText = props.buttonText || 'Get an estimate'
-  const { leftImage, rightImage } = useStaticQuery(graphql`
-    query imageQuery {
-      leftImage: file(relativePath: { regex: "/estimate-project-bar-left/" }) {
-        ...imageProps
-      }
-      rightImage: file(
-        relativePath: { regex: "/estimate-project-bar-right/" }
-      ) {
-        ...imageProps
-      }
-    }
-  `)
+  // const { leftImage, rightImage } = useStaticQuery(graphql`
+  //   query imageQuery {
+  //     leftImage: file(relativePath: { regex: "/estimate-project-bar-left/" }) {
+  //       ...imageProps
+  //     }
+  //     rightImage: file(
+  //       relativePath: { regex: "/estimate-project-bar-right/" }
+  //     ) {
+  //       ...imageProps
+  //     }
+  //   }
+  // `)
 
   return (
     <section className="estimateProject">
       <div className="content row">
-        <GatsbyImage
+        {/* <GatsbyImage
           image={getImage(leftImage)}
           className="center-mobile cta-bar-image"
           alt="Happy phone"
-        />
+        /> */}
         <div className="center">
           <h2 dangerouslySetInnerHTML={{ __html: title }} />
 
@@ -41,11 +41,11 @@ const EstimateProjectBar = (props) => {
             <Link to="/estimate-project/">{buttonText}</Link>
           </div>
         </div>
-        <GatsbyImage
+        {/* <GatsbyImage
           image={getImage(rightImage)}
           className="cta-bar-image desktop-only"
           alt="Happy phone"
-        />
+        /> */}
       </div>
     </section>
   )
