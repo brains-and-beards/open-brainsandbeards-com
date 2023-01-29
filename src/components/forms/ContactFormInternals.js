@@ -1,5 +1,5 @@
+import { GatsbyImage, getImage } from 'gatsby-plugin-image'
 import React, { Component } from 'react'
-import Img from 'gatsby-image'
 
 import { validateEmail } from './utils'
 
@@ -28,7 +28,7 @@ class ContactFormInternals extends Component {
           <input type="hidden" name="form-name" value="contact" />
           <div className="content">
             <div className="contact-content">
-              <Img fixed={image.childImageSharp.fixed} alt="Contact us" />
+              <GatsbyImage fixed={getImage(image)} alt="Contact us" />
               {title}
               <p className="sub2 amazing">{subtitle}</p>
 

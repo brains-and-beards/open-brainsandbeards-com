@@ -1,13 +1,15 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { graphql, useStaticQuery, Link } from 'gatsby'
-import Img from 'gatsby-image'
+import { GatsbyImage, getImage } from 'gatsby-plugin-image';
 
 export const footerImageProps = graphql`
   fragment footerImageProps on File {
     childImageSharp {
-      fixed(width: 88, quality: 90, traceSVG: { color: "#333" }) {
-        ...GatsbyImageSharpFixed_tracedSVG
-      }
+      gatsbyImageData(
+        layout: FIXED
+        width: 88
+        quality: 90
+      )
     }
   }
 `
@@ -61,9 +63,9 @@ const Footer = (props) => {
         </div>
 
         <div className="col">
-          <Img
+          <GatsbyImage
             className="binoculars"
-            fixed={footerImage.childImageSharp.fixed}
+            image={getImage(footerImage)}
             alt="peeping computer"
           />
           <p className="nerd-text">

@@ -1,6 +1,6 @@
 const testimonials = [
   {
-    photo: require('./xing-sebastian.jpg'),
+    photo: 'xing-sebastian.jpg',
     quote:
       '“Brains & Beards helped me by solving many technical impediments across various agile development teams through implementing the needed changes to the backend of those connected applications. The result was that we were able to release the product in time and scope. I would recommend Brains & Beards to people who need the profound support of experienced developers to solve technically challenging projects.”',
     name: 'Sebastian Gerdemann',
@@ -8,7 +8,7 @@ const testimonials = [
     company: 'XING E-Recruiting GmbH & Co. KG',
   },
   {
-    photo: require('./sharoo-feyyaz.jpg'),
+    photo: 'sharoo-feyyaz.jpg',
     quote:
       '“We started working with Brains & Beards back in 2016 and have been a customer ever since. They are a reliable partner to work with and have helped us bring many solutions to life both on desktop and mobile. Their expertise and experience shows in many different facets such as project planning, suggesting solutions and efficient problem solving. We can recommend Brains & Beards to companies that need skilled developers who are not scared of technical challenges.”',
     name: 'Feyyaz Alingan',
@@ -16,7 +16,7 @@ const testimonials = [
     company: 'sharoo AG',
   },
   {
-    photo: require('./rakuten-sergio.jpg'),
+    photo: 'rakuten-sergio.jpg',
     quote:
       "“I've approached Brains & Beards, because we needed a new mobile application for the Spanish market. The result was a product which is not only easy to maintain and robust, but as well great-looking and simple to understand for Rakuten users. Their years-long expertise helped us get rid of many problems before they even appeared.”",
     name: 'Sergio Gago',

@@ -5,8 +5,9 @@
 First you'll need to install [Gatsby](http://gatsbyjs.org/), then clone the website source code (this repo) and run:
 
 ```
+nvm use
 yarn install
-gatsby develop
+yarn gatsby develop
 ```
 
 You can see the development version on `http://localhost:8000/`.

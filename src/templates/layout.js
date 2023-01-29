@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react'
+import React from 'react'
 
 import Header from '../components/Header'
 import Navbar from '../components/Navbar'
@@ -6,10 +6,9 @@ import Footer from '../components/Footer'
 import { Location } from '@reach/router'
 
 import '../assets/stylesheets/main.scss'
-import SEO from '../components/SEO'
+// import SEO from '../components/SEO'
 
-class Layout extends Component {
-  render() {
+const Layout = (props) => {
     const {
       children,
       header,
@@ -21,13 +20,14 @@ class Layout extends Component {
       projects,
       rightContent,
       simpleNavbar,
-    } = this.props
+    } = props
 
     return (
-      <Fragment>
-        <SEO title={headerTitle} />
+      <>
+      {/* TODO: Implement SEO */}
+        {/* <SEO title={headerTitle} /> */}
         <Location>
-          {(locationProps) => (
+        {(locationProps) => (
             <Navbar
               simple={simpleNavbar}
               currentLocation={locationProps.location.pathname}
@@ -52,10 +52,9 @@ class Layout extends Component {
           </div>
         </div>
         {children}
-        <Footer />
-      </Fragment>
+       <Footer />
+      </>
     )
   }
-}
 
 export default Layout

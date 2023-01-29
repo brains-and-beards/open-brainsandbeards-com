@@ -1,6 +1,6 @@
-import React, { Component } from 'react'
+import React, { useState } from 'react'
 import { Link } from 'gatsby'
-import CanonicalLink from './CanonicalLink'
+import { StaticImage } from 'gatsby-plugin-image'
 
 const renderLink = (url, label, klass = 'menu-link') => (
   <li className={klass} key={`menu-link-${label}`}>
@@ -8,32 +8,26 @@ const renderLink = (url, label, klass = 'menu-link') => (
   </li>
 )
 
-class Navbar extends Component {
-  state = {
-    showMobileOverlay: false,
-  }
+const useOverlay = () => {
+  const [isShown, setIsShown] = useState(false)
 
-  showOverlay = () => {
-    this.setState({ showMobileOverlay: true })
-  }
+  const hide = () => setIsShown(false)
+  const show = () => setIsShown(true)
 
-  hideOverlay = () => {
-    this.setState({ showMobileOverlay: false })
-  }
+  return { isShown, hide, show }
+}
 
-  renderLocaleSwitch = () => (
-    <ul className="menu-links desktop-only">
-      {renderLink('#', 'En')}
-      {' | '}
-      {renderLink('#', 'De')}
-    </ul>
-  )
+const Navbar = (props) => {
+  const { simple, grey, currentLocation, projects } = props
 
-  renderMobileLink = (url, label, klass = 'menu-link mobile-menu-link') => {
-    if (url === this.props.currentLocation)
+  const overlay = useOverlay();
+
+
+  const renderMobileLink = (url, label, klass = 'menu-link mobile-menu-link') => {
+    if (url === currentLocation)
       return (
         <li className={klass} key={`mobile-menu-link-${label}`}>
-          <a onClick={this.hideOverlay}> {label} </a>
+          <a onClick={overlay.hide}> {label} </a>
         </li>
       )
 
@@ -44,9 +38,6 @@ class Navbar extends Component {
     )
   }
 
-  render() {
-    const { simple, grey, currentLocation, projects } = this.props
-    const { showMobileOverlay } = this.state
     const navbarBackButtonText = `Back to ${projects ? 'projects' : 'homepage'}`
 
     return (
@@ -54,19 +45,10 @@ class Navbar extends Component {
         {simple ? (
           <div className="menu">
             <Link to="/">
-              <img
-                id="logo"
-                src={require('../assets/images/logo-draft.svg')}
-                alt="logo"
-              />
+              <StaticImage src='../assets/images/logo-draft.svg'  alt='logo' />
             </Link>
             <div className="back-to-homepage">
-              <img
-                src={require('../assets/images/chevron-bold.svg')}
-                height="10px"
-                className="reverse"
-                alt="back"
-              />
+              <StaticImage src='../assets/images/chevron-bold.svg'  alt='back' />
               {projects
                 ? renderLink('/projects', navbarBackButtonText)
                 : renderLink('/', navbarBackButtonText)}
@@ -75,11 +57,7 @@ class Navbar extends Component {
         ) : (
           <div className="menu">
             <Link to="/">
-              <img
-                id="logo"
-                src={require('../assets/images/logo-draft.svg')}
-                alt="logo"
-              />
+              <StaticImage src='../assets/images/logo-draft.svg'  alt='logo' />
             </Link>
 
             <ul className="menu-links desktop-only">
@@ -102,30 +80,24 @@ class Navbar extends Component {
                 'menu-link button menu-estimate-button'
               )}
             </ul>
-            <img
-              src={require('../assets/images/hamburger.svg')}
-              className="mobile-only"
-              onClick={this.showOverlay}
-              alt="menu"
-            />
+            <div onClick={overlay.show}>
+              <StaticImage
+                src='../assets/images/hamburger.svg'
+                className="mobile-only"
+                alt='menu'
+              />
+            </div>
           </div>
         )}
 
-        {showMobileOverlay && (
+        {overlay.isShown && (
           <div className="mobile-only menu-overlay">
             <div className="mobile-menu-content">
               <div className="menu">
-                <img
-                  id="logo"
-                  src={require('../assets/images/logo-draft.svg')}
-                  alt="logo"
-                />
-                <img
-                  src={require('../assets/images/close.svg')}
-                  className="mobile-only"
-                  onClick={this.hideOverlay}
-                  alt="close"
-                />
+                <StaticImage src='../assets/images/logo-draft.svg' alt='logo' />
+                <div onClick={overlay.hide}>
+                  <StaticImage src='../assets/images/close.svg' className="mobile-only" alt='close' />
+                </div>
               </div>
               <ul>
                 {[
@@ -135,13 +107,13 @@ class Navbar extends Component {
                   { url: '/team', label: 'Team' },
                   { url: '/jobs', label: 'Careers' },
                   { url: '/blog', label: 'Blog' },
-                ].map((link) => this.renderMobileLink(link.url, link.label))}
+                ].map((link) => renderMobileLink(link.url, link.label))}
                 <li className="menu-link mobile-menu-link">
                   <a href="https://podcast.brainsandbeards.com"> Podcast </a>
                 </li>
               </ul>
               <ul>
-                {this.renderMobileLink(
+                {renderMobileLink(
                   '/estimate-project',
                   'Estimate project',
                   'menu-link button'
@@ -149,18 +121,18 @@ class Navbar extends Component {
               </ul>
               {false && (
                 <ul className="horizontal">
-                  {this.renderMobileLink('#', 'En', 'menu-link light')}
+                  {renderMobileLink('#', 'En', 'menu-link light')}
                   {' | '}
-                  {this.renderMobileLink('#', 'De', 'menu-link light')}
+                  {renderMobileLink('#', 'De', 'menu-link light')}
                 </ul>
               )}
             </div>
           </div>
         )}
-        <CanonicalLink path={currentLocation} />
+        {/* TODO: Implement it in Head of page */}
+        {/* <CanonicalLink path={currentLocation} /> */}
       </div>
     )
   }
-}
 
 export default Navbar
