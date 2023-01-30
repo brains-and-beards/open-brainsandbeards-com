@@ -1,57 +1,75 @@
+import { graphql, useStaticQuery } from 'gatsby'
 import { GatsbyImage, getImage } from 'gatsby-plugin-image'
-import React, { Component } from 'react'
+import React, { useState } from 'react'
 
 import { validateEmail } from './utils'
 
-class ContactFormInternals extends Component {
-  state = {
-    submitEnabled: false,
+const query = graphql`
+query {
+  image: file(relativePath: { regex: "/contact-us/" }) {
+    childImageSharp {
+      gatsbyImageData(
+        layout: CONSTRAINED
+        height: 192
+        quality: 90
+        placeholder: BLURRED
+      )
+    }
   }
+}
+`
 
-  handleInputChange = (event) => {
+const ContactFormInternals = ({ title, subtitle }) => {
+  const [isSubmitEnabled, setIsSubmitEnabled] = useState(false)
+
+  const { image } = useStaticQuery(query)
+
+  const handleInputChange = (event) => {
     const validationResult = validateEmail(event.target.value)
-    this.setState({ submitEnabled: validationResult })
+    setIsSubmitEnabled(validationResult)
   }
 
-  render = () => {
-    const { submitEnabled } = this.state
-    const { image, title, subtitle } = this.props
-
-    return (
-      <section className="contact-form">
-        <form
-          method="post"
-          data-netlify="true"
-          name="contact"
-          action="/message-sent"
-        >
-          <input type="hidden" name="form-name" value="contact" />
-          <div className="content">
-            <div className="contact-content">
-              <GatsbyImage fixed={getImage(image)} alt="Contact us" />
-              {title}
-              <p className="sub2 amazing">{subtitle}</p>
-
-              <label htmlFor="email"> Email address </label>
-              <input
-                type="text"
-                name="email"
-                onChange={this.handleInputChange}
-              />
-              <label htmlFor="phone">Phone number (not necessary)</label>
-              <input type="text" name="phone" />
-              <label htmlFor="text">How can we help you ?</label>
-              <textarea name="text" />
-
-              <button disabled={!submitEnabled} className="cta-action">
-                Send
-              </button>
+  return (
+    <section className="contact-form">
+      <form
+        method="post"
+        data-netlify="true"
+        name="contact"
+        action="/message-sent"
+      >
+        <input type="hidden" name="form-name" value="contact" />
+        <div className="content">
+          <div className="contact-content">
+            <div  style={{ backgroundColor: 'green' }}>
+            <GatsbyImage
+              objectFit={'contain'}
+              image={getImage(image)}
+              alt="Contact us"
+            />
             </div>
+              
+            {title}
+            <p className="sub2 amazing">{subtitle}</p>
+
+            <label htmlFor="email"> Email address </label>
+            <input
+              type="text"
+              name="email"
+              onChange={handleInputChange}
+            />
+            <label htmlFor="phone">Phone number (not necessary)</label>
+            <input type="text" name="phone" />
+            <label htmlFor="text">How can we help you ?</label>
+            <textarea name="text" />
+
+            <button disabled={!isSubmitEnabled} className="cta-action">
+              Send
+            </button>
           </div>
-        </form>
-      </section>
-    )
-  }
+        </div>
+      </form>
+    </section>
+  )
 }
 
 export default ContactFormInternals

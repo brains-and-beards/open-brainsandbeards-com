@@ -26,6 +26,7 @@ const SwiperItem = ({
           image={getImage(image)}
           imgClassName="round"
           loading="eager"
+          alt="Testimonial illustration"
         />
         <a href="#" onClick={onNext} className="reference next">
           <StaticImage

@@ -16,18 +16,9 @@ const ContactForm = (props) => {
     props.subtitle ||
     'Got something amazing for us? Fill in the form below to start a new project!'
 
-  const { image } = useStaticQuery(graphql`
-    query contactImageQuery {
-      image: file(relativePath: { regex: "/contact-us/" }) {
-        ...illustrationIconImageProps
-      }
-    }
-  `)
-
   return (
     <section className="contact-form">
       <ContactFormInternals
-        image={image}
         title={renderTitle(props)}
         subtitle={subtitle}
       />
