@@ -6,7 +6,7 @@ import ContactForm from '../components/forms/ContactForm'
 import Layout from '../templates/layout'
 import TrustBar from '../components/TrustBar'
 import EstimateProjectBar from '../components/EstimateProjectBar'
-// import ClientLogos from '../components/ClientLogos'
+import ClientLogos from '../components/ClientLogos'
 // import CaseStudyBar from '../components/CaseStudyBar'
 import ReferenceSwiper from '../components/ReferenceSwiper'
 import ReadMore from '../components/ReadMore'
@@ -154,9 +154,9 @@ const MainPage = (props) => {
             desc="How we implemented unique mobile applications supporting renting and interacting with rented vehicles."
             url="/projects/sharoo"
             pageType="home"
-          />
+          /> */}
 
-          <ClientLogos short /> */}
+          <ClientLogos short />
           <ReferenceSwiper />
         </div>
       </section>

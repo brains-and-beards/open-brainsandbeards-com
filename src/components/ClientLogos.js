@@ -50,8 +50,8 @@ function ClientLogos({ short }) {
 
   return (
     <div className="clients">
-      {clientRows.map((clients) => (
-        <div className="logos">
+      {clientRows.map((clients, rowIndex) => (
+        <div key={rowIndex} className="logos">
           {clients.map(({name, image, height}) => (
             <div className="logo" key={`logo-${name}`}>
               <img
