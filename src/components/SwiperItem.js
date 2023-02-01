@@ -18,7 +18,6 @@ const SwiperItem = ({
           <StaticImage
             src="../assets/images/chevron.svg"
             className="reverse"
-            height="24px"
             alt="arrow"
           />
         </a>
@@ -31,7 +30,6 @@ const SwiperItem = ({
         <a href="#" onClick={onNext} className="reference next">
           <StaticImage
             src="../assets/images/chevron.svg"
-            height="24px"
             alt="arrow"
           />
         </a>
