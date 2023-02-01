@@ -142,12 +142,12 @@ const MainPage = (props) => {
       <EstimateProjectBar title="Build your product <br/>with Brains & Beards" />
       <section className="clients">
        <div className="content">
-          {/*   <h2> Our clients </h2>
+          <h2> Our clients </h2>
           <p className="sub2">
             We help technology-driven organizations – from start-ups to large
             enterprises – develop software more efficiently.
           </p>
-          <CaseStudyBar
+          {/*   <CaseStudyBar
             image={require('../assets/case-studies/sharoo/sharoo-hero.jpg')}
             logo={require('../assets/case-studies/sharoo/sharoo-logo.png')}
             header="We helped sharoo team conquering carsharing economy in Switzerland"
