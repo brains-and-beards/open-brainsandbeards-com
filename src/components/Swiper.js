@@ -12,7 +12,6 @@ class Swiper extends Component {
     this.swiper = null
   }
 
-  // TODO: Check if it was fixed
   // Fix arrow buttons in loop mode https://github.com/kidjp85/react-id-swiper/issues/85
   componentDidMount() {
     const slides = document.querySelectorAll('.swiper-slide')

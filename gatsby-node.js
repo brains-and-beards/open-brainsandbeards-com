@@ -6,7 +6,7 @@ const path = require('path')
 // })
 // const showBlog = process.env.SHOW_BLOG
 
-exports.createPages = async ({ actions, graphql }) => {
+exports.createPages = ({ actions, graphql }) => {
   const { createPage, createRedirect } = actions
 
   createRedirect({

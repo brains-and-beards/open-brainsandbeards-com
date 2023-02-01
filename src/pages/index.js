@@ -141,7 +141,7 @@ const MainPage = (props) => {
       <TrustBar />
       <EstimateProjectBar title="Build your product <br/>with Brains & Beards" />
       <section className="clients">
-      <div className="content">
+       <div className="content">
           {/*   <h2> Our clients </h2>
           <p className="sub2">
             We help technology-driven organizations – from start-ups to large

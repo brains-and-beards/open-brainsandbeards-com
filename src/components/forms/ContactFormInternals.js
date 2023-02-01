@@ -6,15 +6,8 @@ import { validateEmail } from './utils'
 
 const query = graphql`
 query {
-  image: file(relativePath: { regex: "/contact-us/" }) {
-    childImageSharp {
-      gatsbyImageData(
-        layout: CONSTRAINED
-        height: 192
-        quality: 90
-        placeholder: BLURRED
-      )
-    }
+  image: file(relativePath: { regex: "/contact-us.png/" }) {
+    ...illustrationIconImageProps
   }
 }
 `
@@ -40,9 +33,8 @@ const ContactFormInternals = ({ title, subtitle }) => {
         <input type="hidden" name="form-name" value="contact" />
         <div className="content">
           <div className="contact-content">
-            <div  style={{ backgroundColor: 'green' }}>
+            <div>
             <GatsbyImage
-              objectFit={'contain'}
               image={getImage(image)}
               alt="Contact us"
             />

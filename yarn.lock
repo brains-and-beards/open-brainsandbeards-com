@@ -4116,7 +4116,7 @@ __metadata:
     react: ^18.2.0
     react-dom: ^18.2.0
     react-helmet-async: ^1.3.0
-    react-id-swiper: ^4.0.0
+    react-id-swiper: ^1.6.8
     sass: ^1.57.1
     swiper: ^8.4.6
   languageName: unknown
@@ -5460,6 +5460,15 @@ __metadata:
     domhandler: ^4.2.0
     entities: ^2.0.0
   checksum: fbb0b01f87a8a2d18e6e5a388ad0f7ec4a5c05c06d219377da1abc7bb0f674d804f4a8a94e3f71ff15f6cb7dcfc75704a54b261db672b9b3ab03da6b758b0b22
+  languageName: node
+  linkType: hard
+
+"dom7@npm:^2.1.3":
+  version: 2.1.5
+  resolution: "dom7@npm:2.1.5"
+  dependencies:
+    ssr-window: ^2.0.0
+  checksum: 7615d2d2deb269149595c0e43cf0608fe9b464580cb205a6c003578b9b417611940f40347712c1fcbd2a7e35adbaf3c07ea1a3273d426865fe42ef42e11fdd8d
   languageName: node
   linkType: hard
 
@@ -11354,16 +11363,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-id-swiper@npm:^4.0.0":
-  version: 4.0.0
-  resolution: "react-id-swiper@npm:4.0.0"
+"react-id-swiper@npm:^1.6.8":
+  version: 1.6.9
+  resolution: "react-id-swiper@npm:1.6.9"
   dependencies:
     object-assign: ^4.1.1
+    prop-types: ^15.7.2
+    swiper: ^4.4.6
   peerDependencies:
-    react: ">=16.8.0"
-    react-dom: ">=16.8.0"
-    swiper: ">=5.0.0"
-  checksum: 0e0a3bb3ff0cc0029d1c7b372eacd97dda615999676d0ac557642b349c631938385628915cc44d036092cfa109e0a1b12e50ab710d33bfd41266a471052999f8
+    react: ^15.0.0 || ^16.0.0
+    react-dom: ^15.0.0 || ^16.0.0
+  checksum: 06186f93a93b440848b18663e77952e78d3b1a61b8d2c78b5c6a51cb51c1a1a05c3f29588a6a0ff86308df309c52ca6acb02d42366b27d01e64f7a518cc441cf
   languageName: node
   linkType: hard
 
@@ -12435,6 +12445,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"ssr-window@npm:^1.0.1":
+  version: 1.0.1
+  resolution: "ssr-window@npm:1.0.1"
+  checksum: 37d90d068978769a7e8b3b547938b94b42cb3fe8d47603f908f27b54789aaf9140b71e2dd81876597b4386543217b71748fcb06d1fcb562490a3d850b6f349d2
+  languageName: node
+  linkType: hard
+
+"ssr-window@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "ssr-window@npm:2.0.0"
+  checksum: 9f076def70f0c0e369f00df94a627829b58c225dd6574de1fba99f9c3a9dd8858e2efcfbe4913b7a7ad77f805d40cbddeee7c1e507ad5324a6ea5d70b57ae675
+  languageName: node
+  linkType: hard
+
 "ssr-window@npm:^4.0.0, ssr-window@npm:^4.0.2":
   version: 4.0.2
   resolution: "ssr-window@npm:4.0.2"
@@ -12809,6 +12833,16 @@ __metadata:
   dependencies:
     tslib: ^2.0.3
   checksum: 6e21c9e1b3cd5735eb2af679a99ec3efc78a14e3d4d5e3fd594e254b91cfd37185b3d1c6e41b22f53a2cdf5d1b963ce30c0fe8b78337e3fd43d0137084670a5f
+  languageName: node
+  linkType: hard
+
+"swiper@npm:^4.4.6":
+  version: 4.5.1
+  resolution: "swiper@npm:4.5.1"
+  dependencies:
+    dom7: ^2.1.3
+    ssr-window: ^1.0.1
+  checksum: b5b896561c4108e33bfaa86e12302ce7f1816622a8263cfeb10cd7fbaaa9986ee72615b1f896eae947b149fb789a80973555d67feaf05a3d75cf042a15556fd2
   languageName: node
   linkType: hard
 
