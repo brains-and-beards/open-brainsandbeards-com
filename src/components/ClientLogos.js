@@ -54,6 +54,7 @@ function ClientLogos({ short }) {
         <div key={rowIndex} className="logos">
           {clients.map(({name, image, height}) => (
             <div className="logo" key={`logo-${name}`}>
+              {/* TODO: This should be optimized to use GatsbyImage. Images now are too large. */}
               <img
                 src={image}
                 height={height}

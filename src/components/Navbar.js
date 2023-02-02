@@ -1,6 +1,9 @@
 import React, { useState } from 'react'
 import { Link } from 'gatsby'
-import { StaticImage } from 'gatsby-plugin-image'
+import LogoSvg from '../assets/images/logo-draft.svg'
+import HamburgerSvg from '../assets/images/hamburger.svg'
+import ChevronBackSvg from '../assets/images/chevron-bold.svg'
+import CloseSvg from '../assets/images/close.svg'
 
 const renderLink = (url, label, klass = 'menu-link') => (
   <li className={klass} key={`menu-link-${label}`}>
@@ -45,10 +48,10 @@ const Navbar = (props) => {
         {simple ? (
           <div className="menu">
             <Link to="/">
-              <StaticImage src='../assets/images/logo-draft.svg'  alt='logo' />
+              <LogoSvg alt="Brains and Beards logo" />
             </Link>
             <div className="back-to-homepage">
-              <StaticImage src='../assets/images/chevron-bold.svg'  alt='back' />
+              <ChevronBackSvg alt="Back arrow" />
               {projects
                 ? renderLink('/projects', navbarBackButtonText)
                 : renderLink('/', navbarBackButtonText)}
@@ -57,7 +60,7 @@ const Navbar = (props) => {
         ) : (
           <div className="menu">
             <Link to="/">
-              <StaticImage src='../assets/images/logo-draft.svg'  alt='logo' />
+              <LogoSvg alt="Brains and Beards logo" />
             </Link>
 
             <ul className="menu-links desktop-only">
@@ -81,8 +84,7 @@ const Navbar = (props) => {
               )}
             </ul>
             <div onClick={overlay.show}>
-              <StaticImage
-                src='../assets/images/hamburger.svg'
+              <HamburgerSvg
                 className="mobile-only"
                 alt='menu'
               />
@@ -94,9 +96,9 @@ const Navbar = (props) => {
           <div className="mobile-only menu-overlay">
             <div className="mobile-menu-content">
               <div className="menu">
-                <StaticImage src='../assets/images/logo-draft.svg' alt='logo' />
+                <LogoSvg alt="Brains and Beards logo" />
                 <div onClick={overlay.hide}>
-                  <StaticImage src='../assets/images/close.svg' className="mobile-only" alt='close' />
+                  <CloseSvg className="mobile-only" alt='close' />
                 </div>
               </div>
               <ul>
