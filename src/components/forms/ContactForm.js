@@ -1,6 +1,4 @@
 import React from 'react'
-import { graphql, useStaticQuery } from 'gatsby'
-
 import ContactFormInternals from './ContactFormInternals'
 
 const renderTitle = ({ title: titleParam, main }) => {

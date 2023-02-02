@@ -59,6 +59,7 @@ class SharooCaseStudy extends Component {
             </p>
           </div>
 
+{/* TODO: image prop */}
           <Testimonial
             quote="“We started working with Brains & Beards back in 2016 and have been a customer ever since. 
             They are a reliable partner to work with and have helped us bring many solutions to life both on desktop and mobile. 

@@ -44,6 +44,7 @@ class FemtasyCaseStudy extends Component {
             </p>
           </div>
 
+{/* TODO: image prop */}
           <Testimonial
             quote="Together with the team of Brains & Beards we developed and successfully published our first app prototype at femtasy for iOS and Android. We truly valued the flexible, hands-on and effective collaboration with Patryk and Natalia."
             photo={require('./../../assets/testimonials/femtasy-michael.jpg')}
@@ -92,6 +93,7 @@ class FemtasyCaseStudy extends Component {
               way.
             </p>
           </div>
+{/* TODO: image prop */}
           <Testimonial
             quote="During the whole process the communication was fantastic and the process was kept simple and lean allowing us to focus on what really mattered for the success of our project."
             photo={require('./../../assets/testimonials/femtasy-ale.png')}
@@ -141,6 +143,7 @@ class FemtasyCaseStudy extends Component {
             </p>
           </div>
 
+{/* TODO: image prop */}
           <Testimonial
             quote="Brains & Beards have helped us achieve our ambitious goal through their professionalism, expertise and great communication. I felt in good hands throughout the whole process and was always sure that they would point out if there was a problem or a better way of doing something."
             photo={require('./../../assets/testimonials/femtasy-peter.jpg')}
@@ -200,6 +203,7 @@ class FemtasyCaseStudy extends Component {
           </div>
         </div>
 
+{/* TODO: image prop */}
         <Testimonial
           quote="If you're looking for experienced, pragmatic and highly communicative team, these are the guys!"
           photo={require('./../../assets/testimonials/femtasy-ale.png')}

@@ -1,58 +1,63 @@
 import React, { Component } from 'react'
-import Img from 'gatsby-image'
 import { graphql } from 'gatsby'
 
 import Swiper from '../components/Swiper'
 import Layout from '../templates/layout'
-import TeamMember from '../components/Team/TeamMember'
+import SEO from '../components/SEO'
+import TeamMember from '../components/TeamMember'
 import ContactForm from '../components/forms/ContactForm'
+import { StaticImage } from 'gatsby-plugin-image'
 import PictureListItem from '../components/PictureListItem'
 import Testimonial from '../components/Testimonial'
+
 
 let teamMembers = [
   {
     name: 'Patryk',
-    imageUrl: require('../assets/team/patryk.jpg'),
+    photo: 'patryk.jpg',
     bio:
       'Ideas machine. Reading too much. Teaching (functional) mobile and desktop development. I do funny faces on YouTube.',
   },
   {
     name: 'Wojciech',
-    imageUrl: require('../assets/team/wojtek.jpg'),
+    photo: 'wojtek.jpg',
     bio:
       'Polyglot software developer. Climber. Interested in renewable energy, electric vehicles, and reforestation. The easiest way to pronounce my name is: boy - tech.',
   },
   {
     name: 'Marek',
-    imageUrl: require('../assets/team/marek.jpg'),
+    photo: 'marek.jpg',
     bio:
       'React Native developer with Ruby on Rails backend experience. Ex-chemist. Enjoys climbing and travelling to remote places.',
   },
   {
     name: 'Szymon',
-    imageUrl: require('../assets/team/szymon.jpg'),
+    photo: 'szymon.jpg',
     bio:
       'React Native developer with native Android and iOS experience. Always curious and eager to try new technologies. Often tinkers with electronics or rides a bike.',
   },
   {
     name: 'Łukasz',
-    imageUrl: require('../assets/team/lukasz.jpg'),
+    photo: 'lukasz.jpg',
     bio:
       'React Native developer with web experience. Enthusiast of functional programming. Always on the lookout for performance gains, never stops asking why. Can be found skating down the streets.',
   },
   {
     name: 'Błażej',
-    imageUrl: require('../assets/team/blazej.jpg'),
+    photo: 'blazej.jpg',
     bio:
       'Mobile apps developer. He fell in love with React Native. Self-improver, golf enthusiast. In his house you can always count on being welcomed with a good Scotch.',
   },
   {
     name: 'This could be you',
-    imageUrl: require('../assets/team/open-positions.jpg'),
+    photo: 'open-positions.jpg',
     bio:
       'Ready to take the next step in your career? Drop us a message to see if you could join our team.',
   },
 ]
+
+const title = "Team"
+const description = "Technology is never enough to solve a problem. You'll need a team of experienced and caring developers as well. How about ours?"
 
 class TeamPage extends Component {
   render() {
@@ -60,34 +65,42 @@ class TeamPage extends Component {
       versatilityIcon,
       reliabilityIcon,
       diversityIcon,
-      outsourcingIcon,
+      testimonialImage,
+      teamImages
     } = this.props.data
+
+    const teamMembersWithImages = teamMembers.map(it => {
+      const image = teamImages.nodes.find(file => file.relativePath === it.photo)
+      return ({
+        ...it,
+        image
+      })
+    })
 
     return (
       <Layout
-        headerTitle="Team"
-        headerSub="Technology is never enough to solve a problem. You'll need a team of experienced and caring developers as well. How about ours?"
+        headerTitle={title}
+        headerSub={description}
       >
         <div className="content-page">
           <div className="big-part-yellow">
             <div className="content members-box">
-              {teamMembers.map((member) => (
+              {teamMembersWithImages.map((member) => (
                 <TeamMember {...member} key={member.name} />
               ))}
             </div>
             <div className="mobile-only team-swiper">
               <Swiper
                 ContentClass={TeamMember}
-                items={teamMembers}
+                items={teamMembersWithImages}
                 slidesPerView={'auto'}
-                spaceBetween={'15%'}
               />
             </div>
           </div>
 
           <Testimonial
             quote="It was a pleasure working at Brains & Beards - a company where everyone is treated equally, fairly, and without discrimination. There was always time to develop yourself. I developed amazingly working with everyone on the team and gained valuable experience as a remote software engineer. In addition, my colleagues were always approachable and I'd always be eager to start a new working day."
-            photo={require('../assets/testimonials/team-natalia.jpg')}
+            image={testimonialImage}
             name="Natalia Majkowska-Stewart"
             position="React Native Developer"
             company="Brains & Beards"
@@ -101,7 +114,7 @@ class TeamPage extends Component {
             </p>
             <ul className="picture-list">
               <PictureListItem
-                image={versatilityIcon.childImageSharp.fixed}
+                image={versatilityIcon}
                 title="Versatility"
               >
                 <p>
@@ -113,7 +126,7 @@ class TeamPage extends Component {
                 </p>
               </PictureListItem>
               <PictureListItem
-                image={reliabilityIcon.childImageSharp.fixed}
+                image={reliabilityIcon}
                 title="Reliability"
               >
                 <p>
@@ -124,7 +137,7 @@ class TeamPage extends Component {
                 </p>
               </PictureListItem>
               <PictureListItem
-                image={diversityIcon.childImageSharp.fixed}
+                image={diversityIcon}
                 title="Diversity"
               >
                 <p>
@@ -150,9 +163,10 @@ class TeamPage extends Component {
                     parties.
                   </p>
                 </section>
-                <Img
-                  fixed={outsourcingIcon.childImageSharp.fixed}
+                <StaticImage
+                  src="../assets/illustrations/team-no-outsourcing.png"
                   alt="No outsourcing policy"
+                  height={320}
                 />
               </div>
             </div>
@@ -207,16 +221,6 @@ class TeamPage extends Component {
   }
 }
 
-export const teamOutsourcingIconImageProps = graphql`
-  fragment teamOutsourcingIconImageProps on File {
-    childImageSharp {
-      fixed(height: 320, quality: 90, traceSVG: { color: "#333" }) {
-        ...GatsbyImageSharpFixed_tracedSVG
-      }
-    }
-  }
-`
-
 export const query = graphql`
   query teamPageQuery {
     versatilityIcon: file(relativePath: { regex: "/team-versatility-icon/" }) {
@@ -228,10 +232,41 @@ export const query = graphql`
     diversityIcon: file(relativePath: { regex: "/team-diversity-icon/" }) {
       ...illustrationIconImageProps
     }
-    outsourcingIcon: file(relativePath: { regex: "/team-no-outsourcing/" }) {
-      ...teamOutsourcingIconImageProps
+    testimonialImage: file(
+      relativePath: { regex: "/team-natalia/" }
+      sourceInstanceName: { eq: "testimonialsAssets" }
+    ) {
+      ...testimonialImageFragment
+    }
+    teamImages: allFile(
+      filter: { 
+        sourceInstanceName: { eq: "teamAssets" },
+        relativePath: {
+          in: [
+            "patryk.jpg", "wojtek.jpg", "marek.jpg",
+            "szymon.jpg", "lukasz.jpg", "blazej.jpg",
+            "open-positions.jpg"
+          ]
+        }
+      }
+    ) {
+      nodes {
+        relativePath
+        childImageSharp {
+          gatsbyImageData(
+            width: 400
+          )
+        }
+      }
     }
   }
 `
 
 export default TeamPage
+
+export const Head = () => (
+  <SEO
+    title={title}
+    description={description}
+  />
+)

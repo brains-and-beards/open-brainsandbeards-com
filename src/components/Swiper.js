@@ -48,7 +48,7 @@ class Swiper extends Component {
     const { items, ContentClass } = this.props
 
     return items.map((i) => (
-      <div key={`reference-${i.company}`}>
+      <div key={`reference-${i.photo}`}>
         <ContentClass {...i} onNext={this.goNext} onPrev={this.goPrev} />
       </div>
     ))

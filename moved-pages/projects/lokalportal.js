@@ -66,6 +66,7 @@ class LokalportalCaseStudy extends Component {
             </ul>
           </div>
 
+{/* TODO: image prop */}
           <Testimonial
             quote="Brains & Beards were recommended to us, since we needed experienced support for a huge and growing backlog.
             We are more than satisfied with Patryk's communication,

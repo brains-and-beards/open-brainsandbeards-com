@@ -1,10 +1,12 @@
+import { graphql } from 'gatsby'
+import { GatsbyImage, getImage } from 'gatsby-plugin-image'
 import React from 'react'
 
-const Testimonial = ({ photo, quote, name, position, company }) => (
+const Testimonial = ({ image, quote, name, position, company }) => (
   <div className="testimonial">
     <div className="content">
       <div className="row photo">
-        <img src={photo} height="152px" className="round" alt="testimonial" />
+        <GatsbyImage image={getImage(image)} imgClassName="round" alt="testimonial" />
       </div>
 
       <div>
@@ -24,5 +26,15 @@ const Testimonial = ({ photo, quote, name, position, company }) => (
     </div>
   </div>
 )
+
+export const _testimonialImageFragment = graphql`
+  fragment testimonialImageFragment on File {
+    childImageSharp {
+      gatsbyImageData(
+        height: 152
+        width: 280
+      )
+    }
+  }`
 
 export default Testimonial

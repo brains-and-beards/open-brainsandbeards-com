@@ -1,9 +1,13 @@
+import { GatsbyImage, getImage } from 'gatsby-plugin-image'
 import React from 'react'
-import Img from 'gatsby-image'
 
 const PictureListItem = ({ image, title, children }) => (
   <li>
-    <Img className="image-wrapper" fixed={image} alt={title} />
+    <GatsbyImage
+      className="image-wrapper"
+      image={getImage(image)}
+      alt={title}
+    />
     <div className="pic-description">
       <p className="title">{title}</p>
       {children}

@@ -166,8 +166,7 @@ export const _homepageHeroImageProps = graphql`
     childImageSharp {
       gatsbyImageData(
         height: 710
-        width: 819
-        quality: 90
+        width: 820
       )
     }
   }

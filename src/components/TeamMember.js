@@ -1,8 +1,9 @@
+import { GatsbyImage, getImage } from 'gatsby-plugin-image'
 import React, { Component } from 'react'
 
 class TeamMember extends Component {
   render() {
-    const { imageUrl, name, bio } = this.props
+    const { image, name, bio } = this.props
     const hash =
       typeof window !== 'undefined' &&
       window &&
@@ -12,9 +13,9 @@ class TeamMember extends Component {
 
     return (
       <div className={'team-member'} id={name}>
-        {imageUrl && (
-          <img
-            src={imageUrl}
+        {!!image && (
+          <GatsbyImage
+            image={getImage(image)}
             alt={`member: ${name}`}
             className={isFocused ? 'isFocused' : ''}
           />

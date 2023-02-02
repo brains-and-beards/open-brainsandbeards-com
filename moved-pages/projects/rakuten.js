@@ -64,6 +64,7 @@ class RakutenCaseStudy extends Component {
             </div>
           </div>
 
+{/* TODO: image prop */}
           <Testimonial
             quote="The result was a product which is
           not only easy to maintain and robust, but as well great-looking and
