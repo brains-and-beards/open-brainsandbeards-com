@@ -51,7 +51,7 @@ const Navbar = (props) => {
               <LogoSvg alt="Brains and Beards logo" />
             </Link>
             <div className="back-to-homepage">
-              <ChevronBackSvg alt="Back arrow" />
+              <ChevronBackSvg className="reverse" alt="Back arrow" />
               {projects
                 ? renderLink('/projects', navbarBackButtonText)
                 : renderLink('/', navbarBackButtonText)}

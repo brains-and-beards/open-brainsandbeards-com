@@ -10,7 +10,7 @@ class MessageSent extends Component {
       <Layout
         headerTitle="Thanks!"
         headerSub="Thanks for contacting us. We'll get back to you soon!"
-        headerImage={heroImage.childImageSharp.fluid}
+        headerImage={heroImage}
         headerColumns
         simpleNavbar
       />

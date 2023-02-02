@@ -6,6 +6,17 @@ import Footer from '../components/Footer'
 import { Location } from '@reach/router'
 
 import '../assets/stylesheets/main.scss'
+import { graphql } from 'gatsby'
+
+export const _headerHeroImage = graphql`
+  fragment headerHeroImage on File {
+    childImageSharp {
+      gatsbyImageData(
+        width: 504
+      )
+    }
+  }
+`
 
 const Layout = (props) => {
     const {
@@ -25,13 +36,13 @@ const Layout = (props) => {
       <>
         <Location>
         {(locationProps) => (
-            <Navbar
-              simple={simpleNavbar}
-              currentLocation={locationProps.location.pathname}
-              navbarBackButtonText={navbarBackButtonText}
-              projects={projects}
-            />
-          )}
+          <Navbar
+            simple={simpleNavbar}
+            currentLocation={locationProps.location.pathname}
+            navbarBackButtonText={navbarBackButtonText}
+            projects={projects}
+          />
+        )}
         </Location>
         <div className="yellow">
           <div className="content row header">
