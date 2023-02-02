@@ -6,7 +6,6 @@ import Footer from '../components/Footer'
 import { Location } from '@reach/router'
 
 import '../assets/stylesheets/main.scss'
-// import SEO from '../components/SEO'
 
 const Layout = (props) => {
     const {
@@ -24,8 +23,6 @@ const Layout = (props) => {
 
     return (
       <>
-      {/* TODO: Implement SEO */}
-        {/* <SEO title={headerTitle} /> */}
         <Location>
         {(locationProps) => (
             <Navbar

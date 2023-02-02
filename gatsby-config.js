@@ -3,10 +3,9 @@ const { slashify } = require('./src/helpers/path_helpers')
 module.exports = {
   siteMetadata: {
     title: 'Home',
-    siteUrl: 'https://brainsandbeards.com',
     titleTemplate: '%s · Brains & Beards',
-    description:
-      'Brains & Beards is an unpretentious mobile studio that solves business problems through a mix of design and technology.',
+    description: 'Brains & Beards is an unpretentious mobile studio that solves business problems through a mix of design and technology.',
+    siteUrl: 'https://brainsandbeards.com',
     url: 'https://brainsandbeards.com',
     // No trailing slash allowed!
     image: 'favicon.png',

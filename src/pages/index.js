@@ -212,3 +212,7 @@ export const query = graphql`
 `
 
 export default MainPage
+
+export const Head = () => (
+  <SEO />
+)
