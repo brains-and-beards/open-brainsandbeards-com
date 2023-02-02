@@ -1,16 +1,17 @@
 import React, { PureComponent } from 'react'
 import { Link } from 'gatsby'
 
-import ReadMore from './ReadMore'
+import ReadMore from '../ReadMore'
+import { GatsbyImage, getImage } from 'gatsby-plugin-image'
 
 class CaseStudyBar extends PureComponent {
   renderContent(isServices) {
     const {
-      image,
+      heroImage,
       header,
       desc,
       full,
-      logo,
+      logoImage,
       url,
       flip,
       small,
@@ -25,12 +26,22 @@ class CaseStudyBar extends PureComponent {
           }`}
         >
           <div className={'clients-pic mobile-only'}>
-            <img src={image} />
+            {!!heroImage && (
+              <GatsbyImage
+                image={getImage(heroImage)}
+                alt="Case study client image"
+              />
+            )}
           </div>
 
           <div className="our-clients-left-col">
             <div className={`left-col ${top ? 'align-top' : ''}`}>
-              {logo && <img src={logo} height={16} alt={header} />}
+              {!!logoImage && (
+                <GatsbyImage
+                  image={getImage(logoImage)}
+                  alt={header}
+                />
+              )}
               {small ? <p className="quote">{header}</p> : <h3>{header}</h3>}
               {desc && desc.length > 0 && <p>{desc}</p>}
               <ReadMore text={full ? 'Read full story' : 'Read more'} />
@@ -39,7 +50,14 @@ class CaseStudyBar extends PureComponent {
           <div className={`${isServices ? 'services-clients-pic' : ''}`}>
             <div className="our-clients-pic">
               <div className="right-col clients-pic">
+              {!!heroImage ? (
+                <GatsbyImage
+                  image={getImage(heroImage)}
+                  alt="Case study client image"
+                />
+              ) : (
                 <img src={image} />
+              )}
               </div>
             </div>
           </div>
@@ -49,7 +67,7 @@ class CaseStudyBar extends PureComponent {
   }
 
   renderCaseStudyElement(isFirst) {
-    const { image, header, desc, logo, url, small, flip } = this.props
+    const { heroImage, header, desc, logoImage, url, small, flip } = this.props
 
     return (
       <Link to={url}>
@@ -63,7 +81,12 @@ class CaseStudyBar extends PureComponent {
               isFirst ? 'clients-pic-first' : 'clients-pic'
             } mobile-only`}
           >
-            <img src={image} alt="Company picture" />
+            {!!heroImage && (
+              <GatsbyImage
+                image={getImage(heroImage)}
+                alt="Company picture"
+              />
+            )}
           </div>
           <div
             className={`our-clients-left-col ${
@@ -71,7 +94,12 @@ class CaseStudyBar extends PureComponent {
             }`}
           >
             <div className={`left-col`}>
-              {logo && <img src={logo} height={22} alt="Company picture" />}
+              {!!logoImage && (
+                <GatsbyImage
+                  image={getImage(logoImage)}
+                  alt="Company picture"
+                />
+              )}
               {small ? <p className="quote">{header}</p> : <h3>{header}</h3>}
               <p>{desc}</p>
               <ReadMore text={'Read full story'} />
@@ -80,7 +108,12 @@ class CaseStudyBar extends PureComponent {
 
           <div className="our-clients-pic-first">
             <div className="right-col clients-pic">
-              <img src={image} alt="Company picture" />
+              {!!heroImage && (
+                <GatsbyImage
+                  image={getImage(heroImage)}
+                  alt="Company picture"
+                />
+              )}
             </div>
           </div>
         </div>

@@ -40,6 +40,13 @@ module.exports = {
       },
     },
     {
+      resolve: 'gatsby-source-filesystem',
+      options: {
+        path: `${__dirname}/src/assets/case-studies`,
+        name: 'caseStudiesAssets',
+      },
+    },
+    {
       resolve: 'gatsby-plugin-react-svg',
       options: {
         rule: {
@@ -218,13 +225,6 @@ module.exports = {
     //   options: {
     //     path: `${__dirname}/src/assets/images`,
     //     name: 'photos',
-    //   },
-    // },
-    // {
-    //   resolve: 'gatsby-source-filesystem',
-    //   options: {
-    //     path: `${__dirname}/src/assets/case-studies`,
-    //     name: 'case-studies',
     //   },
     // },
     // {

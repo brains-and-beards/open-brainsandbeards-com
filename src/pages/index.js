@@ -7,12 +7,13 @@ import Layout from '../templates/layout'
 import TrustBar from '../components/TrustBar'
 import EstimateProjectBar from '../components/EstimateProjectBar'
 import ClientLogos from '../components/ClientLogos'
-// import CaseStudyBar from '../components/CaseStudyBar'
 import ReferenceSwiper from '../components/ReferenceSwiper'
 import ReadMore from '../components/ReadMore'
 
 import RotatingBadge from '../assets/illustrations/also-in.svg';
 import RNBadge from '../assets/illustrations/rn.svg';
+import SharooCaseStudyBar from '../components/caseStudyBar/SharooCaseStudyBar';
+import SEO from '../components/SEO';
 
 const title = (
   <h1 className="text-center-mobile">We deliver great mobile applications</h1>
@@ -147,15 +148,9 @@ const MainPage = (props) => {
             We help technology-driven organizations – from start-ups to large
             enterprises – develop software more efficiently.
           </p>
-          {/*   <CaseStudyBar
-            image={require('../assets/case-studies/sharoo/sharoo-hero.jpg')}
-            logo={require('../assets/case-studies/sharoo/sharoo-logo.png')}
-            header="We helped sharoo team conquering carsharing economy in Switzerland"
-            desc="How we implemented unique mobile applications supporting renting and interacting with rented vehicles."
-            url="/projects/sharoo"
+          <SharooCaseStudyBar
             pageType="home"
-          /> */}
-
+          />
           <ClientLogos short />
           <ReferenceSwiper />
         </div>
