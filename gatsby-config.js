@@ -25,6 +25,13 @@ module.exports = {
     'gatsby-transformer-sharp',
     'gatsby-plugin-sass',
     {
+      resolve: `gatsby-plugin-manifest`,
+      options: {
+        icon: `src/assets/images/favicon.png`,
+        lang: 'en',
+      },
+    },
+    {
       resolve: 'gatsby-source-filesystem',
       options: {
         path: `${__dirname}/src/assets/illustrations`,
@@ -185,24 +192,6 @@ module.exports = {
     //         categories: ['Technology', 'Programming'],
     //       },
     //     ],
-    //   },
-    // },
-    // {
-    //   resolve: 'gatsby-plugin-favicon',
-    //   options: {
-    //     logo: './src/assets/images/favicon.png',
-    //     injectHTML: true,
-    //     icons: {
-    //       android: true,
-    //       appleIcon: true,
-    //       appleStartup: true,
-    //       coast: false,
-    //       favicons: true,
-    //       firefox: true,
-    //       twitter: false,
-    //       yandex: false,
-    //       windows: false,
-    //     },
     //   },
     // },
     // {
