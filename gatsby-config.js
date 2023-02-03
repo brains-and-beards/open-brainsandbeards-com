@@ -11,6 +11,7 @@ module.exports = {
     image: 'favicon.png',
     // Path to your image you placed in the 'static' folder
     twitterUsername: '@brainsandbeards',
+    blogPostsCountPerPage: 12,
   },
   plugins: [
     'gatsby-plugin-image',
@@ -67,7 +68,26 @@ module.exports = {
         }
       }
     },
-    // 'gatsby-plugin-next-seo', <--- OUTDATED
+    {
+      resolve: 'gatsby-source-filesystem',
+      options: {
+        name: 'blogContent',
+        path: `${__dirname}/content/blog/`,
+      },
+    },
+    {
+      resolve: 'gatsby-plugin-mdx',
+      options: {
+        gatsbyRemarkPlugins: [
+          {
+            resolve: 'gatsby-remark-images',
+            options: {
+              maxWidth: 1200,
+            },
+          },
+        ],
+      },
+    },
     // {
     //   resolve: 'gatsby-plugin-sitemap',
     //   options: {

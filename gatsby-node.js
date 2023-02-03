@@ -1,12 +1,11 @@
 const path = require('path')
-// const { createFilePath } = require(`gatsby-source-filesystem`)
 
-// require('dotenv').config({
-//   path: `.env.${process.env.NODE_ENV}`,
-// })
-// const showBlog = process.env.SHOW_BLOG
+require('dotenv').config({
+  path: `.env.${process.env.NODE_ENV}`,
+})
+const showBlog = process.env.SHOW_BLOG
 
-exports.createPages = ({ actions, graphql }) => {
+exports.createPages = async ({ actions, graphql, ...rest }) => {
   const { createPage, createRedirect } = actions
 
   createRedirect({
@@ -16,81 +15,56 @@ exports.createPages = ({ actions, graphql }) => {
     redirectInBrowser: true,
   })
 
-//   if (showBlog !== 'true') return
-//   return graphql(`
-//     {
-//       allMarkdownRemark(
-//         sort: { order: DESC, fields: [frontmatter___date] }
-//         limit: 1000
-//       ) {
-//         edges {
-//           node {
-//             frontmatter {
-//               path
-//             }
-//           }
-//         }
-//       }
-//     }
-//   `).then((result) => {
-//     if (result.errors) {
-//       return Promise.reject(result.errors)
-//     }
+  if (showBlog === 'true') {
+    const result = await graphql(`
+    {
+      site {
+        siteMetadata {
+          blogPostsCountPerPage
+        }
+      }
+      allMdx(
+        sort: { frontmatter: { date: DESC }}
+        limit: 1000
+      ) {
+        nodes {
+          frontmatter {
+            path
+          }
+        }
+      }
+    }`)
 
-//     result.data.allMarkdownRemark.edges.forEach(({ node }) => {
-//       const template = path.resolve(`src/templates/blogTemplate.js`)
-//       createPage({
-//         path: node.frontmatter.path,
-//         component: template,
-//         context: {}, // additional data can be passed via context
-//       })
-//     })
+    if (result.errors) {
+      reporter.panicOnBuild(`Error while running GraphQL query.`)
+      return
+    }
 
-//     const posts = result.data.allMarkdownRemark.edges
-//     const postsPerPage = 12
-//     const numPages = Math.ceil(posts.length / postsPerPage)
-//     Array.from({ length: numPages - 1 }).forEach((_, i) => {
-//       createPage({
-//         path: `/blog/${i + 2}`, // Don't create /blog/0 and /blog/1
-//         component: path.resolve('./src/templates/blog.js'),
-//         context: {
-//           page: i + 2,
-//           numPages,
-//           limit: postsPerPage,
-//           skip: (i + 1) * postsPerPage + 1,
-//         },
-//       })
-//     })
+    const { allMdx, site } = result.data
 
-//     // Manually create the first page with a different path
-//     createPage({
-//       path: `/blog`,
-//       component: path.resolve('./src/templates/blog.js'),
-//       context: {
-//         page: 1,
-//         numPages,
-//         limit: postsPerPage,
-//         skip: 1,
-//       },
-//     })
-//   })
+    const posts = allMdx.nodes
+    const postsPerPage = site.siteMetadata.blogPostsCountPerPage
+    const numPages = Math.ceil(posts.length / postsPerPage)
+    Array.from({ length: numPages }).forEach((_, i) => {
+      createPage({
+        path: i === 0 ? `/blog` : `/blog/${i + 1}`,  // Don't create /blog/0 and /blog/1
+        component: path.resolve("./src/templates/blogListTemplate.js"),
+        context: {
+          limit: postsPerPage,
+          skip: i * postsPerPage,
+          numPages,
+          currentPage: i + 1, // Starts indexing from page 1, there is no page 0
+        },
+      })
+    })
+
+    posts.forEach((node) => {
+      const template = path.resolve(`src/templates/blogTemplate.js`)
+      createPage({
+        path: node.frontmatter.path,
+        component: template,
+        context: {}, // additional data can be passed via context
+      })
+    })
+  }
 }
-
-
-
-// DELETE BELOW
-
-// exports.onCreatePage = ({ page, actions }) => {
-//   const { createPage, deletePage } = actions
-
-//   if (path.resolve('./src/pages/index.js') === page.component) {
-//     deletePage(page)
-//     createPage({
-//       ...page,
-//       context: {
-//         ...page.context,
-//         testimonialsItems: `[${testimonials.map(it => `\"/${it.relativePathRegex}/\"`).join(', ')}]`,
-//       },
-//     })
-//   }
-// }
