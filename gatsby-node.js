@@ -51,7 +51,7 @@ exports.createPages = async ({ actions, graphql, ...rest }) => {
         component: path.resolve("./src/templates/blogListTemplate.js"),
         context: {
           limit: postsPerPage,
-          skip: i * postsPerPage,
+          skip: i * postsPerPage + 1, // +1 because first shown is always the same single newest post
           numPages,
           currentPage: i + 1, // Starts indexing from page 1, there is no page 0
         },

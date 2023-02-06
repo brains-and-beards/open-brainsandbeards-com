@@ -1,33 +1,25 @@
 import React from 'react'
 import { Link } from 'gatsby'
-import Img from 'gatsby-image'
 
 import ReadMore from './ReadMore'
+import { GatsbyImage, getImage } from 'gatsby-plugin-image'
 import AuthorWithPicture from './AuthorWithPicture'
 
 const FirstPostLink = ({ post }) => {
   const {
-    frontmatter: { author, path, title, date, image },
+    frontmatter: { author, path, title, date },
+    firstItemFrontmatter: { image }
   } = post
-  const { childImageSharp, relativePath } = image
 
   return (
     <div className="content">
       <Link to={path}>
         <div className="first-post">
-          {childImageSharp ? (
-            <Img
-              fluid={childImageSharp.fluid}
-              className="blog-image"
-              alt={title}
-            />
-          ) : (
-            <img
-              src={require(`../pages/markdown/${relativePath}`)}
-              className="blog-image"
-              alt={title}
-            />
-          )}
+          <GatsbyImage
+            image={getImage(image)}
+            alt={`Miniature for post titled \"${title}\"`}
+            imgClassName="blog-image"
+          />
           <div className="blurb">
             <p className="first-post-date">{date}</p>
             <h3>{title}</h3>

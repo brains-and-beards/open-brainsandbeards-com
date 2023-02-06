@@ -1,38 +1,38 @@
 export const blogAuthorsImages = {
   'Natalia Majkowska-Stewart': {
-    image: require('../assets/images/blogAuthors/natalia.png'),
+    imageName: 'natalia.png',
     title: 'React and React Native developer',
   },
   'Marek Waligórski': {
-    image: require('../assets/images/blogAuthors/marek.jpeg'),
+    imageName: 'marek.jpeg',
     title: 'Software Developer',
   },
   'Wojciech Ogrodowczyk': {
-    image: require('../assets/images/blogAuthors/wojtek.jpeg'),
+    imageName: 'wojtek.jpeg',
     title: 'Software developer',
   },
   'Patryk Peszko': {
-    image: require('../assets/images/blogAuthors/patryk.jpeg'),
+    imageName: 'patryk.jpeg',
     title: 'Co Founder',
   },
   'Mihály Bezzeg': {
-    image: require('../assets/images/blogAuthors/mihaly.jpeg'),
+    imageName: 'mihaly.jpeg',
     title: 'Mobile developer',
   },
   'Brains&Beards': {
-    image: require('../assets/images/blogAuthors/bb.png'),
+    imageName: 'bb.png',
     title: 'Mobile application development studio',
   },
   'Szymon Koper': {
-    image: require('../assets/images/blogAuthors/Szymon.jpg'),
+    imageName: 'Szymon.jpg',
     title: 'React Native developer',
   },
   'Błażej Lewandowski': {
-    image: require('../assets/images/blogAuthors/blazej.jpeg'),
+    imageName: 'blazej.jpeg',
     title: 'React Native developer',
   },
   'Łukasz Wolski': {
-    image: require('../assets/images/blogAuthors/lukasz.jpeg'),
+    imageName: 'lukasz.jpeg',
     title: 'React Native developer',
   },
 }

@@ -1,36 +1,26 @@
 import React from 'react'
 import { Link } from 'gatsby'
-import Img from 'gatsby-image'
 
 import AuthorWithPicture from './AuthorWithPicture'
+import { GatsbyImage, getImage } from 'gatsby-plugin-image'
 
-const PostLink = ({ post, showExcerpt }) => {
+const PostLink = ({ post, showExcerpt, isFirst }) => {
   const {
     frontmatter: { author, path, title, date, image, imagePosition },
+    firstItemFrontmatter,
     excerpt,
   } = post
 
-  const { childImageSharp, relativePath } = image
-
-  const style = imagePosition ? { 'object-position': imagePosition } : {}
+  const imageToUse = isFirst ? firstItemFrontmatter.image : image
 
   return (
     <div className="blogpost-preview">
       <Link to={path}>
         <div className="post-container">
-          {childImageSharp ? (
-            <Img
-              fluid={childImageSharp.fluid}
-              className="post-link"
-              alt={title}
-            />
-          ) : (
-            <img
-              src={require(`../pages/markdown/${relativePath}`)}
-              style={style}
-              alt={title}
-            />
-          )}
+          <GatsbyImage
+            image={getImage(imageToUse)}
+            alt={`Miniature for post: ${title}`}
+          />
           <p className="quote blog-list-item-title">{title}</p>
           <h3 className="mobile-only text-center-mobile">{title}</h3>
         </div>
