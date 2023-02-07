@@ -36,6 +36,9 @@ exports.createPages = async ({ actions, graphql, ...rest }) => {
             date(formatString: "MMMM DD, YYYY") # for SEO in page Head - date
           }
           excerpt(pruneLength: 250) # for SEO in page Head - description
+          internal {
+            contentFilePath
+          }
         }
       }
     }`)
@@ -64,10 +67,10 @@ exports.createPages = async ({ actions, graphql, ...rest }) => {
     })
 
     posts.forEach((node) => {
-      const template = path.resolve(`src/templates/blogTemplate.js`)
+      const blogTemplate = path.resolve(`src/templates/blogTemplate.js`)
       createPage({
         path: node.frontmatter.path,
-        component: template,
+        component: `${blogTemplate}?__contentFilePath=${node.internal.contentFilePath}`,
         context: {
           id: node.id,
           title: node.frontmatter.title,

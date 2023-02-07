@@ -1,199 +1,194 @@
 import React from 'react'
-// import { graphql } from 'gatsby'
-// import { ArticleJsonLd } from 'gatsby-plugin-next-seo'
+import { graphql } from 'gatsby'
 
-// import Layout from './layout'
-// import PostLink from '../components/PostLink'
-// import AuthorWithPictureAndText from '../components/AuthorWithPictureAndText'
-// import BlogNewsletter from '../components/BlogNewsletter'
+import SEO from '../components/SEO';
+import Layout from './layout'
+import { GatsbyImage, getImage } from 'gatsby-plugin-image';
+import PostLink from '../components/PostLink'
+import AuthorWithPictureAndText from '../components/AuthorWithPictureAndText'
+import BlogNewsletter from '../components/BlogNewsletter'
 // import ReactNativeAnimatedCodeInput from '../components/ReactNativeAnimatedCodeInput'
-// import SubscribeFootnote from '../components/blog/SubscribeFootnote'
-// import HiringFootnote from '../components/blog/HiringFootnote'
+import SubscribeFootnote from '../components/blog/SubscribeFootnote'
+import HiringFootnote from '../components/blog/HiringFootnote'
 
-// const renderDate = (date) => <p className="date">{date}</p>
+const renderDate = (date) => <p className="date">{date}</p>
+
+export const query = graphql`
+  query ($id: String) { # id is injected into context via gatsby-node.js
+    mdx(id: { eq: $id}) {
+      id
+      frontmatter {
+        author
+        date(formatString: "MMMM DD, YYYY")
+        # demo # React Native Web demo
+        image {
+          childImageSharp {
+            gatsbyImageData
+          }
+        }
+        imageCaption
+        thumbnailImage: image {
+          childImageSharp {
+            gatsbyImageData(
+              formats: JPG
+              height: 300
+              width: 300
+              quality: 90
+              transformOptions: {
+                fit: CONTAIN
+                cropFocus: CENTER
+              }
+            )
+          }
+        }
+        path
+        title
+      }
+    }
+    relatedStoriesMdx: allMdx(sort: { frontmatter: { date: DESC } }) {
+      nodes {
+        id
+        frontmatter {
+          author
+          path
+          title
+          date
+          image {
+            childImageSharp {
+              gatsbyImageData(
+                width: 280
+                height: 200
+                transformOptions: {
+                  cropFocus: CENTER
+                }
+              )
+            }
+          }
+        }
+      }
+    }
+  }
+`
 
 const BlogTemplate = ({
-  data, // this prop will be injected by the GraphQL query below.
+  data: {
+    mdx,
+    relatedStoriesMdx
+  },
+  children // It's set as contentFilePath in gatsby-node.js
 }) => {
-  // const {
-  //   markdownRemark,
-  //   smallPic,
-  //   allMarkdownRemark: { edges },
-  // } = data // data.markdownRemark holds our post data
-  // const {
-  //   frontmatter: { title, path, date, image, author, imageCaption, demo },
-  //   id,
-  //   excerpt,
-  //   html,
-  // } = markdownRemark
+  const {
+    id,
+    frontmatter: {
+      title, path, date, image, author, imageCaption//, demo
+    },
+  } = mdx
 
-  // const related = relatedStories(edges, id).map((post) => {
-  //   const { node } = post
-  //   return <PostLink key={node.id} post={node} />
-  // })
-
-  // const { childImageSharp } = smallPic.frontmatter.image
-  // const gatsbySmallSrc = childImageSharp?.fixed?.src
-
-  // const thumbnailUrl =
-  //   'https://brainsandbeards.com' +
-  //   (gatsbySmallSrc
-  //     ? gatsbySmallSrc
-  //     : require(`../pages/markdown/${image.relativePath}`))
+  const related = getRelatedStories(relatedStoriesMdx.nodes, id).map((node) => {
+    return <PostLink key={node.id} post={node} />
+  })
 
   return (
-    <h1>Single blog post</h1>
-    // <Layout headerTitle={title} headerSub={renderDate(date)}>
-    //   <ArticleJsonLd
-    //     url={`https://brainsandbeards.com${path}`}
-    //     headline={title}
-    //     images={[thumbnailUrl]}
-    //     datePublished={date}
-    //     dateModified={date}
-    //     authorName={author}
-    //     publisherName="Brains & Beards"
-    //     publisherLogo="https://brainsandbeards.com/bb.png"
-    //     publisherUrl="https://brainsandbeards.com"
-    //     description={excerpt}
-    //     overrides={{
-    //       '@type': 'BlogPosting',
-    //     }}
-    //   />
-    //   <div className="blog-body">
-    //     {image && (
-    //       <div className="top-part-yellow">
-    //         <div className="content">
-    //           {image.childImageSharp ? (
-    //             <img
-    //               srcSet={image.childImageSharp.fluid.srcSet}
-    //               src={image.childImageSharp.fluid.src}
-    //               alt={imageCaption}
-    //               className="main-blog-image webfeedsFeaturedVisual"
-    //             />
-    //           ) : (
-    //             <img
-    //               src={require(`../pages/markdown/${image.relativePath}`)}
-    //               alt={imageCaption}
-    //               className="main-blog-image webfeedsFeaturedVisual"
-    //             />
-    //           )}
-    //           {imageCaption ? (
-    //             <figcaption
-    //               className="main-blog-image-caption"
-    //               dangerouslySetInnerHTML={{ __html: imageCaption }}
-    //             />
-    //           ) : null}
-    //         </div>
-    //       </div>
-    //     )}
-    //     <div className="narrow-column">
-    //       <div dangerouslySetInnerHTML={{ __html: html }} />
-    //       {demo === 'AnimatedInput' && <ReactNativeAnimatedCodeInput />}
-    //       <SubscribeFootnote />
-    //       <HiringFootnote />
-    //       <AuthorWithPictureAndText author={author} text={'WRITTEN BY'} />
-    //     </div>
-    //     <BlogNewsletter />
-    //     <div className="narrow-column">
-    //       <section>
-    //         <h3>More Brains and Beards stories</h3>
-    //         <div className="more-stories">{related}</div>
-    //       </section>
-    //     </div>
-    //   </div>
-    // </Layout>
+    <Layout headerTitle={title} headerSub={renderDate(date)}>
+      <div className="blog-body">
+        {image && (
+          <div className="top-part-yellow">
+            <div className="content">
+              <GatsbyImage
+                image={getImage(image)}
+                alt={imageCaption}
+                imgClassName="main-blog-image webfeedsFeaturedVisual"
+              />
+              {imageCaption ? (
+                <figcaption
+                  className="main-blog-image-caption"
+                  dangerouslySetInnerHTML={{ __html: imageCaption }}
+                />
+              ) : null}
+            </div>
+          </div>
+        )}
+        <div className="narrow-column">
+          <div>{children}</div>
+          {/* {demo === 'AnimatedInput' && <ReactNativeAnimatedCodeInput />} */}
+          <SubscribeFootnote />
+          <HiringFootnote />
+          <AuthorWithPictureAndText author={author} text={'WRITTEN BY'} />
+        </div>
+        <BlogNewsletter />
+        <div className="narrow-column">
+          <section>
+            <h3>More Brains and Beards stories</h3>
+            <div className="more-stories">{related}</div>
+          </section>
+        </div>
+      </div>
+    </Layout>
   )
 }
 
 export default BlogTemplate
 
-// const relatedStories = (edges, id) => {
-//   const myIndex = edges.findIndex((s) => s.node.id === id)
-//   const count = edges.length
+const getRelatedStories = (nodes, id) => {
+  const myIndex = nodes.findIndex((s) => s.id === id)
+  const count = nodes.length
 
-//   const previous = myIndex === 0 ? count - 1 : myIndex - 1
-//   const next = myIndex === count - 1 ? 0 : myIndex + 1
+  const previous = myIndex === 0 ? count - 1 : myIndex - 1
+  const next = myIndex === count - 1 ? 0 : myIndex + 1
 
-//   return [edges[previous], edges[next]]
-// }
+  return [nodes[previous], nodes[next]]
+}
 
-// export const pageQuery = graphql`
-//   query BlogPostByPath($path: String!) {
-//     markdownRemark(frontmatter: { path: { eq: $path } }) {
-//       html
-//       id
-//       excerpt
-//       frontmatter {
-//         date(formatString: "MMMM DD, YYYY")
-//         title
-//         image {
-//           relativePath
-//           childImageSharp {
-//             fluid(
-//               maxHeight: 1400
-//               quality: 92
-//               srcSetBreakpoints: [350, 500, 700, 1400]
-//             ) {
-//               src
-//               srcSet
-//             }
-//           }
-//         }
-//         path
-//         author
-//         imageCaption
-//         demo
-//       }
-//     }
-//     smallPic: markdownRemark(frontmatter: { path: { eq: $path } }) {
-//       frontmatter {
-//         image {
-//           childImageSharp {
-//             fixed(
-//               height: 300
-//               width: 300
-//               quality: 90
-//               fit: CONTAIN
-//               cropFocus: CENTER
-//             ) {
-//               src
-//             }
-//           }
-//         }
-//         path
-//         author
-//         imageCaption
-//         demo
-//       }
-//     }
-//     allMarkdownRemark(sort: { order: DESC, fields: [frontmatter___date] }) {
-//       edges {
-//         node {
-//           id
-//           frontmatter {
-//             date(formatString: "MMMM DD, YYYY")
-//             path
-//             title
-//             image {
-//               childImageSharp {
-//                 fluid(
-//                   maxWidth: 280
-//                   maxHeight: 200
-//                   quality: 90
-//                   cropFocus: CENTER
-//                   traceSVG: { color: "#333" }
-//                 ) {
-//                   ...GatsbyImageSharpFluid_tracedSVG
-//                   src
-//                 }
-//               }
-//               relativePath
-//             }
-//             author
-//             imageCaption
-//           }
-//         }
-//       }
-//     }
-//   }
-// `
+export const Head = (props) => {
+  const {
+    pageContext: {
+      author,
+      title,
+      excerpt,
+      date
+    },
+    location: {
+      pathname,
+    },
+    data
+  } = props
+
+  const thumbnailPath = data.mdx.frontmatter.thumbnailImage.childImageSharp.gatsbyImageData.images.fallback.src
+  const thumbnailUrl = `https://brainsandbeards.com${thumbnailPath}`
+
+  return (
+    <>
+      <SEO
+        title={title}
+        description={excerpt}
+        article
+      />
+      <script type='application/ld+json'>
+        {`{
+          '@context': 'https://schema.org',
+          '@type': 'BlogPosting',
+          '@id': 'https://brainsandbeards.com${pathname}',
+          'headline': '${title}',
+          'description': '${excerpt}',
+          'datePublished': '${date}',
+          'dateModified': '${date}',
+          'dateCreated': '${date}',
+          'thumbnailURL': '${thumbnailUrl}',
+          'thumbnail': '${thumbnailUrl}',
+          'author': {
+            '@type': '${author === 'Brains&Beards' ? 'Organization' : 'Person'}',
+            'name': '${author}'
+          },
+          'publisher': {
+            '@type': 'Organization',
+            'name': 'Brains & Beards',
+            'logo': {
+              '@type': 'ImageObject',
+              'url': 'https://brainsandbeards.com/bb.png'
+            }
+          }
+        }`}
+      </script>
+    </>
+  )
+}

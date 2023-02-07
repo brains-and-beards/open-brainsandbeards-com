@@ -1,39 +1,16 @@
 import React from 'react'
-import { graphql, useStaticQuery, navigate } from 'gatsby'
-import Img from 'gatsby-image'
+import { navigate } from 'gatsby'
 import { validateEmail } from './forms/utils'
 import { useState, useCallback } from 'react'
 import addToMailchimp from 'gatsby-plugin-mailchimp'
 import { useEffect } from 'react'
 import Modal from './Modal'
-
-export const imageProps = graphql`
-  fragment imageProps on File {
-    childImageSharp {
-      fluid(maxHeight: 400, quality: 90, traceSVG: { color: "#333" }) {
-        ...GatsbyImageSharpFluid_tracedSVG
-      }
-    }
-  }
-`
+import { StaticImage } from 'gatsby-plugin-image'
 
 const BlogNewsletter = () => {
   const [submitEnabled, setSubmitEnabled] = useState(false)
   const [submittedEmail, setSubmittedEmail] = useState('')
   const [submittedName, setSubmittedName] = useState('')
-
-  const { leftImage, rightImage } = useStaticQuery(graphql`
-    query NewsLetterImageQuery {
-      leftImage: file(relativePath: { regex: "/estimate-project-bar-left/" }) {
-        ...imageProps
-      }
-      rightImage: file(
-        relativePath: { regex: "/estimate-project-bar-right/" }
-      ) {
-        ...imageProps
-      }
-    }
-  `)
 
   const [showModal, setShowModal] = useState(false)
   const [modalText, setModalText] = useState('')
@@ -93,9 +70,10 @@ const BlogNewsletter = () => {
   return (
     <section className="estimateProject">
       <div className="content row">
-        <Img
+        <StaticImage
           className="center-mobile cta-bar-image desktop-only"
-          fluid={leftImage.childImageSharp.fluid}
+          height={400}
+          src="../assets/illustrations/estimate-project-bar-left.png"
           alt="Happy puzzle phone"
         />
         <div className="center newsletter-content">
@@ -147,9 +125,10 @@ const BlogNewsletter = () => {
             </div>
           </div>
         </div>
-        <Img
+        <StaticImage
           className="cta-bar-image desktop-only newsletter-image-right"
-          fluid={rightImage.childImageSharp.fluid}
+          height={400}
+          src="../assets/illustrations/estimate-project-bar-right.png"
           alt="Happy puzzle phone"
         />
       </div>
