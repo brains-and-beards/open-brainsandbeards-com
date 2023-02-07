@@ -93,6 +93,36 @@ module.exports = {
               maxWidth: 1200,
             },
           },
+          {
+            resolve: 'gatsby-remark-prismjs',
+            options: {
+              classPrefix: 'language-',
+              inlineCodeMarker: null,
+              aliases: {},
+              showLineNumbers: false,
+              noInlineHighlight: false,
+              languageExtensions: [
+                {
+                  language: 'superscript',
+                  extend: 'javascript',
+                  definition: {
+                    superscript_types: /(SuperType)/,
+                  },
+                  insertBefore: {
+                    function: {
+                      superscript_keywords: /(superif|superelse)/,
+                    },
+                  },
+                },
+              ],
+              prompt: {
+                user: 'root',
+                host: 'localhost',
+                global: false,
+              },
+              escapeEntities: {},
+            },
+          },
         ],
       },
     },
@@ -300,36 +330,6 @@ module.exports = {
     //           noIframeBorder: true,
     //           // Optional: Disable insertion of <style> border: 0.
     //           showInfo: false, // Optional: Hides video title and player actions.
-    //         },
-    //       },
-    //       {
-    //         resolve: 'gatsby-remark-prismjs',
-    //         options: {
-    //           classPrefix: 'language-',
-    //           inlineCodeMarker: null,
-    //           aliases: {},
-    //           showLineNumbers: false,
-    //           noInlineHighlight: false,
-    //           languageExtensions: [
-    //             {
-    //               language: 'superscript',
-    //               extend: 'javascript',
-    //               definition: {
-    //                 superscript_types: /(SuperType)/,
-    //               },
-    //               insertBefore: {
-    //                 function: {
-    //                   superscript_keywords: /(superif|superelse)/,
-    //                 },
-    //               },
-    //             },
-    //           ],
-    //           prompt: {
-    //             user: 'root',
-    //             host: 'localhost',
-    //             global: false,
-    //           },
-    //           escapeEntities: {},
     //         },
     //       },
     //       'gatsby-remark-responsive-iframe',

@@ -1410,7 +1410,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/runtime@npm:^7.0.0, @babel/runtime@npm:^7.12.5, @babel/runtime@npm:^7.20.7, @babel/runtime@npm:^7.8.4, @babel/runtime@npm:^7.9.2":
+"@babel/runtime@npm:^7.0.0, @babel/runtime@npm:^7.12.5, @babel/runtime@npm:^7.20.13, @babel/runtime@npm:^7.20.7, @babel/runtime@npm:^7.8.4, @babel/runtime@npm:^7.9.2":
   version: 7.20.13
   resolution: "@babel/runtime@npm:7.20.13"
   dependencies:
@@ -4249,10 +4249,12 @@ __metadata:
     gatsby-plugin-sharp: ^5.5.0
     gatsby-remark-gifs: ^1.1.0
     gatsby-remark-images: ^7.5.0
+    gatsby-remark-prismjs: ^7.6.0
     gatsby-source-filesystem: ^5.5.0
     gatsby-transformer-sharp: ^5.5.0
     moment: ^2.29.4
     prettier: ^2.8.3
+    prismjs: ^1.29.0
     react: ^18.2.0
     react-dom: ^18.2.0
     react-id-swiper: ^1.6.8
@@ -7702,6 +7704,20 @@ __metadata:
     gatsby: ^5.0.0-next
     gatsby-plugin-sharp: ^5.0.0-next
   checksum: 114679a64fa6a75775b6c529c2fee412f314b0a18c540df1e297b1e3f37352b9565461cca243e7fcfd2ba44b47fb739a248fe0d537fa4edf93e960067ee924b5
+  languageName: node
+  linkType: hard
+
+"gatsby-remark-prismjs@npm:^7.6.0":
+  version: 7.6.0
+  resolution: "gatsby-remark-prismjs@npm:7.6.0"
+  dependencies:
+    "@babel/runtime": ^7.20.13
+    parse-numeric-range: ^1.2.0
+    unist-util-visit: ^2.0.3
+  peerDependencies:
+    gatsby: ^5.0.0-next
+    prismjs: ^1.15.0
+  checksum: 8eb8e6d942005be2335895eea5b87fd2b47aeeadfd3fb2089650b2a5f154c51fe3250e9dce76fd4496726f537a5d77fb31a67ce43857dcad198b1a0499f8ba03
   languageName: node
   linkType: hard
 
@@ -11684,6 +11700,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"parse-numeric-range@npm:^1.2.0":
+  version: 1.3.0
+  resolution: "parse-numeric-range@npm:1.3.0"
+  checksum: 289ca126d5b8ace7325b199218de198014f58ea6895ccc88a5247491d07f0143bf047f80b4a31784f1ca8911762278d7d6ecb90a31dfae31da91cc1a2524c8ce
+  languageName: node
+  linkType: hard
+
 "parse-path@npm:^7.0.0":
   version: 7.0.0
   resolution: "parse-path@npm:7.0.0"
@@ -12373,6 +12396,13 @@ __metadata:
     lodash: ^4.17.20
     renderkid: ^2.0.4
   checksum: 16775d06f9a695d17103414d610b1281f9535ee1f2da1ce1e1b9be79584a114aa7eac6dcdcc5ef151756d3c014dfd4ac1c7303ed8016d0cec12437cfdf4021c6
+  languageName: node
+  linkType: hard
+
+"prismjs@npm:^1.29.0":
+  version: 1.29.0
+  resolution: "prismjs@npm:1.29.0"
+  checksum: 007a8869d4456ff8049dc59404e32d5666a07d99c3b0e30a18bd3b7676dfa07d1daae9d0f407f20983865fd8da56de91d09cb08e6aa61f5bc420a27c0beeaf93
   languageName: node
   linkType: hard
 
