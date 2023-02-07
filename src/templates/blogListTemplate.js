@@ -29,6 +29,7 @@ const BlogListTemplate = ({
     const path = p === 1 ? '/blog' : `/blog/${p}`
     pageLinks.push(
       <Link
+        key={path}
         to={`${path}#posts-list`}
         className={`page-link right sub2 ${p === currentPage ? 'current' : ''}`}
       >

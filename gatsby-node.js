@@ -28,9 +28,14 @@ exports.createPages = async ({ actions, graphql, ...rest }) => {
         limit: 1000
       ) {
         nodes {
+          id
           frontmatter {
-            path
+            path # to create page address
+            title # for SEO in page Head - title
+            author # for SEO in page Head - author
+            date(formatString: "MMMM DD, YYYY") # for SEO in page Head - date
           }
+          excerpt(pruneLength: 250) # for SEO in page Head - description
         }
       }
     }`)
@@ -63,7 +68,13 @@ exports.createPages = async ({ actions, graphql, ...rest }) => {
       createPage({
         path: node.frontmatter.path,
         component: template,
-        context: {}, // additional data can be passed via context
+        context: {
+          id: node.id,
+          title: node.frontmatter.title,
+          excerpt: node.excerpt,
+          author: node.frontmatter.author,
+          date: node.frontmatter.date
+        },
       })
     })
   }
