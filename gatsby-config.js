@@ -86,7 +86,12 @@ module.exports = {
       resolve: 'gatsby-plugin-mdx',
       options: {
         gatsbyRemarkPlugins: [
-          'gatsby-remark-gifs',
+          {
+            resolve: 'gatsby-remark-copy-linked-files',
+            options: {
+              ignoreFileExtensions: ['png', 'jpg', 'jpeg', 'bmp', 'tiff'],
+            },
+          },
           {
             resolve: 'gatsby-remark-images',
             options: {
@@ -303,20 +308,6 @@ module.exports = {
     //   resolve: 'gatsby-transformer-remark',
     //   options: {
     //     plugins: [
-    //       {
-    //         resolve: 'gatsby-remark-images',
-    //         options: {
-    //           maxWidth: 890,
-    //           showCaptions: true,
-    //           backgroundColor: 'transparent',
-    //         },
-    //       },
-    //       {
-    //         resolve: 'gatsby-remark-copy-linked-files',
-    //         options: {
-    //           ignoreFileExtensions: ['png', 'jpg', 'jpeg', 'bmp', 'tiff'],
-    //         },
-    //       },
     //       {
     //         resolve: 'gatsby-remark-better-embed-video',
     //         options: {

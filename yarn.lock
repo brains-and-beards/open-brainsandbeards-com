@@ -4247,7 +4247,7 @@ __metadata:
     gatsby-plugin-react-svg: ^3.3.0
     gatsby-plugin-sass: ^6.5.0
     gatsby-plugin-sharp: ^5.5.0
-    gatsby-remark-gifs: ^1.1.0
+    gatsby-remark-copy-linked-files: ^6.6.0
     gatsby-remark-images: ^7.5.0
     gatsby-remark-prismjs: ^7.6.0
     gatsby-source-filesystem: ^5.5.0
@@ -7674,15 +7674,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"gatsby-remark-gifs@npm:^1.1.0":
-  version: 1.1.0
-  resolution: "gatsby-remark-gifs@npm:1.1.0"
+"gatsby-remark-copy-linked-files@npm:^6.6.0":
+  version: 6.6.0
+  resolution: "gatsby-remark-copy-linked-files@npm:6.6.0"
   dependencies:
+    "@babel/runtime": ^7.20.13
+    cheerio: ^1.0.0-rc.10
+    fs-extra: ^11.1.0
     is-relative-url: ^3.0.0
+    lodash: ^4.17.21
+    path-is-inside: ^1.0.2
+    probe-image-size: ^7.2.3
     unist-util-visit: ^2.0.3
   peerDependencies:
-    gatsby: ^3.0.0 || ^4.0.0
-  checksum: f2f35df654a54400f6707e5d0e2c5a62cf46a648ed4073ee92af5c56fbabf9de56e295b14117d2cca4f4827b290d50aa21f424c7fd862be16d6c1061e21557fa
+    gatsby: ^5.0.0-next
+  checksum: e35635a5af85773493b8ad73305cc063dc3f5f102ad5e83299d3affaadd4f0f75170d850d7e0a2d802dace9e7bae7be1a817e9fc5d3d3337a83ffa6b0b6c215e
   languageName: node
   linkType: hard
 
@@ -11799,6 +11805,13 @@ __metadata:
   version: 1.0.1
   resolution: "path-is-absolute@npm:1.0.1"
   checksum: 060840f92cf8effa293bcc1bea81281bd7d363731d214cbe5c227df207c34cd727430f70c6037b5159c8a870b9157cba65e775446b0ab06fd5ecc7e54615a3b8
+  languageName: node
+  linkType: hard
+
+"path-is-inside@npm:^1.0.2":
+  version: 1.0.2
+  resolution: "path-is-inside@npm:1.0.2"
+  checksum: 0b5b6c92d3018b82afb1f74fe6de6338c4c654de4a96123cb343f2b747d5606590ac0c890f956ed38220a4ab59baddfd7b713d78a62d240b20b14ab801fa02cb
   languageName: node
   linkType: hard
 
