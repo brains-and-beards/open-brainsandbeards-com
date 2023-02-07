@@ -86,6 +86,7 @@ module.exports = {
       resolve: 'gatsby-plugin-mdx',
       options: {
         gatsbyRemarkPlugins: [
+          'gatsby-remark-gifs',
           {
             resolve: 'gatsby-remark-images',
             options: {

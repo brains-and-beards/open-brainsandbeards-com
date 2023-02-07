@@ -4247,6 +4247,7 @@ __metadata:
     gatsby-plugin-react-svg: ^3.3.0
     gatsby-plugin-sass: ^6.5.0
     gatsby-plugin-sharp: ^5.5.0
+    gatsby-remark-gifs: ^1.1.0
     gatsby-remark-images: ^7.5.0
     gatsby-source-filesystem: ^5.5.0
     gatsby-transformer-sharp: ^5.5.0
@@ -7668,6 +7669,18 @@ __metadata:
     react: ^18.0.0 || ^0.0.0
     react-dom: ^18.0.0 || ^0.0.0
   checksum: 10d01a67f0f90a2bdfedde4b4032b81295c75bc6a3e4e4867b47c0266860bc8161d94b49783b8a7aa9fbf1e0f04a0de59b7c1f7c84ae3a312586b9dfc23f13b3
+  languageName: node
+  linkType: hard
+
+"gatsby-remark-gifs@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "gatsby-remark-gifs@npm:1.1.0"
+  dependencies:
+    is-relative-url: ^3.0.0
+    unist-util-visit: ^2.0.3
+  peerDependencies:
+    gatsby: ^3.0.0 || ^4.0.0
+  checksum: f2f35df654a54400f6707e5d0e2c5a62cf46a648ed4073ee92af5c56fbabf9de56e295b14117d2cca4f4827b290d50aa21f424c7fd862be16d6c1061e21557fa
   languageName: node
   linkType: hard
 
@@ -14865,7 +14878,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"unist-util-visit@npm:^2.0.0":
+"unist-util-visit@npm:^2.0.0, unist-util-visit@npm:^2.0.3":
   version: 2.0.3
   resolution: "unist-util-visit@npm:2.0.3"
   dependencies:
