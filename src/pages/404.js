@@ -18,8 +18,9 @@ class NotFound extends Component {
 
 export default NotFound
 
-export const Head = () => (
+export const Head = ({ location }) => (
   <SEO
+    pathname={location.pathname}
     title={title}
     description={description}
   />

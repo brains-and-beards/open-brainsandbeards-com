@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { useLocation } from '@reach/router'
 import { useStaticQuery, graphql } from 'gatsby'
+import CanonicalLink from './CanonicalLink'
 
 const query = graphql`
   query SEO {
@@ -22,7 +22,7 @@ export const useSiteMetadata = () => {
   return data.site.siteMetadata
 }
 
-const SEO = ({ title, description, image, article, children }) => {
+const SEO = ({ title, description, image, article, pathname, children }) => {
   const {
     defaultTitle,
     titleTemplate,
@@ -32,8 +32,6 @@ const SEO = ({ title, description, image, article, children }) => {
     twitterUsername,
   } = useSiteMetadata()
 
-  // const { pathname } = useLocation()
-const pathname = 'asdasd'
   const seo = {
     title: (typeof title === 'string' && title) || defaultTitle,
     description: description || defaultDescription,
@@ -68,6 +66,8 @@ const pathname = 'asdasd'
         name="google-site-verification"
         content="BcbkPGxOMtXOUPAOFSU3DxA3gb_51mPzyidC4VE_mXg"
       />
+
+      {!!pathname && <CanonicalLink path={pathname} />}
       {children}
     </>
   )

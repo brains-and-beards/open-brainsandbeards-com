@@ -162,6 +162,7 @@ export const Head = (props) => {
         title={title}
         description={excerpt}
         article
+        pathname={pathname}
       />
       <script type='application/ld+json'>
         {`{

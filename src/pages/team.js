@@ -264,9 +264,10 @@ export const query = graphql`
 
 export default TeamPage
 
-export const Head = () => (
+export const Head = ({ location }) => (
   <SEO
     title={title}
     description={description}
+    pathname={location.pathname}
   />
 )

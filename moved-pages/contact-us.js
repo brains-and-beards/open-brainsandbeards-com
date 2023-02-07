@@ -10,6 +10,7 @@ class ContactUs extends Component {
   render() {
     return (
       <Fragment>
+        {/* TODO pathname */}
         <SEO title={'Contact Us'} />
         <Location>
           {(locationProps) => (

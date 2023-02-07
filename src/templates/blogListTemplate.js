@@ -208,11 +208,12 @@ export const query = graphql`
   }
 `
 
-export const Head = () => (
+export const Head = ({ location }) => (
   <>
     <SEO
       title={title}
       description={description}
+      pathname={location.pathname}
     />
     <link
       rel="alternate"
