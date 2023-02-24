@@ -6,14 +6,7 @@ require('dotenv').config({
 const showBlog = process.env.SHOW_BLOG
 
 exports.createPages = async ({ actions, graphql, ...rest }) => {
-  const { createPage, createRedirect } = actions
-
-  createRedirect({
-    fromPath: '/jobs',
-    toPath:
-      'https://brains-and-beards.notion.site/Job-offers-at-Brains-Beards-1b21951978bd4a11b9b03b5fbf0021c1',
-    redirectInBrowser: true,
-  })
+  const { createPage } = actions
 
   if (showBlog === 'true') {
     const result = await graphql(`
