@@ -1,9 +1,9 @@
 ---
 title: Part 4 — Implementing authentication and integrating with Apollo Client
-date: '2019-01-03T12:01:00.815Z'
-path: '/blog/part-4-implementing-authentication-and-integrating-with-apollo-client'
+date: "2019-01-03T12:01:00.815Z"
+path: "/blog/part-4-implementing-authentication-and-integrating-with-apollo-client"
 image: graphql4.jpeg
-author: 'Natalia Majkowska-Stewart'
+author: "Natalia Majkowska-Stewart"
 ---
 
 Thanks for checking-in to part four of my blog series **Getting Started with GraphQL and React Native.** This will be the last post in this series. I’m going to be walking through how you can implement authentication with GraphQL, and integrate the sign-up and login functionality in a React Native application.
@@ -72,48 +72,48 @@ $ yarn add jsonwebtoken bcryptjs
 Now we need to create the mutations for signing-up and logging-in. I will create a new file for it, because there is quite a lot of code and it is better to keep mutations in a separate file. Add a file called `Mutations.js` in the `src` directory.
 
 ```javascript {numberLines: true}
-const APP_SECRET = 'abcdefghijklmnopqrst'
-const bcrypt = require('bcryptjs')
-const jwt = require('jsonwebtoken')
+const APP_SECRET = "abcdefghijklmnopqrst";
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 
 signUp = async (_object, args, context, _information) => {
-  const password = await bcrypt.hash(args.password, 10)
+  const password = await bcrypt.hash(args.password, 10);
   const user = await context.db.mutation.createUser(
     {
       data: { ...args, password },
     },
     `{ id }`
-  )
+  );
 
-  const token = jwt.sign({ userId: user.id }, APP_SECRET)
+  const token = jwt.sign({ userId: user.id }, APP_SECRET);
 
   return {
     token,
     user,
-  }
-}
+  };
+};
 
 login = async (_object, args, context, _information) => {
   const user = await context.db.query.user(
     { where: { email: args.email } },
     ` { id password } `
-  )
+  );
   if (!user) {
-    throw new Error('User not found')
+    throw new Error("User not found");
   }
 
-  const valid = await bcrypt.compare(args.password, user.password)
+  const valid = await bcrypt.compare(args.password, user.password);
   if (!valid) {
-    throw new Error('Sorry, Wrong password')
+    throw new Error("Sorry, Wrong password");
   }
 
-  const token = jwt.sign({ userId: user.id }, APP_SECRET)
+  const token = jwt.sign({ userId: user.id }, APP_SECRET);
 
   return {
     token,
     user,
-  }
-}
+  };
+};
 
 dog = (root, args, context, queryInfo) => {
   return context.db.mutation.createDog(
@@ -124,33 +124,33 @@ dog = (root, args, context, queryInfo) => {
       },
     },
     queryInfo
-  )
-}
+  );
+};
 
 module.exports = {
   signUp,
   login,
   dog,
-}
+};
 ```
 
 The file contains three function: `do` (created in the [previous tutorial](https://brainsandbeards.com/blog/part-2-setting-up-apollo-client-in-a-react-native-app)), `login` and `signUp`. The login and sign-up functions are resolvers for handling, you guessed it, logging-in and signing-up mutations. We’re using bcrypt to hash and compare passwords, while the `jwt` library is used to sign a JWT. Update the `index.js` file with a reference to `Mutations.js`:
 
 ```javascript {numberLines: true}
-const Mutation = require('./Mutations')
+const Mutation = require("./Mutations");
 
 const resolvers = {
   Query: {
     dogName: () => `Tommy the chihuahua`,
     dogs: (root, args, context, queryInfo) => {
-      return context.db.query.dogs({}, queryInfo)
+      return context.db.query.dogs({}, queryInfo);
     },
     user: (root, args, context, info) => {
-      return context.db.query.user({ where: { id: root.user.id } }, info)
+      return context.db.query.user({ where: { id: root.user.id } }, info);
     },
   },
   Mutation,
-}
+};
 ```
 
 > Please note this tutorial won’t go into detail about checking the JSON Web Token on subsequent requests to the GraphQL Server. Ideally, you’ll want to verify the token and make a decision based on the validity of the token. This can be done using authentication middleware for your GraphQL Server, e.g. [Passport.js](http://www.passportjs.org/docs/username-password)
@@ -170,10 +170,10 @@ When you click **Schema** on the right, you should see your custom mutations lis
 I’ve refactored `App.js` and created new files called `DogsScreen.js` and `LoginScreen.js`. The `LoginScreen.js` file contains form inputs and handlers for logging-in and signing-up.
 
 ```javascript {numberLines: true}
-import React, { Component } from 'react'
-import { StyleSheet, View, ScrollView } from 'react-native'
-import { LoginScreen } from './LoginScreen'
-import { DogsScreen } from './DogsScreen'
+import React, { Component } from "react";
+import { StyleSheet, View, ScrollView } from "react-native";
+import { LoginScreen } from "./LoginScreen";
+import { DogsScreen } from "./DogsScreen";
 
 export default class App extends Component {
   render() {
@@ -184,7 +184,7 @@ export default class App extends Component {
           <DogsScreen />
         </View>
       </ScrollView>
-    )
+    );
   }
 }
 
@@ -195,37 +195,33 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#F5FCFF",
   },
-})
+});
 ```
 
-<div class="gif-container">
-
-#####App.js
-
-</div>
+##### App.js
 
 The `DogsScreen.js` file is detailed explained in more detail [here](/blog/part-3-mutating-data-in-a-react-native-app-with-apollo-client).
 
 ```javascript {numberLines: true}
-import React, { Component } from 'react'
-import { StyleSheet, Text, View, Button, Modal, TextInput } from 'react-native'
-import { ApolloClient, HttpLink, InMemoryCache } from 'apollo-boost'
-import { ApolloProvider, graphql, Mutation } from 'react-apollo'
-import gql from 'graphql-tag'
+import React, { Component } from "react";
+import { StyleSheet, Text, View, Button, Modal, TextInput } from "react-native";
+import { ApolloClient, HttpLink, InMemoryCache } from "apollo-boost";
+import { ApolloProvider, graphql, Mutation } from "react-apollo";
+import gql from "graphql-tag";
 
 const client = new ApolloClient({
   link: new HttpLink({
-    uri: 'https://eu1.prisma.sh/natalia-majkowska/dogs-service/dev',
+    uri: "https://eu1.prisma.sh/natalia-majkowska/dogs-service/dev",
     headers: {
-      authorization: 'YOUR_TOKEN', // on production you need to store token in storage or in redux persist, for demonstration purposes we do this like that
+      authorization: "YOUR_TOKEN", // on production you need to store token in storage or in redux persist, for demonstration purposes we do this like that
     },
   }),
   cache: new InMemoryCache(),
-})
+});
 
 const dogQuery = gql`
   query {
@@ -234,7 +230,7 @@ const dogQuery = gql`
       type
     }
   }
-`
+`;
 
 const addDog = gql`
   mutation addDog($type: String!, $name: String!) {
@@ -242,31 +238,31 @@ const addDog = gql`
       id
     }
   }
-`
+`;
 
 const DogComponent = graphql(dogQuery)((props) => {
-  const { error, dogs } = props.data
+  const { error, dogs } = props.data;
   if (error) {
-    return <Text>{error}</Text>
+    return <Text>{error}</Text>;
   }
   if (dogs) {
     return (
       <View>
         {dogs.map((dog) => {
-          return <Text key={dog.name}>{dog.name}</Text>
+          return <Text key={dog.name}>{dog.name}</Text>;
         })}
       </View>
-    )
+    );
   }
 
-  return <Text>Loading...</Text>
-})
+  return <Text>Loading...</Text>;
+});
 
 export class DogsScreen extends Component {
   state = {
-    name: '',
-    type: '',
-  }
+    name: "",
+    type: "",
+  };
 
   render() {
     return (
@@ -297,8 +293,8 @@ export class DogsScreen extends Component {
                       },
                     })
                       .then((res) => res)
-                      .catch((err) => <Text>{err}</Text>)
-                    this.setState({ type: '', name: '' })
+                      .catch((err) => <Text>{err}</Text>);
+                    this.setState({ type: "", name: "" });
                   }}
                   title="Add dog"
                 />
@@ -309,56 +305,52 @@ export class DogsScreen extends Component {
           <DogComponent />
         </View>
       </ApolloProvider>
-    )
+    );
   }
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#F5FCFF",
   },
   welcome: {
     fontSize: 20,
-    textAlign: 'center',
+    textAlign: "center",
     margin: 10,
   },
   input: {
     height: 30,
     width: 150,
-    borderColor: 'gray',
+    borderColor: "gray",
     borderWidth: 1,
     marginTop: 5,
     padding: 1,
   },
-})
+});
 ```
 
-<div class="gif-container">
-
-#####DogsScreen
-
-</div>
+##### DogsScreen
 
 And now, the most important part, `LoginScreen.js`. As you can see, I have a new instance of **ApolloClient** with my Heroku URL. I also added the mutations for `signUp` and `login`, which have similar arguments to their server-side equivalents. The rest is very similar to `DogsScreen`. I’ve added some state to demonstrate a successful sign-up and login.
 
 > If you’re not sure how we’ve set up the mutations, you can refer back to the previous tutorial [here](https://brainsandbeards.com/blog/part-3-mutating-data-in-a-react-native-app-with-apollo-client).
 
 ```javascript {numberLines: true}
-import React, { Component } from 'react'
-import { StyleSheet, Text, View, Button, TextInput } from 'react-native'
-import { ApolloClient, HttpLink, InMemoryCache } from 'apollo-boost'
-import { ApolloProvider, Mutation } from 'react-apollo'
-import gql from 'graphql-tag'
+import React, { Component } from "react";
+import { StyleSheet, Text, View, Button, TextInput } from "react-native";
+import { ApolloClient, HttpLink, InMemoryCache } from "apollo-boost";
+import { ApolloProvider, Mutation } from "react-apollo";
+import gql from "graphql-tag";
 
 const client = new ApolloClient({
   link: new HttpLink({
-    uri: 'https://mysterious-harbor-82544.herokuapp.com',
+    uri: "https://mysterious-harbor-82544.herokuapp.com",
   }),
   cache: new InMemoryCache(),
-})
+});
 
 const signUp = gql`
   mutation signUp($name: String!, $email: String!, $password: String!) {
@@ -369,7 +361,7 @@ const signUp = gql`
       }
     }
   }
-`
+`;
 
 const login = gql`
   mutation login($email: String!, $password: String!) {
@@ -377,16 +369,16 @@ const login = gql`
       token
     }
   }
-`
+`;
 
 export class LoginScreen extends Component {
   state = {
-    password: '',
-    name: '',
-    email: '',
-    resultRegister: '',
-    resultLogin: '',
-  }
+    password: "",
+    name: "",
+    email: "",
+    resultRegister: "",
+    resultLogin: "",
+  };
 
   render() {
     return (
@@ -427,16 +419,16 @@ export class LoginScreen extends Component {
                     })
                       .then((res) => {
                         console.log(
-                          '​LoginScreen -> res.data.login.token',
+                          "​LoginScreen -> res.data.login.token",
                           res.data.signUp.token
-                        )
+                        );
                         this.setState({
-                          resultRegister: 'SUCCESS',
-                        })
+                          resultRegister: "SUCCESS",
+                        });
 
-                        return res
+                        return res;
                       })
-                      .catch((err) => <Text>{err}</Text>)
+                      .catch((err) => <Text>{err}</Text>);
                   }}
                   title="Register user"
                 />
@@ -472,19 +464,19 @@ export class LoginScreen extends Component {
                     })
                       .then((res) => {
                         console.log(
-                          '​LoginScreen -> res.data.login.token',
+                          "​LoginScreen -> res.data.login.token",
                           res.data.login.token
-                        )
+                        );
                         this.setState({
-                          resultLogin: 'SUCCESS',
-                        })
+                          resultLogin: "SUCCESS",
+                        });
 
-                        return res
+                        return res;
                       })
                       .catch((err) => {
-                        console.log('​LoginScreen -> err', err)
-                        return <Text>{err}</Text>
-                      })
+                        console.log("​LoginScreen -> err", err);
+                        return <Text>{err}</Text>;
+                      });
                   }}
                   title="Login user"
                 />
@@ -494,31 +486,31 @@ export class LoginScreen extends Component {
           </Mutation>
         </View>
       </ApolloProvider>
-    )
+    );
   }
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#F5FCFF",
   },
   welcome: {
     fontSize: 20,
-    textAlign: 'center',
+    textAlign: "center",
     margin: 10,
   },
   input: {
     height: 30,
     width: 150,
-    borderColor: 'gray',
+    borderColor: "gray",
     borderWidth: 1,
     marginTop: 5,
     padding: 1,
   },
-})
+});
 ```
 
 Here is the completed application:

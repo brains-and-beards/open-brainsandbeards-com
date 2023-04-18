@@ -1,9 +1,9 @@
 ---
-path: '/blog/supercharging-your-console-logs-in-react-native'
-date: '2018-11-21T09:31:00.726Z'
+path: "/blog/supercharging-your-console-logs-in-react-native"
+date: "2018-11-21T09:31:00.726Z"
 title: Supercharging your console logs in React Native
 image: agent_brand.png
-author: 'Wojciech Ogrodowczyk'
+author: "Wojciech Ogrodowczyk"
 ---
 
 A common piece of folk wisdom says you can divide the programmers into two groups: those that use _debuggers_ and those that prefer to sprinkle _printf_ (or `console.log` if they do JavaScript) statements over their code like magic pixie dust.
@@ -40,22 +40,20 @@ Using Reactotron you’re not constrained to just sending `console.log` and `con
 And the code responsible for it is really simple and customisable:
 
 ```javascript {numberLines: true}
-const data = responseJson.data.results[0]
+const data = responseJson.data.results[0];
 console.tron.display({
-  name: 'Superhero loaded',
+  name: "Superhero loaded",
   value: data,
-  preview: 'Click for details: ' + data.name,
-  image: data.thumbnail.path + '.' + data.thumbnail.extension,
-})
+  preview: "Click for details: " + data.name,
+  image: data.thumbnail.path + "." + data.thumbnail.extension,
+});
 ```
 
 #### Easier logging from VS Code
 
 If you’re like most of React Native developers nowadays, you probably use Visual Studio Code as your code editor of choice. In that case, you can make your experience of adding logs really easy using the [Turbo Console Log extension](https://marketplace.visualstudio.com/items?itemName=ChakrounAnas.turbo-console-log). See it in action:
 
-<div class="gif-container">
-<img src="3.gif" width="600px"/>
-</div>
+<div class="gif-container">![](3.gif)</div>
 
 **Tip**: the shortcut for inserting the logs is `ctrl + alt + l` (letter L, like lettuce), **not** `ctrl + alt + I` (letter I, like iguana) 🤦‍♂️
 

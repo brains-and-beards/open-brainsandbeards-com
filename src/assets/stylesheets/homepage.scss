@@ -454,11 +454,7 @@ a:hover span.inner-text {
       flex: 1;
       margin: 40px 10px;
       display: block;
-    }
-
-    .logo img {
-      margin: 0 auto;
-      display: block;
+      text-align:center
     }
   }
 }
@@ -478,6 +474,8 @@ a:hover span.inner-text {
     max-width: 1040px;
   }
 
+  // TODO: Currently we have a bug and the swiper is not displayed
+  // Fix swiper pagination, or remove styles
   .swiper {
     text-align: center;
     display: flex;

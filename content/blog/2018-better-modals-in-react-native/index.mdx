@@ -1,9 +1,9 @@
 ---
 title: Better modals in React Native
-date: '2018-12-07T06:47:49.085Z'
-path: '/blog/better-modals-in-react-native'
+date: "2018-12-07T06:47:49.085Z"
+path: "/blog/better-modals-in-react-native"
 image: header.png
-author: 'Wojciech Ogrodowczyk'
+author: "Wojciech Ogrodowczyk"
 ---
 
 I’ve been working recently with modal popups in React Native (again!) and realised it’s a recurring pattern in a lot of applications that’s worth writing a bit about. So, here’s a few of my lessons learnt over implementing modal dialogs over and over again 📣
@@ -16,24 +16,24 @@ Let’s imagine a modal that we can see in a lot of simple applications. In such
 
 ```javascript {numberLines: true}
 class SurveyScreen extends Component {
-  state = { showConfirmation: false }
+  state = { showConfirmation: false };
 
   handleSubmit = (value) => {
-    this.setState({ showConfirmation: true, value: value })
-  }
+    this.setState({ showConfirmation: true, value: value });
+  };
 
   // Handler for when the user confirms their choice in the modal
   handleConfirm = () => {
     // …
-  }
+  };
 
   // Handler for when the user cancels the confirmation dialog
   handleCancel = () => {
-    this.setState({ showConfirmation: false })
-  }
+    this.setState({ showConfirmation: false });
+  };
 
   render() {
-    const { showConfirmation } = this.state
+    const { showConfirmation } = this.state;
 
     return (
       <View style={styles.container}>
@@ -42,18 +42,16 @@ class SurveyScreen extends Component {
           <Dialog onCancel={this.handleCancel} onConfirm={this.handleConfirm} />
         )}
       </View>
-    )
+    );
   }
 }
 
-export default SurveyScreen
+export default SurveyScreen;
 ```
 
 And here’s how it could look like 👇
 
-<div class="gif-container">
-<img src="modal_remove.gif" height="600px"/>
-</div>
+<div class="gif-container">![](modal_remove.gif)</div>
 
 This is a typical modal that I’ve seen many times. Its visibility is handled by the parent component by changing its inner state. We’d get `showConfirmation` from local state and depending whether it’s set or not, show or hide the confirmation dialog. We’d also pass there the `handleConfirm` and `handleCancel`buttons that would take care of the logic that should happen when user presses any of those.
 
@@ -75,8 +73,8 @@ const contentNavigator = createStackNavigator(
     screenOne: { screen: SomeImportantScreen },
     screenTwo: { screen: OtherImportantScreen },
   },
-  { initialRouteName: 'screenOne' }
-)
+  { initialRouteName: "screenOne" }
+);
 
 export const AppNavigator = createStackNavigator(
   {
@@ -84,16 +82,14 @@ export const AppNavigator = createStackNavigator(
     modal: { screen: OurCustomDialogScreen },
   },
   {
-    headerMode: 'none',
-    mode: 'modal',
-    initialRouteName: 'content',
+    headerMode: "none",
+    mode: "modal",
+    initialRouteName: "content",
   }
-)
+);
 ```
 
-<div class="gif-container">
-<img src="2.gif" height="600px"/>
-</div>
+<div class="gif-container">![](2.gif)</div>
 
 After we run this code we can see that React Navigation has really cool support for modals. We can just pass a `mode: modal`option to a `StackNavigator` and we already have some cool modal features and animations. However, the behaviour out-of-the-box leaves something to be desired for our use case, so we’ll have to tune it a bit along the way.
 
@@ -105,9 +101,7 @@ First thing we’d want to achieve is that our modal is not rendered as a comple
 
 First, for us to be able to see the previous screen underneath ours, we’ll need to make the modals transparent. By default, any screen rendered with React Navigation has a white background. However, we can pass an (experimental) option of `transparentCard: true` to make it… transparent. We can add it to the navigator options passed when creating `AppNavigator`.
 
-<div class="gif-container">
-<img src="3.gif" height="600px"/>
-</div>
+<div class="gif-container">![](3.gif)</div>
 
 After this change we’ll see that the modal is indeed transparent, but it’s not exactly on top of our other screen. We have this weird animation that our modal slides in and then the other screen disappears (on an Android phone it would get pushed out of the way).
 
@@ -126,27 +120,25 @@ transitionConfig: () => ({
     useNativeDriver: true,
   },
   screenInterpolator: (sceneProps) => {
-    const { layout, position, scene } = sceneProps
-    const thisSceneIndex = scene.index
+    const { layout, position, scene } = sceneProps;
+    const thisSceneIndex = scene.index;
 
-    const height = layout.initHeight
+    const height = layout.initHeight;
     const translateY = position.interpolate({
       inputRange: [thisSceneIndex - 1, thisSceneIndex, thisSceneIndex + 1],
       outputRange: [height, 0, 0],
-    })
+    });
 
-    return { transform: [{ translateY }] }
+    return { transform: [{ translateY }] };
   },
-})
+});
 ```
 
 This will pass custom configuration to drive the navigation transition. If you used `Animated` before, that should feel familiar. If not, why don’t you check out [our introduction to creating animations in React Native](https://www.youtube.com/watch?v=grR9UmbjpsQ).
 
 This will make our modal screen slide on top of the previous screen, instead of pushing it out of the way, we’re getting one step closer to getting a nice experience:
 
-<div class="gif-container">
-<img src="4.gif" height="600px"/>
-</div>
+<div class="gif-container">![](4.gif)</div>
 
 One note here, because I know it confuses some people. When we create an _interpolation_ we pass arrays for both input and output ranges. For a simple animation the input is usually `[0, 1]` and the output `[someValueX, someValueY]`. In that case it means that the value is **interpolated** between `someValueX` and `someValueY` **linearly**. So, in the middle of the animation (in case of a one-second-long animation, after half a second), the value will be exactly in the middle between them.
 
@@ -156,7 +148,7 @@ However, sometimes we don’t want a linear change, but something more drastic. 
 someValue.interpolate({
   inputRange: [0, 100, 1000],
   outputRange: [1.0, 0.5, 0.1],
-})
+});
 ```
 
 In case of our animation, we have `inputRange: [thisSceneIndex — 1, thisSceneIndex, thisSceneIndex + 1]` and `thisSceneIndex` is the index of the screen that’s currently being pushed into view. So, the previous screen (which is being covered) will be `thisSceneIndex — 1`.
@@ -201,9 +193,7 @@ If not, and your splash screen is more elaborate than that — well, you’l
 
 I’m lucky and my splash screen is dark, so we get a nice darkened effect on the previous screen:
 
-<div class="gif-container">
-<img src="5.gif" height="600px"/>
-</div>
+<div class="gif-container">![](5.gif)</div>
 
 #### Disabling gestures
 
@@ -250,15 +240,15 @@ When we have the above defined _service_ that helps us create options for partic
 
 ```javascript {numberLines: true}
 NavigationService.navigate(
-  'modal',
+  "modal",
   ConfirmationDialog({
-    cancelLabel: 'Cancel',
-    confirmLabel: 'Confirm',
+    cancelLabel: "Cancel",
+    confirmLabel: "Confirm",
     confirmAction: this.handleConfirm,
-    title: 'Some custom title',
-    text: 'Blah blah blah, make your choice.',
+    title: "Some custom title",
+    text: "Blah blah blah, make your choice.",
   })
-)
+);
 ```
 
 This code snippet assumes we have a general DialogScreen that can handle any configuration: one button — to dismiss, two buttons — to confirm or cancel, etc. This can get verbose depending on how many different types of dialogs you need to handle. In my case, it’s at least four: warnings, errors, informational and asking for confirmation.
