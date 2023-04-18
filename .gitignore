@@ -1,5 +1,16 @@
 node_modules/
-.cache/
-.yarn/
-public
+
+# Gatsby stuff
 src/gatsby-types.d.ts
+public/
+.cache/
+
+# IDE
+.idea/
+.vscode/
+
+# Mac stuff
+.DS_Store
+
+# Blog post helpers
+.expo
