@@ -1,10 +1,10 @@
-import React from "react";
-import { Link } from "gatsby";
-import { StaticImage } from "gatsby-plugin-image";
+import React from 'react'
+import { Link } from 'gatsby'
+import { StaticImage } from 'gatsby-plugin-image'
 
-const EstimateProjectBar = (props) => {
-  const title = props.title || "Want to start<br/>a great project?";
-  const buttonText = props.buttonText || "Get an estimate";
+const EstimateProjectBar = props => {
+  const title = props.title || 'Want to start<br/>a great project?'
+  const buttonText = props.buttonText || 'Get an estimate'
 
   return (
     <section className="estimateProject">
@@ -34,7 +34,7 @@ const EstimateProjectBar = (props) => {
         />
       </div>
     </section>
-  );
-};
+  )
+}
 
-export default EstimateProjectBar;
+export default EstimateProjectBar

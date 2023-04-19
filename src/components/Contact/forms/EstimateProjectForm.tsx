@@ -1,31 +1,26 @@
-import React, { Component } from "react";
-import { GatsbyImage, getImage } from "gatsby-plugin-image";
+import React, { Component } from 'react'
+import { GatsbyImage, getImage } from 'gatsby-plugin-image'
 
-import { validateEmail } from "./utils";
+import { validateEmail } from './utils'
 
 class EstimateProjectForm extends Component {
   state = {
-    submitEnabled: false,
-  };
+    submitEnabled: false
+  }
 
-  handleInputChange = (event) => {
-    const validationResult = validateEmail(event.target.value);
-    this.setState({ submitEnabled: validationResult });
-  };
+  handleInputChange = event => {
+    const validationResult = validateEmail(event.target.value)
+    this.setState({ submitEnabled: validationResult })
+  }
 
   render = () => {
-    const { submitEnabled } = this.state;
+    const { submitEnabled } = this.state
     const {
-      imageData: { androidIcon, iosIcon, bothIcon, scratchIcon, legacyIcon },
-    } = this.props;
+      imageData: { androidIcon, iosIcon, bothIcon, scratchIcon, legacyIcon }
+    } = this.props
 
     return (
-      <form
-        method="post"
-        data-netlify="true"
-        name="estimate"
-        action="/estimate-requested"
-      >
+      <form method="post" data-netlify="true" name="estimate" action="/estimate-requested">
         <input type="hidden" name="form-name" value="estimate" />
         <ol className="estimate-list">
           <li className="radio">
@@ -70,12 +65,7 @@ class EstimateProjectForm extends Component {
             </legend>
             <div className="row">
               <div>
-                <input
-                  type="radio"
-                  id="greenfield"
-                  name="state"
-                  value="greenfield"
-                />
+                <input type="radio" id="greenfield" name="state" value="greenfield" />
                 <label htmlFor="greenfield">
                   <GatsbyImage
                     className="image-wrapper"
@@ -111,16 +101,10 @@ class EstimateProjectForm extends Component {
                 </div>
                 <div>
                   <label htmlFor="email"> Email address </label>
-                  <input
-                    type="text"
-                    name="email"
-                    onChange={this.handleInputChange}
-                  />
+                  <input type="text" name="email" onChange={this.handleInputChange} />
                 </div>
                 <div>
-                  <label htmlFor="phone">
-                    Phone (only if you prefer us to call)
-                  </label>
+                  <label htmlFor="phone">Phone (only if you prefer us to call)</label>
                   <input type="text" name="phone" />
                 </div>
               </div>
@@ -133,9 +117,7 @@ class EstimateProjectForm extends Component {
             <p>
               Need NDA first? E-mail us at
               <br />
-              <a href="mailto:urgent-nda@brainsandbeards.com">
-                urgent-nda@brainsandbeards.com
-              </a>
+              <a href="mailto:urgent-nda@brainsandbeards.com">urgent-nda@brainsandbeards.com</a>
             </p>
             <button disabled={!submitEnabled} className="cta-action">
               Estimate project
@@ -143,8 +125,8 @@ class EstimateProjectForm extends Component {
           </li>
         </ol>
       </form>
-    );
-  };
+    )
+  }
 }
 
-export default EstimateProjectForm;
+export default EstimateProjectForm

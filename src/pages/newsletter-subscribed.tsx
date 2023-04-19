@@ -1,11 +1,11 @@
-import React, { Component } from "react";
-import { graphql } from "gatsby";
-import Layout from "../templates/layout";
-import SEO from "../components/shared/layout/SEO";
+import React, { Component } from 'react'
+import { graphql } from 'gatsby'
+import Layout from '../templates/layout'
+import SEO from '../components/shared/layout/SEO'
 
 class NewsletterSubscribed extends Component {
   render() {
-    const { heroImage } = this.props.data;
+    const { heroImage } = this.props.data
 
     return (
       <Layout
@@ -15,7 +15,7 @@ class NewsletterSubscribed extends Component {
         headerColumns
         simpleNavbar
       />
-    );
+    )
   }
 }
 
@@ -25,13 +25,13 @@ export const query = graphql`
       ...headerHeroImage
     }
   }
-`;
+`
 
-export default NewsletterSubscribed;
+export default NewsletterSubscribed
 
-const title = "Newsletter subscribed";
-const description = "We'll visit your mailbox soon enough!";
+const title = 'Newsletter subscribed'
+const description = "We'll visit your mailbox soon enough!"
 
 export const Head = ({ location }) => (
   <SEO title={title} description={description} pathname={location.pathname} />
-);
+)

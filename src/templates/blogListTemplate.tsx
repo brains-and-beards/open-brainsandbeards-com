@@ -1,39 +1,38 @@
-import React from "react";
-import { graphql, Link } from "gatsby";
-import { StaticImage } from "gatsby-plugin-image";
+import React from 'react'
+import { graphql, Link } from 'gatsby'
+import { StaticImage } from 'gatsby-plugin-image'
 
-import Layout from "./layout";
-import SEO from "../components/shared/layout/SEO";
-import PostLink from "../components/Blog/PostLink";
-import FirstPostLink from "../components/Blog/FirstPostLink";
-import ContactForm from "../components/Contact/forms/ContactForm";
-import ChevronSvg from "../assets/images/chevron-bold.svg";
+import Layout from './layout'
+import SEO from '../components/shared/layout/SEO'
+import PostLink from '../components/Blog/PostLink'
+import FirstPostLink from '../components/Blog/FirstPostLink'
+import ContactForm from '../components/Contact/forms/ContactForm'
+import ChevronSvg from '../assets/images/chevron-bold.svg'
 
-const title = "Read our insights";
-const description =
-  "Technology, Shipping great products, Building successful teams";
+const title = 'Read our insights'
+const description = 'Technology, Shipping great products, Building successful teams'
 
 const BlogListTemplate = ({
   data: { allMdx, firstElement },
-  pageContext: { currentPage, numPages },
+  pageContext: { currentPage, numPages }
 }) => {
-  const posts = allMdx.nodes.filter((node) => !!node.frontmatter.date);
-  const firstPost = firstElement.nodes[0];
+  const posts = allMdx.nodes.filter(node => !!node.frontmatter.date)
+  const firstPost = firstElement.nodes[0]
 
-  const firstPageLink = Math.max(currentPage - 2, 1);
-  const lastPageLink = Math.min(firstPageLink + 4, numPages);
-  const pageLinks = [];
+  const firstPageLink = Math.max(currentPage - 2, 1)
+  const lastPageLink = Math.min(firstPageLink + 4, numPages)
+  const pageLinks = []
   for (let p = firstPageLink; p <= lastPageLink; p++) {
-    const path = p === 1 ? "/blog" : `/blog/${p}`;
+    const path = p === 1 ? '/blog' : `/blog/${p}`
     pageLinks.push(
       <Link
         key={path}
         to={`${path}#posts-list`}
-        className={`page-link right sub2 ${p === currentPage ? "current" : ""}`}
+        className={`page-link right sub2 ${p === currentPage ? 'current' : ''}`}
       >
         <span>{p}</span>
       </Link>
-    );
+    )
   }
 
   const SubtitleRow = (
@@ -69,7 +68,7 @@ const BlogListTemplate = ({
         <p className="sub2">Building successful teams</p>
       </div>
     </div>
-  );
+  )
 
   return (
     <Layout headerTitle={title} headerSub={SubtitleRow}>
@@ -80,16 +79,11 @@ const BlogListTemplate = ({
               <FirstPostLink key={firstPost.id} post={firstPost} />
             </div>
             <div className="mobile-only">
-              <PostLink
-                key={firstPost.id}
-                post={firstPost}
-                isFirst
-                showExcerpt
-              />
+              <PostLink key={firstPost.id} post={firstPost} isFirst showExcerpt />
             </div>
 
             <div id="posts-list">
-              {posts.map((node) => (
+              {posts.map(node => (
                 <PostLink key={node.id} post={node} />
               ))}
             </div>
@@ -98,18 +92,11 @@ const BlogListTemplate = ({
 
         <div className="row" id="load-more">
           <Link
-            to={
-              currentPage <= 2
-                ? "/blog#posts-list"
-                : `/blog/${currentPage - 1}#posts-list`
-            }
-            className={`button left sub2 big ${
-              currentPage <= 1 ? "disabled" : ""
-            }`}
+            to={currentPage <= 2 ? '/blog#posts-list' : `/blog/${currentPage - 1}#posts-list`}
+            className={`button left sub2 big ${currentPage <= 1 ? 'disabled' : ''}`}
           >
             <span>
-              <ChevronSvg height="14px" className="reverse" alt="Newer posts" />{" "}
-              Newer posts
+              <ChevronSvg height="14px" className="reverse" alt="Newer posts" /> Newer posts
             </span>
           </Link>
 
@@ -117,9 +104,7 @@ const BlogListTemplate = ({
 
           <Link
             to={`/blog/${currentPage + 1}#posts-list`}
-            className={`button right sub2 big ${
-              currentPage >= numPages ? "disabled" : ""
-            }`}
+            className={`button right sub2 big ${currentPage >= numPages ? 'disabled' : ''}`}
           >
             <span>
               Older posts <ChevronSvg height="14px" alt="Older posts" />
@@ -132,10 +117,10 @@ const BlogListTemplate = ({
         subtitle="If you'd like to get in touch with us about something we wrote on our blog, please do!"
       />
     </Layout>
-  );
-};
+  )
+}
 
-export default BlogListTemplate;
+export default BlogListTemplate
 
 export const _blogPostListItemFragment = graphql`
   fragment BlogPostListItem on Mdx {
@@ -148,18 +133,14 @@ export const _blogPostListItemFragment = graphql`
       image {
         relativePath
         childImageSharp {
-          gatsbyImageData(
-            width: 280
-            height: 200
-            transformOptions: { cropFocus: CENTER }
-          )
+          gatsbyImageData(width: 280, height: 200, transformOptions: { cropFocus: CENTER })
         }
       }
       imagePosition
       author
     }
   }
-`;
+`
 
 export const _blogPostFirstItemFragment = graphql`
   fragment BlogPostFirstItem on Mdx {
@@ -173,7 +154,7 @@ export const _blogPostFirstItemFragment = graphql`
       }
     }
   }
-`;
+`
 
 export const query = graphql`
   query ($limit: Int, $skip: Int) {
@@ -189,7 +170,7 @@ export const query = graphql`
       }
     }
   }
-`;
+`
 
 export const Head = ({ location }) => (
   <>
@@ -201,4 +182,4 @@ export const Head = ({ location }) => (
       href="https://brainsandbeards.com/blog/feed.xml"
     />
   </>
-);
+)

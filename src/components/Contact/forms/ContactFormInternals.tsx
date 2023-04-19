@@ -1,23 +1,18 @@
-import { StaticImage } from "gatsby-plugin-image";
-import React, { useState } from "react";
-import { validateEmail } from "./utils";
+import { StaticImage } from 'gatsby-plugin-image'
+import React, { useState } from 'react'
+import { validateEmail } from './utils'
 
 const ContactFormInternals = ({ title, subtitle }) => {
-  const [isSubmitEnabled, setIsSubmitEnabled] = useState(false);
+  const [isSubmitEnabled, setIsSubmitEnabled] = useState(false)
 
-  const handleInputChange = (event) => {
-    const validationResult = validateEmail(event.target.value);
-    setIsSubmitEnabled(validationResult);
-  };
+  const handleInputChange = event => {
+    const validationResult = validateEmail(event.target.value)
+    setIsSubmitEnabled(validationResult)
+  }
 
   return (
     <section className="contact-form">
-      <form
-        method="post"
-        data-netlify="true"
-        name="contact"
-        action="/message-sent"
-      >
+      <form method="post" data-netlify="true" name="contact" action="/message-sent">
         <input type="hidden" name="form-name" value="contact" />
         <div className="content">
           <div className="contact-content">
@@ -47,7 +42,7 @@ const ContactFormInternals = ({ title, subtitle }) => {
         </div>
       </form>
     </section>
-  );
-};
+  )
+}
 
-export default ContactFormInternals;
+export default ContactFormInternals

@@ -1,19 +1,19 @@
-import React from "react";
-import { graphql } from "gatsby";
+import React from 'react'
+import { graphql } from 'gatsby'
 
-import SEO from "../components/shared/layout/SEO";
-import Layout from "./layout";
-import { GatsbyImage, getImage } from "gatsby-plugin-image";
-import PostLink from "../components/Blog/PostLink";
-import AuthorWithPictureAndText from "../components/Blog/AuthorWithPictureAndText";
-import Newsletter from "../components/Blog/Newsletter";
+import SEO from '../components/shared/layout/SEO'
+import Layout from './layout'
+import { GatsbyImage, getImage } from 'gatsby-plugin-image'
+import PostLink from '../components/Blog/PostLink'
+import AuthorWithPictureAndText from '../components/Blog/AuthorWithPictureAndText'
+import Newsletter from '../components/Blog/Newsletter'
 // import ReactNativeAnimatedCodeInput from '../components/ReactNativeAnimatedCodeInput'
-import SubscribeFootnote from "../components/Blog/SubscribeFootnote";
-import HiringFootnote from "../components/Blog/HiringFootnote";
-import { MDXProvider } from "@mdx-js/react";
-import PrismSyntaxHighlight from "../components/Blog/PrismSyntaxHighlight";
+import SubscribeFootnote from '../components/Blog/SubscribeFootnote'
+import HiringFootnote from '../components/Blog/HiringFootnote'
+import { MDXProvider } from '@mdx-js/react'
+import PrismSyntaxHighlight from '../components/Blog/PrismSyntaxHighlight'
 
-const renderDate = (date) => <p className="date">{date}</p>;
+const renderDate = date => <p className="date">{date}</p>
 
 export const query = graphql`
   query ($id: String) {
@@ -55,34 +55,28 @@ export const query = graphql`
           date(formatString: "MMMM DD, YYYY")
           image {
             childImageSharp {
-              gatsbyImageData(
-                width: 280
-                height: 200
-                transformOptions: { cropFocus: CENTER }
-              )
+              gatsbyImageData(width: 280, height: 200, transformOptions: { cropFocus: CENTER })
             }
           }
         }
       }
     }
   }
-`;
+`
 
 const components = {
   code: ({ children, className }) => {
     return className ? (
-      <PrismSyntaxHighlight className={className}>
-        {children}
-      </PrismSyntaxHighlight>
+      <PrismSyntaxHighlight className={className}>{children}</PrismSyntaxHighlight>
     ) : (
       <code>{children}</code>
-    );
-  },
-};
+    )
+  }
+}
 
 const BlogTemplate = ({
   data: { mdx, relatedStoriesMdx },
-  children, // It's set as contentFilePath in gatsby-node.js
+  children // It's set as contentFilePath in gatsby-node.js
 }) => {
   const {
     id,
@@ -91,13 +85,13 @@ const BlogTemplate = ({
       date,
       image,
       author,
-      imageCaption, //, demo
-    },
-  } = mdx;
+      imageCaption //, demo
+    }
+  } = mdx
 
-  const related = getRelatedStories(relatedStoriesMdx.nodes, id).map((node) => {
-    return <PostLink key={node.id} post={node} />;
-  });
+  const related = getRelatedStories(relatedStoriesMdx.nodes, id).map(node => {
+    return <PostLink key={node.id} post={node} />
+  })
 
   return (
     <Layout headerTitle={title} headerSub={renderDate(date)}>
@@ -127,7 +121,7 @@ const BlogTemplate = ({
           {/* {demo === 'AnimatedInput' && <ReactNativeAnimatedCodeInput />} */}
           <SubscribeFootnote />
           <HiringFootnote />
-          <AuthorWithPictureAndText author={author} text={"WRITTEN BY"} />
+          <AuthorWithPictureAndText author={author} text={'WRITTEN BY'} />
         </div>
       </div>
       <Newsletter />
@@ -138,32 +132,31 @@ const BlogTemplate = ({
         </section>
       </div>
     </Layout>
-  );
-};
+  )
+}
 
-export default BlogTemplate;
+export default BlogTemplate
 
 const getRelatedStories = (nodes, id) => {
-  const myIndex = nodes.findIndex((s) => s.id === id);
-  const count = nodes.length;
+  const myIndex = nodes.findIndex(s => s.id === id)
+  const count = nodes.length
 
-  const previous = myIndex === 0 ? count - 1 : myIndex - 1;
-  const next = myIndex === count - 1 ? 0 : myIndex + 1;
+  const previous = myIndex === 0 ? count - 1 : myIndex - 1
+  const next = myIndex === count - 1 ? 0 : myIndex + 1
 
-  return [nodes[previous], nodes[next]];
-};
+  return [nodes[previous], nodes[next]]
+}
 
-export const Head = (props) => {
+export const Head = props => {
   const {
     pageContext: { author, title, excerpt, date },
     location: { pathname },
-    data,
-  } = props;
+    data
+  } = props
 
   const thumbnailPath =
-    data.mdx.frontmatter.thumbnailImage.childImageSharp.gatsbyImageData.images
-      .fallback.src;
-  const thumbnailUrl = `https://brainsandbeards.com${thumbnailPath}`;
+    data.mdx.frontmatter.thumbnailImage.childImageSharp.gatsbyImageData.images.fallback.src
+  const thumbnailUrl = `https://brainsandbeards.com${thumbnailPath}`
 
   return (
     <>
@@ -181,9 +174,7 @@ export const Head = (props) => {
           "thumbnailURL": "${thumbnailUrl}",
           "thumbnail": "${thumbnailUrl}",
           "author": {
-            "@type": "${
-              author === "Brains&Beards" ? "Organization" : "Person"
-            }",
+            "@type": "${author === 'Brains&Beards' ? 'Organization' : 'Person'}",
             "name": "${author}"
           },
           "publisher": {
@@ -197,5 +188,5 @@ export const Head = (props) => {
         }`}
       </script>
     </>
-  );
-};
+  )
+}

@@ -1,5 +1,5 @@
-import { StaticImage } from "gatsby-plugin-image";
-import React from "react";
+import { StaticImage } from 'gatsby-plugin-image'
+import React from 'react'
 
 export const clincaseHeroImage = (
   <StaticImage
@@ -7,15 +7,11 @@ export const clincaseHeroImage = (
     alt="Femtasy banner"
     width={620}
   />
-);
+)
 
 export const clincaseLogoImage = (
-  <StaticImage
-    src="../../assets/client-logos/clincase.png"
-    alt="Femtasy logo"
-    height={22}
-  />
-);
+  <StaticImage src="../../assets/client-logos/clincase.png" alt="Femtasy logo" height={22} />
+)
 
 export const femtasyHeroImage = (
   <StaticImage
@@ -23,7 +19,7 @@ export const femtasyHeroImage = (
     alt="Femtasy banner"
     width={680}
   />
-);
+)
 
 export const femtasyLogoImage = (
   <StaticImage
@@ -31,7 +27,7 @@ export const femtasyLogoImage = (
     alt="Femtasy logo"
     height={22}
   />
-);
+)
 
 export const lokalportalHeroImage = (
   <StaticImage
@@ -39,7 +35,7 @@ export const lokalportalHeroImage = (
     alt="Femtasy banner"
     width={680}
   />
-);
+)
 
 export const lokalportalLogoImage = (
   <StaticImage
@@ -47,23 +43,15 @@ export const lokalportalLogoImage = (
     alt="Femtasy logo"
     height={22}
   />
-);
+)
 
 export const rakutenHeroImage = (
-  <StaticImage
-    src="../../assets/case-studies/rakuten-team.jpg"
-    alt="Femtasy banner"
-    width={680}
-  />
-);
+  <StaticImage src="../../assets/case-studies/rakuten-team.jpg" alt="Femtasy banner" width={680} />
+)
 
 export const rakutenLogoImage = (
-  <StaticImage
-    src="../../assets/client-logos/rakuten-alt.png"
-    alt="Femtasy logo"
-    height={22}
-  />
-);
+  <StaticImage src="../../assets/client-logos/rakuten-alt.png" alt="Femtasy logo" height={22} />
+)
 
 export const sharooHeroImage = (
   <StaticImage
@@ -71,7 +59,7 @@ export const sharooHeroImage = (
     alt="Femtasy banner"
     width={680}
   />
-);
+)
 
 export const sharooLogoImage = (
   <StaticImage
@@ -79,4 +67,4 @@ export const sharooLogoImage = (
     alt="Femtasy logo"
     height={22}
   />
-);
+)

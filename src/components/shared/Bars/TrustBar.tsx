@@ -3,9 +3,7 @@ import TrustBarItem from './TrustBarItem'
 import moment from 'moment'
 
 const BB_START_DATE = '08/25/2015'
-const COMPANY_YEARS = moment(BB_START_DATE, 'MM/DD/YYYY')
-  .fromNow()
-  .split(' ')[0]
+const COMPANY_YEARS = moment(BB_START_DATE, 'MM/DD/YYYY').fromNow().split(' ')[0]
 
 class TrustBar extends Component {
   static defaultProps = {
@@ -14,14 +12,12 @@ class TrustBar extends Component {
       { value: '52 months', label: 'longest ongoing client engagement' },
       {
         value: '9+',
-        label: 'average years of programming experience on our team',
-      },
-    ],
+        label: 'average years of programming experience on our team'
+      }
+    ]
   }
 
-  renderItem = (item) => (
-    <TrustBarItem key={item.value} number={item.value} caption={item.label} />
-  )
+  renderItem = item => <TrustBarItem key={item.value} number={item.value} caption={item.label} />
 
   render = () => {
     const { items } = this.props

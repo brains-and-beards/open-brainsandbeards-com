@@ -9,17 +9,13 @@ const renderTitle = ({ title: titleParam, main }) => {
   else return <h3 className={`center ${klass}`}>{title}</h3>
 }
 
-const ContactForm = (props) => {
+const ContactForm = props => {
   const subtitle =
-    props.subtitle ||
-    'Got something amazing for us? Fill in the form below to start a new project!'
+    props.subtitle || 'Got something amazing for us? Fill in the form below to start a new project!'
 
   return (
     <section className="contact-form">
-      <ContactFormInternals
-        title={renderTitle(props)}
-        subtitle={subtitle}
-      />
+      <ContactFormInternals title={renderTitle(props)} subtitle={subtitle} />
     </section>
   )
 }

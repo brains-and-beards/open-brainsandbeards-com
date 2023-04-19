@@ -1,8 +1,8 @@
-import React from "react";
-import { useStaticQuery, graphql } from "gatsby";
-import { blogAuthorsImages } from "../../configs/consts";
-import { AnchorLink } from "gatsby-plugin-anchor-links";
-import { GatsbyImage, getImage } from "gatsby-plugin-image";
+import React from 'react'
+import { useStaticQuery, graphql } from 'gatsby'
+import { blogAuthorsImages } from '../../configs/consts'
+import { AnchorLink } from 'gatsby-plugin-anchor-links'
+import { GatsbyImage, getImage } from 'gatsby-plugin-image'
 
 const query = graphql`
   query {
@@ -15,19 +15,19 @@ const query = graphql`
       }
     }
   }
-`;
+`
 
 const AuthorWithPictureAndText = ({ author, text }) => {
-  const data = useStaticQuery(query);
+  const data = useStaticQuery(query)
 
-  if (!blogAuthorsImages[author]) return <div />;
+  if (!blogAuthorsImages[author]) return <div />
 
   const image = data.allFile.nodes.find(
-    (it) => it.relativePath === blogAuthorsImages[author].imageName
-  );
+    it => it.relativePath === blogAuthorsImages[author].imageName
+  )
 
   return (
-    <AnchorLink to={`/team#${author.split(" ")[0]}`}>
+    <AnchorLink to={`/team#${author.split(' ')[0]}`}>
       <div className="written-by-container">
         <div className="author-container">
           <div className="author-content">
@@ -41,14 +41,12 @@ const AuthorWithPictureAndText = ({ author, text }) => {
           <div>
             <h5 className="written-by">{text}</h5>
             <p className="written-by-author-name">{author}</p>
-            <p className="written-by-author-title">
-              {blogAuthorsImages[author].title}
-            </p>
+            <p className="written-by-author-title">{blogAuthorsImages[author].title}</p>
           </div>
         </div>
       </div>
     </AnchorLink>
-  );
-};
+  )
+}
 
-export default AuthorWithPictureAndText;
+export default AuthorWithPictureAndText

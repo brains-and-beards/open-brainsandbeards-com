@@ -1,29 +1,27 @@
-import React from "react";
-import rangeParser from "parse-numeric-range";
-import Highlight, { defaultProps } from "prism-react-renderer";
+import React from 'react'
+import rangeParser from 'parse-numeric-range'
+import Highlight, { defaultProps } from 'prism-react-renderer'
 
-const calculateLinesToHighlight = (meta) => {
-  const RE = /{([\d,-]+)}/;
+const calculateLinesToHighlight = meta => {
+  const RE = /{([\d,-]+)}/
   if (RE.test(meta)) {
-    const strlineNumbers = RE.exec(meta)[1];
-    const lineNumbers = rangeParser(strlineNumbers);
-    return (index) => lineNumbers.includes(index + 1);
+    const strlineNumbers = RE.exec(meta)[1]
+    const lineNumbers = rangeParser(strlineNumbers)
+    return index => lineNumbers.includes(index + 1)
   } else {
-    return () => true;
+    return () => true
   }
-};
+}
 
 const PrismSyntaxHighlight = ({ children, className }) => {
-  var language = className.replace(/language-/gm, "");
-  const highlightedLinesMatch = language.match(/{[^}]+}/);
-  let highlightLinesDefinition = "";
+  var language = className.replace(/language-/gm, '')
+  const highlightedLinesMatch = language.match(/{[^}]+}/)
+  let highlightLinesDefinition = ''
   if (highlightedLinesMatch !== null) {
-    highlightLinesDefinition = highlightedLinesMatch[0];
-    language = language.substr(0, highlightedLinesMatch.index);
+    highlightLinesDefinition = highlightedLinesMatch[0]
+    language = language.substr(0, highlightedLinesMatch.index)
   }
-  const shouldHighlightLine = calculateLinesToHighlight(
-    highlightLinesDefinition
-  );
+  const shouldHighlightLine = calculateLinesToHighlight(highlightLinesDefinition)
 
   return (
     <Highlight {...defaultProps} code={children} language={language}>
@@ -31,26 +29,26 @@ const PrismSyntaxHighlight = ({ children, className }) => {
         return (
           <code className={className}>
             {tokens.slice(0, -1).map((line, i) => {
-              const lineProps = getLineProps({ line, key: i });
+              const lineProps = getLineProps({ line, key: i })
               if (shouldHighlightLine(i)) {
-                lineProps.className = `${lineProps.className} highlight-line`;
+                lineProps.className = `${lineProps.className} highlight-line`
               }
-              delete lineProps.style;
+              delete lineProps.style
               return (
                 <div key={i} {...lineProps}>
                   {line.map((token, key) => {
-                    const tokenProps = getTokenProps({ token, key });
-                    delete tokenProps.style;
-                    return <span {...tokenProps} />;
+                    const tokenProps = getTokenProps({ token, key })
+                    delete tokenProps.style
+                    return <span {...tokenProps} />
                   })}
                 </div>
-              );
+              )
             })}
           </code>
-        );
+        )
       }}
     </Highlight>
-  );
-};
+  )
+}
 
-export default PrismSyntaxHighlight;
+export default PrismSyntaxHighlight

@@ -1,10 +1,10 @@
-import React, { Component } from "react";
+import React, { Component } from 'react'
 
-import Layout from "../templates/layout";
-import ClientLogos from "../components/CaseStudies/ClientLogos";
-import CaseStudyBar from "../components/shared/Bars/CaseStudyBar";
-import TrustBar from "../components/shared/Bars/TrustBar";
-import EstimateProjectBar from "../components/shared/Bars/EstimateProjectBar";
+import Layout from '../templates/layout'
+import ClientLogos from '../components/CaseStudies/ClientLogos'
+import CaseStudyBar from '../components/shared/Bars/CaseStudyBar'
+import TrustBar from '../components/shared/Bars/TrustBar'
+import EstimateProjectBar from '../components/shared/Bars/EstimateProjectBar'
 import {
   clincaseHeroImage,
   clincaseLogoImage,
@@ -15,9 +15,9 @@ import {
   rakutenHeroImage,
   rakutenLogoImage,
   sharooLogoImage,
-  sharooHeroImage,
-} from "../components/CaseStudies/images";
-import SEO from "../components/shared/layout/SEO";
+  sharooHeroImage
+} from '../components/CaseStudies/images'
+import SEO from '../components/shared/layout/SEO'
 
 class Projects extends Component {
   render() {
@@ -78,8 +78,7 @@ class Projects extends Component {
               pageType="projects"
             />
             <h3 className="awesome-people">
-              We've helped some pretty great people at some pretty awesome
-              companies:
+              We've helped some pretty great people at some pretty awesome companies:
             </h3>
             <ClientLogos />
           </div>
@@ -88,16 +87,15 @@ class Projects extends Component {
         <TrustBar />
         <EstimateProjectBar />
       </Layout>
-    );
+    )
   }
 }
 
-export default Projects;
+export default Projects
 
-const title = "Case studies";
-const description =
-  "Read in detail about some of the applications that we've built.";
+const title = 'Case studies'
+const description = "Read in detail about some of the applications that we've built."
 
 export const Head = ({ location }) => (
   <SEO title={title} description={description} pathname={location.pathname} />
-);
+)

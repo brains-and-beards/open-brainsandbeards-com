@@ -1,11 +1,11 @@
-import React from "react";
-import { graphql } from "gatsby";
-import Layout from "../templates/layout";
-import EstimateProjectForm from "../components/Contact/forms/EstimateProjectForm";
-import SEO from "../components/shared/layout/SEO";
+import React from 'react'
+import { graphql } from 'gatsby'
+import Layout from '../templates/layout'
+import EstimateProjectForm from '../components/Contact/forms/EstimateProjectForm'
+import SEO from '../components/shared/layout/SEO'
 
-const EstimateProject = (props) => {
-  const { heroImage } = props.data;
+const EstimateProject = props => {
+  const { heroImage } = props.data
 
   return (
     <Layout
@@ -21,8 +21,8 @@ const EstimateProject = (props) => {
         </div>
       </div>
     </Layout>
-  );
-};
+  )
+}
 
 export const _fluidIllustration = graphql`
   fragment fluidIllustration on File {
@@ -30,7 +30,7 @@ export const _fluidIllustration = graphql`
       gatsbyImageData(height: 192)
     }
   }
-`;
+`
 
 export const query = graphql`
   query estimatePageQuery {
@@ -53,14 +53,14 @@ export const query = graphql`
       ...fluidIllustration
     }
   }
-`;
+`
 
-export default EstimateProject;
+export default EstimateProject
 
-const title = "Request estimate";
+const title = 'Request estimate'
 const description =
-  "Let us know what you need, we'll contact you promptly to discuss how we can help with your project.";
+  "Let us know what you need, we'll contact you promptly to discuss how we can help with your project."
 
 export const Head = ({ location }) => (
   <SEO title={title} description={description} pathname={location.pathname} />
-);
+)

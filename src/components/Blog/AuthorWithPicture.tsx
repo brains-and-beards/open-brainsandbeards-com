@@ -1,7 +1,7 @@
-import { graphql, useStaticQuery } from "gatsby";
-import { GatsbyImage, getImage } from "gatsby-plugin-image";
-import React from "react";
-import { blogAuthorsImages } from "../../configs/consts";
+import { graphql, useStaticQuery } from 'gatsby'
+import { GatsbyImage, getImage } from 'gatsby-plugin-image'
+import React from 'react'
+import { blogAuthorsImages } from '../../configs/consts'
 
 const query = graphql`
   query {
@@ -14,18 +14,18 @@ const query = graphql`
       }
     }
   }
-`;
+`
 
 const AuthorWithPicture = ({ author, firstPost }) => {
-  const data = useStaticQuery(query);
+  const data = useStaticQuery(query)
 
-  if (!blogAuthorsImages[author]) return <div />; // Author not defined
+  if (!blogAuthorsImages[author]) return <div /> // Author not defined
 
-  const suffix = firstPost ? "" : "-list";
+  const suffix = firstPost ? '' : '-list'
 
   const image = data.allFile.nodes.find(
-    (it) => it.relativePath === blogAuthorsImages[author].imageName
-  );
+    it => it.relativePath === blogAuthorsImages[author].imageName
+  )
 
   return (
     <div>
@@ -44,7 +44,7 @@ const AuthorWithPicture = ({ author, firstPost }) => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default AuthorWithPicture;
+export default AuthorWithPicture

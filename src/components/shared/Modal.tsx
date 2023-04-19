@@ -7,11 +7,11 @@ const Modal = ({ show, onClose, mainText, title, footerText }) => {
     if (show) {
       modal.style.display = 'block'
       setTimeout(() => (modal.style.opacity = 1), 50)
-      window.onclick = (event) => (event.target === modal ? onClose() : null)
+      window.onclick = event => (event.target === modal ? onClose() : null)
     } else {
       modal.style.opacity = 0
       setTimeout(() => (modal.style.display = 'none'), 500)
-      window.onclick = (event) => (event.target === modal ? onClose() : null)
+      window.onclick = event => (event.target === modal ? onClose() : null)
     }
   }, [show])
 

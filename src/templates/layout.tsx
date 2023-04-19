@@ -1,10 +1,10 @@
-import React from "react";
-import { graphql } from "gatsby";
-import Header from "../components/shared/layout/Header";
-import Navbar from "../components/shared/layout/Navbar";
-import Footer from "../components/shared/layout/Footer";
-import { Location } from "@reach/router";
-import "../assets/stylesheets/main.scss";
+import React from 'react'
+import { graphql } from 'gatsby'
+import Header from '../components/shared/layout/Header'
+import Navbar from '../components/shared/layout/Navbar'
+import Footer from '../components/shared/layout/Footer'
+import { Location } from '@reach/router'
+import '../assets/stylesheets/main.scss'
 
 export const _headerHeroImage = graphql`
   fragment headerHeroImage on File {
@@ -12,9 +12,9 @@ export const _headerHeroImage = graphql`
       gatsbyImageData(width: 504)
     }
   }
-`;
+`
 
-const Layout = (props) => {
+const Layout = props => {
   const {
     children,
     header,
@@ -25,13 +25,13 @@ const Layout = (props) => {
     navbarBackButtonText,
     projects,
     rightContent,
-    simpleNavbar,
-  } = props;
+    simpleNavbar
+  } = props
 
   return (
     <>
       <Location>
-        {(locationProps) => (
+        {locationProps => (
           <Navbar
             simple={simpleNavbar}
             currentLocation={locationProps.location.pathname}
@@ -58,7 +58,7 @@ const Layout = (props) => {
       {children}
       <Footer />
     </>
-  );
-};
+  )
+}
 
-export default Layout;
+export default Layout

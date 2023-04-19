@@ -1,12 +1,12 @@
-import React, { Component } from "react";
-import { graphql } from "gatsby";
+import React, { Component } from 'react'
+import { graphql } from 'gatsby'
 
-import Layout from "../templates/layout";
-import SEO from "../components/shared/layout/SEO";
+import Layout from '../templates/layout'
+import SEO from '../components/shared/layout/SEO'
 
 class EstimateRequested extends Component {
   render() {
-    const { heroImage } = this.props.data;
+    const { heroImage } = this.props.data
 
     return (
       <Layout
@@ -16,7 +16,7 @@ class EstimateRequested extends Component {
         headerColumns
         simpleNavbar
       />
-    );
+    )
   }
 }
 
@@ -26,13 +26,13 @@ export const query = graphql`
       ...headerHeroImage
     }
   }
-`;
+`
 
-export default EstimateRequested;
+export default EstimateRequested
 
-const title = "Estimate requested";
-const description = "Thanks for considering us for your project.";
+const title = 'Estimate requested'
+const description = 'Thanks for considering us for your project.'
 
 export const Head = ({ location }) => (
   <SEO title={title} description={description} pathname={location.pathname} />
-);
+)

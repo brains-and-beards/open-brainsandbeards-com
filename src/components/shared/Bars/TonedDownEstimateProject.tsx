@@ -1,14 +1,14 @@
-import React, { Component } from "react";
-import { Link } from "gatsby";
+import React, { Component } from 'react'
+import { Link } from 'gatsby'
 
 class TonedDownEstimateProject extends Component {
   static defaultProps = {
-    title: "Want to start<br/>a great project?",
-    buttonText: "Get an estimate",
-  };
+    title: 'Want to start<br/>a great project?',
+    buttonText: 'Get an estimate'
+  }
 
   render() {
-    const { title, buttonText } = this.props;
+    const { title, buttonText } = this.props
 
     return (
       <section className="toned-down estimateProject">
@@ -21,8 +21,8 @@ class TonedDownEstimateProject extends Component {
           </div>
         </div>
       </section>
-    );
+    )
   }
 }
 
-export default TonedDownEstimateProject;
+export default TonedDownEstimateProject

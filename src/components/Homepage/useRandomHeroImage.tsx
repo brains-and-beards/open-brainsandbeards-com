@@ -1,10 +1,10 @@
-import React, { useMemo } from "react";
-import { StaticImage } from "gatsby-plugin-image";
+import React, { useMemo } from 'react'
+import { StaticImage } from 'gatsby-plugin-image'
 
 const heroImages = [
   <StaticImage
     src="../../assets/illustrations/hero-bicycle.png"
-    className={"hero-image heroBicycle"}
+    className={'hero-image heroBicycle'}
     objectFit="contain"
     alt="Hero image"
     placeholder="blurred"
@@ -12,7 +12,7 @@ const heroImages = [
   />,
   <StaticImage
     src="../../assets/illustrations/hero-jogin.png"
-    className={"hero-image heroJogin"}
+    className={'hero-image heroJogin'}
     objectFit="contain"
     alt="Hero image"
     placeholder="blurred"
@@ -20,45 +20,45 @@ const heroImages = [
   />,
   <StaticImage
     src="../../assets/illustrations/hero-skateboard.png"
-    className={"hero-image heroSkateboard"}
+    className={'hero-image heroSkateboard'}
     objectFit="contain"
     alt="Hero image"
     placeholder="blurred"
     width={710}
-  />,
-];
+  />
+]
 
 const mobileHeroImages = [
   <StaticImage
     src="../../assets/illustrations/hero-bicycle.png"
-    className={"hero-image mobile-only"}
+    className={'hero-image mobile-only'}
     alt="Hero image"
     placeholder="blurred"
     height={510}
   />,
   <StaticImage
     src="../../assets/illustrations/hero-jogin.png"
-    className={"hero-image mobile-only"}
+    className={'hero-image mobile-only'}
     alt="Hero image"
     placeholder="blurred"
     height={510}
   />,
   <StaticImage
     src="../../assets/illustrations/hero-skateboard.png"
-    className={"hero-image mobile-only"}
+    className={'hero-image mobile-only'}
     alt="Hero image"
     placeholder="blurred"
     height={510}
-  />,
-];
+  />
+]
 
 const useRandomHeroImage = () => {
   const heroImage = useMemo(() => {
-    const index = Math.floor(Math.random() * heroImages.length);
-    return [heroImages[index], mobileHeroImages[index]];
-  }, []);
+    const index = Math.floor(Math.random() * heroImages.length)
+    return [heroImages[index], mobileHeroImages[index]]
+  }, [])
 
-  return heroImage;
-};
+  return heroImage
+}
 
-export default useRandomHeroImage;
+export default useRandomHeroImage

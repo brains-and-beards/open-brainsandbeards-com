@@ -1,6 +1,6 @@
-import { StaticImage } from "gatsby-plugin-image";
-import React from "react";
-import CaseStudyBar, { PageType } from "./CaseStudyBar";
+import { StaticImage } from 'gatsby-plugin-image'
+import React from 'react'
+import CaseStudyBar, { PageType } from './CaseStudyBar'
 
 const heroImage = (
   <StaticImage
@@ -9,7 +9,7 @@ const heroImage = (
     placeholder="blurred"
     width={680}
   />
-);
+)
 
 const logoImage = (
   <StaticImage
@@ -18,7 +18,7 @@ const logoImage = (
     placeholder="blurred"
     height={22}
   />
-);
+)
 
 const SharooCaseStudyBar = ({ pageType }: { pageType: PageType }) => {
   return (
@@ -28,9 +28,9 @@ const SharooCaseStudyBar = ({ pageType }: { pageType: PageType }) => {
       header="We helped sharoo team conquering carsharing economy in Switzerland"
       desc="How we implemented unique mobile applications supporting renting and interacting with rented vehicles."
       url="/projects/sharoo"
-      pageType={pageType || "home"}
+      pageType={pageType || 'home'}
     />
-  );
-};
+  )
+}
 
-export default SharooCaseStudyBar;
+export default SharooCaseStudyBar

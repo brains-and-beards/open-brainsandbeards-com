@@ -4,14 +4,14 @@ import Swiper from 'react-id-swiper'
 const SimpleSwiperWithParams = ({ items, ContentClass }) => {
   const ref = useRef(null)
 
-  const goNext = (e) => {
+  const goNext = e => {
     e.preventDefault()
     if (ref.current !== null && ref.current.swiper !== null) {
       ref.current.swiper.slideNext()
     }
   }
 
-  const goPrev = (e) => {
+  const goPrev = e => {
     e.preventDefault()
     if (ref.current !== null && ref.current.swiper !== null) {
       ref.current.swiper.slidePrev()
@@ -29,7 +29,7 @@ const SimpleSwiperWithParams = ({ items, ContentClass }) => {
       renderPrevButton={() => null}
       renderNextButton={() => null}
     >
-      {items.map((i) => (
+      {items.map(i => (
         <div key={`reference-${i.name}`}>
           <ContentClass {...i} onNext={goNext} onPrev={goPrev} />
         </div>

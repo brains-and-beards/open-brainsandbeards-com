@@ -1,15 +1,15 @@
-import React from "react";
-import { Link } from "gatsby";
+import React from 'react'
+import { Link } from 'gatsby'
 
-import ReadMore from "../shared/ReadMore";
-import { GatsbyImage, getImage } from "gatsby-plugin-image";
-import AuthorWithPicture from "./AuthorWithPicture";
+import ReadMore from '../shared/ReadMore'
+import { GatsbyImage, getImage } from 'gatsby-plugin-image'
+import AuthorWithPicture from './AuthorWithPicture'
 
 const FirstPostLink = ({ post }) => {
   const {
     frontmatter: { author, path, title, date },
-    firstItemFrontmatter: { image },
-  } = post;
+    firstItemFrontmatter: { image }
+  } = post
 
   return (
     <div className="content">
@@ -24,12 +24,12 @@ const FirstPostLink = ({ post }) => {
             <p className="first-post-date">{date}</p>
             <h3>{title}</h3>
             <AuthorWithPicture author={author} firstPost={true} />
-            <ReadMore text={"Read full story"} url={path} />
+            <ReadMore text={'Read full story'} url={path} />
           </div>
         </div>
       </Link>
     </div>
-  );
-};
+  )
+}
 
-export default FirstPostLink;
+export default FirstPostLink

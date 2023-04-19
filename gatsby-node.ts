@@ -1,9 +1,9 @@
-const path = require("path");
+const path = require('path')
 
-require("dotenv").config({
-  path: `.env.${process.env.NODE_ENV}`,
-});
-const showBlog = process.env.SHOW_BLOG;
+require('dotenv').config({
+  path: `.env.${process.env.NODE_ENV}`
+})
+const showBlog = process.env.SHOW_BLOG
 
 const PAGES_QUERY = `
   query {
@@ -28,39 +28,39 @@ const PAGES_QUERY = `
       }
     }
   }
-`;
+`
 
 exports.createPages = async ({ actions, graphql, ...rest }) => {
-  const { createPage } = actions;
+  const { createPage } = actions
 
-  if (showBlog === "true") {
-    const result = await graphql(PAGES_QUERY);
+  if (showBlog === 'true') {
+    const result = await graphql(PAGES_QUERY)
 
     if (result.errors) {
-      reporter.panicOnBuild(`Error while running GraphQL query.`);
-      return;
+      reporter.panicOnBuild(`Error while running GraphQL query.`)
+      return
     }
 
-    const { allMdx, site } = result.data;
+    const { allMdx, site } = result.data
 
-    const posts = allMdx.nodes;
-    const postsPerPage = site.siteMetadata.blogPostsCountPerPage;
-    const numPages = Math.ceil(posts.length / postsPerPage);
+    const posts = allMdx.nodes
+    const postsPerPage = site.siteMetadata.blogPostsCountPerPage
+    const numPages = Math.ceil(posts.length / postsPerPage)
     Array.from({ length: numPages }).forEach((_, i) => {
       createPage({
         path: i === 0 ? `/blog` : `/blog/${i + 1}`, // Don't create /blog/0 and /blog/1
-        component: path.resolve("./src/templates/blogListTemplate.tsx"),
+        component: path.resolve('./src/templates/blogListTemplate.tsx'),
         context: {
           limit: postsPerPage,
           skip: i * postsPerPage + 1, // +1 because first shown is always the same single newest post
           numPages,
-          currentPage: i + 1, // Starts indexing from page 1, there is no page 0
-        },
-      });
-    });
+          currentPage: i + 1 // Starts indexing from page 1, there is no page 0
+        }
+      })
+    })
 
-    posts.forEach((node) => {
-      const blogTemplate = path.resolve(`src/templates/blogTemplate.tsx`);
+    posts.forEach(node => {
+      const blogTemplate = path.resolve(`src/templates/blogTemplate.tsx`)
 
       createPage({
         path: node.frontmatter.path,
@@ -70,9 +70,9 @@ exports.createPages = async ({ actions, graphql, ...rest }) => {
           title: node.frontmatter.title,
           excerpt: node.excerpt,
           author: node.frontmatter.author,
-          date: node.frontmatter.date,
-        },
-      });
-    });
+          date: node.frontmatter.date
+        }
+      })
+    })
   }
-};
+}

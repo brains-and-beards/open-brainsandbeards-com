@@ -13,38 +13,38 @@ let teamMembers = [
   {
     name: 'Patryk',
     photo: 'patryk.jpg',
-    bio: 'Ideas machine. Reading too much. Teaching (functional) mobile and desktop development. I do funny faces on YouTube.',
+    bio: 'Ideas machine. Reading too much. Teaching (functional) mobile and desktop development. I do funny faces on YouTube.'
   },
   {
     name: 'Wojciech',
     photo: 'wojtek.jpg',
-    bio: 'Polyglot software developer. Climber. Interested in renewable energy, electric vehicles, and reforestation. The easiest way to pronounce my name is: boy - tech.',
+    bio: 'Polyglot software developer. Climber. Interested in renewable energy, electric vehicles, and reforestation. The easiest way to pronounce my name is: boy - tech.'
   },
   {
     name: 'Marek',
     photo: 'marek.jpg',
-    bio: 'React Native developer with Ruby on Rails backend experience. Ex-chemist. Enjoys climbing and travelling to remote places.',
+    bio: 'React Native developer with Ruby on Rails backend experience. Ex-chemist. Enjoys climbing and travelling to remote places.'
   },
   {
     name: 'Szymon',
     photo: 'szymon.jpg',
-    bio: 'React Native developer with native Android and iOS experience. Always curious and eager to try new technologies. Often tinkers with electronics or rides a bike.',
+    bio: 'React Native developer with native Android and iOS experience. Always curious and eager to try new technologies. Often tinkers with electronics or rides a bike.'
   },
   {
     name: 'Łukasz',
     photo: 'lukasz.jpg',
-    bio: 'React Native developer with web experience. Enthusiast of functional programming. Always on the lookout for performance gains, never stops asking why. Can be found skating down the streets.',
+    bio: 'React Native developer with web experience. Enthusiast of functional programming. Always on the lookout for performance gains, never stops asking why. Can be found skating down the streets.'
   },
   {
     name: 'Błażej',
     photo: 'blazej.jpg',
-    bio: 'Mobile apps developer. He fell in love with React Native. Self-improver, golf enthusiast. In his house you can always count on being welcomed with a good Scotch.',
+    bio: 'Mobile apps developer. He fell in love with React Native. Self-improver, golf enthusiast. In his house you can always count on being welcomed with a good Scotch.'
   },
   {
     name: 'This could be you',
     photo: 'open-positions.jpg',
-    bio: 'Ready to take the next step in your career? Drop us a message to see if you could join our team.',
-  },
+    bio: 'Ready to take the next step in your career? Drop us a message to see if you could join our team.'
+  }
 ]
 
 const title = 'Team'
@@ -53,21 +53,14 @@ const description =
 
 class TeamPage extends Component {
   render() {
-    const {
-      versatilityIcon,
-      reliabilityIcon,
-      diversityIcon,
-      testimonialImage,
-      teamImages,
-    } = this.props.data
+    const { versatilityIcon, reliabilityIcon, diversityIcon, testimonialImage, teamImages } =
+      this.props.data
 
-    const teamMembersWithImages = teamMembers.map((it) => {
-      const image = teamImages.nodes.find(
-        (file) => file.relativePath === it.photo
-      )
+    const teamMembersWithImages = teamMembers.map(it => {
+      const image = teamImages.nodes.find(file => file.relativePath === it.photo)
       return {
         ...it,
-        image,
+        image
       }
     })
 
@@ -76,7 +69,7 @@ class TeamPage extends Component {
         <div className="content-page">
           <div className="big-part-yellow">
             <div className="content members-box">
-              {teamMembersWithImages.map((member) => (
+              {teamMembersWithImages.map(member => (
                 <TeamMember {...member} key={member.name} />
               ))}
             </div>
@@ -95,34 +88,30 @@ class TeamPage extends Component {
 
           <div className="narrow-column team-traits">
             <p className="quote center">
-              Above you saw a few words about each of us, but what's important
-              are the qualities we all share. Here are a few traits that we
-              consider vital:
+              Above you saw a few words about each of us, but what's important are the qualities we
+              all share. Here are a few traits that we consider vital:
             </p>
             <ul className="picture-list">
               <PictureListItem image={versatilityIcon} title="Versatility">
                 <p>
-                  Our business revolves around building products in three
-                  different technologies: iOS, Android, and React Native.
-                  Because we value both the strong foundation of native mobile
-                  development and the versatility of cross-platform solutions,
-                  most of us are comfortable with at least two of them.
+                  Our business revolves around building products in three different technologies:
+                  iOS, Android, and React Native. Because we value both the strong foundation of
+                  native mobile development and the versatility of cross-platform solutions, most of
+                  us are comfortable with at least two of them.
                 </p>
               </PictureListItem>
               <PictureListItem image={reliabilityIcon} title="Reliability">
                 <p>
-                  Working remotely we all need to be able to self-manage,
-                  recognize what the priorities arem and focus our work on
-                  what's most important. Being responsible and taking ownership
-                  of our work is key for us.
+                  Working remotely we all need to be able to self-manage, recognize what the
+                  priorities arem and focus our work on what's most important. Being responsible and
+                  taking ownership of our work is key for us.
                 </p>
               </PictureListItem>
               <PictureListItem image={diversityIcon} title="Diversity">
                 <p>
-                  Monocultural teams create boring and one-sided products.
-                  That's not us. Instead, we strive to create depth that comes
-                  from combining different points of view. Currently we're seven
-                  developers spread over four countries all over Europe and
+                  Monocultural teams create boring and one-sided products. That's not us. Instead,
+                  we strive to create depth that comes from combining different points of view.
+                  Currently we're seven developers spread over four countries all over Europe and
                   we're not stopping there.
                 </p>
               </PictureListItem>
@@ -135,10 +124,9 @@ class TeamPage extends Component {
                 <section>
                   <h3>NO OUTSOURCING POLICY</h3>
                   <p>
-                    We pride ourselves on the quality of our work and it's our
-                    top priority to ensure you get the best results. For this
-                    reason we never outsource any parts of our projects to 3rd
-                    parties.
+                    We pride ourselves on the quality of our work and it's our top priority to
+                    ensure you get the best results. For this reason we never outsource any parts of
+                    our projects to 3rd parties.
                   </p>
                 </section>
                 <StaticImage
@@ -153,9 +141,8 @@ class TeamPage extends Component {
             <div className="center">
               <h3> Would you like to see us? </h3>
               <p className="sub2">
-                We understand that sometimes there's a need for a more personal
-                contact. If you want to see better what drives us, take a look
-                at our video channels:
+                We understand that sometimes there's a need for a more personal contact. If you want
+                to see better what drives us, take a look at our video channels:
               </p>
             </div>
           </div>
@@ -163,32 +150,24 @@ class TeamPage extends Component {
           <div className="row movies">
             <div className="column-400 youtube-container">
               <div className="youtube-wrapper">
-                <iframe
-                  src="https://www.youtube.com/embed/udnxfH9me1Q"
-                  className="youtube"
-                />
+                <iframe src="https://www.youtube.com/embed/udnxfH9me1Q" className="youtube" />
               </div>
               <a className="sub1" href="https://brains.zone/no-brainers">
                 No Brainers
               </a>
               <p>
-                Curated look at new technologies, tools and ideas that will
-                improve your daily work.
+                Curated look at new technologies, tools and ideas that will improve your daily work.
               </p>
             </div>
             <div className="column-400 youtube-container">
               <div className="youtube-wrapper">
-                <iframe
-                  className="youtube"
-                  src="https://www.youtube.com/embed/grR9UmbjpsQ"
-                />
+                <iframe className="youtube" src="https://www.youtube.com/embed/grR9UmbjpsQ" />
               </div>
               <a className="sub1" href="https://brains.zone/brain-picks">
                 Brain Picks
               </a>
               <p>
-                A place where we offer easy solutions to common problems in
-                everyday development.
+                A place where we offer easy solutions to common problems in everyday development.
               </p>
             </div>
           </div>

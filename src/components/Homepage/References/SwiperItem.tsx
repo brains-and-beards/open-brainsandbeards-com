@@ -1,15 +1,7 @@
 import { StaticImage } from 'gatsby-plugin-image'
 import React from 'react'
 
-const SwiperItem = ({
-  image,
-  quote,
-  name,
-  position,
-  company,
-  onPrev,
-  onNext,
-}) => {
+const SwiperItem = ({ image, quote, name, position, company, onPrev, onNext }) => {
   return (
     <div className="swiper">
       <div className="row photo">
@@ -23,11 +15,7 @@ const SwiperItem = ({
         </a>
         {image}
         <a href="#" onClick={onNext} className="reference next">
-          <StaticImage
-            src="../../../assets/images/chevron.svg"
-            alt="arrow"
-            placeholder="blurred"
-          />
+          <StaticImage src="../../../assets/images/chevron.svg" alt="arrow" placeholder="blurred" />
         </a>
       </div>
       <p className="quote">{quote}</p>
