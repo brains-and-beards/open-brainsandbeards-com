@@ -1,55 +1,55 @@
-import React, { Component } from "react";
-import { graphql } from "gatsby";
-import { StaticImage } from "gatsby-plugin-image";
-import Swiper from "../components/Homepage/References/Swiper";
-import Layout from "../templates/layout";
-import SEO from "../components/shared/layout/SEO";
-import TeamMember from "../components/Team/TeamMember";
-import ContactForm from "../components/Contact/forms/ContactForm";
-import PictureListItem from "../components/shared/PictureListItem";
-import Testimonial from "../components/CaseStudies/Testimonial";
+import React, { Component } from 'react'
+import { graphql } from 'gatsby'
+import { StaticImage } from 'gatsby-plugin-image'
+import Swiper from '../components/Homepage/References/Swiper'
+import Layout from '../templates/layout'
+import SEO from '../components/shared/layout/SEO'
+import TeamMember from '../components/Team/TeamMember'
+import ContactForm from '../components/Contact/forms/ContactForm'
+import PictureListItem from '../components/shared/PictureListItem'
+import Testimonial from '../components/CaseStudies/Testimonial'
 
 let teamMembers = [
   {
-    name: "Patryk",
-    photo: "patryk.jpg",
-    bio: "Ideas machine. Reading too much. Teaching (functional) mobile and desktop development. I do funny faces on YouTube.",
+    name: 'Patryk',
+    photo: 'patryk.jpg',
+    bio: 'Ideas machine. Reading too much. Teaching (functional) mobile and desktop development. I do funny faces on YouTube.',
   },
   {
-    name: "Wojciech",
-    photo: "wojtek.jpg",
-    bio: "Polyglot software developer. Climber. Interested in renewable energy, electric vehicles, and reforestation. The easiest way to pronounce my name is: boy - tech.",
+    name: 'Wojciech',
+    photo: 'wojtek.jpg',
+    bio: 'Polyglot software developer. Climber. Interested in renewable energy, electric vehicles, and reforestation. The easiest way to pronounce my name is: boy - tech.',
   },
   {
-    name: "Marek",
-    photo: "marek.jpg",
-    bio: "React Native developer with Ruby on Rails backend experience. Ex-chemist. Enjoys climbing and travelling to remote places.",
+    name: 'Marek',
+    photo: 'marek.jpg',
+    bio: 'React Native developer with Ruby on Rails backend experience. Ex-chemist. Enjoys climbing and travelling to remote places.',
   },
   {
-    name: "Szymon",
-    photo: "szymon.jpg",
-    bio: "React Native developer with native Android and iOS experience. Always curious and eager to try new technologies. Often tinkers with electronics or rides a bike.",
+    name: 'Szymon',
+    photo: 'szymon.jpg',
+    bio: 'React Native developer with native Android and iOS experience. Always curious and eager to try new technologies. Often tinkers with electronics or rides a bike.',
   },
   {
-    name: "Łukasz",
-    photo: "lukasz.jpg",
-    bio: "React Native developer with web experience. Enthusiast of functional programming. Always on the lookout for performance gains, never stops asking why. Can be found skating down the streets.",
+    name: 'Łukasz',
+    photo: 'lukasz.jpg',
+    bio: 'React Native developer with web experience. Enthusiast of functional programming. Always on the lookout for performance gains, never stops asking why. Can be found skating down the streets.',
   },
   {
-    name: "Błażej",
-    photo: "blazej.jpg",
-    bio: "Mobile apps developer. He fell in love with React Native. Self-improver, golf enthusiast. In his house you can always count on being welcomed with a good Scotch.",
+    name: 'Błażej',
+    photo: 'blazej.jpg',
+    bio: 'Mobile apps developer. He fell in love with React Native. Self-improver, golf enthusiast. In his house you can always count on being welcomed with a good Scotch.',
   },
   {
-    name: "This could be you",
-    photo: "open-positions.jpg",
-    bio: "Ready to take the next step in your career? Drop us a message to see if you could join our team.",
+    name: 'This could be you',
+    photo: 'open-positions.jpg',
+    bio: 'Ready to take the next step in your career? Drop us a message to see if you could join our team.',
   },
-];
+]
 
-const title = "Team";
+const title = 'Team'
 const description =
-  "Technology is never enough to solve a problem. You'll need a team of experienced and caring developers as well. How about ours?";
+  "Technology is never enough to solve a problem. You'll need a team of experienced and caring developers as well. How about ours?"
 
 class TeamPage extends Component {
   render() {
@@ -59,17 +59,17 @@ class TeamPage extends Component {
       diversityIcon,
       testimonialImage,
       teamImages,
-    } = this.props.data;
+    } = this.props.data
 
     const teamMembersWithImages = teamMembers.map((it) => {
       const image = teamImages.nodes.find(
         (file) => file.relativePath === it.photo
-      );
+      )
       return {
         ...it,
         image,
-      };
-    });
+      }
+    })
 
     return (
       <Layout headerTitle={title} headerSub={description}>
@@ -81,11 +81,7 @@ class TeamPage extends Component {
               ))}
             </div>
             <div className="mobile-only team-swiper">
-              <Swiper
-                ContentClass={TeamMember}
-                items={teamMembersWithImages}
-                slidesPerView={"auto"}
-              />
+              <Swiper ContentClass={TeamMember} items={teamMembersWithImages} />
             </div>
           </div>
 
@@ -199,7 +195,7 @@ class TeamPage extends Component {
         </div>
         <ContactForm subtitle="If that's not enough and you crave for some face-to-face contact, feel free to use the contact form to get in touch with us!" />
       </Layout>
-    );
+    )
   }
 }
 
@@ -239,15 +235,15 @@ export const query = graphql`
       nodes {
         relativePath
         childImageSharp {
-          gatsbyImageData(width: 400)
+          gatsbyImageData(transformOptions: { fit: CONTAIN })
         }
       }
     }
   }
-`;
+`
 
-export default TeamPage;
+export default TeamPage
 
 export const Head = ({ location }) => (
   <SEO title={title} description={description} pathname={location.pathname} />
-);
+)

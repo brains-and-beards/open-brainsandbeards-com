@@ -1,5 +1,5 @@
-import { GatsbyImage, getImage, StaticImage } from "gatsby-plugin-image";
-import React from "react";
+import { StaticImage } from 'gatsby-plugin-image'
+import React from 'react'
 
 const SwiperItem = ({
   image,
@@ -37,7 +37,7 @@ const SwiperItem = ({
         {company}
       </p>
     </div>
-  );
-};
+  )
+}
 
-export default SwiperItem;
+export default SwiperItem

@@ -1,27 +1,27 @@
-import React, { useRef } from "react";
-import Swiper from "react-id-swiper";
+import React, { useRef } from 'react'
+import Swiper from 'react-id-swiper'
 
 const SimpleSwiperWithParams = ({ items, ContentClass }) => {
-  const ref = useRef(null);
+  const ref = useRef(null)
 
   const goNext = (e) => {
-    e.preventDefault();
+    e.preventDefault()
     if (ref.current !== null && ref.current.swiper !== null) {
-      ref.current.swiper.slideNext();
+      ref.current.swiper.slideNext()
     }
-  };
+  }
 
   const goPrev = (e) => {
-    e.preventDefault();
+    e.preventDefault()
     if (ref.current !== null && ref.current.swiper !== null) {
-      ref.current.swiper.slidePrev();
+      ref.current.swiper.slidePrev()
     }
-  };
+  }
 
   return (
     <Swiper
       ref={ref}
-      slidesPerView={1}
+      slidesPerView={1.4}
       spaceBetween={0}
       grabCursor
       centeredSlides
@@ -35,7 +35,7 @@ const SimpleSwiperWithParams = ({ items, ContentClass }) => {
         </div>
       ))}
     </Swiper>
-  );
-};
+  )
+}
 
-export default SimpleSwiperWithParams;
+export default SimpleSwiperWithParams
