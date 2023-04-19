@@ -4,12 +4,7 @@ import LogoSvg from '../../../assets/images/logo-draft.svg'
 import HamburgerSvg from '../../../assets/images/hamburger.svg'
 import ChevronBackSvg from '../../../assets/images/chevron-bold.svg'
 import CloseSvg from '../../../assets/images/close.svg'
-
-const renderLink = (url, label, klass = 'menu-link') => (
-  <li className={klass} key={`menu-link-${label}`}>
-    <Link to={url}> {label} </Link>
-  </li>
-)
+import NavbarLink from './NavbarLink'
 
 const useOverlay = () => {
   const [isShown, setIsShown] = useState(false)
@@ -19,26 +14,33 @@ const useOverlay = () => {
 
   return { isShown, hide, show }
 }
+const menuLinks = [
+  { url: '/', label: 'Home' },
+  { url: '/projects/', label: 'Projects' },
+  { url: '/about-us/', label: 'About us' },
+  { url: '/team/', label: 'Team' },
+  { url: 'https://brainsandbeards.com/jobs', label: 'Careers' },
+  { url: '/blog/', label: 'Blog' },
+  { url: 'https://podcast.brainsandbeards.com', label: 'Podcast' }
+]
 
 const Navbar = props => {
   const { simple, grey, currentLocation, projects } = props
 
   const overlay = useOverlay()
 
-  const renderMobileLink = (url, label, klass = 'menu-link mobile-menu-link') => {
-    if (url === currentLocation)
-      return (
-        <li className={klass} key={`mobile-menu-link-${label}`}>
-          <a onClick={overlay.hide}> {label} </a>
-        </li>
-      )
+  const renderMobileLink = (url: string, label: string, klass = 'menu-link mobile-menu-link') => (
+    <NavbarLink
+      url={url}
+      label={label}
+      klass={klass}
+      onClick={url === currentLocation ? overlay.hide : undefined}
+    />
+  )
 
-    return (
-      <li className={klass} key={`mobile-menu-link-${label}`}>
-        <Link to={url}> {label} </Link>
-      </li>
-    )
-  }
+  const renderDesktopLink = (url: string, label: string, klass = 'menu-link') => (
+    <NavbarLink url={url} label={label} klass={klass} />
+  )
 
   const navbarBackButtonText = `Back to ${projects ? 'projects' : 'homepage'}`
 
@@ -52,8 +54,8 @@ const Navbar = props => {
           <div className="back-to-homepage">
             <ChevronBackSvg className="reverse" alt="Back arrow" />
             {projects
-              ? renderLink('/projects', navbarBackButtonText)
-              : renderLink('/', navbarBackButtonText)}
+              ? renderDesktopLink('/projects', navbarBackButtonText)
+              : renderDesktopLink('/', navbarBackButtonText)}
           </div>
         </div>
       ) : (
@@ -63,20 +65,10 @@ const Navbar = props => {
           </Link>
 
           <ul className="menu-links desktop-only">
-            {[
-              { url: '/', label: 'Home' },
-              { url: '/projects', label: 'Projects' },
-              { url: '/about-us', label: 'About us' },
-              { url: '/team', label: 'Team' },
-              { url: '/jobs', label: 'Careers' },
-              { url: '/blog', label: 'Blog' }
-            ].map(link => renderLink(link.url, link.label))}
-            <li className="menu-link">
-              <a href="https://podcast.brainsandbeards.com"> Podcast </a>
-            </li>
+            {menuLinks.map(link => renderDesktopLink(link.url, link.label))}
           </ul>
           <ul className="menu-estimate-link desktop-only">
-            {renderLink(
+            {renderDesktopLink(
               '/estimate-project',
               'Estimate project',
               'menu-link button menu-estimate-button'
@@ -97,19 +89,7 @@ const Navbar = props => {
                 <CloseSvg className="mobile-only" alt="close" />
               </div>
             </div>
-            <ul>
-              {[
-                { url: '/', label: 'Home' },
-                { url: '/projects', label: 'Projects' },
-                { url: '/about-us', label: 'About us' },
-                { url: '/team', label: 'Team' },
-                { url: '/jobs', label: 'Careers' },
-                { url: '/blog', label: 'Blog' }
-              ].map(link => renderMobileLink(link.url, link.label))}
-              <li className="menu-link mobile-menu-link">
-                <a href="https://podcast.brainsandbeards.com"> Podcast </a>
-              </li>
-            </ul>
+            <ul>{menuLinks.map(link => renderMobileLink(link.url, link.label))}</ul>
             <ul>{renderMobileLink('/estimate-project', 'Estimate project', 'menu-link button')}</ul>
             {false && (
               <ul className="horizontal">
