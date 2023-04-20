@@ -36,7 +36,7 @@ export const blogAuthorsImages = {
     title: 'React Native developer'
   },
   'Ilya Kushner': {
-    image: require('../assets/images/blogAuthors/ilya.jpg'),
+    imageName: 'ilya.jpg',
     title: 'React Native developer'
   }
 }
