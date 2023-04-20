@@ -484,6 +484,12 @@ a:hover span.inner-text {
       margin: 40px 0 40px;
     }
 
+    .quote {
+      @include mobile-version {
+        padding: 0 25px;
+      }
+    }
+
     @include mobile-version {
       padding-bottom: 40px;
     }
