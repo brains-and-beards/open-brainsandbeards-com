@@ -144,15 +144,18 @@
 
 .team-member {
   text-align: left;
-  max-width: 280px;
   width: 100%;
-  padding-bottom: 80px;
 
   @include mobile-version {
     width: 100%;
-    padding-bottom: 40px;
+    padding: 0px 40px 40px;
     align-items: center;
     text-align: center;
+  }
+
+  @include desktop-version {
+    max-width: 280px;
+    padding-bottom: 80px;
   }
 
   img {

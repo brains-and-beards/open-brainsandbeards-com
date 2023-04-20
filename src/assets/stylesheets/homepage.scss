@@ -324,15 +324,23 @@ section {
   }
 }
 
-.read-more {
-  font-family: 'Neutrif Medium';
-  text-transform: uppercase;
+.read-more-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
   margin-top: 8px;
   margin-bottom: 0;
 
-  span.inner-text {
+  .read-more {
+    font-family: 'Neutrif Medium';
+    text-transform: uppercase;
     margin-right: 5px;
     font-size: 12px;
+  }
+
+  .read-more-image {
+    display: inline-flex;
   }
 }
 
@@ -446,11 +454,7 @@ a:hover span.inner-text {
       flex: 1;
       margin: 40px 10px;
       display: block;
-    }
-
-    .logo img {
-      margin: 0 auto;
-      display: block;
+      text-align: center;
     }
   }
 }
@@ -478,6 +482,12 @@ a:hover span.inner-text {
 
     .row {
       margin: 40px 0 40px;
+    }
+
+    .quote {
+      @include mobile-version {
+        padding: 0 25px;
+      }
     }
 
     @include mobile-version {

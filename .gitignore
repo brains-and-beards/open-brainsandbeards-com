@@ -1,15 +1,16 @@
-.cache
-node_modules
-yarn-error.log
-.merlin
-public/*
-!public/rss
-lib
-src/**/*.bs.js
-*.code-workspace
-.expo
-.DS_Store
+node_modules/
+
+# Gatsby stuff
+src/gatsby-types.d.ts
+public/
+.cache/
 
 # IDE
 .idea/
 .vscode/
+
+# Mac stuff
+.DS_Store
+
+# Blog post helpers
+.expo

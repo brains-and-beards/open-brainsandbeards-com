@@ -6,122 +6,6 @@
   }
 }
 
-.gatsby-highlight pre[class*='language-'].line-numbers {
-  padding-left: 2.8em;
-}
-
-.gatsby-highlight {
-  background-color: $codeYellow;
-  border-radius: 0.3em;
-  margin: 0.5em 0;
-  padding: 1em;
-  overflow: auto;
-}
-
-.gatsby-highlight pre[class*='language-'].line-numbers {
-  padding: 0;
-  padding-left: 2.8em;
-  overflow: initial;
-}
-
-.gatsby-highlight-code-line {
-  background-color: $codeYellow;
-  display: block;
-  margin-right: -1em;
-  margin-left: -1em;
-  padding-right: 1em;
-  padding-left: 0.75em;
-  border-left: 0.25em solid $paleYellow;
-}
-
-// code selection background color ``
-:not(pre) > code[class*='language-'],
-pre[class*='language-'] {
-  background-color: $grey;
-  font-size: 16px;
-}
-
-// code selection text color
-code[class*='language-'],
-pre[class*='language-'] {
-  color: $darkGrey;
-}
-
-// code selection color
-pre[class*='language-']::selection,
-pre[class*='language-'] ::selection,
-code[class*='language-']::selection,
-code[class*='language-'] ::selection {
-  background: $grey;
-}
-
-// code text color
-code[class*='language-'],
-pre[class*='language-'] {
-  color: $black;
-}
-
-// code with `` inside code block
-.token.selector,
-.token.attr-name,
-.token.string,
-.token.char,
-.token.builtin,
-.token.url,
-.token.inserted {
-  color: $codeVariable;
-}
-
-.token.property,
-.token.tag,
-.token.boolean,
-.token.number,
-.token.constant,
-.token.symbol,
-.token.deleted {
-  color: $darkGrey;
-}
-
-// code block background
-.gatsby-highlight {
-  background-color: $paleYellow;
-  border-radius: 0.3em;
-  margin: 0.5em 0;
-  padding: 1em;
-  overflow: auto;
-}
-
-// code block
-.gatsby-highlight pre[class*='language-'] {
-  background-color: transparent;
-  margin: 0;
-  padding: 0;
-  overflow: initial;
-  float: left;
-  min-width: 100%; /* 1 */
-}
-
-.command-line-prompt > span:before {
-  color: $codeYellow;
-  content: ' ';
-  display: block;
-  padding-right: 0.8em;
-}
-
-/* Prompt for all users */
-.command-line-prompt > span[data-user]:before {
-  content: '[' attr(data-user) '@' attr(data-host) '] $';
-}
-
-/* Prompt for root */
-.command-line-prompt > span[data-user='root']:before {
-  content: '[' attr(data-user) '@' attr(data-host) '] #';
-}
-
-.command-line-prompt > span[data-prompt]:before {
-  content: attr(data-prompt);
-}
-
 .small-image {
   height: 98px;
 }
@@ -397,7 +281,7 @@ pre[class*='language-'] {
   }
 }
 
-img.main-blog-image {
+.main-blog-image {
   width: 100%;
   max-width: 100%;
   object-fit: contain;
@@ -434,6 +318,11 @@ img.main-blog-image {
   background-color: $lightGrey;
   font-size: 18px;
   line-height: 27px;
+  .content {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+  }
   .estimateProject {
     .content {
       @include mobile-version {
@@ -536,6 +425,10 @@ blockquote {
 .gif-container {
   display: block;
   text-align: center;
+
+  img {
+    max-height: 600px;
+  }
 }
 .circular-image {
   display: inline-block;
