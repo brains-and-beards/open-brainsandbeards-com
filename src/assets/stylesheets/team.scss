@@ -159,10 +159,7 @@
   }
 
   img {
-    object-fit: cover;
-    width: 280px;
-    height: 384px;
-    filter: grayscale(1);
+    filter: grayscale(0.6);
     transition: all 0.35s ease-in-out;
 
     @include mobile-version {

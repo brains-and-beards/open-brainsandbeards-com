@@ -41,6 +41,16 @@ let teamMembers = [
     bio: 'Mobile apps developer. He fell in love with React Native. Self-improver, golf enthusiast. In his house you can always count on being welcomed with a good Scotch.'
   },
   {
+    name: 'Asia',
+    photo: 'asia.jpg',
+    bio: "React Native developer with web experience. Movie buff. Cooking enthusiast always willing to taste new food. Supporter of the statement that you're only one swim away from a good mood."
+  },
+  {
+    name: 'Ilya',
+    photo: 'ilya.jpg',
+    bio: "When he's not coding, you can find him cruising around town on his longboard or savoring a glass of good whiskey. Despite his love for React Native, Ilya also has a soft spot for C# and enjoys exploring its versatility and power."
+  },
+  {
     name: 'This could be you',
     photo: 'open-positions.jpg',
     bio: 'Ready to take the next step in your career? Drop us a message to see if you could join our team.'
@@ -206,6 +216,8 @@ export const query = graphql`
             "szymon.jpg"
             "lukasz.jpg"
             "blazej.jpg"
+            "asia.jpg"
+            "ilya.jpg"
             "open-positions.jpg"
           ]
         }
