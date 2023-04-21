@@ -7,7 +7,6 @@ import { GatsbyImage, getImage } from 'gatsby-plugin-image'
 import PostLink from '../components/Blog/PostLink'
 import AuthorWithPictureAndText from '../components/Blog/AuthorWithPictureAndText'
 import Newsletter from '../components/Blog/Newsletter'
-// import ReactNativeAnimatedCodeInput from '../components/ReactNativeAnimatedCodeInput'
 import SubscribeFootnote from '../components/Blog/SubscribeFootnote'
 import HiringFootnote from '../components/Blog/HiringFootnote'
 import { MDXProvider } from '@mdx-js/react'
@@ -23,7 +22,6 @@ export const query = graphql`
       frontmatter {
         author
         date(formatString: "MMMM DD, YYYY")
-        # demo # React Native Web demo
         image {
           childImageSharp {
             gatsbyImageData
@@ -80,13 +78,7 @@ const BlogTemplate = ({
 }) => {
   const {
     id,
-    frontmatter: {
-      title,
-      date,
-      image,
-      author,
-      imageCaption //, demo
-    }
+    frontmatter: { title, date, image, author, imageCaption }
   } = mdx
 
   const related = getRelatedStories(relatedStoriesMdx.nodes, id).map(node => {
@@ -118,7 +110,6 @@ const BlogTemplate = ({
           <MDXProvider components={components}>
             <div>{children}</div>
           </MDXProvider>
-          {/* {demo === 'AnimatedInput' && <ReactNativeAnimatedCodeInput />} */}
           <SubscribeFootnote />
           <HiringFootnote />
           <AuthorWithPictureAndText author={author} text={'WRITTEN BY'} />
