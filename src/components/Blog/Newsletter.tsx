@@ -1,11 +1,10 @@
-import React from 'react'
 import { navigate } from 'gatsby'
-import { validateEmail } from '../Contact/forms/utils'
-import { useState, useCallback } from 'react'
-import addToMailchimp from 'gatsby-plugin-mailchimp'
-import { useEffect } from 'react'
-import Modal from '../shared/Modal'
 import { StaticImage } from 'gatsby-plugin-image'
+import addToMailchimp from 'gatsby-plugin-mailchimp'
+import React, { useCallback, useEffect, useState } from 'react'
+
+import { validateEmail } from '../Contact/forms/utils'
+import Modal from '../shared/Modal'
 
 const BlogNewsletter = () => {
   const [submitEnabled, setSubmitEnabled] = useState(false)

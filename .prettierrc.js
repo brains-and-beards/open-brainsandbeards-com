@@ -19,7 +19,7 @@ module.exports = {
     '^@services/(.*)$',
     '^[./]'
   ],
-  importOrderSeparation: false,
+  importOrderSeparation: true,
   importOrderSortSpecifiers: true,
   overrides: [
     {
