@@ -1,13 +1,13 @@
-import React from 'react'
 import { graphql } from 'gatsby'
+import React from 'react'
 
-import Layout from '../../templates/layout'
-import PictureListItem from '../../components/shared/PictureListItem'
-import TrustBar from '../../components/shared/Bars/TrustBar'
-import EstimateProjectBar from '../../components/shared/Bars/EstimateProjectBar'
-import CaseStudyBar from '../../components/shared/Bars/CaseStudyBar'
 import { femtasyHeroImage } from '../../components/CaseStudies/images'
+import CaseStudyBar from '../../components/shared/Bars/CaseStudyBar'
+import EstimateProjectBar from '../../components/shared/Bars/EstimateProjectBar'
+import TrustBar from '../../components/shared/Bars/TrustBar'
+import PictureListItem from '../../components/shared/PictureListItem'
 import SEO from '../../components/shared/layout/SEO'
+import Layout from '../../templates/layout'
 
 const ReactNativeService = props => {
   const { heroImage, fasterImage, teamImage, reuseImage, codebaseImage } = props.data

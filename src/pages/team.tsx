@@ -1,13 +1,14 @@
-import React, { Component } from 'react'
 import { graphql } from 'gatsby'
 import { StaticImage } from 'gatsby-plugin-image'
-import Swiper from '../components/Homepage/References/Swiper'
-import Layout from '../templates/layout'
-import SEO from '../components/shared/layout/SEO'
-import TeamMember from '../components/Team/TeamMember'
-import ContactForm from '../components/Contact/forms/ContactForm'
-import PictureListItem from '../components/shared/PictureListItem'
+import React, { Component } from 'react'
+
 import Testimonial from '../components/CaseStudies/Testimonial'
+import ContactForm from '../components/Contact/forms/ContactForm'
+import Swiper from '../components/Homepage/References/Swiper'
+import TeamMember from '../components/Team/TeamMember'
+import PictureListItem from '../components/shared/PictureListItem'
+import SEO from '../components/shared/layout/SEO'
+import Layout from '../templates/layout'
 
 let teamMembers = [
   {
@@ -160,7 +161,11 @@ class TeamPage extends Component {
           <div className="row movies">
             <div className="column-400 youtube-container">
               <div className="youtube-wrapper">
-                <iframe src="https://www.youtube.com/embed/udnxfH9me1Q" className="youtube" />
+                <iframe
+                  src="https://www.youtube.com/embed/udnxfH9me1Q"
+                  className="youtube"
+                  title="Expectations Management"
+                />
               </div>
               <a className="sub1" href="https://brains.zone/no-brainers">
                 No Brainers
@@ -171,7 +176,11 @@ class TeamPage extends Component {
             </div>
             <div className="column-400 youtube-container">
               <div className="youtube-wrapper">
-                <iframe className="youtube" src="https://www.youtube.com/embed/grR9UmbjpsQ" />
+                <iframe
+                  className="youtube"
+                  src="https://www.youtube.com/embed/grR9UmbjpsQ"
+                  title="ListView Animations"
+                />
               </div>
               <a className="sub1" href="https://brains.zone/brain-picks">
                 Brain Picks

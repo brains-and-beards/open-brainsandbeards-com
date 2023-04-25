@@ -1,6 +1,6 @@
-import React from 'react'
 import rangeParser from 'parse-numeric-range'
 import Highlight, { defaultProps } from 'prism-react-renderer'
+import React from 'react'
 
 const calculateLinesToHighlight = meta => {
   const RE = /{([\d,-]+)}/
@@ -39,6 +39,7 @@ const PrismSyntaxHighlight = ({ children, className }) => {
                   {line.map((token, key) => {
                     const tokenProps = getTokenProps({ token, key })
                     delete tokenProps.style
+                    // eslint-disable-next-line react/jsx-key -- getTokenProps() should give it, strange that Linter doesn't see it
                     return <span {...tokenProps} />
                   })}
                 </div>

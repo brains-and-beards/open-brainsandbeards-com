@@ -1,12 +1,12 @@
-import React, { Component } from 'react'
 import { graphql } from 'gatsby'
 import { GatsbyImage, getImage } from 'gatsby-plugin-image'
+import React, { Component } from 'react'
 
-import Layout from '../../templates/layout'
+import Testimonial from '../../components/CaseStudies/Testimonial'
 import EstimateProjectBar from '../../components/shared/Bars/EstimateProjectBar'
 import TrustBar from '../../components/shared/Bars/TrustBar'
-import Testimonial from '../../components/CaseStudies/Testimonial'
 import SEO from '../../components/shared/layout/SEO'
+import Layout from '../../templates/layout'
 
 class SharooCaseStudy extends Component {
   render = () => {
@@ -88,11 +88,12 @@ class SharooCaseStudy extends Component {
               <a
                 href="https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93viewmodel"
                 target="_blank"
+                rel="noreferrer"
               >
                 MVVM
               </a>
               , declarative programming and{' '}
-              <a href="http://reactivex.io/" target="_blank">
+              <a href="http://reactivex.io/" target="_blank" rel="noreferrer">
                 Rx
               </a>{' '}
               to help us keep the project clean and improve state management of the controllers.
@@ -136,7 +137,11 @@ class SharooCaseStudy extends Component {
               possible that both platforms use the same DB schemes. That means it's much easier to
               compare the implementations and do DB migrations in the same way. Another advantage is
               the easiness of refreshing views with new data, driven by{' '}
-              <a href="https://github.com/RxSwiftCommunity/RxRealm" target="_blank">
+              <a
+                href="https://github.com/RxSwiftCommunity/RxRealm"
+                target="_blank"
+                rel="noreferrer"
+              >
                 RxRealm.
               </a>
             </p>
@@ -165,7 +170,11 @@ class SharooCaseStudy extends Component {
               Even if we had sharoo box sitting next to our computers, sometimes there was still a
               need to debug application inside sharoo offices where it could be tested with actual
               cars. For these particular cases, we used{' '}
-              <a href="https://github.com/SwiftyBeaver/SwiftyBeaver" target="_blank">
+              <a
+                href="https://github.com/SwiftyBeaver/SwiftyBeaver"
+                target="_blank"
+                rel="noreferrer"
+              >
                 SwiftyBeaver
               </a>
               . This allowed us to "see" in real-time the interaction between the mobile app, sharoo
@@ -207,6 +216,7 @@ class SharooCaseStudy extends Component {
               <a
                 href="https://www2.deloitte.com/content/dam/Deloitte/ch/Documents/consumer-business/ch-de-cb-sharing-economy-teile-und-verdiene.pdf"
                 target="_blank"
+                rel="noreferrer"
               >
                 Sharing Economy report
               </a>

@@ -1,5 +1,6 @@
-const { slashify } = require('./src/helpers/path_helpers')
 import type { GatsbyConfig } from 'gatsby'
+
+const { slashify } = require('./src/helpers/path_helpers')
 
 const config: GatsbyConfig = {
   siteMetadata: {
@@ -249,13 +250,6 @@ const config: GatsbyConfig = {
                   },
                   custom_elements: [
                     {
-                      'media:content': {
-                        _attr: {
-                          height: 300,
-                          medium: 'image',
-                          url: imageUrl
-                        }
-                      },
                       'media:content': node.body
                     }
                   ]

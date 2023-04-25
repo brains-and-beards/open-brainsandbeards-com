@@ -1,8 +1,8 @@
-import React from 'react'
 import { Link } from 'gatsby'
+import { GatsbyImage, getImage } from 'gatsby-plugin-image'
+import React from 'react'
 
 import ReadMore from '../shared/ReadMore'
-import { GatsbyImage, getImage } from 'gatsby-plugin-image'
 import AuthorWithPicture from './AuthorWithPicture'
 
 const FirstPostLink = ({ post }) => {
@@ -17,7 +17,7 @@ const FirstPostLink = ({ post }) => {
         <div className="first-post">
           <GatsbyImage
             image={getImage(image)!}
-            alt={`Miniature for post titled \"${title}\"`}
+            alt={`Miniature for post titled "${title}"`}
             imgClassName="blog-image"
           />
           <div className="blurb">

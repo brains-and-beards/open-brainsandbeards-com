@@ -1,6 +1,6 @@
-import React from 'react'
 import { Link } from 'gatsby'
 import { StaticImage } from 'gatsby-plugin-image'
+import React from 'react'
 
 const EstimateProjectBar = props => {
   const title = props.title || 'Want to start<br/>a great project?'

@@ -1,17 +1,17 @@
-import React from 'react'
+import { MDXProvider } from '@mdx-js/react'
 import { graphql } from 'gatsby'
-
-import SEO from '../components/shared/layout/SEO'
-import Layout from './layout'
 import { GatsbyImage, getImage } from 'gatsby-plugin-image'
-import PostLink from '../components/Blog/PostLink'
+import React from 'react'
+
 import AuthorWithPictureAndText from '../components/Blog/AuthorWithPictureAndText'
+import HiringFootnote from '../components/Blog/HiringFootnote'
 import Newsletter from '../components/Blog/Newsletter'
+import PostLink from '../components/Blog/PostLink'
+import PrismSyntaxHighlight from '../components/Blog/PrismSyntaxHighlight'
 // import ReactNativeAnimatedCodeInput from '../components/ReactNativeAnimatedCodeInput'
 import SubscribeFootnote from '../components/Blog/SubscribeFootnote'
-import HiringFootnote from '../components/Blog/HiringFootnote'
-import { MDXProvider } from '@mdx-js/react'
-import PrismSyntaxHighlight from '../components/Blog/PrismSyntaxHighlight'
+import SEO from '../components/shared/layout/SEO'
+import Layout from './layout'
 
 const renderDate = date => <p className="date">{date}</p>
 

@@ -1,6 +1,7 @@
 import { graphql, useStaticQuery } from 'gatsby'
 import { GatsbyImage, getImage } from 'gatsby-plugin-image'
 import React from 'react'
+
 import { blogAuthorsImages } from '../../configs/consts'
 
 const query = graphql`

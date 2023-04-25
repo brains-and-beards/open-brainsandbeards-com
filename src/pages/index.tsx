@@ -1,19 +1,19 @@
-import React, { useMemo } from 'react'
-import { graphql, Link } from 'gatsby'
+import { Link, graphql } from 'gatsby'
 import { StaticImage } from 'gatsby-plugin-image'
+import React from 'react'
 
-import ContactForm from '../components/Contact/forms/ContactForm'
-import Layout from '../templates/layout'
-import TrustBar from '../components/shared/Bars/TrustBar'
-import EstimateProjectBar from '../components/shared/Bars/EstimateProjectBar'
-import ClientLogos from '../components/CaseStudies/ClientLogos'
-import ReferenceSwiper from '../components/Homepage/References'
-import ReadMore from '../components/shared/ReadMore'
 import RotatingBadge from '../assets/illustrations/also-in.svg'
 import RNBadge from '../assets/illustrations/rn.svg'
+import ClientLogos from '../components/CaseStudies/ClientLogos'
+import ContactForm from '../components/Contact/forms/ContactForm'
+import ReferenceSwiper from '../components/Homepage/References'
 import useRandomHeroImage from '../components/Homepage/useRandomHeroImage'
+import EstimateProjectBar from '../components/shared/Bars/EstimateProjectBar'
 import SharooCaseStudyBar from '../components/shared/Bars/SharooCaseStudyBar'
+import TrustBar from '../components/shared/Bars/TrustBar'
+import ReadMore from '../components/shared/ReadMore'
 import SEO from '../components/shared/layout/SEO'
+import Layout from '../templates/layout'
 
 // TODO: Remove once it's not used (on service pages)
 export const _imageProps = graphql`
@@ -60,8 +60,7 @@ const RNSticker = () => (
   </div>
 )
 
-const MainPage = props => {
-  const { data } = props
+const MainPage = () => {
   // const { serviceIconCrossPlatform, serviceIconNative, serviceIconStaff } =
   //   data;
 

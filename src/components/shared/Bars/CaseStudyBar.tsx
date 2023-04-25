@@ -1,5 +1,5 @@
-import React, { PureComponent } from 'react'
 import { Link } from 'gatsby'
+import React, { PureComponent } from 'react'
 
 import ReadMore from '../ReadMore'
 

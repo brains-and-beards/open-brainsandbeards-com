@@ -30,6 +30,7 @@ const PAGES_QUERY = `
   }
 `
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 exports.createPages = async ({ actions, graphql, ...rest }) => {
   const { createPage } = actions
 

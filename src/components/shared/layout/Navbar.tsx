@@ -1,9 +1,10 @@
-import React, { useState } from 'react'
 import { Link } from 'gatsby'
-import LogoSvg from '../../../assets/images/logo-draft.svg'
-import HamburgerSvg from '../../../assets/images/hamburger.svg'
+import React, { useState } from 'react'
+
 import ChevronBackSvg from '../../../assets/images/chevron-bold.svg'
 import CloseSvg from '../../../assets/images/close.svg'
+import HamburgerSvg from '../../../assets/images/hamburger.svg'
+import LogoSvg from '../../../assets/images/logo-draft.svg'
 import NavbarLink from './NavbarLink'
 
 const useOverlay = () => {

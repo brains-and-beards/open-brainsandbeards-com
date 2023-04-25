@@ -1,12 +1,12 @@
-import React, { Component } from 'react'
 import { graphql } from 'gatsby'
 import { GatsbyImage, getImage } from 'gatsby-plugin-image'
+import React, { Component } from 'react'
 
-import Layout from '../../templates/layout'
+import Testimonial from '../../components/CaseStudies/Testimonial'
 import EstimateProjectBar from '../../components/shared/Bars/EstimateProjectBar'
 import TrustBar from '../../components/shared/Bars/TrustBar'
-import Testimonial from '../../components/CaseStudies/Testimonial'
 import SEO from '../../components/shared/layout/SEO'
+import Layout from '../../templates/layout'
 
 class RakutenCaseStudy extends Component {
   render = () => {

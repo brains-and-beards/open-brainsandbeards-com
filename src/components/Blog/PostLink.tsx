@@ -1,8 +1,8 @@
-import React from 'react'
 import { Link } from 'gatsby'
+import { GatsbyImage, getImage } from 'gatsby-plugin-image'
+import React from 'react'
 
 import AuthorWithPicture from './AuthorWithPicture'
-import { GatsbyImage, getImage } from 'gatsby-plugin-image'
 
 const PostLink = ({ post, showExcerpt, isFirst }) => {
   const {

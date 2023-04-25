@@ -1,11 +1,11 @@
-import React, { Component } from 'react'
 import { graphql } from 'gatsby'
 import { StaticImage } from 'gatsby-plugin-image'
+import React, { Component } from 'react'
 
-import Layout from '../templates/layout'
-import PictureListItem from '../components/shared/PictureListItem'
 import PortfolioForm from '../components/Contact/forms/PortfolioForm'
+import PictureListItem from '../components/shared/PictureListItem'
 import SEO from '../components/shared/layout/SEO'
+import Layout from '../templates/layout'
 
 class About extends Component {
   render() {
