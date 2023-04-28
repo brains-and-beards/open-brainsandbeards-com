@@ -14,9 +14,6 @@ const calculateLinesToHighlight = meta => {
 }
 
 const PrismSyntaxHighlight = ({ children, className }) => {
-  console.log(className)
-  console.log(className)
-  console.log(className)
   let language = className.replace(/language-/gm, '')
   const highlightedLinesMatch = language.match(/{[^}]+}/)
   let highlightLinesDefinition = ''
@@ -28,7 +25,7 @@ const PrismSyntaxHighlight = ({ children, className }) => {
 
   return (
     <Highlight {...defaultProps} code={children} language={language}>
-      {({ className, style, tokens, getLineProps, getTokenProps }) => {
+      {({ className, tokens, getLineProps, getTokenProps }) => {
         return (
           <pre className={className}>
             {tokens.slice(0, -1).map((line, i) => {
