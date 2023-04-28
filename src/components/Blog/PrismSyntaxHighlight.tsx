@@ -13,7 +13,10 @@ const calculateLinesToHighlight = meta => {
   }
 }
 
-const PrismSyntaxHighlight = ({ children, className = 'language-typescript' }) => {
+const PrismSyntaxHighlight = ({ children, className }) => {
+  console.log(className)
+  console.log(className)
+  console.log(className)
   let language = className.replace(/language-/gm, '')
   const highlightedLinesMatch = language.match(/{[^}]+}/)
   let highlightLinesDefinition = ''
@@ -27,17 +30,23 @@ const PrismSyntaxHighlight = ({ children, className = 'language-typescript' }) =
     <Highlight {...defaultProps} code={children} language={language}>
       {({ className, style, tokens, getLineProps, getTokenProps }) => {
         return (
-          <pre
-            className={className}
-            style={{ ...style, position: 'relative', backgroundColor: '' }}
-          >
-            {tokens.map((line, i) => (
-              <div {...getLineProps({ line, key: i })}>
-                {line.map((token, key) => (
-                  <span {...getTokenProps({ token, key })} />
-                ))}
-              </div>
-            ))}
+          <pre className={className}>
+            {tokens.slice(0, -1).map((line, i) => {
+              const lineProps = getLineProps({ line, key: i })
+              if (shouldHighlightLine(i)) {
+                lineProps.className = `${lineProps.className} highlight-line`
+              }
+              delete lineProps.style
+              return (
+                <div key={i} {...lineProps}>
+                  {line.map((token, key) => {
+                    const tokenProps = getTokenProps({ token, key })
+                    delete tokenProps.style
+                    return <span {...tokenProps} />
+                  })}
+                </div>
+              )
+            })}
           </pre>
         )
       }}
