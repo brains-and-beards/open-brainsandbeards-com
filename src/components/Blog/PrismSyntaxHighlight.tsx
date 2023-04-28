@@ -1,6 +1,6 @@
-import React from 'react'
 import rangeParser from 'parse-numeric-range'
 import Highlight, { defaultProps } from 'prism-react-renderer'
+import React from 'react'
 
 const calculateLinesToHighlight = meta => {
   const RE = /{([\d,-]+)}/
@@ -13,8 +13,8 @@ const calculateLinesToHighlight = meta => {
   }
 }
 
-const PrismSyntaxHighlight = ({ children, className }) => {
-  var language = className.replace(/language-/gm, '')
+const PrismSyntaxHighlight = ({ children, className = 'language-typescript' }) => {
+  let language = className.replace(/language-/gm, '')
   const highlightedLinesMatch = language.match(/{[^}]+}/)
   let highlightLinesDefinition = ''
   if (highlightedLinesMatch !== null) {
@@ -25,26 +25,20 @@ const PrismSyntaxHighlight = ({ children, className }) => {
 
   return (
     <Highlight {...defaultProps} code={children} language={language}>
-      {({ className, tokens, getLineProps, getTokenProps }) => {
+      {({ className, style, tokens, getLineProps, getTokenProps }) => {
         return (
-          <code className={className}>
-            {tokens.slice(0, -1).map((line, i) => {
-              const lineProps = getLineProps({ line, key: i })
-              if (shouldHighlightLine(i)) {
-                lineProps.className = `${lineProps.className} highlight-line`
-              }
-              delete lineProps.style
-              return (
-                <div key={i} {...lineProps}>
-                  {line.map((token, key) => {
-                    const tokenProps = getTokenProps({ token, key })
-                    delete tokenProps.style
-                    return <span {...tokenProps} />
-                  })}
-                </div>
-              )
-            })}
-          </code>
+          <pre
+            className={className}
+            style={{ ...style, position: 'relative', backgroundColor: '' }}
+          >
+            {tokens.map((line, i) => (
+              <div {...getLineProps({ line, key: i })}>
+                {line.map((token, key) => (
+                  <span {...getTokenProps({ token, key })} />
+                ))}
+              </div>
+            ))}
+          </pre>
         )
       }}
     </Highlight>

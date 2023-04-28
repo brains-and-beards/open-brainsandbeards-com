@@ -67,7 +67,9 @@ const components = {
     return className ? (
       <PrismSyntaxHighlight className={className}>{children}</PrismSyntaxHighlight>
     ) : (
-      <code>{children}</code>
+      <PrismSyntaxHighlight className={className}>{children}</PrismSyntaxHighlight>
+
+      // <code>{children}</code>
     )
   }
 }
