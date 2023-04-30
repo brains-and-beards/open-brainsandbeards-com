@@ -1,6 +1,6 @@
-import React from 'react'
 import rangeParser from 'parse-numeric-range'
 import Highlight, { defaultProps } from 'prism-react-renderer'
+import React from 'react'
 
 const calculateLinesToHighlight = meta => {
   const RE = /{([\d,-]+)}/
@@ -14,7 +14,7 @@ const calculateLinesToHighlight = meta => {
 }
 
 const PrismSyntaxHighlight = ({ children, className }) => {
-  var language = className.replace(/language-/gm, '')
+  let language = className.replace(/language-/gm, '')
   const highlightedLinesMatch = language.match(/{[^}]+}/)
   let highlightLinesDefinition = ''
   if (highlightedLinesMatch !== null) {
@@ -27,7 +27,7 @@ const PrismSyntaxHighlight = ({ children, className }) => {
     <Highlight {...defaultProps} code={children} language={language}>
       {({ className, tokens, getLineProps, getTokenProps }) => {
         return (
-          <code className={className}>
+          <pre className={className}>
             {tokens.slice(0, -1).map((line, i) => {
               const lineProps = getLineProps({ line, key: i })
               if (shouldHighlightLine(i)) {
@@ -44,7 +44,7 @@ const PrismSyntaxHighlight = ({ children, className }) => {
                 </div>
               )
             })}
-          </code>
+          </pre>
         )
       }}
     </Highlight>
