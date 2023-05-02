@@ -27,7 +27,7 @@ const PrismSyntaxHighlight = ({ children, className }) => {
     <Highlight {...defaultProps} code={children} language={language}>
       {({ className, tokens, getLineProps, getTokenProps }) => {
         return (
-          <code className={className}>
+          <pre className={className}>
             {tokens.slice(0, -1).map((line, i) => {
               const lineProps = getLineProps({ line, key: i })
               if (shouldHighlightLine(i)) {
@@ -45,7 +45,7 @@ const PrismSyntaxHighlight = ({ children, className }) => {
                 </div>
               )
             })}
-          </code>
+          </pre>
         )
       }}
     </Highlight>
