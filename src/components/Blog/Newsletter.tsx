@@ -1,11 +1,10 @@
-import React from 'react'
 import { navigate } from 'gatsby'
-import { validateEmail } from '../Contact/forms/utils'
-import { useState, useCallback } from 'react'
-import addToMailchimp from 'gatsby-plugin-mailchimp'
-import { useEffect } from 'react'
-import Modal from '../shared/Modal'
 import { StaticImage } from 'gatsby-plugin-image'
+import addToMailchimp from 'gatsby-plugin-mailchimp'
+import React, { useCallback, useEffect, useState } from 'react'
+
+import { validateEmail } from '../Contact/forms/utils'
+import Modal from '../shared/Modal'
 
 const BlogNewsletter = () => {
   const [submitEnabled, setSubmitEnabled] = useState(false)
@@ -45,9 +44,9 @@ const BlogNewsletter = () => {
         EMAIL: submittedEmail
       })
         .then(data => {
-          if (data.result == 'success') {
+          if (data.result === 'success') {
             navigate('/newsletter-subscribed')
-          } else if (data.result == 'error') {
+          } else if (data.result === 'error') {
             if (data.msg.includes('The username portion of the email address is invalid')) {
               showErrorModal(data.msg.replace('0 - ', ''))
             } else {
@@ -89,7 +88,7 @@ const BlogNewsletter = () => {
                 <label htmlFor="email">Email address</label>
 
                 <div className="form col">
-                  <input type_="text" name="email" onChange={handleInputChange} />
+                  <input type="text" name="email" onChange={handleInputChange} />
 
                   <div className="name-blog-form">
                     <label htmlFor="name">Name</label>

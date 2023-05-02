@@ -1,6 +1,7 @@
-import React from 'react'
+import { graphql, useStaticQuery } from 'gatsby'
 import PropTypes from 'prop-types'
-import { useStaticQuery, graphql } from 'gatsby'
+import React from 'react'
+
 import CanonicalLink from './CanonicalLink'
 
 const query = graphql`

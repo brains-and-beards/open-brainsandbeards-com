@@ -1,10 +1,11 @@
-import React from 'react'
+import { Location } from '@reach/router'
 import { graphql } from 'gatsby'
+import React from 'react'
+
+import '../assets/stylesheets/main.scss'
+import Footer from '../components/shared/layout/Footer'
 import Header from '../components/shared/layout/Header'
 import Navbar from '../components/shared/layout/Navbar'
-import Footer from '../components/shared/layout/Footer'
-import { Location } from '@reach/router'
-import '../assets/stylesheets/main.scss'
 
 export const _headerHeroImage = graphql`
   fragment headerHeroImage on File {

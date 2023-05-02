@@ -1,5 +1,5 @@
-import React, { Component } from 'react'
 import { GatsbyImage, getImage } from 'gatsby-plugin-image'
+import React, { Component } from 'react'
 
 import { validateEmail } from './utils'
 

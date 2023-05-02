@@ -1,6 +1,7 @@
-import React, { Component } from 'react'
-import TrustBarItem from './TrustBarItem'
 import moment from 'moment'
+import React, { Component } from 'react'
+
+import TrustBarItem from './TrustBarItem'
 
 const BB_START_DATE = '08/25/2015'
 const COMPANY_YEARS = moment(BB_START_DATE, 'MM/DD/YYYY').fromNow().split(' ')[0]

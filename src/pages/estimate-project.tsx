@@ -1,8 +1,9 @@
-import React from 'react'
 import { graphql } from 'gatsby'
-import Layout from '../templates/layout'
+import React from 'react'
+
 import EstimateProjectForm from '../components/Contact/forms/EstimateProjectForm'
 import SEO from '../components/shared/layout/SEO'
+import Layout from '../templates/layout'
 
 const EstimateProject = props => {
   const { heroImage } = props.data

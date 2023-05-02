@@ -1,10 +1,6 @@
 import React, { Component } from 'react'
 
-import Layout from '../templates/layout'
 import ClientLogos from '../components/CaseStudies/ClientLogos'
-import CaseStudyBar from '../components/shared/Bars/CaseStudyBar'
-import TrustBar from '../components/shared/Bars/TrustBar'
-import EstimateProjectBar from '../components/shared/Bars/EstimateProjectBar'
 import {
   clincaseHeroImage,
   clincaseLogoImage,
@@ -14,10 +10,14 @@ import {
   lokalportalLogoImage,
   rakutenHeroImage,
   rakutenLogoImage,
-  sharooLogoImage,
-  sharooHeroImage
+  sharooHeroImage,
+  sharooLogoImage
 } from '../components/CaseStudies/images'
+import CaseStudyBar from '../components/shared/Bars/CaseStudyBar'
+import EstimateProjectBar from '../components/shared/Bars/EstimateProjectBar'
+import TrustBar from '../components/shared/Bars/TrustBar'
 import SEO from '../components/shared/layout/SEO'
+import Layout from '../templates/layout'
 
 class Projects extends Component {
   render() {

@@ -1,7 +1,7 @@
 import { GatsbyImage, getImage } from 'gatsby-plugin-image'
 import React from 'react'
 
-const TeamMember = ({ image, bio, name, onPrev, onNext }) => {
+const TeamMember = ({ image, bio, name }) => {
   const hash =
     typeof window !== 'undefined' &&
     window &&

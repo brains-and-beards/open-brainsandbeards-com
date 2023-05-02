@@ -1,4 +1,5 @@
 import React from 'react'
+
 import ChevronSvg from '../../assets/images/chevron-bold.svg'
 
 const ReadMore = ({ text }: { text: string }) => (

@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
 import { Link } from 'gatsby'
+import React from 'react'
 
 const isExternal = (link: string) => link.match(/^https?:\/\//)
 
@@ -7,6 +7,7 @@ const renderInternalLink = (url: string, label: string) => <Link to={url}> {labe
 
 const renderAsPureHTML = (url: string, label: string, onClick: (() => void) | undefined) => (
   // If we have both `url` and `onClick`, the app will trigger both
+  // eslint-disable-next-line jsx-a11y/anchor-is-valid
   <a href={onClick ? undefined : url} onClick={onClick}>
     {label}
   </a>

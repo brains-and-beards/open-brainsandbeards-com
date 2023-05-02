@@ -1,5 +1,6 @@
-import React from 'react'
 import { StaticImage } from 'gatsby-plugin-image'
+import React from 'react'
+
 import Swiper from './Swiper'
 import SwiperItem from './SwiperItem'
 

@@ -1,8 +1,9 @@
-import React from 'react'
-import { useStaticQuery, graphql } from 'gatsby'
-import { blogAuthorsImages } from '../../configs/consts'
+import { graphql, useStaticQuery } from 'gatsby'
 import { AnchorLink } from 'gatsby-plugin-anchor-links'
 import { GatsbyImage, getImage } from 'gatsby-plugin-image'
+import React from 'react'
+
+import { blogAuthorsImages } from '../../configs/consts'
 
 const query = graphql`
   query {

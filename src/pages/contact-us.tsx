@@ -1,9 +1,10 @@
-import React, { Component, Fragment } from 'react'
 import { Location } from '@reach/router'
-import SEO from '../components/shared/layout/SEO'
-import Navbar from '../components/shared/layout/Navbar'
+import React, { Component, Fragment } from 'react'
+
 import ContactForm from '../components/Contact/forms/ContactForm'
 import Footer from '../components/shared/layout/Footer'
+import Navbar from '../components/shared/layout/Navbar'
+import SEO from '../components/shared/layout/SEO'
 
 class ContactUs extends Component {
   render() {

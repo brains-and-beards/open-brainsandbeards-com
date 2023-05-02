@@ -1,5 +1,6 @@
 import { StaticImage } from 'gatsby-plugin-image'
 import React from 'react'
+
 import CaseStudyBar, { PageType } from './CaseStudyBar'
 
 const heroImage = (

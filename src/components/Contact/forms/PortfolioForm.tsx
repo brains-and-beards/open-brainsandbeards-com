@@ -29,7 +29,7 @@ class PortfolioForm extends Component {
               <label htmlFor="email">Email address</label>
 
               <div className="row form">
-                <input type_="text" name="email" onChange={this.handleInputChange} />
+                <input type="text" name="email" onChange={this.handleInputChange} />
                 <button disabled={!submitEnabled}>I want to know more</button>
               </div>
             </form>

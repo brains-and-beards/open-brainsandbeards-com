@@ -1,7 +1,8 @@
-import React, { Component } from 'react'
 import { graphql } from 'gatsby'
-import Layout from '../templates/layout'
+import React, { Component } from 'react'
+
 import SEO from '../components/shared/layout/SEO'
+import Layout from '../templates/layout'
 
 class NewsletterSubscribed extends Component {
   render() {

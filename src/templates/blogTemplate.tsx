@@ -2,6 +2,7 @@ import { MDXProvider } from '@mdx-js/react'
 import { graphql } from 'gatsby'
 import { GatsbyImage, getImage } from 'gatsby-plugin-image'
 import React from 'react'
+
 import AuthorWithPictureAndText from '../components/Blog/AuthorWithPictureAndText'
 import HiringFootnote from '../components/Blog/HiringFootnote'
 import Newsletter from '../components/Blog/Newsletter'

@@ -1,6 +1,5 @@
-import React from 'react'
-
 import { GatsbyImage, getImage } from 'gatsby-plugin-image'
+import React from 'react'
 
 const renderSubtitle = (subtitleContent, image) => {
   return typeof subtitleContent === 'string' ? (

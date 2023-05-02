@@ -1,11 +1,11 @@
-import React, { Component } from 'react'
 import { graphql } from 'gatsby'
 import { GatsbyImage, getImage } from 'gatsby-plugin-image'
+import React, { Component } from 'react'
 
-import Layout from '../../templates/layout'
-import EstimateProjectBar from '../../components/shared/Bars/EstimateProjectBar'
 import Testimonial from '../../components/CaseStudies/Testimonial'
+import EstimateProjectBar from '../../components/shared/Bars/EstimateProjectBar'
 import SEO from '../../components/shared/layout/SEO'
+import Layout from '../../templates/layout'
 
 class FemtasyCaseStudy extends Component {
   render = () => {
@@ -29,7 +29,7 @@ class FemtasyCaseStudy extends Component {
 
           <div className="narrow-column text-format">
             <p>
-              <a href="https://www.femtasy.com" target="_blank">
+              <a href="https://www.femtasy.com" target="_blank" rel="noreferrer">
                 Femtasy
               </a>{' '}
               is a streaming platform for erotic audio stories for women (and everybody else!).
@@ -172,7 +172,11 @@ class FemtasyCaseStudy extends Component {
             </p>
             <p>
               PS. If this project sounds interesting to you, you should definitely check{' '}
-              <a href="https://www.linkedin.com/company/femtasy/jobs/" target="_blank">
+              <a
+                href="https://www.linkedin.com/company/femtasy/jobs/"
+                target="_blank"
+                rel="noreferrer"
+              >
                 open positions in Femtasy
               </a>
               . They're hiring!

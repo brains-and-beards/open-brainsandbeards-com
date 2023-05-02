@@ -1,12 +1,12 @@
-import React from 'react'
 import { graphql } from 'gatsby'
+import React from 'react'
 
-import Layout from '../../templates/layout'
-import TonedDownEstimateProject from '../../components/shared/Bars/TonedDownEstimateProject'
-import CaseStudyBar from '../../components/shared/Bars/CaseStudyBar'
-import PictureListItem from '../../components/shared/PictureListItem'
 import { lokalportalHeroImage } from '../../components/CaseStudies/images'
+import CaseStudyBar from '../../components/shared/Bars/CaseStudyBar'
+import TonedDownEstimateProject from '../../components/shared/Bars/TonedDownEstimateProject'
+import PictureListItem from '../../components/shared/PictureListItem'
 import SEO from '../../components/shared/layout/SEO'
+import Layout from '../../templates/layout'
 
 const TeamAugmentationService = props => {
   const { heroImage, fasterImage, learningImage, scalingImage } = props.data

@@ -39,6 +39,7 @@ const PrismSyntaxHighlight = ({ children, className }) => {
                   {line.map((token, key) => {
                     const tokenProps = getTokenProps({ token, key })
                     delete tokenProps.style
+                    // eslint-disable-next-line react/jsx-key -- getTokenProps() should give it, strange that Linter doesn't see it
                     return <span {...tokenProps} />
                   })}
                 </div>

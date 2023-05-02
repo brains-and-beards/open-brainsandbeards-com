@@ -1,5 +1,6 @@
 import { StaticImage } from 'gatsby-plugin-image'
 import React, { useState } from 'react'
+
 import { validateEmail } from './utils'
 
 const ContactFormInternals = ({ title, subtitle }) => {

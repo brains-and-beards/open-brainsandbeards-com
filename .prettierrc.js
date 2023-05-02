@@ -5,21 +5,8 @@ module.exports = {
   printWidth: 100,
   arrowParens: 'avoid',
   trailingComma: 'none',
-  importOrder: [
-    '<THIRD_PARTY_MODULES>',
-    '^@assets/(.*)$',
-    '^@components/(.*)$',
-    '^@config/(.*)$',
-    '^@constants/(.*)$',
-    '^@helpers/(.*)$',
-    '^@localization/(.*)$',
-    '^@mobx/(.*)$',
-    '^@models/(.*)$',
-    '^@navigation/(.*)$',
-    '^@services/(.*)$',
-    '^[./]'
-  ],
-  importOrderSeparation: false,
+  importOrder: ['<THIRD_PARTY_MODULES>', '^[./]'],
+  importOrderSeparation: true,
   importOrderSortSpecifiers: true,
   overrides: [
     {

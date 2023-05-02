@@ -1,5 +1,5 @@
-import React, { useMemo } from 'react'
 import { StaticImage } from 'gatsby-plugin-image'
+import React, { useMemo } from 'react'
 
 const heroImages = [
   <StaticImage
@@ -9,6 +9,7 @@ const heroImages = [
     alt="Hero image"
     placeholder="blurred"
     width={710}
+    key="bicycle"
   />,
   <StaticImage
     src="../../assets/illustrations/hero-jogin.png"
@@ -17,6 +18,7 @@ const heroImages = [
     alt="Hero image"
     placeholder="blurred"
     width={740}
+    key="jogin"
   />,
   <StaticImage
     src="../../assets/illustrations/hero-skateboard.png"
@@ -25,6 +27,7 @@ const heroImages = [
     alt="Hero image"
     placeholder="blurred"
     width={710}
+    key="skateboard"
   />
 ]
 
@@ -35,6 +38,7 @@ const mobileHeroImages = [
     alt="Hero image"
     placeholder="blurred"
     height={510}
+    key="bicycle"
   />,
   <StaticImage
     src="../../assets/illustrations/hero-jogin.png"
@@ -42,6 +46,7 @@ const mobileHeroImages = [
     alt="Hero image"
     placeholder="blurred"
     height={510}
+    key="jogin"
   />,
   <StaticImage
     src="../../assets/illustrations/hero-skateboard.png"
@@ -49,6 +54,7 @@ const mobileHeroImages = [
     alt="Hero image"
     placeholder="blurred"
     height={510}
+    key="skateboard"
   />
 ]
 
