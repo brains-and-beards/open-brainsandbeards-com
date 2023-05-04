@@ -21,13 +21,17 @@ const SimpleSwiperWithParams = ({ items, ContentClass }) => {
   return (
     <Swiper
       ref={ref}
-      slidesPerView={1.4}
       spaceBetween={0}
       grabCursor
       centeredSlides
       loop
       renderPrevButton={() => null}
       renderNextButton={() => null}
+      pagination={{
+        el: '.swiper-pagination',
+        type: 'bullets',
+        clickable: true
+      }}
     >
       {items.map(i => (
         <div key={`reference-${i.name}`}>
