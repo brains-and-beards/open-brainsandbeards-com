@@ -1,0 +1,117 @@
+---
+path: '/blog/2023-no-small-apps'
+date: '2023-05-05T11:12:41.253Z'
+title: 'No small apps'
+image: header.jpg
+author: Wojciech Ogrodowczyk
+---
+
+**Disclaimer**: This topic is being discussed only in the context that we work in, so from the perspective of mobile apps. For _web_ apps user expectations differ, so they'd require different analysis.
+
+There's a proliferation of "should you be using Redux in your React app" blog posts that all end up on the same note - it depends. They all write about local component state, Context API, react-query, etc. and conclude that if your app is small enough, Redux is an overkill. Those posts bother me for two reasons:
+- They usually make no distinction between React.JS (web) and React NATIVE (mobile) apps. I think the gap between the two is big enough that they warrant separate analysis. 
+- On mobile there are no apps small enough that Redux (or MobX, or other equivalent) is an overkill.
+
+But don't worry, this post is not really about Redux. I want to justify my (probably controversial) opinion that there no small apps and offer a summary of what it means for the way we make technical decisions.
+
+## What do you mean by "no small apps"?
+
+There's a lot of requirements that pop up for mobile apps irrespective of what you're actually building. I'd call it an _implied_ scope, because it's rarely discussed as features that we're explicitly working on in order to solve the problem that the app is aiming to address. Rather, that's something that we know (or even worse - don't) we'll have to build in somewhere along the way.
+
+I'd group them in two sections - what your users expect from any app and what kind of technical "base features" you'll have to build under the hood.
+
+## User expectations
+
+The quality threshold for mobile apps is pretty high nowadays and your users will expect your app to meet it. Here's a few of their expectations that grow the scope of your app.
+
+### Visual themes
+
+Like it or not, some of your users use dark mode and some don’t. But both groups expect your app to fit in. 
+
+Implementing dark mode support basically means an implementation of a global visual theme manager that we can switch based on the time of day or user preferences. On a technical side it not only means you need to wrap everything in a global Context, but you need to start with a design system that accepts different colour (and image asset!) schemes.
+
+### Offline support
+
+This one's a huge difference in expectations between a web app and a mobile app. When opening a web page, people understand that you might need internet connection, but a mobile app that freezes when trying to refetch some data it already had before is unacceptable.
+
+Depending on the app that you're building you might want to take the offline support to different levels. For example, in an ecommerce app it's reasonable to expect that you'd use cached product information, so that the user is not blocked by a loading screen on literally _every_ screen transition. On the other hand, it's not reasonable to assume that the customer will be able to complete the checkout flow all the way till the end without making any network calls.
+
+However, for a medical app that we worked on once it was important that users input data at a particular time - doesn't matter whether they're at home using wifi, deep inside a coal mine, or trekking across Sahara. Coincidentally, another requirement specified that they need to be authenticated every time they open the app. That meant building both an authentication and data entry systems that can be used offline.
+
+### Localisation
+
+To be fair, my experience in building apps is limited to targeting users in the Global North (mostly EU, US, Canada), but I believe (but not _know_) that the following will also hold true if you're launching apps targeting other regions. 
+
+That being said, you'll need to at least cover multiple languages. English is usually a good place to start, but if you stick to not using anything else, in US you might alienate your users who'd rather use Spanish, or in Canada - French. In the EU the freedom of moving between countries means that even if you're building an app for a specific country that only has one official language, you'll have plenty of foreigners use it. For example, in Poland government services are available not only in Polish, but often also in English and Ukrainian.
+
+And once your're already introducing a translation system, it's worth going a tiny step forward and offer full localisation. You can use our [i18n guide](/blog/i18n-in-react-native-apps/) to help you with that.
+
+## Technical requirements
+
+### Authentication
+
+Apart from casual games, there aren’t many apps that make sense without a backend service. And using that usually means accounts, which in turn means the whole authentication flow - sign in and up, forgot password flow, etc. That's several API calls and at least 3-4 screens plus any explanations that you might offer to the user to guide them through the process.
+
+On top of that, once you already have the user account you should have a profile screen in the app with options to update this data. Finally, if you want to earn money using the app you'd need to add payment management options, transaction history, etc.
+
+Of course, different parts of the app will want to know whether you're signed in and maybe what kind of user role (premium, admin, etc.) you have, so that information needs to be passed around somehow. That brings us to…
+
+### State management
+
+Here we come back to the starting point and my comment that no app is too small for Redux. Let's look at the options:
+
+- Local component state. Cool, if you can use it - do it, no question about it. But if you want a component deeper in your hierarchy to know what role (or name) the signed-in user has, you're out of luck. And sooner or later, you'll need to know. So local component state can't be your only option.
+
+- Context API. Great choice for a simple solution, but only if you don't have more than one of them. Once you have more than one, things start to fall apart for two reasons. One, global variables (state) is only good if it's limited to one place - if you sprinkle them around it becomes hard to maintain. Two, if you've build your state management on using several Contexts and implemented a solution to share information between them, you've just implemented Redux from scratch - but probably poorly and with worse performance. Finally, from the analysis above we see we already have two global contexts - a visual theme and user information - without even building any real feature.
+
+- Jotai and other atom based solutions. I haven't used Jotai in any application, so what do I know 🤷‍♂️ However, the reason why I didn't is because I'm sceptical about the composability of the solution. Atoms seem like a great idea for _localising_ state, which seems great at first, but sooner or later you'll come across a business requirement that basically means that something needs to know about everything else. Example: you want to display a product, which has a net price (coming from the backend) + VAT tax, which is based on user's "location". This could be a GPS location of the phone (cached in a store somewhere to save battery), the address in the user's profile (stored in the user store), the location of the bank that issued their payment card (stored in the payment metods store) - or, the most common case, a combination of the above. Then you're in the territory where you start hoping everything was stored together from the get-go.
+
+- Redux / MobX / Zustand and other equivalents. As Sherlock Holmes used to say: "When you have eliminated all which is impossible, then whatever remains, however improbable, must be the truth".
+
+### Communication
+
+One more thing that I'd want to highlight in this section as a non-obvious requirement is all the communication-related responsibilities you'll be expected to handle:
+
+- REST, GraphQL, tRPC, etc. That's the networking protocol that you chose (or the backend team chose for you) for the basic information exchange.
+
+- Data caching for offline support. We've mentioned before that your users expect to be able to use your app also when offline, so caching is a necessity. How hard can it be? Well, a non-obvious requirement here is that you can't rely on a simple automated system, but you rather need something that allows you to perform manual cache modifications, due to…
+
+- Optimistic updates. Some of the apps can be read-only (example: news reader) and then you're good, because you never have to update anything. However, most of the apps are not (example: news reader that lets you _favourite_ an article), so in order to let users perform those when offline you'll need to be able to: manually modify the cache (so that after refresh your users see the new state, for example that an article is marked as favourite), networking queue that will store commands that we want to send to the server once we're online again, and an error handling system that will appropriately handle errors on those queued requests (for example the article you wanted to _favourite_ has been deleted in the meantime - what do we do?).
+
+- Push notifications. Marketing, amirite?
+
+- Deep linking 🙈
+
+## Wait a minute…
+
+Of course, you don’t need all that for your MVP, but you’ll need it _eventually_ to have a competitive app. When you're starting out you want to focus on building the parts that bring most value to the user - whether that's a translation system, or adding a "social login" option. But at some point, once the big things are taken care of, you'll have to face all of the above.
+
+Also, in some cases, you might (and many companies do) get away with just having a really basic app when:
+
+- Your clients don’t interact with it often. For example, setting up an Xbox requires a mobile app, but some people (like yours truly) don't really run this app anymore. Coincidentally, the Xbox app is pretty cool and very far from a "basic" version. However, I wouldn't mind if it were (since I only used it once).
+
+- Your product / service is so much better than your competition that clients would rather put up with a bad app than miss out on the value that it brings. For example: many EV charging apps are _not great_. However, drivers pick where to charge not based on the app they'd rather use, but on a particular charger's location and price.
+
+## Okay, but how does it look in practise?
+
+I checked what apps I keep on my phone (iOS) that I'd consider _basic_. Either due to the overall feature set, or how _shallow_ those features have been implemented. Here's a few examples:
+
+- Weather app - that would be a classic example of a basic app done well. A small set of features, no customisation, no user management - that all leads to a tiny app.
+
+- Pocket Tune - just a string tuning app that I use once or twice a year when I remember I still have an ukulele that I wanted to learn how to play 🤷‍♂️ Great, simple app. Hard to build a business around it, though.
+
+- Duo - another basic app. I'm surprised 2FA is not handled by a system app, but this one's a nice, simple (and also free, do you see a pattern here?) replacement.
+
+- Mullvad VPN - this one's an example that contradicts everything I wrote above. This one doesn't have many features (although I have no idea how complicated managing a VPN on a mobile client is), payment is really streamlined (no user accounts) and still it's a solid business.
+
+- Onewheel - this one's not a simple app in terms of feature list, but… it does everything in the seemingly simplest way possible. Connecting the board for the first time is a pain, errors don't tell you anything, no caching, etc. The official app is so bad that the Onewheel community [reverse-engineered the protocols and built an open source version](https://github.com/OnewheelCommunityEdition/OWCE_App).
+
+## So, what are you saying?
+
+I believe virtually any app worth building will eventually outgrow the "small enough" category (given enough development resources). That means for any technical choice you make early you have two choices:
+
+- embrace from the start the size the app will grow into
+
+- plan for switching the temporary solution to a mature one later
+
+And I think that's good news, because it simplifies the decision making around app architecture.
