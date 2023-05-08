@@ -8,6 +8,8 @@ import {
   femtasyLogoImage,
   lokalportalHeroImage,
   lokalportalLogoImage,
+  manomanoHeroImage,
+  manomanoLogoImage,
   rakutenHeroImage,
   rakutenLogoImage,
   sharooHeroImage,
@@ -29,16 +31,25 @@ class Projects extends Component {
         <div className="case-studies-container">
           <CaseStudyBar
             yellowish
-            heroImage={femtasyHeroImage}
-            logoImage={femtasyLogoImage}
-            header="We built a streaming audio player for femtasy"
-            desc="Story of a successful launch of a mobile app for an award-winning streaming platform."
-            url="/projects/femtasy"
-            flip
+            heroImage={manomanoHeroImage}
+            logoImage={manomanoLogoImage}
+            header="Ecommerce app for a French unicorn"
+            desc="Turning a quick prototype into a fully-fledged ecommerce app for several European markets."
+            url="/projects/manomano"
             full
             pageType="projects"
           />
           <div className="content">
+            <CaseStudyBar
+              heroImage={femtasyHeroImage}
+              logoImage={femtasyLogoImage}
+              header="We built a streaming audio player for femtasy"
+              desc="Story of a successful launch of a mobile app for an award-winning streaming platform."
+              url="/projects/femtasy"
+              flip
+              full
+              pageType="projects"
+            />
             <CaseStudyBar
               heroImage={lokalportalHeroImage}
               logoImage={lokalportalLogoImage}
