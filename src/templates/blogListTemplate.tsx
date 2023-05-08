@@ -171,11 +171,6 @@ export const query = graphql`
     }
   }
 `
-// Explanation on SEO links on this page:
-// According to this sources:
-// 1: https://developers.google.com/search/docs/crawling-indexing/canonicalization
-// 2: https://www.searchenginejournal.com/what-is-a-canonical-url/469636/
-// Best way -- to do nothing
 
 export const Head = ({ location }) => (
   <>
