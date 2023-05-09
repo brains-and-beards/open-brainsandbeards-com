@@ -250,7 +250,7 @@ const config: GatsbyConfig = {
                   },
                   custom_elements: [
                     {
-                      'media:content': node.body
+                      'content:encoded': node.body
                     }
                   ]
                 })
