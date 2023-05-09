@@ -250,7 +250,7 @@ const config: GatsbyConfig = {
                   },
                   custom_elements: [
                     {
-                      'content:encoded': node.html
+                      'content:encoded': node.body
                     }
                   ]
                 })
@@ -261,7 +261,6 @@ const config: GatsbyConfig = {
                 allMdx(sort: {frontmatter: {date: DESC}}, limit: 15) {
                   nodes {
                     excerpt
-                    html
                     frontmatter {
                       title
                       date
