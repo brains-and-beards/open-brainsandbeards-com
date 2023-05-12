@@ -1,5 +1,7 @@
 import type { GatsbyConfig } from 'gatsby'
 
+const marked = require('marked')
+
 const { slashify } = require('./src/helpers/path_helpers')
 
 const config: GatsbyConfig = {
@@ -250,7 +252,7 @@ const config: GatsbyConfig = {
                   },
                   custom_elements: [
                     {
-                      'content:encoded': node.body
+                      'content:encoded': marked.parse(node.body)
                     }
                   ]
                 })
@@ -301,8 +303,7 @@ const config: GatsbyConfig = {
               {
                 'webfeeds:cover': {
                   _attr: {
-                    image:
-                      'https://brainsandbeards.com/static/a0fa7ff82c8900c764ad1d0678a8d1de/b8661/hero-bicycle.png'
+                    image: 'https://brainsandbeards.com/favicon.png'
                   }
                 }
               },
