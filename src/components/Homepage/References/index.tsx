@@ -8,7 +8,7 @@ const references = [
   {
     image: (
       <StaticImage
-        src={'../../../assets/testimonials/xing-sebastian.jpg'}
+        src={'../../../assets/testimonials/rakuten-sergio.jpg'}
         imgClassName="round"
         loading="eager"
         alt="Testimonial illustration"
@@ -17,10 +17,27 @@ const references = [
       />
     ),
     quote:
-      '“Brains & Beards helped me by solving many technical impediments across various agile development teams through implementing the needed changes to the backend of those connected applications. The result was that we were able to release the product in time and scope. I would recommend Brains & Beards to people who need the profound support of experienced developers to solve technically challenging projects.”',
-    name: 'Sebastian Gerdemann',
-    position: 'Senior Product Manager',
-    company: 'XING E-Recruiting GmbH & Co. KG'
+      "“I've approached Brains & Beards, because we needed a new mobile application for the Spanish market. The result was a product which is not only easy to maintain and robust, but as well great-looking and simple to understand for Rakuten users. Their years-long expertise helped us get rid of many problems before they even appeared.”",
+    name: 'Sergio Gago',
+    position: 'Technical Director',
+    company: 'Rakuten SL'
+  },
+  {
+    image: (
+      <StaticImage
+        src={'../../../assets/case-studies/manomano/elias-manomano.jpg'}
+        imgClassName="round"
+        loading="eager"
+        alt="Testimonial illustration"
+        height={152}
+        placeholder="blurred"
+      />
+    ),
+    quote:
+      '“Working with Brains & Beards is very easy. They have integrated into the teams as if they were part of our internal team and have contributed their experience and professionalism in the creation of our apps. Both technically with their great knowledge of technology and at the process level with a clear mindset of continuous learning.”',
+    name: 'Jose Maria Elias',
+    position: 'Engineering Manager',
+    company: 'ManoMano - Colibri SAS'
   },
   {
     image: (
@@ -42,7 +59,7 @@ const references = [
   {
     image: (
       <StaticImage
-        src={'../../../assets/testimonials/rakuten-sergio.jpg'}
+        src={'../../../assets/testimonials/xing-sebastian.jpg'}
         imgClassName="round"
         loading="eager"
         alt="Testimonial illustration"
@@ -51,10 +68,10 @@ const references = [
       />
     ),
     quote:
-      "“I've approached Brains & Beards, because we needed a new mobile application for the Spanish market. The result was a product which is not only easy to maintain and robust, but as well great-looking and simple to understand for Rakuten users. Their years-long expertise helped us get rid of many problems before they even appeared.”",
-    name: 'Sergio Gago',
-    position: 'Technical Director',
-    company: 'Rakuten SL'
+      '“Brains & Beards helped me by solving many technical impediments across various agile development teams through implementing the needed changes to the backend of those connected applications. The result was that we were able to release the product in time and scope. I would recommend Brains & Beards to people who need the profound support of experienced developers to solve technically challenging projects.”',
+    name: 'Sebastian Gerdemann',
+    position: 'Senior Product Manager',
+    company: 'XING E-Recruiting GmbH & Co. KG'
   }
 ]
 
