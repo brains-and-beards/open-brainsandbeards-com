@@ -24,11 +24,18 @@ The next line of code is actually setting the canonical URL:
   return <link rel="canonical" href={`${host}${findBasePath(/*locale,*/ path)}`} />
 ```
 
+## Why we need this document about canonicalization blogposts list?
+
+We should talk about blogposts canonicalization because Google is not always indexing automatically paginated pages of blogposts with link structure `blog/x/`, where x - is a page number
+
+### **And why is it happening?**
+
+Canonical URL is a static representative link to a content, and link to paginated list will show different in few months (as soon as new blogpost will be posted)
+
+
 ## The Decision
 
-
-After investigation, I found a few possible solutions, but we decided to do nothing and stick with the current implementation.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
-
+After investigation, I found a few possible solutions, but we decided to do nothing and stick with the current implementation.
 
 **Why?**
 
@@ -38,9 +45,9 @@ According to the sources, I have concluded that staying with the current impleme
 2. We still want those pages to be paginated
 3. It's recommended (and possibly the only) approach with [gatsby pagination](https://www.gatsbyjs.com/docs/adding-pagination/)
 
-## Alternative approaches
+## Alternative approaches, we didn't choose
 
-1. Exclude pages with /blog/x paths from the sitemap and/or mark them with noindex.
+1. Exclude pages with `/blog/x` paths from the sitemap and/or mark them with noindex.
 
 ### Why wasn't this option chosen?
 
