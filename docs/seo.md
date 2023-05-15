@@ -54,7 +54,7 @@ According to the sources, I have concluded that staying with the current impleme
 This is the worst option according to the [Google documentation](https://developers.google.com/search/docs/specialty/ecommerce/pagination-and-incremental-page-loading#use-urls-correctly) Here is a quote from it:
 >Don't use the first page of a paginated sequence as the canonical page. Instead, give each page in its own canonical URL.
 
-2. Change the pagination logic, making it not via /blog/x but via /blog?page=x (using parameters).
+2. Change the pagination logic, making it not via `/blog/x` but via `/blog?page=x` (using parameters).
 
 ### What's wrong with this option?
 
