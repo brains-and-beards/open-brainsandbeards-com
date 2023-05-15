@@ -45,6 +45,22 @@ export const lokalportalLogoImage = (
   />
 )
 
+export const manomanoHeroImage = (
+  <StaticImage
+    src="../../assets/case-studies/manomano/manomano-hero-banner.png"
+    alt="ManoMano banner"
+    width={620}
+  />
+)
+
+export const manomanoLogoImage = (
+  <StaticImage
+    src="../../assets/case-studies/manomano/manomano-logo-colour.png"
+    alt="ManoMano logo"
+    height={22}
+  />
+)
+
 export const rakutenHeroImage = (
   <StaticImage src="../../assets/case-studies/rakuten-team.jpg" alt="Femtasy banner" width={680} />
 )

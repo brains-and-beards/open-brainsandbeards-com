@@ -9,7 +9,7 @@ import ContactForm from '../components/Contact/forms/ContactForm'
 import ReferenceSwiper from '../components/Homepage/References'
 import useRandomHeroImage from '../components/Homepage/useRandomHeroImage'
 import EstimateProjectBar from '../components/shared/Bars/EstimateProjectBar'
-import SharooCaseStudyBar from '../components/shared/Bars/SharooCaseStudyBar'
+import FeaturedCaseStudyBar from '../components/shared/Bars/FeaturedCaseStudyBar'
 import TrustBar from '../components/shared/Bars/TrustBar'
 import ReadMore from '../components/shared/ReadMore'
 import SEO from '../components/shared/layout/SEO'
@@ -141,7 +141,7 @@ const MainPage = () => {
             We help technology-driven organizations – from start-ups to large enterprises – develop
             software more efficiently.
           </p>
-          <SharooCaseStudyBar pageType="home" />
+          <FeaturedCaseStudyBar />
           <ClientLogos short />
           <ReferenceSwiper />
         </div>

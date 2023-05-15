@@ -84,7 +84,7 @@ class FemtasyCaseStudy extends Component {
               Finally, as with all startups, there's always an important question of time. On one
               hand we want to have high code quality with good documentation to allow for easy
               project handover at the end, but on the other hand we want the app done fast, so we
-              can get answers to out questions as soon as possible. In a true agile way.
+              can get answers to our questions as soon as possible. In a true agile way.
             </p>
           </div>
 
