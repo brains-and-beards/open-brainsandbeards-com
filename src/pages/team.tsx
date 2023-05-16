@@ -167,7 +167,7 @@ class TeamPage extends Component {
                   title="Expectations Management"
                 />
               </div>
-              <a className="sub1" href="https://brains.zone/no-brainers">
+              <a className="sub1" href="https://www.youtube.com/@nobrainers-bybrainsbeards5226">
                 No Brainers
               </a>
               <p>
@@ -182,7 +182,7 @@ class TeamPage extends Component {
                   title="ListView Animations"
                 />
               </div>
-              <a className="sub1" href="https://brains.zone/brain-picks">
+              <a className="sub1" href="https://www.youtube.com/@brainpicks-bybrainsbeards106">
                 Brain Picks
               </a>
               <p>
