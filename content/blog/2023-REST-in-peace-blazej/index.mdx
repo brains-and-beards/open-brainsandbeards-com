@@ -1,0 +1,186 @@
+---
+path: '/blog/2023-REST-in-peace-blazej' # TODO edit this metadata 
+date: '2023-05-05T11:12:41.253Z'
+title: 'TODO'
+image: header.jpg
+author: Błażej Lewandowski
+---
+
+When it comes to API there are number of ways to handle backend / frontend communication. The most common protocols that you probably at least heard of are **REST**, **GrapghQL** and **tRPC** (which btw. I cannot wait to get my hands on <!-- maybe put some links in here instead? -->). While we're on the popularity, I wrote it in the right order - REST is cleary the winner here, and it's probably gonna stay there for some time. It's simple, easy to learn, compatible and scalable. It's not ideal, that's why we keep seeing newer inventions, but it can't be denied that knowing this paradigm is considered now a base knowledge that you as a software developer absolutely must have and you'll face it sooner or ~~later~~ imidietaly 😄. 
+
+Anyways, I bet you already know what the RESTful API is and how to use it, but if you're new to this game it might be not so intuitive when it comes to the code structure at the frontend part of it, especially if you'd like to GET some advantage of TypeScript <!-- link? -->. In this short POST I'd like to show you what I see as a nice and clean form of working with such API using bare TypeScript code (no libraries). The code examples come from react-native application, but imagine with just slight adjustments this can be applied to any app. What you'll see here is what I would call a minimal setup, we're gonna focus on the basic usage, but I'll try to add some notes about posible ways of extending it. Example is based on `JSON` data format, we're not going anything crazy here.
+
+## The requester
+
+First thing first, Let's begin with the obvious part - the point from which every request flies to the server. It's our single window to the outter world in which we can place any logic that is common for all requests that we make.
+
+```tsx
+// src/api/common.ts
+
+// Generic type here is used to type the backend response
+async function makeRequest<T>(params: RequestParams): Promise<T> {
+  // Change the default request timeout
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 10000);
+
+  const {path, ...restParams} = params;
+  try {
+    const response = await fetch(`${Config.API_URL}/${path}`, {
+      ...restParams,
+      body: JSON.stringify(restParams.body),
+      signal: controller.signal,
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        ...restParams.headers,
+      },
+    });
+
+    const hasBody = parseInt(response.headers.get('content-length')!) !== 0;
+    const body = hasBody ? await response.json() : null
+
+    if (!response.ok) {
+      // Throw anything outside the 200-299 range as an error
+      const errorCause = {
+        status: response.status,
+        body,
+      };
+      const readableBody = body ? ` and ${JSON.stringify(body, null, 2)}` : '';
+      throw new Error(`Server returned ${response.status}${readableBody}`, {
+        cause: errorCause,
+      });
+    }
+
+    // Typed backend json response
+    return <T>body;
+  } catch (error) {
+    let errorMessage;
+    if (error instanceof Error && error.name === 'AbortError') {
+      errorMessage = 'Request timed out';
+    } else {
+      errorMessage = getErrorMessage(error);
+    }
+    // Log all the errors and rethrow to parent handlers
+    console.warn(`#makeRequest failed on /${path}: ${errorMessage}`);
+
+    throw error;
+  } finally {
+    clearTimeout(timeoutId);
+  }
+}
+```
+Let's break it down, from the top to the bottom. 
+
+On the first line we have defined our function parameter type, which is slightly modified version of what can be passed straight to the `fetch()`.
+The differences are:
+- we exclude `signal` parameter, cause our function overrides it anyway
+- we redefine `body` so we can pass objects to this function and convert it to string in a single place
+- we add `path` parameter, which stands for the variable part of your url's e.g. considering you have resources under `https://official-joke-api.appspot.com/jokes/random` and `https://official-joke-api.appspot.com/jokes/programming/ten` the path would be just `jokes/random` or `jokes/programming/ten`
+
+Next, we have the function itself. I'd like you to notice the `<T>` part here, it's a [typescript generic](https://www.typescriptlang.org/docs/handbook/2/generics.html) that help us properly type the backend responses. Having it forces us to specify return type each time we use this function, otherwise it resolves to `unknown` type.
+
+Right at the top of the function body you'll find a `setTimeout` call. It's job is to cancel / fail requests that are taking too long. The default request timeout is not acceptable in most of the cases nowdays, especially in the context of mobile apps, where instant feedback to user's actions is kind of expected. We clear this timeout in the `finally` block.
+
+Moving forward we have standard [fetch()](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) call. This is also the place where our base API url (e.g. `https://official-joke-api.appspot.com`) belongs, hence the `Config.API_URL` part. Usually developers need to switch between at least 2 different environments, that means different API url's. In my example app I used [react-native-config](https://github.com/luggit/react-native-config) for that purpose
+
+Then, we try to return parsed response body if it exist and in case of response status being outside of the `200-299` range we throw it as an error. The error handling is important here, for debugging purposes it's crucial to see exactly which call failed and why, at the same time it's not only about logging, we have to include some error details to be able to provide some more specific error handling whenever we want. Here I attatched response's `body` and `status` using standardized [cause property](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/cause) which should be sufficient for most of the cases. The `console.warn()` part was used for sake of simplicity, but I highly recommend to introduce some kind of Logger class instead, which could decide what to do with particullar message, wheter to send it to our bug reporting system, print it to console etc.
+
+
+Example error message logged out from the setup above:
+<pre>
+#makeRequest succes on /products/1': Server returned 401 and {
+  "message": "Unauthorized"
+}
+</pre>
+
+💡Hint: If you're like me and you run your local server inside VSCode's built-in terminal and you see all the messages in there, you can hold `cmd` and click the `#makeRequest` log part which should open your editor in this exact place.
+
+
+### The second layer
+
+Having our requester in place, we could use it right away like this: 
+```tsx
+makeRequest<JokeBE>({
+  path: 'jokes/random',
+  method: 'GET'
+})
+```
+But what I don't like in this approach is the type safety of `method` property. Originally it is typed as `string` so it's easy to misstype correct method.
+What we can do about it? We know what are the possible methods, it's `POST`, `PUT`, `PATCH`, `GET` or `DELETE`! We could create a [union type](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#union-types) out of it, that's for sure.
+But what I find just a little bit more elegant is if we stay for in a common file for a moment and define simple wrapper for all possible methods like that:
+
+```tsx
+// src/api/common.ts
+
+type SimplifiedRequestParams = Omit<RequestParams, 'method'>;
+
+export const getRequest = <T>(params: SimplifiedRequestParams) => {
+  const getParams: RequestParams = {
+    ...params,
+    method: 'GET',
+  };
+  return makeRequest<T>((getParams));
+};
+
+export const postRequest = <T>(params: SimplifiedRequestParams) => {
+  const postParams: RequestParams = {
+    ...params,
+    method: 'POST',
+  };
+  return makeRequest<T>((postParams));
+};
+...
+```
+Notice the keyword `export` - this time we want to make these funcions available to rest of the code.
+
+We can define it all at once, in the end it's only 5 functions, or keep adding it on the go as we find the need for it. When our app starts to getting more advanced, we may need to define another optional set of wrappers e.g later on to include authorization header we could do something like this:
+```tsx
+export const authPostRequest = <T>(params: SimplifiedRequestParams) => {
+  const authPostParams: RequestParams = {
+    ...params,
+    headers: {
+      ...params.headers,
+      authorization: `Bearer ${authToken}`
+    }
+  };
+  return postRequest<T>((authPostParams));
+};
+```
+
+### The usage
+
+Ok, so we have common API logic in place - the hardest part is done. Now our job is to use that newly created functions in orderly fashion.
+The best way to do it, is to group all the requests that the app is making by a particular resource.
+
+Let's say the app is able to get from API a random joke with `https://official-joke-api.appspot.com/jokes/random` and a list of jokes with `https://official-joke-api.appspot.com/jokes/ten`. We have a nested endpoint, it seems natural to create a new file for all requests related to `jokes`. 
+
+```tsx
+// src/api/jokes.ts
+
+import { getRequest } from './common'
+import { JokeBE } from './types/jokes.types'
+
+export const getRandomJoke = () =>
+  getRequest<JokeBE>({
+    path: 'jokes/random',
+  })
+
+export const getTenRandomProgrammingJokes = () =>
+  getRequest<Array<JokeBE>>({
+    path: 'jokes/programming/ten',
+  })
+```
+
+We have the final functions ready to use. It return a promise, that resolves to given type. The type itself found it's way to another file:
+```tsx
+// src/api/types/jokes.types.tsx
+
+export interface JokeBE {
+  readonly type: string
+  readonly setup: string
+  readonly punchline: string
+  readonly id: number
+}
+```
+
+It's much cleaner when separated, additionaly it's always easier to extract or share just your `types` package later, if e.g. we notice that our neighbour team from web app needs exactly same types in their project too.
