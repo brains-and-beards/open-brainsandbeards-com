@@ -14,7 +14,8 @@ const description =
 
 class ManoManoCaseStudy extends Component {
   render = () => {
-    const { storeB2cImage, storeB2bImage, eliasImage, gregoireImage, linaImage } = this.props.data
+    const { storeB2cImage, storeB2bImage, eliasImage, gregoireImage, linaImage, marcImage } =
+      this.props.data
 
     return (
       <Layout headerTitle={title} headerSub={description} simpleNavbar projects>
@@ -172,10 +173,10 @@ class ManoManoCaseStudy extends Component {
         </div>
 
         <Testimonial
-          quote="I would recommend working with Brains & Beards 200% if you are looking for professional people who know what they are doing and who are wonderful people who will do everything possible to help you."
-          image={eliasImage}
-          name="Jose Maria Elias"
-          position="Engineering Manager"
+          quote="Deep technical knowledge, human touch, high level of engagement, leadership skills, adaptability… there are many reasons for which I’m trusting completely in Brains & Beards to make the story of ManoMano apps a great success."
+          image={marcImage}
+          name="Marc Torrent"
+          position="Head of Engineering"
           company="ManoMano - Colibri SAS"
         />
         <EstimateProjectBar
@@ -212,6 +213,9 @@ export const query = graphql`
       ...testimonialImageFragment
     }
     linaImage: file(relativePath: { regex: "/lina-manomano/" }) {
+      ...testimonialImageFragment
+    }
+    marcImage: file(relativePath: { regex: "/marc-manomano/" }) {
       ...testimonialImageFragment
     }
     gregoireImage: file(relativePath: { regex: "/gregoire-manomano/" }) {
