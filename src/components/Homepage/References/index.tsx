@@ -8,6 +8,23 @@ const references = [
   {
     image: (
       <StaticImage
+        src={'../../../assets/case-studies/manomano/marc-manomano.png'}
+        imgClassName="round"
+        loading="eager"
+        alt="Testimonial illustration"
+        height={152}
+        placeholder="blurred"
+      />
+    ),
+    quote:
+      '“Deep technical knowledge, human touch, high level of engagement, leadership skills, adaptability… there are many reasons for which I’m trusting completely in Brains & Beards to make the story of ManoMano apps a great success.”',
+    name: 'Marc Torrent',
+    position: 'Head of Engineering',
+    company: 'ManoMano - Colibri SAS'
+  },
+  {
+    image: (
+      <StaticImage
         src={'../../../assets/testimonials/rakuten-sergio.jpg'}
         imgClassName="round"
         loading="eager"
@@ -25,23 +42,6 @@ const references = [
   {
     image: (
       <StaticImage
-        src={'../../../assets/case-studies/manomano/elias-manomano.jpg'}
-        imgClassName="round"
-        loading="eager"
-        alt="Testimonial illustration"
-        height={152}
-        placeholder="blurred"
-      />
-    ),
-    quote:
-      '“Working with Brains & Beards is very easy. They have integrated into the teams as if they were part of our internal team and have contributed their experience and professionalism in the creation of our apps. Both technically with their great knowledge of technology and at the process level with a clear mindset of continuous learning.”',
-    name: 'Jose Maria Elias',
-    position: 'Engineering Manager',
-    company: 'ManoMano - Colibri SAS'
-  },
-  {
-    image: (
-      <StaticImage
         src={'../../../assets/testimonials/sharoo-feyyaz.jpg'}
         imgClassName="round"
         loading="eager"
@@ -55,6 +55,23 @@ const references = [
     name: 'Feyyaz Alingan',
     position: 'Head of Product & Development',
     company: 'sharoo AG'
+  },
+  {
+    image: (
+      <StaticImage
+        src={'../../../assets/case-studies/manomano/elias-manomano.jpg'}
+        imgClassName="round"
+        loading="eager"
+        alt="Testimonial illustration"
+        height={152}
+        placeholder="blurred"
+      />
+    ),
+    quote:
+      '“Working with Brains & Beards is very easy. They have integrated into the teams as if they were part of our internal team and have contributed their experience and professionalism in the creation of our apps. Both technically with their great knowledge of technology and at the process level with a clear mindset of continuous learning.”',
+    name: 'Jose Maria Elias',
+    position: 'Engineering Manager',
+    company: 'ManoMano - Colibri SAS'
   },
   {
     image: (
