@@ -16,7 +16,7 @@ const references = [
       />
     ),
     quote:
-      '“Brains & Beards helped me by solving many technical impediments across various agile development teams through implementing the needed changes to the backend of those connected applications. The result was that we were able to release the product in time and scope. I would recommend Brains & Beards to people who need the profound support of experienced developers to solve technically challenging projects.”',
+      '“Brains & Beards test helped me by solving many technical impediments across various agile development teams through implementing the needed changes to the backend of those connected applications. The result was that we were able to release the product in time and scope. I would recommend Brains & Beards to people who need the profound support of experienced developers to solve technically challenging projects.”',
     name: 'Sebastian Gerdemann',
     position: 'Senior Product Manager',
     company: 'XING E-Recruiting GmbH & Co. KG'
