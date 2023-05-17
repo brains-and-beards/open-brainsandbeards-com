@@ -37,17 +37,19 @@ const config: GatsbyConfig = {
           }
         }
       `,
-        sitemap: 'sitemap-index.xml',
         resolveEnv: () => NETLIFY_ENV,
         env: {
           production: {
-            policy: [{ userAgent: '*' }]
+            policy: [{ userAgent: '*' }],
+            sitemap: 'sitemap-index.xml'
           },
           'branch-deploy': {
-            policy: [{ userAgent: '*', disallow: ['/'] }]
+            policy: [{ userAgent: '*', disallow: ['/'] }],
+            sitemap: null
           },
           'deploy-preview': {
-            policy: [{ userAgent: '*', disallow: ['/'] }]
+            policy: [{ userAgent: '*', disallow: ['/'] }],
+            sitemap: null
           }
         }
       }
