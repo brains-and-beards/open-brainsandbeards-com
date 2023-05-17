@@ -35,15 +35,7 @@ const config: GatsbyConfig = {
           }
         }
       `,
-        resolveEnv: () => process.env.GATSBY_ENV,
-        env: {
-          development: {
-            sitemap: null
-          },
-          production: {
-            sitemap: ({ site }) => `${site.siteMetadata.siteUrl}/sitemap-index.xml`
-          }
-        }
+        sitemap: 'sitemap-index.xml'
       }
     },
     {
