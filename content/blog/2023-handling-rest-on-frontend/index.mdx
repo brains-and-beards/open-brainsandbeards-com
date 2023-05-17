@@ -1,8 +1,9 @@
 ---
-path: '/blog/2023-handling-rest-on-frontend' # TODO edit this metadata 
-date: '2023-05-05T11:12:41.253Z'
+path: '/blog/2023-handling-rest-on-frontend'
+date: '2023-05-17T19:12:41.253Z'
 title: 'Handling REST on Frontend'
 image: header.jpg
+imageCaption: 'Network cables photo by <a href="https://unsplash.com/photos/40XgDxBfYXM">Jordan Harrison</a>'
 author: Błażej Lewandowski
 ---
 
@@ -160,7 +161,7 @@ The error handling is important here, for debugging purposes it's crucial to see
 Example error message logged out from the setup above:
 > #makeRequest succes on /products/1': Server returned 401 and {"{"}<br />&ensp;&ensp;"message": "Unauthorized"<br />{'}'}
 
-💡Hint: If you're like me and you run your local server inside VSCode's built-in terminal and you see all the messages in there, you can hold `cmd` and click the `#makeRequest` log part which should open your editor in this exact place.
+*💡Hint: If you're like me and you run your local server inside VSCode's built-in terminal and you see all the messages in there, you can hold `cmd` and click the `#makeRequest` log part which should open your editor in this exact place.*
 
 To sum up - we have created a requester that will operate with given backend types, returns parsed json response, log error messages in human readable form and rethrows errors including status codes.
 
@@ -252,3 +253,50 @@ export interface JokeBE {
 ```
 
 It's much cleaner when separated, additionaly it's always easier to extract or share just your `types` package later, if e.g. we notice that our neighbour team from web app needs exactly the same types in their project too.
+
+So now, the only thing that's left is to ask the server for our `joke`. From now on, there are number of valid options for calling the API from the component. In real world applications, there is always some state management library ([redux](https://redux.js.org) / [mobx](https://mobx-state-tree.js.org/intro/welcome)) in use, and we usually offload async logic like that to their corresponding middlewares.
+
+That said the simples way for rendering our remote data inside the component is to just call the functions I mentioned above, in some button `onPress` handler or `useEffect()` hook, save the results in local state and voilà. Just be sure to always wrap your API calls with `try-catch` block
+
+```tsx
+function useJokeRequest() {
+  const [joke, setJoke] = useState<JokeBE>()
+  const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+
+  useEffect(() => {
+    async function fetchData() {
+      setIsLoading(true)
+      setError(null)
+      try {
+        const newJoke = await getRandomJoke()
+        setJoke(newJoke)
+      } catch (error) {
+        setError(getErrorMessage(error))
+      } finally {
+        setIsLoading(false)
+      }
+    }
+
+    fetchData()
+  }, [])
+
+  return {
+    joke,
+    isLoading,
+    error,
+  }
+}
+```
+
+We can also go a step further and combine our request related logic into a single custom hook like above. This way we get the joke on mount, loading state to display a loader while our request is in fly, and error in case the request failed.
+
+Depending on the needs, if we find repetetive paterns e.g. we're doing on mount API calls and we always use error / loading states, nothing stops us from extracting common logic to some more universal reusable custom hook.  
+Once we got our first API call down, sky is the limit!
+
+You can find the full code example used in this article under [this link](https://github.com/brains-and-beards/rn-rest-example)
+
+*btw. I got quiet surprised when I got this from the API 😂:*
+> Where did the API go to eat?
+>
+> To the RESTaurant.
