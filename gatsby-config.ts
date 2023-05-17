@@ -24,6 +24,29 @@ const config: GatsbyConfig = {
     'gatsby-plugin-sass',
     'gatsby-plugin-image',
     {
+      resolve: 'gatsby-plugin-robots-txt',
+      options: {
+        query: `
+        {
+          site {
+            siteMetadata {
+              siteUrl
+            }
+          }
+        }
+      `,
+        resolveEnv: () => process.env.GATSBY_ENV,
+        env: {
+          development: {
+            sitemap: null
+          },
+          production: {
+            sitemap: ({ site }) => `${site.siteMetadata.siteUrl}/sitemap-index.xml`
+          }
+        }
+      }
+    },
+    {
       resolve: 'gatsby-plugin-sitemap',
       options: {
         query: `
