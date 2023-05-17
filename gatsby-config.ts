@@ -35,7 +35,15 @@ const config: GatsbyConfig = {
           }
         }
       `,
-        sitemap: 'sitemap-index.xml'
+        sitemap: 'sitemap-index.xml',
+        env: {
+          development: {
+            policy: [{ userAgent: '*', disallow: ['/'] }]
+          },
+          production: {
+            policy: [{ userAgent: '*', allow: '/' }]
+          }
+        }
       }
     },
     {
