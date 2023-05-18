@@ -2,6 +2,8 @@ import type { GatsbyConfig } from 'gatsby'
 
 const { slashify } = require('./src/helpers/path_helpers')
 
+const { NODE_ENV, CONTEXT: NETLIFY_ENV = NODE_ENV } = process.env
+
 const config: GatsbyConfig = {
   siteMetadata: {
     title: 'Home',
@@ -23,6 +25,35 @@ const config: GatsbyConfig = {
   plugins: [
     'gatsby-plugin-sass',
     'gatsby-plugin-image',
+    {
+      resolve: 'gatsby-plugin-robots-txt',
+      options: {
+        query: `
+        {
+          site {
+            siteMetadata {
+              siteUrl
+            }
+          }
+        }
+      `,
+        resolveEnv: () => NETLIFY_ENV,
+        env: {
+          production: {
+            policy: [{ userAgent: '*' }],
+            sitemap: 'sitemap-index.xml'
+          },
+          'branch-deploy': {
+            policy: [{ userAgent: '*', disallow: ['/'] }],
+            sitemap: null
+          },
+          'deploy-preview': {
+            policy: [{ userAgent: '*', disallow: ['/'] }],
+            sitemap: null
+          }
+        }
+      }
+    },
     {
       resolve: 'gatsby-plugin-sitemap',
       options: {
