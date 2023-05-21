@@ -713,3 +713,44 @@ blockquote {
   flex-direction: column;
   align-items: center;
 }
+
+pre[class*="language-"].numbered-lines {
+  position: relative;
+  padding-left: 3.8em;
+  counter-reset: linenumber;
+}
+
+pre[class*="language-"].numbered-lines > div {
+  position: relative;
+  white-space: inherit;
+}
+
+.numbered-lines .numbered-lines-rows {
+  position: absolute;
+  pointer-events: none;
+  top: 0;
+  font-size: 100%;
+  left: -3.8em;
+  width: 3em; /* works for line-numbers below 1000 lines */
+  border-right: 1px solid #999;
+
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+
+}
+
+.numbered-lines-rows {
+  display: block;
+  counter-increment: linenumber;
+}
+
+.numbered-lines-rows:before {
+  letter-spacing: -1px;
+  content: counter(linenumber);
+  color: #999;
+  padding-right: 2em;
+  padding-left: 1em;
+  text-align: right;
+}

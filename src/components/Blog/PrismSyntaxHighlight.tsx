@@ -27,7 +27,7 @@ const PrismSyntaxHighlight = ({ children, className }) => {
     <Highlight {...defaultProps} code={children} language={language}>
       {({ className, tokens, getLineProps, getTokenProps }) => {
         return (
-          <pre className={className}>
+          <pre className={`numbered-lines ${className}`}>
             {tokens.slice(0, -1).map((line, i) => {
               const lineProps = getLineProps({ line, key: i })
               if (shouldHighlightLine(i)) {
@@ -35,7 +35,7 @@ const PrismSyntaxHighlight = ({ children, className }) => {
               }
               delete lineProps.style
               return (
-                <div key={i} {...lineProps}>
+                <div key={i} {...lineProps} className={'numbered-lines-rows'}>
                   {line.map((token, key) => {
                     const tokenProps = getTokenProps({ token, key })
                     delete tokenProps.style
