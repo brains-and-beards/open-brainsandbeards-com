@@ -31,7 +31,7 @@ You can [see the app code and tinker with it on _Snack_](https://snack.expo.dev/
 
 It's _just a list_, we said. We tested the app on a simulator, and it looked correct. What can go wrong? Let's publish it! 🚀
 
-```tsx {numberLines: true}
+```tsx:numberLines=true
 export const HomeScreen: React.FC = () => {
   const { answers, updateAnswer } = useSurveyAnswers();
 
@@ -65,7 +65,7 @@ So we did it. 🔥
 
 As soon as the first users received the new app and started using it, the first negative reviews started coming. Some users were complaining that the app was slow when sliding.
 
-Fortunately, we have a slow smartphone waiting specifically for such occasions. Quick testing on this device confirms there is a problem. On some devices, UI is freezing, lagging, and unresponsive. 
+Fortunately, we have a slow smartphone waiting specifically for such occasions. Quick testing on this device confirms there is a problem. On some devices, UI is freezing, lagging, and unresponsive.
 
 
 ## What is going on?
@@ -170,7 +170,7 @@ State in _React_ is _immutable_, which means we can't update a single item in an
 
 If we want to change the rate `value` in a single answer, let's say "_Menu easy to read_" from _6_ to _7_, we have to create a copy of the old list with a single item different. It results in a new `answers` object.
 
-In console logs "_Data has changed_" represents `answers` value change, but we see it each time user updates just one of his answers. It's because whenever user slides one list item slider new `answers` list is passed as a new `data` prop value, which results in re-rendering the whole `FlatList` and all it's children. 
+In console logs "_Data has changed_" represents `answers` value change, but we see it each time user updates just one of his answers. It's because whenever user slides one list item slider new `answers` list is passed as a new `data` prop value, which results in re-rendering the whole `FlatList` and all it's children.
 
 However, there is a way to avoid those unnecessary re-renders and save CPU time. It will help slow smartphones to catch up with performance. 🐌
 

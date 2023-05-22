@@ -13,7 +13,7 @@ const calculateLinesToHighlight = meta => {
   }
 }
 
-const PrismSyntaxHighlight = ({ children, className }) => {
+const PrismSyntaxHighlight = ({ children, className, shouldCountLineNumbers }) => {
   let language = className.replace(/language-/gm, '')
   const highlightedLinesMatch = language.match(/{[^}]+}/)
   let highlightLinesDefinition = ''
@@ -26,16 +26,19 @@ const PrismSyntaxHighlight = ({ children, className }) => {
   return (
     <Highlight {...defaultProps} code={children} language={language}>
       {({ className, tokens, getLineProps, getTokenProps }) => {
+        const wrapperClassName = shouldCountLineNumbers ? `numbered-lines ${className}` : className
+
         return (
-          <pre className={`numbered-lines ${className}`}>
+          <pre className={wrapperClassName}>
             {tokens.slice(0, -1).map((line, i) => {
               const lineProps = getLineProps({ line, key: i })
               if (shouldHighlightLine(i)) {
                 lineProps.className = `${lineProps.className} highlight-line`
               }
+              const lineWrapperStyle = shouldCountLineNumbers ? 'numbered-lines-rows' : ''
               delete lineProps.style
               return (
-                <div key={i} {...lineProps} className={'numbered-lines-rows'}>
+                <div key={i} {...lineProps} className={lineWrapperStyle}>
                   {line.map((token, key) => {
                     const tokenProps = getTokenProps({ token, key })
                     delete tokenProps.style

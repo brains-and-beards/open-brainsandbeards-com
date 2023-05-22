@@ -64,10 +64,17 @@ export const query = graphql`
 
 const components = {
   code: ({ children, className }) => {
-    return className ? (
-      <PrismSyntaxHighlight className={className}>{children}</PrismSyntaxHighlight>
-    ) : (
-      <code>{children}</code>
+    if (!className) {
+      return <code>{children}</code>
+    }
+
+    const [language, countLineNumbers] = className.split(':')
+    const shouldCountLineNumbers = countLineNumbers?.split('=')[1] === 'true'
+
+    return (
+      <PrismSyntaxHighlight className={language} shouldCountLineNumbers={shouldCountLineNumbers}>
+        {children}
+      </PrismSyntaxHighlight>
     )
   }
 }
