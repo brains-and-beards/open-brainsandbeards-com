@@ -62,17 +62,29 @@ export const query = graphql`
   }
 `
 
+const createRecordtFromString = string => {
+  const keyValuePairs = string.split(';')
+  const record = {}
+
+  for (const pair of keyValuePairs) {
+    const [key, value] = pair.split('=')
+    record[key.trim()] = value.trim()
+  }
+
+  return record
+}
+
 const components = {
   code: ({ children, className }) => {
     if (!className) {
       return <code>{children}</code>
     }
 
-    const [language, countLineNumbers] = className.split(':')
-    const shouldCountLineNumbers = countLineNumbers?.split('=')[1] === 'true'
+    const [language, paramsString] = className.split(':')
+    const params = paramsString ? createRecordtFromString(paramsString) : {}
 
     return (
-      <PrismSyntaxHighlight className={language} shouldCountLineNumbers={shouldCountLineNumbers}>
+      <PrismSyntaxHighlight className={language} shouldCountLineNumbers={params.numberLines}>
         {children}
       </PrismSyntaxHighlight>
     )

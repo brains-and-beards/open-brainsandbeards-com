@@ -35,10 +35,13 @@ const PrismSyntaxHighlight = ({ children, className, shouldCountLineNumbers }) =
               if (shouldHighlightLine(i)) {
                 lineProps.className = `${lineProps.className} highlight-line`
               }
+
               const lineWrapperStyle = shouldCountLineNumbers ? 'numbered-lines-rows' : ''
+              lineProps.className += ' ' + lineWrapperStyle
+
               delete lineProps.style
               return (
-                <div key={i} {...lineProps} className={lineWrapperStyle}>
+                <div key={i} {...lineProps}>
                   {line.map((token, key) => {
                     const tokenProps = getTokenProps({ token, key })
                     delete tokenProps.style
