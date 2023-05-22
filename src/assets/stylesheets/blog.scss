@@ -740,11 +740,6 @@ pre[class*="language-"].numbered-lines > div {
 }
 
 .numbered-lines-rows:before {
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-
   letter-spacing: -1px;
   content: counter(linenumber);
   color: #999;
