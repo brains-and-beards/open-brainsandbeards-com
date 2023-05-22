@@ -732,12 +732,6 @@ pre[class*="language-"].numbered-lines > div {
   left: -3.8em;
   width: 3em; /* works for line-numbers below 1000 lines */
   border-right: 1px solid #999;
-
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-
 }
 
 .numbered-lines-rows {
@@ -746,6 +740,11 @@ pre[class*="language-"].numbered-lines > div {
 }
 
 .numbered-lines-rows:before {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+
   letter-spacing: -1px;
   content: counter(linenumber);
   color: #999;
