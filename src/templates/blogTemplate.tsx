@@ -62,7 +62,7 @@ export const query = graphql`
   }
 `
 
-const createRecordtFromString = string => {
+const createRecordFromString = string => {
   const keyValuePairs = string.split(';')
   const record = {}
 
@@ -81,7 +81,7 @@ const components = {
     }
 
     const [language, paramsString] = className.split(':')
-    const params = paramsString ? createRecordtFromString(paramsString) : {}
+    const params = paramsString ? createRecordFromString(paramsString) : {}
 
     return (
       <PrismSyntaxHighlight className={language} shouldCountLineNumbers={params.numberLines}>
