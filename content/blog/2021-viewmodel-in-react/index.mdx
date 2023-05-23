@@ -10,7 +10,7 @@ author: Wojciech Ogrodowczyk
 
 Let's take a look at this piece of code that could come from any ecommerce application:
 
-```
+```tsx
 export const AddressContainer = () => {
   const { firstName, surname, phoneNumber } = usePersonalData();
   const { address, postalCode, city } = useAddress();
@@ -36,7 +36,7 @@ Also, consider what will happen when we start expanding into foreign markets. So
 
 One of the ways to solve this problem could be to introduce a new entity responsible for data formatting logic: a ViewModel. This would give us a way to take the data fetched from the container and format it in a way that is easy to use in the presentational component. In the simplest version it could look something like this:
 
-```
+```tsx
 class CustomerViewModel {
   constructor(personalData, addressData) {
     this.personalData = personalData;
@@ -97,7 +97,7 @@ But what if you don't want to write so much code? There must be an easier way wi
 
 When we look at this example we can see that it's only about reading and formatting data. And what's responsible for fetching data? Selectors! So, let's try to refector it into a selector-based solution.
 
-```
+```tsx
 const customerData = (state) => state.customer;
 
 const customerAddressSelector = createSelector(
@@ -122,7 +122,7 @@ It's definitely shorter and gives us basically the same functionality. However, 
 
 In React we have this concept of one way data flow, where we use the state (whether local or global) to render components, which in turn can trigger events that modify this state. So, to get the power of performing mutations in our ViewModel, we'll just need to allow it to not only store data, but also trigger events. In the context of our example, it could look like this:
 
-```
+```tsx
 const customerData = (state) => state.customer;
 
 const customerAddressSelector = createSelector(

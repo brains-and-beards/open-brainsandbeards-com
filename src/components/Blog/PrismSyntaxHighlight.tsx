@@ -9,7 +9,7 @@ const calculateLinesToHighlight = meta => {
     const lineNumbers = rangeParser(strlineNumbers)
     return index => lineNumbers.includes(index + 1)
   } else {
-    return () => true
+    return () => false
   }
 }
 

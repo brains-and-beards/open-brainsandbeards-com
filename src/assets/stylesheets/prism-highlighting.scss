@@ -27,8 +27,8 @@ cyan      #2aa198
 green     #859900
 */
 
-code.prism-code .token-line.highlight-line {
-  background-color: $paleYellow;
+pre.prism-code .token-line.highlight-line {
+  background-color: $codeYellow;
   display: block;
   margin-right: -1em;
   margin-left: -1em;
