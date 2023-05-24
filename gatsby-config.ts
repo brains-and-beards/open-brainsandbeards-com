@@ -318,16 +318,16 @@ const config: GatsbyConfig = {
             `,
             output: '/blog/feed.xml',
             title: 'Brains & Beards Insights',
-            image_url: 'https://brainsandbeards.com/favicon.ico',
-            feed_url: 'https://brainsandbeards.com/blog/feed.xml',
-            site_url: 'https://brainsandbeards.com',
+            image_url: ({ query: { site } }) => `${site.siteMetadata.siteUrl}/favicon.ico`,
+            feed_url: ({ query: { site } }) => `${site.siteMetadata.siteUrl}/blog/feed.xml`,
+            site_url: ({ query: { site } }) => `${site.siteMetadata.siteUrl}`,
             custom_namespaces: {
               webfeeds: 'http://webfeeds.org/rss/1.0',
               media: 'http://search.yahoo.com/mrss/'
             },
             custom_elements: [
               {
-                'webfeeds:logo': 'https://brainsandbeards.com/favicon.ico'
+                'webfeeds:logo': ({ query: { site } }) => `${site.siteMetadata.siteUrl}/favicon.ico`
               },
               {
                 'webfeeds:cover': {
