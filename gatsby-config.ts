@@ -347,6 +347,12 @@ const config: GatsbyConfig = {
       }
     },
     {
+      resolve: 'gatsby-plugin-manifest',
+      options: {
+        icon: `src/images/icon.png`
+      }
+    },
+    {
       resolve: 'gatsby-plugin-matomo',
       options: {
         siteId: '1',
