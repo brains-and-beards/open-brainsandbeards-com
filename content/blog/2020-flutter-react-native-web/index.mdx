@@ -55,7 +55,7 @@ In the screenshot you can see:
 
 Implementation in Flutter:
 
-```javascript {numberLines: true}
+```javascript:numberLines=true
     Card(
         margin: new EdgeInsets.only(left: 0, right: 0, top: margin),
         child: CheckboxListTile(
@@ -88,7 +88,7 @@ Flutter comes with an extensive list of Widgets to use out-of-the-box. Each one 
 
 In React Native Web it wasn't so easy. Both technologies are still under development, so it wasn't surprising that I couldn't find a `CardView` library that works well with React Native Web and I had to define my own `CardView` component.
 
-```javascript {numberLines: true}
+```javascript:numberLines=true
 import React, { Component } from 'react'
 import { View, StyleProp, ViewStyle } from 'react-native'
 
@@ -141,7 +141,7 @@ export default class CardView extends Component<IProps> {
 
 Source: <a href="https://github.com/Kishanjvaghela/react-native-cardview/tree/master/libs" target="_blank">https://github.com/Kishanjvaghela/react-native-cardview/tree/master/libs</a>
 
-```javascript {numberLines: true}
+```javascript:numberLines=true
  <CardView
             style={{ width: Dimensions.get('window').width - 200, height: 50 }}
             cardElevation={2}
@@ -163,7 +163,7 @@ Source: <a href="https://github.com/Kishanjvaghela/react-native-cardview/tree/ma
 
 Then I declared `ReminderItem`:
 
-```javascript {numberLines: true}
+```javascript:numberLines=true
 export const ReminderItem: FC<IProps> = (props) => {
   const { reminder } = props;
 
@@ -255,11 +255,11 @@ Unlike Detox, one of the benefits of Flutter integration testing is that tests a
 
 #### Summary
 
-You probably know there are no clear winners in the programming world. Everything has some strings attached, and many things are subjective. But if you are looking for our personal conclusion, we would give an edge to Flutter in UI testing, documentation and the amount of out of the box widgets. React Native would win in community support. 
+You probably know there are no clear winners in the programming world. Everything has some strings attached, and many things are subjective. But if you are looking for our personal conclusion, we would give an edge to Flutter in UI testing, documentation and the amount of out of the box widgets. React Native would win in community support.
 
-Naturally, as I have more experience with React Native, it was easier and faster to write the web version of the Reminders App in React Native Web rather than in Flutter. However, as I showed you in this article, one of the components needed substantially more boilerplate code than the widget I did in Flutter. 
+Naturally, as I have more experience with React Native, it was easier and faster to write the web version of the Reminders App in React Native Web rather than in Flutter. However, as I showed you in this article, one of the components needed substantially more boilerplate code than the widget I did in Flutter.
 
-I think Flutter has a bright future. It is a fast, cross-platform solution with good, growing community support. On the other hand, React Native uses Javascript, one of the most widely-used languages around the world. So, for many developers it will be easier to write the app in React Native than in Flutter. I don't have a strong opinion about which solution is better. 
+I think Flutter has a bright future. It is a fast, cross-platform solution with good, growing community support. On the other hand, React Native uses Javascript, one of the most widely-used languages around the world. So, for many developers it will be easier to write the app in React Native than in Flutter. I don't have a strong opinion about which solution is better.
 
 I can't predict the future, but I can say React Native isn't going anywhere and the Flutter community will continue to grow.
 

@@ -48,7 +48,7 @@ Let’s create some type definitions and resolvers. In my example, I created a `
 
 Paste the following code into your `src/index.js` file. We’ll do a simple test to validate our GraphQL Server is operational and working correctly.
 
-```javascript {numberLines: true}
+```javascript:numberLines=true
 const { GraphQLServer } = require('graphql-yoga')
 
 const typeDefs = `
@@ -98,7 +98,7 @@ Great! Our GraphQL Server is working. Let’s get things set up with Prisma.
 
 Add a Dog type to the `datamodel.graphql` file you created earlier:
 
-```javascript {numberLines: true}
+```javascript:numberLines=true
 type Dog {
   id: ID! @unique
   name: String!
@@ -108,7 +108,7 @@ type Dog {
 
 Now let’s set up the configuration file for Prisma. Open the `prisma.yml` file you created earlier and change it to the following:
 
-```javascript {numberLines: true}
+```javascript:numberLines=true
 # Prisma API HTTP endpoint
 endpoint: ''
 
@@ -147,7 +147,7 @@ To check if the token is valid, click the **Schema** button on the right. The ex
 
 If you have everything working, let’s add a dog to our database. To change data in a database via a GraphQL API, we use what’s called a [mutation](https://graphql.github.io/learn/queries/#mutations). Copy the following mutation into the GraphQL playground:
 
-```javascript {numberLines: true}
+```javascript:numberLines=true
 mutation {
   createDog(data: {
     name: "Tommy",
@@ -166,7 +166,7 @@ Hit the play button, and if everything works correctly, a Dog object will have b
 
 Let’s verify that our new dog exists in the database by running a query. Copy the following query into the GraphQL playground:
 
-```javascript {numberLines: true}
+```javascript:numberLines=true
 query {
  dogs{
   	id,
@@ -188,7 +188,7 @@ The last step of this tutorial will be connecting our GraphQL resolvers to the P
 
 Open the `index.js` file change it to the following:
 
-```javascript {numberLines: true}
+```javascript:numberLines=true
 const { GraphQLServer } = require('graphql-yoga')
 const { Prisma } = require('prisma-binding')
 
@@ -222,7 +222,7 @@ server.start(() => console.log(`Server address: http://localhost:4000`))
 
 All we did above was create a `Prisma` binding instance and attach it to the context of the GraphQL Server. Now it’s time to adjust the resolvers. Update your `index.js` file to the following:
 
-```javascript {numberLines: true}
+```javascript:numberLines=true
 const { GraphQLServer } = require('graphql-yoga')
 const { Prisma } = require('prisma-binding')
 
@@ -274,7 +274,7 @@ Our resolver functions will now execute the appropriate binding functions of the
 
 Before we can test this, we need to create a GraphQL Schema. In the project’s `src` directory, create a file called `schema.graphql`. Declare the following types inside:
 
-```javascript {numberLines: true}
+```javascript:numberLines=true
 type Query {
   dogName: String!
   dogs: [Dog!]!
@@ -293,7 +293,7 @@ type Dog {
 
 In the `index.js` file, replace the `typeDefs` path for the Prisma binding instance with `‘src/schema.graphql’`
 
-```javascript {numberLines: true}
+```javascript:numberLines=true
 const server = new GraphQLServer({
   typeDefs: 'src/schema.graphql',
   resolvers,
@@ -311,7 +311,7 @@ const server = new GraphQLServer({
 
 Everything is looking good but we’re missing two last pieces. So before the GraphQL Schema can be generated correctly, we have to create a `.graphqlconfig.yml` file and add a reference the Prisma database schema. Create a `.graphqlconfig.yml` file in the root directory of your project’s workspace, and paste the following:
 
-```javascript {numberLines: true}
+```javascript:numberLines=true
 projects:
   app:
     schemaPath: src/schema.graphql
@@ -326,7 +326,7 @@ projects:
 
 For the end, edit also `database/prisma.yml` adding following code:
 
-```javascript {numberLines: true}
+```javascript:numberLines=true
 # Deploy hook
 hooks:
   post-deploy:

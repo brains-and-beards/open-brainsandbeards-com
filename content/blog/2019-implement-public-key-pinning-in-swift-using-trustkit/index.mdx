@@ -65,7 +65,7 @@ There are two ways of configuring TrustKit itself:
 
 - Adding keys and values to info.plist file:
 
-```javascript {numberLines: true}
+```javascript:numberLines=true
 <key>TSKConfiguration</key>
 	<dict>
 		<key>TSKPinnedDomains</key>
@@ -96,7 +96,7 @@ You can also provide the `kTSKEnforcePinning` key if you would like to block the
 
 - You can add the same keys and values by code as well:
 
-```javascript {numberLines: true}
+```javascript:numberLines=true
 import Foundation
 import PluggableApplicationDelegate
 import TrustKit
@@ -133,7 +133,7 @@ In the example above I used [PluggableApplicationDelegate](https://github.com/fm
 
 If you have set up the configuration for TrustKit properly, you can easily do the key validation by using PinnigValidator and URLSessionDelegate:
 
-```javascript {numberLines: true}
+```javascript:numberLines=true
 static func isServerCertValid(_ challenge: URLAuthenticationChallenge) -> Bool {
   guard let serverTrust = challenge.protectionSpace.serverTrust else {
       return false

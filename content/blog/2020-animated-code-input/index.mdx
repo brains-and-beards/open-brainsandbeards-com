@@ -9,7 +9,7 @@ imageCaption: '<a href="https://unsplash.com/photos/MS2dni_S3Ew">Backdrop for th
 
 ### Introduction
 
-Hello folks! Quarantine time has been productive for Brains and Beards and we are here today to show you our new baby. We created a small library for an animated code input. Our motivation for creating this library came from the need to give users a good first impression of an application. Generally, one time password screens are amongst the first screens a user will experience. We also weren't able to find suitable libraries in the community for auto-filling an input with text from a SMS text message. In this article we will demonstrate how to use it, show you a few input styles and teach you how to handle SMS autofill. 
+Hello folks! Quarantine time has been productive for Brains and Beards and we are here today to show you our new baby. We created a small library for an animated code input. Our motivation for creating this library came from the need to give users a good first impression of an application. Generally, one time password screens are amongst the first screens a user will experience. We also weren't able to find suitable libraries in the community for auto-filling an input with text from a SMS text message. In this article we will demonstrate how to use it, show you a few input styles and teach you how to handle SMS autofill.
 
 React Native Animated Code Input supports RN >=0.59.0.
 
@@ -35,7 +35,7 @@ yarn add react-native-animated-code-input
 
 ### Usage
 
-A component has three required properties: `code`, `onChangeText`, and `onSubmit`. 
+A component has three required properties: `code`, `onChangeText`, and `onSubmit`.
 
 * **value** - [`string`] It is the value displayed by the input. Use the app state to update it on every key press. This is similar to how React Native TextInput works. Please refer to example if you need more guidance.
 * **onChangeText** - [`function`] Callback that is called when the text input's text changes.
@@ -43,7 +43,7 @@ A component has three required properties: `code`, `onChangeText`, and `onSubmit
 
 ##### Simple Example
 
-```javascript {numberLines: true}
+```javascript:numberLines=true
    <AnimatedCodeInput
               value={value}
               numberOfInputs={5} // default value 1
@@ -61,7 +61,7 @@ Life would be boring without any custom options so we exposed some properties to
 * **autoFocus** - [`boolean`] Set to false if you want the user to press on the code input first before it starts register
 * **codeAnimationDuration** - [`number`] duration of fade effect for the code
 * **codeContainerStyle** - [`style object`] custom input style
-* **cursorAnimationDuration** - [`number`] cursor animation duration  
+* **cursorAnimationDuration** - [`number`] cursor animation duration
 * **cursorStyle** - [`style object`] - custom cursor style
 * **index** - [`number`] active code input
 * **numberOfInputs** - [`number`] number of code inputs
@@ -73,7 +73,7 @@ Here are some examples using above properties:
 
 Example 1:
 
-```javascript {numberLines: true}
+```javascript:numberLines=true
 <AnimatedCodeInput
     value={code}
     numberOfInputs={NUMBER_OF_INPUTS}
@@ -112,7 +112,7 @@ simplyActiveCodeContainer: {
 
 Example 2:
 
-```javascript {numberLines: true}
+```javascript:numberLines=true
   <AnimatedCodeInput
     value={value}
     numberOfInputs={NUMBER_OF_INPUTS}
@@ -146,7 +146,7 @@ Example 2:
 
 Example 3:
 
-```javascript {numberLines: true}
+```javascript:numberLines=true
 <AnimatedCodeInput
     value={code}
     numberOfInputs={NUMBER_OF_INPUTS}
@@ -195,7 +195,7 @@ I wrote a simple function `readFromClipboard` that is responsible for checking a
 
 Here is a full example and demo:
 
-```javascript {numberLines: true}
+```javascript:numberLines=true
 import React, { FC, useState, useCallback, useEffect } from "react";
 import {
   Text,

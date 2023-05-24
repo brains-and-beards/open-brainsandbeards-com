@@ -12,7 +12,7 @@ Thanks for checking-in to part four of my blog series **Getting Started with Gra
 
 First of all, we need to create a `User` data model user in `datamodel.graphql`, the `User` type has an `id`, `name`, `password` and an array of `dogs`.
 
-```javascript {numberLines: true}
+```javascript:numberLines=true
 type Dog {
   id: ID! @unique
   name: String!
@@ -41,7 +41,7 @@ When we have User model now we can add a type for represents a user with token, 
 
 We now need to create an `AuthPayload` type. This represents the data payload that will be returned upon successfully signing-up or logging-in.
 
-```javascript {numberLines: true}
+```javascript:numberLines=true
 type Dog {
   id: ID! @unique
   name: String!
@@ -71,7 +71,7 @@ $ yarn add jsonwebtoken bcryptjs
 
 Now we need to create the mutations for signing-up and logging-in. I will create a new file for it, because there is quite a lot of code and it is better to keep mutations in a separate file. Add a file called `Mutations.js` in the `src` directory.
 
-```javascript {numberLines: true}
+```javascript:numberLines=true
 const APP_SECRET = "abcdefghijklmnopqrst";
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
@@ -136,7 +136,7 @@ module.exports = {
 
 The file contains three function: `do` (created in the [previous tutorial](https://brainsandbeards.com/blog/part-2-setting-up-apollo-client-in-a-react-native-app)), `login` and `signUp`. The login and sign-up functions are resolvers for handling, you guessed it, logging-in and signing-up mutations. We’re using bcrypt to hash and compare passwords, while the `jwt` library is used to sign a JWT. Update the `index.js` file with a reference to `Mutations.js`:
 
-```javascript {numberLines: true}
+```javascript:numberLines=true
 const Mutation = require("./Mutations");
 
 const resolvers = {
@@ -169,7 +169,7 @@ When you click **Schema** on the right, you should see your custom mutations lis
 
 I’ve refactored `App.js` and created new files called `DogsScreen.js` and `LoginScreen.js`. The `LoginScreen.js` file contains form inputs and handlers for logging-in and signing-up.
 
-```javascript {numberLines: true}
+```javascript:numberLines=true
 import React, { Component } from "react";
 import { StyleSheet, View, ScrollView } from "react-native";
 import { LoginScreen } from "./LoginScreen";
@@ -206,7 +206,7 @@ const styles = StyleSheet.create({
 
 The `DogsScreen.js` file is detailed explained in more detail [here](/blog/part-3-mutating-data-in-a-react-native-app-with-apollo-client).
 
-```javascript {numberLines: true}
+```javascript:numberLines=true
 import React, { Component } from "react";
 import { StyleSheet, Text, View, Button, Modal, TextInput } from "react-native";
 import { ApolloClient, HttpLink, InMemoryCache } from "apollo-boost";
@@ -338,7 +338,7 @@ And now, the most important part, `LoginScreen.js`. As you can see, I have a new
 
 > If you’re not sure how we’ve set up the mutations, you can refer back to the previous tutorial [here](https://brainsandbeards.com/blog/part-3-mutating-data-in-a-react-native-app-with-apollo-client).
 
-```javascript {numberLines: true}
+```javascript:numberLines=true
 import React, { Component } from "react";
 import { StyleSheet, Text, View, Button, TextInput } from "react-native";
 import { ApolloClient, HttpLink, InMemoryCache } from "apollo-boost";

@@ -31,7 +31,7 @@ You'll note the inclusion of `rxdart`. We need this package to subscribe to `onD
 #### Prepare native projects
 
 
-Before we start playing with notifications we should configure the native projects. For Android, we must update the manifest. First, add the following permissions to your app. 
+Before we start playing with notifications we should configure the native projects. For Android, we must update the manifest. First, add the following permissions to your app.
 
 Android:
 
@@ -81,7 +81,7 @@ On the iOS side, go to `ios/Runner/AppDelegate.swift`, and make sure you registe
 
 The first thing we should do is initialize the notifications. I created a file `notificationHelper.dart`, where I declared a method `initNotifications`. I want to keep all notification functionality in one place.
 
-```javascript {numberLines: true}
+```javascript:numberLines=true
 final BehaviorSubject<ReminderNotification> didReceiveLocalNotificationSubject =
     BehaviorSubject<ReminderNotification>();
 
@@ -112,27 +112,27 @@ Future<void> initNotifications(
 }
 ```
 
-Two lines in this function are for configuring the initialization settings per platform. For Android, we are setting a default icon for the notification so **REMEMBER** to add this file in the android folder otherwise it will not work. 
+Two lines in this function are for configuring the initialization settings per platform. For Android, we are setting a default icon for the notification so **REMEMBER** to add this file in the android folder otherwise it will not work.
 
 **TIP**: If you have any problems with notifications, you can use the debug console in VSCode. I found it had very detailed messages about why something wasn't working.
 
 ![](first.png)
 
-The `IOSInitializationSettings` object is more complicated. I set notifications permissions to `false` to ask the user about it later. It's good practice to ask the user about permissions. 
+The `IOSInitializationSettings` object is more complicated. I set notifications permissions to `false` to ask the user about it later. It's good practice to ask the user about permissions.
 
-`onDidReceiveLocalNotification` is a callback for handling notifications when a notification is triggered while the app is in the foreground. I am passing this function `didReceiveLocalNotificationSubject`, which is a subject that always subscribes to listen for changes. [More info about it here](https://pub.dev/documentation/rxdart/latest/). 
+`onDidReceiveLocalNotification` is a callback for handling notifications when a notification is triggered while the app is in the foreground. I am passing this function `didReceiveLocalNotificationSubject`, which is a subject that always subscribes to listen for changes. [More info about it here](https://pub.dev/documentation/rxdart/latest/).
 
 Next, there is the initialization part where we are passing the settings and listener, which is triggered when the user opens a notification. For example, if you want to do something after the user opens the notification, you can easily listen to this subject and have access to the payload as follows:
 
-```javascript {numberLines: true}
+```javascript:numberLines=true
  selectNotificationSubject.stream.listen((String payload) async {
      // your code
     });
 ```
 
-For the iOS permissions, I declare the following function. You can call it with different options. It's up to you. 
+For the iOS permissions, I declare the following function. You can call it with different options. It's up to you.
 
-```javascript {numberLines: true}
+```javascript:numberLines=true
 
 void requestIOSPermissions(
     FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin) {
@@ -149,7 +149,7 @@ void requestIOSPermissions(
 
 You're probably thinking what is the `flutterLocalNotificationsPlugin`, this object is passed as an argument to every function. It's responsible for displaying local notifications. We need this object in every local notification action (schedule, initialization, permission, etc.) I declared this object in `main.dart`. In my app, I access this value from different widgets so I prefer to have it in the main file.
 
-```javascript {numberLines: true}
+```javascript:numberLines=true
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();
@@ -188,7 +188,7 @@ In my app, I schedule notifications from the "Add reminder modal":
 I have two types of notifications in my app - scheduled periodically or set on a custom time. For scheduled notifications at a specific time, I prepare the 'SET TIME' button which is calling the `scheduleNotification` function.
 
 
-```javascript {numberLines: true}
+```javascript:numberLines=true
 Future<void> scheduleNotification(
     FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin,
     String id,
@@ -210,7 +210,7 @@ Future<void> scheduleNotification(
 
 To schedule a notification, I prepared two platform-specific objects `AndroidNotificationDetails` and `IOSNotificationDetails`. Using `flutterLocalNotificationsPlugin` you schedule notifications with options. The same applies to periodic notifications. The plugin gives you a few options: EveryMinute, Hourly, Daily, Weekly. The whole configuration is very similar to the previous example. Using the local notification plugin options isn't difficult, and mostly of the time the same.
 
-```javascript {numberLines: true}
+```javascript:numberLines=true
 
 Future<void> scheduleNotificationPeriodically(
     FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin,
@@ -233,7 +233,7 @@ Future<void> scheduleNotificationPeriodically(
 
 The following code shows what's happening when you set a reminder. I'm adding an object to my redux store and then scheduling a notification. If I don't want to see this reminder anymore I'm calling a function `turnOffNotificationById`.
 
-```javascript {numberLines: true}
+```javascript:numberLines=true
   void _configurePlayMusic(bool value) {
     if (value) {
       getStore().dispatch(SetReminderAction(
@@ -252,7 +252,7 @@ The following code shows what's happening when you set a reminder. I'm adding an
 
 Here is an example for the custom time reminder:
 
-```javascript {numberLines: true}
+```javascript:numberLines=true
 
  void _configureCustomReminder(bool value) {
     if (customNotificationTime != null) {
@@ -281,7 +281,7 @@ Here is an example for the custom time reminder:
 
 For canceling notifications, we have two options using this plugin: cancelAll and cancel by id. Again, it is calling a function using the `flutterLocalNotificationsPlugin`.
 
-```javascript {numberLines: true}
+```javascript:numberLines=true
 
 Future<void> turnOffNotification(
     FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin) async {
@@ -305,7 +305,7 @@ Future<void> turnOffNotificationById(
 </div>
 
 From my experience, using the Flutter plugin was a nice implementation for local notifications. Compared to the native solutions in Java, Swift or React Native, it is super easy to get started. I like that the plugin has a lot of options configured by the object
-`NotificationDetails`. To sum up, I fully recommend this plugin for local notifications. You can play with my reminders app by visiting the repository - link below. 
+`NotificationDetails`. To sum up, I fully recommend this plugin for local notifications. You can play with my reminders app by visiting the repository - link below.
 
 If you like our Flutter tutorials, here are some more articles:
 

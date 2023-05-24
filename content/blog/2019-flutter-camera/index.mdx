@@ -40,7 +40,7 @@ dependencies:
 
 First, I created a `camera` folder in the `screens` directory and added a `camera.dart`. The code in the documentation doesn’t fit my structure perfectly, so you’ll want to modify the implementation slightly:
 
-```javascript {numberLines: true}
+```javascript:numberLines=true
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
@@ -91,7 +91,7 @@ class CameraState extends State<CameraWidget> {
 
 We’ll also update the bottom navigation, instantiating a new instance of the `CameraWidget`:
 
-```javascript {numberLines: true}
+```javascript:numberLines=true
  final widgetOptions = [
     new BeerListPage(),
     new CameraWidget(),
@@ -118,7 +118,7 @@ Okay, we have a basic version working, but what we want to achieve during this t
 
 The first thing we need to declare are some values:
 
-```javascript {numberLines: true}
+```javascript:numberLines=true
 class CameraState extends State<CameraWidget> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   List<CameraDescription> cameras;
@@ -141,7 +141,7 @@ class CameraState extends State<CameraWidget> {
 
 Next, we need to initialise the view’s state. It is very important for us to first check for an available camera. `Camera.dart` offers an asynchronous method for that. The `setupCameras` method also initialises `CameraController` and manages the `isReady` state.
 
-```javascript {numberLines: true}
+```javascript:numberLines=true
  @override
   void initState() {
     super.initState();
@@ -166,7 +166,7 @@ Next, we need to initialise the view’s state. It is very important for us to f
 
 When our cameras are initialised, it’s time to add a scrollable layout. I use `SingleChildScrollView.` I then add a `Column` widget with the camera preview and image preview. There is also a section for the camera capture button. After that, we have a camera options widget and input’s widget.
 
-```javascript {numberLines: true}
+```javascript:numberLines=true
 Widget build(BuildContext context) {
     return Scaffold(
         key: scaffoldKey,
@@ -202,7 +202,7 @@ Widget build(BuildContext context) {
 
 Let’s start with the `cameraPreviewWidget`. This method returns an `AspectRatio` widget, which is responsible for returning the child with a specific aspect ratio. Our child here is a `CameraPreview` widget.
 
-```javascript {numberLines: true}
+```javascript:numberLines=true
 Widget cameraPreviewWidget() {
     if (!isReady || !controller.value.isInitialized) {
       return Container();
@@ -215,7 +215,7 @@ Widget cameraPreviewWidget() {
 
 If we have a camera, we also need a section to show the picture that was taken. The `imagePreviewWidget` is responsible for this. Basically, it is just a container with SizedBox for displaying an Image from the imagePath. The image that was taken is always saved to the phone’s memory, so for displaying the image, I use `Image.file`.
 
-```javascript {numberLines: true}
+```javascript:numberLines=true
 Widget imagePreviewWidget() {
     return Container(
         child: Padding(
@@ -235,7 +235,7 @@ Widget imagePreviewWidget() {
 
 The next widget is simply a `Row` with an icon. The Icon has an `onPressed` method. If the camera controller `isInitialized`, the user can call `onTakePictureButtonPressed`.
 
-```javascript {numberLines: true}
+```javascript:numberLines=true
  Widget captureControlRowWidget() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -255,7 +255,7 @@ The next widget is simply a `Row` with an icon. The Icon has an `onPressed` meth
 
 The `onTakePictureButtonPressed` method is asynchronous and is responsible for creating a directory with a specific path. This file path is used for image captures. The image will be saved to the `filePath`.
 
-```javascript {numberLines: true}
+```javascript:numberLines=true
 void onTakePictureButtonPressed() {
     takePicture().then((String filePath) {
       if (mounted) {
@@ -291,7 +291,7 @@ void onTakePictureButtonPressed() {
 
 Not every picture is perfect, so to give the user an opportunity to edit the picture, I’ve also added a `editCaptureControlRowWidaget`. After the button is pressed, the camera will become visible again and the user can retake the picture.
 
-```javascript {numberLines: true}
+```javascript:numberLines=true
  Widget editCaptureControlRowWidget() {
     return Padding(
       padding: const EdgeInsets.only(top: 5),
@@ -311,7 +311,7 @@ Not every picture is perfect, so to give the user an opportunity to edit the pic
 
 The next section contains two buttons which represent the camera options. A user can choose between the front or back camera. The `cameraOptionsWidget` returns a Row widget with `SizedBoxes` containing Radio Icons.
 
-```javascript {numberLines: true}
+```javascript:numberLines=true
 Widget cameraOptionsWidget() {
     return Padding(
       padding: const EdgeInsets.all(5.0),
@@ -353,7 +353,7 @@ Widget cameraOptionsWidget() {
 
 The radio button has an `onChanged` function, where I call the `onNewCameraSelected` method. This method reinitialised the controller with the current cameraDescription.
 
-```javascript {numberLines: true}
+```javascript:numberLines=true
  void onNewCameraSelected(CameraDescription cameraDescription) async {
     if (controller != null) {
       await controller.dispose();
@@ -381,7 +381,7 @@ The radio button has an `onChanged` function, where I call the `onNewCameraSelec
 
 And finally, it’s time for the last section. To create a beer in app, we need some inputs where user can type in the information. We use for it a simple column with children that render `Padding` widgets with `TextField` widgets.
 
-```javascript {numberLines: true}
+```javascript:numberLines=true
  Widget beerInfoInputsWidget() {
     return Column(
       children: [

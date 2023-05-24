@@ -36,7 +36,7 @@ Usually, the format of the data that you receive in your app from your REST API 
 
 The backend side needs to handle thousands of different users, so when one of them signs in using the mobile app and fetches their articles here’s what they do: they look for this particular user, find a collection of all of their articles and send it back to the app. Probably, as an array. Maybe something like that:
 
-```javascript {numberLines: true}
+```javascript:numberLines=true
 {
   articles: [
     {
@@ -73,7 +73,7 @@ What would happen in a lot of apps, they’d just store those articles in the sa
 
 Instead of doing that, we should think about what would be the best schema **for us**. Probably, we’d do a lot of accessing by the article ID, so it would be nice to store them in a dictionary that allows us direct access. Also, we might notice that there’s some data redundancy with the tags. Backend returned to us a bunch of strings that get repeated a lot. We could do better by assigning them IDs, storing them in a separate table / dictionary and just reference them in articles. For example, our store could look like that:
 
-```javascript {numberLines: true}
+```javascript:numberLines=true
 {
   articles: {
     1: { title: "Dagon", tags: [1, 2] },
@@ -103,7 +103,7 @@ Of course, we should automate and speed up this process (and avoid bugs that mig
 
 First, we’ll need to define the schema that we want to use. In our case we have two objects (_entities_): `tag` and `article`. We’d have to describe the schema of the object that we originally receive. For the example above, our schema would be the following:
 
-```javascript {numberLines: true}
+```javascript:numberLines=true
 import { normalize, schema } from 'normalizr'
 
 const tag = new schema.Entity('tags', {})
@@ -119,7 +119,7 @@ The above code defines what a `tag` (a `{}` object means that it doesn’t have 
 
 Here’s how the normalised state would look like:
 
-```javascript {numberLines: true}
+```javascript:numberLines=true
 {
   entities: {
     tags: {
@@ -159,7 +159,7 @@ Sometimes we can refactor it to use a local component state for such things (and
 
 For example, that’s how our entire Redux state could look like for our article publishing app:
 
-```javascript {numberLines: true}
+```javascript:numberLines=true
 {
   tags: {
     "1": { id: 1, name: "old ones" },
@@ -187,7 +187,7 @@ At the first glance, this might seem like a huge hassle — do I really have
 
 Whenever we get new articles fetched from the API we could use our schema, convert them to our entities, and trigger a Redux action to update the entities:
 
-```javascript {numberLines: true}
+```javascript:numberLines=true
 // We assume that we already receive some `apiResponse`
 // and defined our schema as `articleSchema`
 const normalizedArticles = normalize(apiResponse, { articles: [articleSchema] })
@@ -197,7 +197,7 @@ dispatch(addEntities(normalizedArticles.entities))
 
 Then, in the Redux reducer, we could handle the state update as simple as that:
 
-```javascript {numberLines: true}
+```javascript:numberLines=true
 export function reducer(state = {}, action) {
   switch (action.type) {
     case ADD_ENTITIES:

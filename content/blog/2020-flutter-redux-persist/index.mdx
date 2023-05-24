@@ -28,7 +28,7 @@ $ flutter pub get
 
 In the app, there is a `Reminder` class. The class will evolve over the course of this post but essentially we'll use it to model our reminders.
 
-```javascript {numberLines: true}
+```javascript:numberLines=true
 class Reminder {
   final String time;
   final RepeatInterval repeat;
@@ -50,7 +50,7 @@ enum RepeatInterval { EveryMinute, Hourly, Daily, Weekly }
 
 We've decided that the app will store persistent state in a JSON file. If we want to save and load data from the JSON file into an object model, we need to add two methods: `fromJson` and `toJson`. The first one is for creating objects from JSON; the second is for saving objects to JSON. One of the fields is of the type enum, which means we must write a method to parse it.
 
-```javascript {numberLines: true}
+```javascript:numberLines=true
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:meta/meta.dart';
 
@@ -118,7 +118,7 @@ class Reminder {
 
 If we prepared the model for loading and reading now we can adjust the state. The app stores the list of reminders in `RemindersState`. To save this state I also need a `fromJson` and `toJson` method.
 
-```javascript {numberLines: true}
+```javascript:numberLines=true
 import 'package:hello_world/models/index.dart';
 
 class RemindersState {
@@ -163,7 +163,7 @@ We've added a method `parseList`. It will iterate over a list and add `Reminder`
 
 This setup is easier because we have everything ready. We just need to call on the `RemindersState` property methods: `fromJson` and `toJson`.
 
-```javascript {numberLines: true}
+```javascript:numberLines=true
 import 'package:flutter/material.dart';
 import 'package:hello_world/store/RemindersState.dart';
 
@@ -201,7 +201,7 @@ class AppState {
 
 When we finish preparing the models we can add the logic responsible for preparing the store. If you use `redux` in your app you will have a `createStore` method. Mine looks like this:
 
-```javascript {numberLines: true}
+```javascript:numberLines=true
 Future<Store<AppState>> createStore() async {
   final persistor = Persistor<AppState>(
     storage: FileStorage(await _localFile),
@@ -236,7 +236,7 @@ If you want to use this code, add `path_provider` to the `pubspec.yaml` file.
   path_provider: ^1.6.7
 ```
 
-```javascript {numberLines: true}
+```javascript:numberLines=true
 Store<AppState> store;
 Future<String> get _localPath async {
   final directory = await getApplicationDocumentsDirectory();

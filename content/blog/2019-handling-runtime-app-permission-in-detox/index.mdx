@@ -36,7 +36,7 @@ But let’s dive a bit deeper into an example that will let us walk through this
 
 Let’s have an app that makes sure during its onboarding process that the user gave it access to their contact list. A component that takes care of that could look something like this:
 
-```javascript {numberLines: true}
+```javascript:numberLines=true
 // PermissionsScreen.ts
 import React, { Component } from 'react'
 import { Button, Text, PermissionsAndroid, View } from 'react-native'
@@ -78,7 +78,7 @@ The problem with end-to-end testing of such a component is that runtime permissi
 
 We can start with refactoring the permission request to a separate file. Those changes could look like that:
 
-```javascript {numberLines: true}
+```javascript:numberLines=true
 // ContactCheckScreen.ts
 import React, { Component } from 'react'
 import { Button, Text, View } from 'react-native'
@@ -110,7 +110,7 @@ class ContactCheckScreen extends Component {
 }
 ```
 
-```javascript {numberLines: true}
+```javascript:numberLines=true
 // permissions.ts
 import { PermissionsAndroid } from 'react-native'
 
@@ -129,7 +129,7 @@ export const getContactsPermission = async () => {
 
 We’re still not finished, because although our component has been changed, it still does exactly the same thing. However, as we have extracted a permissions check to a separate file, it’s very easy to mock it out for an optimistic version that always returns true. It could look like this:
 
-```javascript {numberLines: true}
+```javascript:numberLines=true
 // permissions.e2e.ts
 export const getContactsPermission = async () => {
   return Promise.resolve(true)
@@ -146,14 +146,14 @@ But what happens when it’s not your code that’s requesting the permissions? 
 
 In such a case we can switch the whole 3rd party component for a mocked one. For example, instead of `import { RNCamera } from ‘react-native-camera’` we can create a proxy _component provider_ that will decide what component to use. This way for detox testing we can use a mocked version.
 
-```javascript {numberLines: true}
+```javascript:numberLines=true
 // CameraProvider.e2e.ts
 import { View } from 'react-native'
 
 export default View
 ```
 
-```javascript {numberLines: true}
+```javascript:numberLines=true
 // CameraProvider.ts
 import { RNCamera } from 'react-native-camera'
 
