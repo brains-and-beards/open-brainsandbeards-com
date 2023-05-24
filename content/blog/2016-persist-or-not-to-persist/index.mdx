@@ -18,7 +18,7 @@ I will not go into much detail on this one, because of [multiple](https://medium
 
 If you follow any of these tutorials, you’ll probably wind up with a “navigation reducer”, whose initial state will be similar to this one:
 
-```javascript {numberLines: true}
+```javascript:numberLines=true
 export const INITIAL_STATE = {
   index: 0,
   key: 'root',
@@ -32,7 +32,7 @@ When transitioning to other parts of the app, the new screen routes will either 
 
 With a neat tool such as [redux-persist](https://github.com/rt2zz/redux-persist/), you can have the whole app state (or just selected reducers if you prefer) automatically saved into the AsyncStorage of the device on each update, by adding but a few lines of code.
 
-```javascript {numberLines: true}
+```javascript:numberLines=true
 import { persistStore, autoRehydrate } from 'redux-persist'
 const store = createStore(reducer, undefined, autoRehydrate())
 persistStore(store)
@@ -50,7 +50,7 @@ This is one of the rare cases when it makes more sense to clean up everything an
 
 A very simple error handler can look like this:
 
-```javascript {numberLines: true}
+```javascript:numberLines=true
 export default class Root extends React.Component {
   componentWillMount() {
     //Intercept react-native error handling

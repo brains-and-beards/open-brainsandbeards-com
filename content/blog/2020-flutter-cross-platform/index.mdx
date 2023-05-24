@@ -92,7 +92,7 @@ Add the following dependency in `pubspec.yaml`:
 
 In `store.dart`, we need to make changes to the persistor:
 
-```javascript {numberLines: true}
+```javascript:numberLines=true
   final persistor = Persistor<AppState>(
     storage: kIsWeb
         ? FlutterStorage(location: FlutterSaveLocation.sharedPreferences)
@@ -152,7 +152,7 @@ It was because I used `Platform.isIOS` to set the height for some widgets. So I 
 
 To detect if we have a web or mobile app I created a `screenTypeHelper.dart`. In this file we have a few functions: isDesktop, isMobile, isTablet and isLandscapeNotchDevice.
 
-```javascript {numberLines: true}
+```javascript:numberLines=true
 import 'package:flutter/material.dart';
 
 enum DisplayType {
@@ -223,7 +223,7 @@ Source: <a href="https://pub.dev/packages/responsive_widgets" target="_blank">re
 
 I used this in the main widget, <a href="https://github.com/brains-and-beards/flutter-reminders-app/tree/reminders-app-web" target="_blank">here is the full source code</a>.
 
-```javascript {numberLines: true}
+```javascript:numberLines=true
 class _MainWidgetState extends State<MainWidget> {
   @override
   Widget build(BuildContext context) {

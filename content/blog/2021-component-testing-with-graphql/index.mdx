@@ -12,7 +12,7 @@ In the last couple of weeks, I've been helping to switch an application from a R
 
 So, let's start by imagining a component that displays a list of ToDos (how original!):
 
-```javascript {numberLines: true}
+```javascript:numberLines=true
 import React, { useCallback } from 'react'
 import { FlatList } from 'react-native'
 import { ActivityIndicator } from 'react-native-paper'
@@ -54,7 +54,7 @@ We're not going to test the first task, because that would mean testing a 3rd pa
 
 So, we can end up with a test file that tests the two other assumptions:
 
-```javascript {numberLines: true}
+```javascript:numberLines=true
 import { render, waitFor } from '@testing-library/react-native';
 import React from 'react';
 import { Text } from 'react-native';

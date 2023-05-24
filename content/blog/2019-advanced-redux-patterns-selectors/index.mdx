@@ -109,7 +109,7 @@ Now, this definitely feels much more like a performance bottleneck! 🧐
 
 In such a case we could use `reselect` to cache the result like this:
 
-```javascript {numberLines: true}
+```javascript:numberLines=true
 import { createSelector } from 'reselect'
 import _ from 'lodash'
 
@@ -190,7 +190,7 @@ This is not only a bit verbose, but comes with a strong disadvantage. Because su
 
 With `re-reselect`, you can handle this problem in a better way. Let’s first take a look at the solution and we’ll break down the differences afterwards:
 
-```javascript {numberLines: true}
+```javascript:numberLines=true
 import createCachedSelector from 're-reselect'
 import _ from 'lodash'
 

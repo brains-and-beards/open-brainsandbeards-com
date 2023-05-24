@@ -18,7 +18,7 @@ Let us, before improving anything, have a quick look to status quo.
 
 Below you have a typical NSNotification implementation following Apple rule books aka documentation :)
 
-```javascript {numberLines: true}
+```javascript:numberLines=true
 import UIKit
 
 struct Payment { }
@@ -109,7 +109,7 @@ I wanted to come up with the easiest solution possible, without complex generics
 
 At the end our Sad controller evolve to nicer Happy controller:
 
-```javascript {numberLines: true}
+```javascript:numberLines=true
 // It's just an example for notifications. The rest can be safely ignored :)
 class HappyPaymentViewController: UIViewController {
 
@@ -148,7 +148,7 @@ In the code above we have some sort of object thingy called **PaymentNotificatio
 
 Cool, but what is this PaymentNotification?
 
-```javascript {numberLines: true}
+```javascript:numberLines=true
 enum PaymentNotifications: String, Notifiable {
     case accepted
     case rejected
@@ -164,7 +164,7 @@ As you can see the implementation is very tiny. It’s an enum which has to conf
 
 Let’s reveal now the protocol and its extension.
 
-```javascript {numberLines: true}
+```javascript:numberLines=true
 // In the past I was calling it Notification but iOS10
 // NSNotification was renamed to Notification, so ¯\_(ツ)_/¯
 protocol Notifiable: RawRepresentable {

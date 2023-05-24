@@ -20,7 +20,7 @@ Let’s start with the most essential thing — the actual implementation of
 
 The component consists of a _FrameLayout_ wrapped around an _ImageView_ element, which in turn displays a bitmap with a circle made of two arcs. The rendering of the vector paths is done using Android _Canvas._ We need to adjust the bitmap resolution for device screen density to give it a nice look.
 
-```javascript {numberLines: true}
+```javascript:numberLines=true
 public class CanvasView extends FrameLayout {
     Bitmap bitmap = null;
     Canvas canvas = null;
@@ -123,7 +123,7 @@ While most of this code is pretty straightforward, we needed to cover one extra 
 
 While RN Guides don’t really cover this topic, we figured out that there is a method called _onAfterUpdateTransaction(),_ which is called after all the props have been set. It thus seems to be a good place for calling our drawing function.
 
-```javascript {numberLines: true}
+```javascript:numberLines=true
 public class ReactCanvasManager extends SimpleViewManager<CanvasView> {
 
     @Override
@@ -179,7 +179,7 @@ public class ReactCanvasManager extends SimpleViewManager<CanvasView> {
 
 We now need to wrap this whole thing into a package, which, if necessary, could include up a couple of managers for different components. Again, the original documentation turns out to be a bit sparse and pays no respect to the return values of a few abstract functions that must be implemented before we can get our component up and running. Fortunately, some StackOverflow + Github issues search reveals that returning empty lists of proper type basically does the trick :).
 
-```javascript {numberLines: true}
+```javascript:numberLines=true
 class MySpecialPackage implements ReactPackage {
 
     @Override
@@ -204,7 +204,7 @@ class MySpecialPackage implements ReactPackage {
 
 Now let’s ask the main activity to load our package:
 
-```javascript {numberLines: true}
+```javascript:numberLines=true
 public class MainActivity extends ReactActivity {
 
     /* Other overriden methods...  */
@@ -224,7 +224,7 @@ public class MainActivity extends ReactActivity {
 
 Our component is up and loaded, but we still need to tell the Javascript layer how it’s meant to be used. We do this by calling _requireNativeComponent()_ and creating a React Native interface which specifies the component’s name, as well as required props and their types.
 
-```javascript {numberLines: true}
+```javascript:numberLines=true
 import React, { requireNativeComponent, PropTypes } from 'react-native'
 
 var iface = {

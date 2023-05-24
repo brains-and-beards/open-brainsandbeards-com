@@ -30,7 +30,7 @@ Easy, yes?
 
 Let’s address Android. Open your project in Android Studio. In my sample Android project I have SplashScreenActivity which basically starts MainActivity.
 
-```javascript {numberLines: true}
+```javascript:numberLines=true
 public class SplashScreenActivity extends AppCompatActivity {
 
     @Override
@@ -46,7 +46,7 @@ public class SplashScreenActivity extends AppCompatActivity {
 
 In the AndroidManifest.xml file you need to define SplashScreenActivity in `LAUNCHER` mode. I also added `android:theme=”@style/SplashTheme”`. This line is responsible for our splash theme.
 
-```javascript {numberLines: true}
+```javascript:numberLines=true
 <manifest
   xmlns:android="http://schemas.android.com/apk/res/android"
   package="com.basicsetup"
@@ -90,7 +90,7 @@ Project structure
 
 In the `values-night` folder, create a `styles.xml` file with the following:
 
-```javascript {numberLines: true}
+```javascript:numberLines=true
 <resources>
   <style name="SplashTheme" parent="Theme.AppCompat.Light.NoActionBar">
     <item name="android:windowFullscreen">true</item>
@@ -108,7 +108,7 @@ Dark theme
 
 I added a background to SplashTheme as a drawable with my splash screen layout for dark mode. Do the same for light mode, as follows:
 
-```javascript {numberLines: true}
+```javascript:numberLines=true
 <resources>
     <style name="SplashTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowFullscreen">true</item>
@@ -127,7 +127,7 @@ Light theme
 
 Now you need to add two drawables: `splash_screen_dark.xml` and `splash_screen_light.xml`, and set the images as needed. Here is my example:
 
-```javascript {numberLines: true}
+```javascript:numberLines=true
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
 
@@ -152,7 +152,7 @@ Rebuild the project and that’s it :)
 
 If you’re using `react-native-splash-screen`, you can set the theme colors for your `launch_screen` in `MainActivity.java`.
 
-```javascript {numberLines: true}
+```javascript:numberLines=true
 @Override
     protected void onCreate(Bundle savedInstanceState) {
         switch (getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK) {
@@ -174,7 +174,7 @@ If you’re using `react-native-splash-screen`, you can set the theme colors for
 
 You also need to update `styles.xml`. Similar to the following:
 
-```javascript {numberLines: true}
+```javascript:numberLines=true
 <resources>
     <style name="SplashTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowFullscreen">true</item>

@@ -14,7 +14,7 @@ Note: For a lot of cases you might be just fine using the built-in [Modal](https
 
 Let’s imagine a modal that we can see in a lot of simple applications. In such a basic case, the visibility of the modal is managed internally by some component’s local state. Maybe something like this:
 
-```javascript {numberLines: true}
+```javascript:numberLines=true
 class SurveyScreen extends Component {
   state = { showConfirmation: false };
 
@@ -67,7 +67,7 @@ One of the things that would make it easier to extract such a dialog into a glob
 
 In this example I’ll show how we can achieve this using [React Navigation](https://reactnavigation.org/), which I believe is the most popular navigation solution nowadays. When we read the documentation we can see [an example how to implement a fullscreen modal](https://reactnavigation.org/docs/en/modal.html). We can easily follow it and add our own global navigator stack that will decide whether we render the content of our application (normal screens), or our modal:
 
-```javascript {numberLines: true}
+```javascript:numberLines=true
 const contentNavigator = createStackNavigator(
   {
     screenOne: { screen: SomeImportantScreen },
@@ -111,7 +111,7 @@ So, instead of the background of the previous screen, what we see below is our a
 
 To customise the way our modal gets pushed onto the screen, we need to add another option when creating our navigator:
 
-```javascript {numberLines: true}
+```javascript:numberLines=true
 transitionConfig: () => ({
   transitionSpec: {
     duration: 750,
@@ -144,7 +144,7 @@ One note here, because I know it confuses some people. When we create an _interp
 
 However, sometimes we don’t want a linear change, but something more drastic. In that case we can pass more values to both `inputRange` and `outputRange` (we just need to make sure their lengths are the same). For example, if we want a one-second animation that changes opacity to quickly go from `1.0` to `0.5` in the first 100 ms and then slow down and linearly go to `0.1`, we can create the following interpolation:
 
-```javascript {numberLines: true}
+```javascript:numberLines=true
 someValue.interpolate({
   inputRange: [0, 100, 1000],
   outputRange: [1.0, 0.5, 0.1],
@@ -157,7 +157,7 @@ In case of our animation, we have `inputRange: [thisSceneIndex — 1, thisSceneI
 
 Now we can see our custom dialog screen on top of the previous screen. It’s kind of what we wanted, but not quite. The screen in the back is a little bit distracting, so it would be nice to make it a little less _attention-grabbing_. For this purpose we could fade it away a little bit, by lowering its `opacity`. To do so, we can just extend out custom animation transition to look like that:
 
-```javascript {numberLines: true}
+```javascript:numberLines=true
 transitionConfig: () => ({
   transitionSpec: {
     duration: 750,
@@ -209,7 +209,7 @@ Okay, now we have a modal that looks and behaves really nice. Time to create an 
 
 Of course, you can choose whatever code architecture you want (it’s JavaScript in the end), let me just share the API I like and find pleasant to work with:
 
-```javascript {numberLines: true}
+```javascript:numberLines=true
 import { DialogProps } from '../../containers/DialogScreen';
 
 interface ConfirmationDialogProps {
@@ -238,7 +238,7 @@ export default function make(props: ConfirmationDialogProps): DialogProps {
 
 When we have the above defined _service_ that helps us create options for particular types of dialogs (errors, warning, confirmations, etc.), we can use it in any component with the following navigation call:
 
-```javascript {numberLines: true}
+```javascript:numberLines=true
 NavigationService.navigate(
   "modal",
   ConfirmationDialog({

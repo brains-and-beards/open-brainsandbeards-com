@@ -14,7 +14,7 @@ In most apps where you can create and update data, you do so via a form. For the
 
 Create a simple layout and add some `<TextInput>` components, similar to the following example:
 
-```javascript {numberLines: true}
+```javascript:numberLines=true
 <View>
   <Text style={styles.welcome}>Dogs data:</Text>
 
@@ -48,7 +48,7 @@ To verify the operation is executed successfully, copy the same mutation from ab
 
 Let’s add the `addDog` mutation to our React Native app:
 
-```javascript {numberLines: true}
+```javascript:numberLines=true
 const addDog = gql`
   mutation addDog($type: String!, $name: String!) {
     createDog(data: { type: $type, name: $name }) {
@@ -60,13 +60,13 @@ const addDog = gql`
 
 Okay, we also need to import `Mutation` from the `react-apollo` package.
 
-```javascript {numberLines: true}
+```javascript:numberLines=true
 import { ApolloProvider, graphql, Mutation } from 'react-apollo'
 ```
 
 To execute a mutation operation in a React Native app, we use the `Mutation` component. It takes a _mutation_ prop, which is where we’ll assign our _addDog_ mutation. The `Mutation` component uses the [render prop](https://reactjs.org/docs/render-props.html) pattern in React. React will call the render prop function and provide you with a mutate function and an object containing data about the mutation’s result. To use the `Mutation` component, we wrap our existing layout in it:
 
-```javascript {numberLines: true}
+```javascript:numberLines=true
 render() {
     return (
       <ApolloProvider client={client}>

@@ -23,7 +23,7 @@ Using the **material.dart** package for Flutter, we get a Material Design bottom
 
 Let’s create a widget that uses the `bottomNavigationBar` widget. In `lib/screens`, add a folder called `home` and inside this folder create a file called `home_screen.dart`. Here is the code that I placed in the file we created. It contains three items in the bottom navigation tab.
 
-```javascript {numberLines: true}
+```javascript:numberLines=true
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -84,7 +84,7 @@ In the `build` method, I declared body with the current selected index from `wid
 
 Okay, now copy this code to your file. Don’t forget to edit `main.dart`, and include the `HomePage` widget. Compile the project and your bottom navigation is done.
 
-```javascript {numberLines: true}
+```javascript:numberLines=true
 import 'package:Liquorie/screens/home/home_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -162,7 +162,7 @@ Because our JSON file is a resource, we need to include it in `pubspec.yaml`. Th
 
 Okay, now we need to add the beer list to one of our screens. In screens, create a folder called `beer_list` and inside create a file called `beer_list.dart`. To build list we use [ListView widget](https://docs.flutter.io/flutter/widgets/ListView-class.html).
 
-```javascript {numberLines: true}
+```javascript:numberLines=true
 return new ListView.builder(
                 itemBuilder: (BuildContext context, int index) {
                   var beer = beers[index];
@@ -201,7 +201,7 @@ To load the data from the JSON file, we use `DefaultAssetBundle`. We then have t
 
 > The FutureBuilder widget is essentially a widget that returns another widget based on the result of a Future’s execution. The builder callback defines the strategy for what is rendered based on the information in the snapshot from the asynchronous computation (Future). You can read more about the FutureBuilder API [here](https://docs.flutter.io/flutter/widgets/FutureBuilder-class.html).
 
-```javascript {numberLines: true}
+```javascript:numberLines=true
 child: new FutureBuilder(
             future:
                 DefaultAssetBundle.of(context).loadString('assets/beers.json'),
@@ -211,7 +211,7 @@ child: new FutureBuilder(
 
 Here you have the entire code:
 
-```javascript {numberLines: true}
+```javascript:numberLines=true
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -269,7 +269,7 @@ class BeerListPageState extends State<BeerListPage> {
 
 Okay, now we just need to add a reference to your list in the `HomeScreen` widget I created in the first part of this tutorial.
 
-```javascript {numberLines: true}
+```javascript:numberLines=true
 final widgetOptions = [
     new BeerListPage(),
     Text('Add new beer'),
