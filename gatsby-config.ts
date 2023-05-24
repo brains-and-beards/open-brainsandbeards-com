@@ -318,7 +318,7 @@ const config: GatsbyConfig = {
             `,
             output: '/blog/feed.xml',
             title: 'Brains & Beards Insights',
-            image_url: 'https://brainsandbeards.com/favicon.png',
+            image_url: 'https://brainsandbeards.com/favicon.ico',
             feed_url: 'https://brainsandbeards.com/blog/feed.xml',
             site_url: 'https://brainsandbeards.com',
             custom_namespaces: {
