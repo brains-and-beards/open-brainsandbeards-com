@@ -327,7 +327,7 @@ const config: GatsbyConfig = {
             },
             custom_elements: [
               {
-                'webfeeds:logo': 'https://brainsandbeards.com/favicon.png'
+                'webfeeds:logo': 'https://brainsandbeards.com/favicon.ico'
               },
               {
                 'webfeeds:cover': {
