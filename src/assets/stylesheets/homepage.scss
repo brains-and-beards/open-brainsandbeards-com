@@ -135,12 +135,12 @@ section {
     padding: 0 20px;
     margin-top: -10px;
     @include tablet-version {
-      img {
+      div {
         max-width: 400px;
       }
     }
     @include desktop-version {
-      img {
+      div {
         max-width: 680px;
       }
     }
@@ -222,6 +222,10 @@ section {
 }
 
 .our-clients-left-col {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
   .left-col {
     @include tablet-version {
       width: auto;

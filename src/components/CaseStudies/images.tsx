@@ -62,7 +62,12 @@ export const manomanoLogoImage = (
 )
 
 export const rakutenHeroImage = (
-  <StaticImage src="../../assets/case-studies/rakuten-team.jpg" alt="Femtasy banner" width={680} />
+  <StaticImage
+    src="../../assets/case-studies/rakuten-team.jpg"
+    alt="Femtasy banner"
+    width={680}
+    layout={'fixed'}
+  />
 )
 
 export const rakutenLogoImage = (
