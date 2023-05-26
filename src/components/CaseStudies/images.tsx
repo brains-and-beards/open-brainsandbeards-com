@@ -18,6 +18,7 @@ export const femtasyHeroImage = (
     src="../../assets/case-studies/femtasy/femtasy-header.png"
     alt="Femtasy banner"
     width={680}
+    layout={'fixed'}
   />
 )
 
@@ -32,7 +33,8 @@ export const femtasyLogoImage = (
 export const lokalportalHeroImage = (
   <StaticImage
     src="../../assets/case-studies/lokalportal/lokalportal-web.jpg"
-    alt="Femtasy banner"
+    layout={'fixed'}
+    alt="lokalportal banner"
     width={680}
   />
 )
@@ -64,7 +66,7 @@ export const manomanoLogoImage = (
 export const rakutenHeroImage = (
   <StaticImage
     src="../../assets/case-studies/rakuten-team.jpg"
-    alt="Femtasy banner"
+    alt="Rakuten team"
     width={680}
     layout={'fixed'}
   />
