@@ -80,7 +80,12 @@ pre[class*='language-'] {
   border-radius: 0.3em;
 }
 
-:not(pre) > code[class*='language-'],
+:not(pre) > code[class*='language-']{
+  background-color: #dbdbdb;
+  font-size: 16px;
+  color: #414141;
+}
+
 pre[class*='language-'] {
   background-color: #fdf6e3; /* base3 */
 }

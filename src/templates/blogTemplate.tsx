@@ -77,7 +77,7 @@ const createRecordFromString = string => {
 const components = {
   code: ({ children, className }) => {
     if (!className) {
-      return <code>{children}</code>
+      return <code className={'language-text'}>{children}</code>
     }
 
     const [language, paramsString] = className.split(':')
