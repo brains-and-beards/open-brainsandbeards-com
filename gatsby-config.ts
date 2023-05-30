@@ -189,14 +189,6 @@ const config: GatsbyConfig = {
     {
       resolve: 'gatsby-source-filesystem',
       options: {
-        name: 'images',
-        path: './src/images/'
-      },
-      __key: 'images'
-    },
-    {
-      resolve: 'gatsby-source-filesystem',
-      options: {
         name: 'pages',
         path: './src/pages/'
       },
@@ -318,7 +310,7 @@ const config: GatsbyConfig = {
             `,
             output: '/blog/feed.xml',
             title: 'Brains & Beards Insights',
-            image_url: 'https://brainsandbeards.com/favicon.png',
+            image_url: 'https://brainsandbeards.com/favicon.ico',
             feed_url: 'https://brainsandbeards.com/blog/feed.xml',
             site_url: 'https://brainsandbeards.com',
             custom_namespaces: {
@@ -327,7 +319,7 @@ const config: GatsbyConfig = {
             },
             custom_elements: [
               {
-                'webfeeds:logo': 'https://brainsandbeards.com/favicon.png'
+                'webfeeds:logo': 'https://brainsandbeards.com/favicon.ico'
               },
               {
                 'webfeeds:cover': {
@@ -344,6 +336,12 @@ const config: GatsbyConfig = {
             categories: ['Technology', 'Programming']
           }
         ]
+      }
+    },
+    {
+      resolve: 'gatsby-plugin-manifest',
+      options: {
+        icon: `static/favicon.png`
       }
     },
     {
