@@ -1,0 +1,153 @@
+---
+path: '/blog/2023-remote-data-101'
+date: '2023-06-13T11:12:41.253Z'
+title: 'Working with Remote Data 101'
+image: header.jpg
+author: Wojciech Ogrodowczyk
+---
+
+> God, grant me the serenity to accept the things I cannot change,<br/>
+> the courage to change the things I can,<br/>
+> and the wisdom to know the difference.
+
+You've probably heard [at least one of the versions of this Serenity prayer](https://en.wikipedia.org/wiki/Serenity_Prayer). It's not only a pretty useful piece of advice for life, but also a helpful tip towards handling remote data successfully when building mobile apps.
+
+One of the key strategies in building a reliable app is to understand what data is flowing through your system. Unless you work in a small team that believes in _full-stack development_, you won't have much control over what comes to your app from the backend services. This data can come with multiple types of issues with a varying impact:
+
+* It can simply be invalid for your app. Let's say you have a B2C ecommerce app and you get a product without a name or price. While (for various legacy reasons) this might be valid on the backend it definitely is not a product that you can display like all the others. Either you'll have to build a special version of all the product details screens and listings to accomodate a product like that, or you just ignore it.
+* Data can be malformed. An ID that is a number is passed as a string, or URLs for any detailed pages are not localised. Those are issues that can (and have to!) be corrected _somewhere_ in your app.
+* Cosmetic issues: typos in property names, mixing snake case and camel case, misleading naming (field called `distanceInMiles` that returns kilometers instead), etc. Those issues can be fixed on your side, or accepted as quirks and propagated across your codebase as well.
+
+Of course, a lot of those issues are simply differences between how your team sees the domain (and how things _should_ be) and how other teams do. Sometimes there's a business logic error hidden there that you can simply ask the other team to fix, but a lot of times it's a matter of preference. Of course, even if you're right it doesn't mean that the problem is worth fixing. Good luck [raising priority on your ticket that somebody misspelled _referrer_](https://en.wikipedia.org/wiki/HTTP_referer).
+
+If you value maintainability in the long-term over moving fast and breaking things, you'll probably want to draw a line where the data enters your app and put a border guard there that does two things:
+* Checks for correctness
+* Translates from external (backend) to internal (yours) representation (and back to external format when data's leaving your app)
+
+You _could_ hand-craft a layer of artisanal code somewhere between low-level networking and your business logic, but you don't have to. Enter [zod](https://zod.dev/).
+
+## Data validation
+
+Let's take as an example the Marvel API's endpoint for characters. We'd like to represent a list of them with a possibility of fetching more data for a detailed screen should our user tap any of them. We _could_ do manual checks for the fields that we need (`ID` - to later fetch the details, `name` - to display it in our list, `URL` - to fetch a thumbnail image, and `modified` time - to possibly help us with cache invalidation), but we can also let `zod` do it for us by defining a schema that we're interested in:
+
+```tsx
+import z from 'zod'
+
+const HeroUrlBE = z.object({
+  type: z.string(),
+  url: z.string().url(),
+})
+
+const HeroBESchema = z.object({
+  id: z.number(),
+  modified: z.string().datetime({ offset: true }),
+  name: z.string(),
+  urls: z.array(HeroUrlBE).nonempty(),
+})
+```
+
+Then we can simply use this schema to validate data we received using `HeroBESchema.parse(someHeroWannabe)`. 
+
+Note: I often use `BE` sufix to mark types or schemas that represent remote (backend) data representation.
+
+## Data transformation
+
+As I mentioned above, checking correctness is just the first step, because we'd also like to control the shape of data inside our app. 
+
+In that particular case, we get an array of URLs, but we only need one. We can define a schema transformation that will take the remote representation and massage it into shape that we'd like to use. For example:
+
+```tsx
+import { D } from '@mobily/ts-belt'
+
+const HeroFESchema = HeroBESchema.transform(hero => ({
+  url: hero.urls[0].url,
+  ...D.deleteKeys(hero, ['urls']),
+}))
+```
+
+That will strip the fields that you're not interested in (here `urls`) and set a new one that you want to use (`url`). 
+
+Note: anything that was present in the original data that you've received, but hasn't been mentioned in the validation schema has been automatically removed to avoid any surprises.
+
+## What about TypeScript?
+
+For those of us that use TypeScript a natural question arises - wouldn't I have to do double work now to define my types? If that were necessary, I wouldn't be writing this blog post. You can infer types from the schema and easily share them with other parts of your app:
+
+```tsx
+import z from 'zod'
+
+export type HeroBE = z.infer<typeof HeroBESchema>
+export type Hero = z.infer<typeof HeroFESchema>
+```
+
+(For those of us who don't use TypeScript another natural question arises - why am I not using TypeScript?)
+
+## Filtering data
+
+I mentioned earlier in this article that sometimes you'll need to decide what to do about data that you got, but can't do anything with (like the ecommerce product with no name). Of course, depending on your domain, you might have a better approach, but a good starting point would be:
+
+- Stop this data from entering your app. Note that we’re talking here about *invalid* objects (data is not there), not *malformed* ones (the data is there, just not in a great shape). If you can’t use it, ignore it.
+
+- File an error. If you get an object that you can’t use, it means there’s an error _somewhere_. Either a technical one (in data validation on one of the sides), or a communication one (there’s a misunderstanding about the contract between the systems). Usually we’d use the same [Sentry reporting system](https://docs.sentry.io/platforms/react-native/) that we use for handling any other exception.
+
+```tsx{5,7-11,29}
+import z from 'zod'
+
+const mapBEToFE = (hero: HeroBE): Hero | undefined => {
+  try {
+    return HeroFESchema.parse(hero)
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      console.error('[mapBEToFE] Not valid: ', error.issues)
+      // Report error to Sentry
+      return undefined
+    }
+
+    console.error('[mapBEToFE] Parsing error:', error)
+    throw error
+  }
+}
+
+export const fetchHeroes = async () => {
+  // (…)
+  try {
+    const response = await fetch(requestUrl, {
+      headers: {
+        Accept: 'application/json',
+      },
+    })
+
+    const heroes = (await response.json())?.data?.results
+
+    return heroes.map(mapBEToFE).filter(hero => hero !== undefined)
+  } catch (error) {
+    console.error('[fetchHeroes] Networking error:', error)
+    throw error
+  }
+}
+```
+
+Note: we don't throw away the whole collection when only one of the items is invalid.
+
+## Translating back to BE
+
+If you want to send data back (for example to update a record), you'll need to adhere to the backend service's data format. That usually means translating data back to its original form.
+
+Unfortunately, it requires some _monkey work_. While we do know what `Hero` and `HeroBE` are like, `zod` does not give us an easy way to reverse the transformation that we've defined before. However, because we can be confident in our data being valid (because we use TypeScript, right?) we don't really need `zod` here. This map function can be as simple as:
+
+```tsx
+import { D } from '@mobily/ts-belt'
+
+const mapFEToBE = (hero: Hero): HeroBE => ({
+  urls: [{ type: 'thumbnail', url: hero.url }],
+  ...D.deleteKeys(hero, ['url']),
+})
+```
+
+Note: of course here we squashed the URLs array into just one URL and then later made an array back from it, so we've lost some data. We probably should not send this particular object as an update (but Marvel API doesn't allow any POST requests anyway).
+
+## Summary
+
+`zod` offers a nice way to implement the (often tedious) border guards for your remote data with only minimal boilerplate. If you're doing it by hand (or not doing it 🙈), I'd strongly recommend giving this approach a try. 
+
+However, if you're already using `zod` and looking for a solution with even less boilerplate, we might soon have an option for you as well. Watch this space!
