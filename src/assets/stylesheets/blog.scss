@@ -285,6 +285,7 @@
   width: 100%;
   max-width: 100%;
   object-fit: contain;
+  margin-bottom: 32px;
 
   @include tablet-version {
     max-height: 700px;
@@ -293,7 +294,7 @@
 
 .main-blog-image-caption {
   text-align: center;
-  margin-bottom: 80px;
+  margin-bottom: 32px;
   font-size: 14px;
   line-height: 24px;
 }
