@@ -134,7 +134,8 @@ const config: GatsbyConfig = {
           {
             resolve: 'gatsby-remark-images',
             options: {
-              maxWidth: 1200
+              maxWidth: 1200,
+              showCaptions: ['title']
             }
           },
           'gatsby-remark-responsive-iframe' //Optional: Must be loaded after gatsby-remark-embed-video
