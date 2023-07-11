@@ -4,8 +4,8 @@ import { GatsbyImage, getImage } from 'gatsby-plugin-image'
 import React from 'react'
 
 import AuthorWithPictureAndText from '../components/Blog/AuthorWithPictureAndText'
+import Newsletter from '../components/Blog/CourseEnrollBanner'
 import HiringFootnote from '../components/Blog/HiringFootnote'
-import Newsletter from '../components/Blog/Newsletter'
 import PostLink from '../components/Blog/PostLink'
 import PrismSyntaxHighlight from '../components/Blog/PrismSyntaxHighlight'
 import SubscribeFootnote from '../components/Blog/SubscribeFootnote'
@@ -130,7 +130,7 @@ const BlogTemplate = ({
             <div>{children}</div>
           </MDXProvider>
           <SubscribeFootnote />
-          <HiringFootnote />
+          {/* <HiringFootnote /> */}
           <AuthorWithPictureAndText author={author} text={'WRITTEN BY'} />
         </div>
       </div>

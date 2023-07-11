@@ -227,13 +227,6 @@ const config: GatsbyConfig = {
       }
     },
     {
-      resolve: 'gatsby-plugin-mailchimp',
-      options: {
-        endpoint:
-          'https://brainsandbeards.us10.list-manage.com/subscribe/post?u=1866d0ed0d86fc67762d34be5&amp;id=7080aab9c0'
-      }
-    },
-    {
       resolve: 'gatsby-plugin-feed',
       options: {
         query: `

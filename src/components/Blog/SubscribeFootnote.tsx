@@ -6,8 +6,7 @@ const SubscribeFootnote = () => (
     <p>
       If you liked this post, why don't you subscribe for more content? If you're as old-school as
       we are, you can just grab the <a href="https://brainsandbeards.com/blog/feed.xml">RSS feed</a>{' '}
-      of this blog. If not, why don't you subscribe to our newsletter to stay in touch (fill in the
-      form just below). We'll let you know from time to time when something interesting comes out.
+      of this blog. Or enroll to the course described below!
     </p>
     <p>
       Alternatively, if audio's more your thing why don't you subscribe to{' '}

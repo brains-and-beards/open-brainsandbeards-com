@@ -597,70 +597,8 @@ blockquote {
   }
 }
 
-.blog-newsletter {
-  text-align: center;
-  align-items: center;
-  justify-content: center;
-  display: flex;
-
-  .narrow-column {
-    align-items: center;
-    padding: 0;
-  }
-  form {
-    margin-top: 32px;
-    width: 100%;
-  }
-
-  .form {
-    align-items: center;
-    margin-right: 32px;
-    justify-content: center;
-    margin-top: 4px;
-    width: 100%;
-
-    input {
-      background: $codeYellow;
-      height: 48px;
-      border-radius: 8px;
-      border: solid 1px $black;
-      font-size: 16px;
-      padding: 12px;
-      flex: 1;
-      width: 100%;
-
-      @include mobile-version {
-        margin-right: 0;
-        width: 100%;
-      }
-    }
-
-    label {
-      width: 100%;
-      text-align: center;
-      display: inline-block;
-    }
-
-    button {
-      height: 48px;
-      font-size: 16px;
-      font-family: 'Neutrif';
-      align-items: center;
-      justify-content: center;
-      background: #fff;
-      border: none;
-      box-shadow: none;
-      width: 100%;
-      box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
-
-      @include darken-link-on-hover($amount: 5%);
-
-      @include mobile-version {
-        margin-top: 23px;
-        width: 100%;
-      }
-    }
-  }
+.convertkit-form {
+  padding: 30px 0px 10px;
 }
 
 .blog-micro {
@@ -686,9 +624,19 @@ blockquote {
   margin: 20px 0;
 }
 
-.newsletter-content {
-  padding: 0 10px;
+.estimateProject {
+  .newsletter-content.center {
+    padding: 20px 30px 20px;
+
+    h2 {
+      margin-bottom: 0;
+    }
+    p {
+      line-height: 27px;
+    }
+  }
 }
+
 
 .name-blog-form {
   margin-top: 10px;
