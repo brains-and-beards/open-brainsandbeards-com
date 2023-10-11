@@ -1,7 +1,7 @@
 import { graphql } from 'gatsby'
 import React from 'react'
 
-import { lokalportalHeroImage } from '../../components/CaseStudies/images'
+import { lokalportalHeroImage, lokalportalLogoImage } from '../../components/CaseStudies/images'
 import CaseStudyBar from '../../components/shared/Bars/CaseStudyBar'
 import TonedDownEstimateProject from '../../components/shared/Bars/TonedDownEstimateProject'
 import PictureListItem from '../../components/shared/PictureListItem'
@@ -65,10 +65,7 @@ const TeamAugmentationService = props => {
             about how we can help with yours.
           </p>
         </div>
-        <TonedDownEstimateProject
-          title="We'd be happy to help and steer you towards the best solution"
-          buttonText="Estimate project"
-        />
+        <TonedDownEstimateProject title="We'd be happy to help and steer you towards the best solution" />
         <div className="content row">
           <div className="narrow-column">
             <h3 className="center set-out">How about an example?</h3>

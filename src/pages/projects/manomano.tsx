@@ -6,7 +6,6 @@ import Testimonial from '../../components/CaseStudies/Testimonial'
 import EstimateProjectBar from '../../components/shared/Bars/EstimateProjectBar'
 import SEO from '../../components/shared/layout/SEO'
 import Layout from '../../templates/layout'
-import TrustBar from '../../components/shared/Bars/TrustBar'
 
 const title = 'Case study: ManoMano'
 const description =
@@ -179,10 +178,7 @@ class ManoManoCaseStudy extends Component {
           position="Head of Engineering"
           company="ManoMano - Colibri SAS"
         />
-        <EstimateProjectBar
-          title="Let us craft a custom solution<br/>for your product"
-          buttonText="Estimate project"
-        />
+        <EstimateProjectBar title="Let us craft a custom solution<br/>for your product" />
       </Layout>
     )
   }

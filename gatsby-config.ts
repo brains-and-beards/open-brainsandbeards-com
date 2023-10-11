@@ -190,6 +190,13 @@ const config: GatsbyConfig = {
     {
       resolve: 'gatsby-source-filesystem',
       options: {
+        path: `${__dirname}/src/assets/images/contact-page`,
+        name: 'contactPageAssets'
+      }
+    },
+    {
+      resolve: 'gatsby-source-filesystem',
+      options: {
         name: 'pages',
         path: './src/pages/'
       },
