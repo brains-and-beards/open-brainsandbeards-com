@@ -1,5 +1,5 @@
 import { Location } from '@reach/router'
-import { Link, graphql } from 'gatsby'
+import { graphql } from 'gatsby'
 import React from 'react'
 
 import '../../assets/stylesheets/main.scss'
@@ -20,9 +20,9 @@ const HeaderSubtitle = ({ text }) => {
     <>
       <div className="sub2">{text}</div>
       <div className="button estimate-link header-cta">
-        <Link className="center" to="/free-consultation">
+        <a className="center" href="/free-consultation">
           Book a free consultation
-        </Link>
+        </a>
       </div>
     </>
   )

@@ -47,9 +47,9 @@ const HireUs = props => {
             </p>
           </div>
           <div className="button estimate-link">
-            <Link className="center" to="/free-consultation">
+            <a className="center" href="/free-consultation">
               Book a free consultation
-            </Link>
+            </a>
           </div>
         </div>
       </div>

@@ -1,4 +1,3 @@
-import { Link } from 'gatsby'
 import { StaticImage } from 'gatsby-plugin-image'
 import React from 'react'
 
@@ -21,7 +20,7 @@ const FreeConsultationBar = props => {
           <h2 dangerouslySetInnerHTML={{ __html: title }} />
 
           <div className="button estimate-link">
-            <Link to="/free-consultation">{buttonText}</Link>
+            <a href="/free-consultation">{buttonText}</a>
           </div>
         </div>
 
