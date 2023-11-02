@@ -191,10 +191,7 @@ class FemtasyCaseStudy extends Component {
           position="Head of Engineering"
           company="Pink Internet GmbH"
         />
-        <EstimateProjectBar
-          title="Let us craft a custom solution<br/>for your product"
-          buttonText="Estimate project"
-        />
+        <EstimateProjectBar title="Let us craft a custom solution<br/>for your product" />
       </Layout>
     )
   }

@@ -1,0 +1,50 @@
+.hire-us {
+    .speaker-image {
+        margin: 0 25px;
+    
+        img {
+            border: 1px solid #999;
+        }
+    
+        figcaption {
+            margin-top: 20px;
+        }
+    }
+    
+    .speaker-images-bar {
+        justify-content: center;
+    }
+
+    @include desktop-version {
+        .youtube {
+          width: 1024px;
+          height: 575px;
+          margin-top: -60px;
+          margin-bottom: 0px;
+        }
+      }
+
+    .big-part-yellow {
+        margin-bottom: 32px;
+    }
+
+    .header-cta {
+        margin-top: 32px;
+        display: block;
+        text-align: center
+    }
+
+    .narrow-column {
+        .button {
+            background-color: $yellow;
+            display: block;
+            width: 50%;
+            text-align: center;
+            margin: 64px auto 0
+        }
+    }
+
+    p > a {
+        border-bottom: 1px solid $black;
+    }
+}

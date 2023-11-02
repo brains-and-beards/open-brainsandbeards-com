@@ -238,10 +238,7 @@ class SharooCaseStudy extends Component {
           </div>
         </div>
         <TrustBar />
-        <EstimateProjectBar
-          title="Let us craft a custom solution<br/>for your product"
-          buttonText="Estimate project"
-        />
+        <EstimateProjectBar title="Let us craft a custom solution<br/>for your product" />
       </Layout>
     )
   }

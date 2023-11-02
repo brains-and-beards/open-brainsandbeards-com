@@ -69,11 +69,7 @@ const Navbar = props => {
             {menuLinks.map(link => renderDesktopLink(link.url, link.label))}
           </ul>
           <ul className="menu-estimate-link desktop-only">
-            {renderDesktopLink(
-              '/estimate-project',
-              'Estimate project',
-              'menu-link button menu-estimate-button'
-            )}
+            {renderDesktopLink('/hire-us', 'Hire us', 'menu-link button menu-estimate-button')}
           </ul>
           <div onClick={overlay.show}>
             <HamburgerSvg className="mobile-only" alt="menu" />
@@ -91,7 +87,7 @@ const Navbar = props => {
               </div>
             </div>
             <ul>{menuLinks.map(link => renderMobileLink(link.url, link.label))}</ul>
-            <ul>{renderMobileLink('/estimate-project', 'Estimate project', 'menu-link button')}</ul>
+            <ul>{renderMobileLink('/hire-us', 'Hire us', 'menu-link button')}</ul>
             {false && (
               <ul className="horizontal">
                 {renderMobileLink('#', 'En', 'menu-link light')}

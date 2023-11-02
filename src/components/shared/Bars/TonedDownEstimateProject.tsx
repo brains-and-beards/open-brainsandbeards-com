@@ -4,7 +4,7 @@ import React, { Component } from 'react'
 class TonedDownEstimateProject extends Component {
   static defaultProps = {
     title: 'Want to start<br/>a great project?',
-    buttonText: 'Get an estimate'
+    buttonText: 'Get in touch'
   }
 
   render() {
@@ -16,7 +16,7 @@ class TonedDownEstimateProject extends Component {
           <div className="center">
             <h3 dangerouslySetInnerHTML={{ __html: title }} />
             <div className="button estimate-link yellow">
-              <Link to="/estimate-project/">{buttonText}</Link>
+              <Link to="/hire-us">{buttonText}</Link>
             </div>
           </div>
         </div>
