@@ -8,7 +8,7 @@ import SEO from '../components/shared/layout/SEO'
 
 const title = 'Hire us'
 const description =
-  'Book a free consultation where we can discuss your project and how we can help.'
+  "Every project is unique, so let's start with a chat about yours and how we can help."
 
 const HireUs = props => {
   const { heroImage } = props.data
@@ -28,7 +28,7 @@ const HireUs = props => {
 
         <div className="narrow-column">
           <div className="text-format">
-            <h3 className="center"> Start with a free consultation </h3>
+            <h3 className="center"> Start with a conversation </h3>
             <p>
               We believe that good communication is vital in making any project successful. That's
               why instead of filing an anonymous contact form, we encourage you to have a chat with
