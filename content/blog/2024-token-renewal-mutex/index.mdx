@@ -133,7 +133,6 @@ const makeAuthenticatedRequest = async (url: string, options: RequestInit) => {
 
   if (response.status === 401) {
     await renewAuthenticationToken()
-    // Retry the request after successful token renewal
     return await makeAuthenticatedRequest(url, options)
   }
 
@@ -160,7 +159,7 @@ Enter the formidable [_mutex_](https://www.npmjs.com/package/async-mutex), an ob
 
 Let's leverage the `Mutex` from the `async-mutex` package for a robust solution:
 
-```tsx{1,3,6-8,11,14,20}
+```tsx{1,3,6-8,11,14,19-20}
 import { Mutex } from 'async-mutex'
 
 const tokenRenewalMutex = new Mutex()
@@ -179,14 +178,13 @@ const renewAuthenticationToken = async () => {
 }
 
 const makeAuthenticatedRequest = async (url: string, options: RequestInit) => {
-  // if token is being renewed now - wait for the new token
   await tokenRenewalMutex.waitForUnlock()
-  const response = await fetch(url, options)
+  const newOptions = getOptionsWithCurrentToken(options)
+  const response = await fetch(url, newOptions)
 
   if (response.status === 401) {
     await renewAuthenticationToken()
-    // Retry the request after successful token renewal
-    return await makeAuthenticatedRequest(url, options)
+    return await makeAuthenticatedRequest(url, newOptions)
   }
 
   return response
