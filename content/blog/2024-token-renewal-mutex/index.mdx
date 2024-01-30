@@ -1,6 +1,6 @@
 ---
 path: '/blog/2024-token-renewal-mutex'
-date: '2024-01-12T16:00:00.000Z'
+date: '2024-01-30T16:00:00.000Z'
 title: 'Common Pitfalls in Authentication Token Renewal'
 image: header.jpg
 author: Szymon Koper
@@ -62,13 +62,13 @@ While these aspects contribute to robust network handling, our main focus in thi
 
 ### Navigating concurrency pitfails
 
-Revisit our naive implementation and envision a scenario: an authorized request fails with a `401 Unauthorized` message, triggering the token renewal process.
+Let's revisit our naive implementation and envision the following scenario: an authorized request fails with a `401 Unauthorized` message, triggering the token renewal process.
 
 In the world of apps, it's common to send multiple requests concurrently.
 What happens if a previous token renewal is still in progress, and the app initiates another authorized request?
-In our naive implementation, it sparks another renewal process, unintentionally creating a [race condition](https://en.wikipedia.org/wiki/Race_condition)
+In our naive implementation, it sparks another renewal process, unintentionally creating a [race condition](https://en.wikipedia.org/wiki/Race_condition).
 
-We've unintentionally introduced a race condition where multiple token renewal operations can be in progress simultaneously, when in reality, a single operation would suffice.
+We've unintentionally introduced a race condition where multiple token renewal operations can be in progress simultaneously when a single operation would suffice.
 
 Depending on the backend token renewal implementation, each consecutive renewal might invalidate the previous tokens, leading to a cascade of failed requests.
 This not only wastes resources but also negatively impacts performance, drains the battery, and creates a frustrating experience for both users and developers.
@@ -100,7 +100,7 @@ const waitForRenewalToFinish = async (): Promise<boolean> => {
 }
 
 const renewAuthenticationToken = async () => {
-  if (isDuringRenewal) {   
+  if (isDuringRenewal) {
     await waitForRenewalToFinish()
   }
 
@@ -202,6 +202,6 @@ In this blog, we explored pitfalls in renewing authentication tokens in React Na
 
 The naive approach led to race conditions with multiple token renewals.
 To address this, we introduced a `Mutex`, ensuring a single, synchronized renewal process.
-The solution prevents race conditions and enhances app efficiency. 
+The solution prevents race conditions and enhances app efficiency.
 
 Happy coding! 🚀
