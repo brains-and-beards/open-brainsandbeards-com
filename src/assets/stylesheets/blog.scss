@@ -367,6 +367,15 @@
     }
   }
 
+  table,
+  th,
+  td {
+    text-align: left;
+    border: 1px solid $black;
+    border-collapse: collapse;
+    padding: 6px 13px;
+  }
+
   .wrap-left,
   .wrap-right {
     @include desktop-version {
@@ -637,7 +646,6 @@ blockquote {
   }
 }
 
-
 .name-blog-form {
   margin-top: 10px;
 }
@@ -663,13 +671,13 @@ blockquote {
   align-items: center;
 }
 
-pre[class*="language-"].numbered-lines {
+pre[class*='language-'].numbered-lines {
   position: relative;
   padding-left: 3.8em;
   counter-reset: linenumber;
 }
 
-pre[class*="language-"].numbered-lines > div {
+pre[class*='language-'].numbered-lines > div {
   position: relative;
   white-space: inherit;
 }
