@@ -1,0 +1,117 @@
+---
+path: '/blog/2024-mgewcli-maximizing-git-efficiency-with-cli'
+date: '2024-02-13T19:12:41.253Z'
+title: 'mgewcli - Maximizing git efficiency with CLI'
+image: header.jpg
+author: Błażej Lewandowski
+imageCaption: 'Dictionary photo by <a href="https://unsplash.com/@rvignes">Romain Vignes</a>'
+---
+
+### A Tale of efficiency - skip
+It was a typical work day, we had a little pair programming session, where I was trying to explain my colleague some deployment processes. In the realm of remote work, such sessions, reliant on screen sharing, are prone to hiccups. Connection might get unstable and so the video might lag a bit. It’s usually better when you take this into account, and try to explain things slowly, **especially when you’re about to teach something**.  
+That time I totally forgot about this rule...  
+I launched like a rocket, I took every shortcut that I could, making my teammate totally confused :D. 
+It was intelligible...  
+What possibly you can understand from this:
+```sh
+gbD develop
+gco your-feature-branch
+gcb develop
+gpsupf
+```
+I quickly fixed my little mistake, but this made me realise I can share some git efficiency tips, that I think most of developers already have at the tips of their fingers.
+If you’re curious what does that mean 👇, go on with reading.
+
+### Git gui vs terminal
+Before we begin, let’s put a little disclaimer right here. I use git via CLI. Chances are you might see that as a relict and use some GUI client. That’s ok, and it doesn’t mean this article is not for you :).
+While, GUI apps are mature now and can offer some benefits over the CLI. I think it’s still beneficial to know how to write, rather than click stuff.
+Some pros of such approach:
+- speed: it’s a muscle memory, keyboard > mouse
+- scripting: enjoy the power of automation with simple scripts
+- cross-platform consistency: whether you jump on Linux, macOS or connect to remote location via SSH.
+- hackerman feeling: impress your colleagues, if you’re into it
+
+And the list goes on...
+
+### oh-my-zsh
+Another heads-up: I use [oh-my-zsh](https://github.com/ohmyzsh/ohmyzsh). For those who don’t know it - it’s the most popular framework for your zsh config management. It can bring a lot of fun features to your system shell, but let’s focus on the one in particular - git plugin.  
+Why this topic? Well, `zsh` has been the default shell on macOS for several versions now (starting from Catalina), and many devs, myself included, adopt `oh-my-zsh` right after seeing its cool customizable themes in action. If you [peek into the default .zshrc config](https://github.com/ohmyzsh/ohmyzsh/blob/e195c7cb438224e8bcea20bdbc2e4b8a6bb3949b/templates/zshrc.zsh-template#L73), you'll notice the git plugin is enabled by default, so most likely the whole setup is already there.
+
+### oh-my-zsh plugin git
+Alright! The plugin is really simple, it just adds a set of handy aliases  and functions for git commands, so you don’t have to write a complete long form of it. e.g. instead of writing `git push` you can write just `gp`, simply saving yourself 6 precious keystrokes.  
+To give a better idea how does that look in action, here's a glimpse of some real world everyday commands and their abbreviated counterparts (full list is available at [plugin page](https://github.com/ohmyzsh/ohmyzsh/blob/master/plugins/git/README.md), I recommend going through it anyways. If you haven’t seen it, I’m sure you’ll discover something cool for yourself in there.):
+
+<table>
+  <tr>
+    <th>abbreviation</th>
+    <th>full command</th>
+  </tr>
+  <tr>
+    <td>`ga filename.ext`</td>
+    <td>`git add filename.ext`</td>
+  </tr>
+  <tr>
+    <td>`gaa`</td>
+    <td>`git add --all`</td>
+  </tr>
+  <tr>
+    <td>`gco-`</td>
+    <td>`git checkout -`</td>
+  </tr>
+  <tr>
+    <td>`gcb new-branch`</td>
+    <td>`git checkout -b new-branch`</td>
+  </tr>
+  <tr>
+    <td>`gcp c0mm!t5ha`</td>
+    <td>`git cherry-pick c0mm!t5ha`</td>
+  </tr>
+  <tr>
+    <td>`gc -m “some commit message”`</td>
+    <td>`git commit -v -m “some commit message”`</td>
+  </tr>
+  <tr>
+    <td>`gcmsg “different command, same result”`</td>
+    <td>`git commit --message “different command, same result”`</td>
+  </tr>
+  <tr>
+    <td>`gd`</td>
+    <td>`gid diff`</td>
+  </tr>
+  <tr>
+    <td>`gst`</td>
+    <td>`git status`  </td>
+  </tr>
+  <tr>
+    <td>`glola`</td>
+    <td>`git log --graph --pretty='%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset' --all`</td>
+  </tr>
+  <tr>
+    <td>`gm branch`</td>
+    <td>`git merge branch`</td>
+  </tr>
+  <tr>
+    <td>`gl`</td>
+    <td>`git pull`</td>
+  </tr>
+  <tr>
+    <td>`gpsup`</td>
+    <td>`git push --set-upstream origin $(git_current_branch)`</td>
+  </tr>
+  <tr>
+    <td>`grb some-branch`</td>
+    <td>`git rebase some-branch`</td>
+  </tr>
+</table>
+ 
+ Notice, it’s perfectly fine to add some extra arguments after the aliased command.  
+ I’m especially a fan of `gpsup`. Typing this command usually means I just finished my current work and I'm ready to share it in PR up for the review. Very convenient!  
+ The learning investment is nothing, but whenever you find yourself unsure about some specific command, there is always a handy way to check what it does:
+ ```
+ type gc
+ gc is an alias for git commit -v
+ ```
+With some aliases you probably gotta ba a little more careful. I can’t say how many times I invoked Ghostscript by mistyping `gs` instead of `gst`... Other than that, I had 0 conflicts with it, and such error is hardly catastrophic.
+
+There you have it! 
+GLHF with your new super powers!
