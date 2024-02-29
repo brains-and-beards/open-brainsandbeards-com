@@ -10,10 +10,10 @@ imageCaption: 'Bar neon photo by <a href="https://unsplash.com/@trommelkopf">Ste
 The status bar, right after loading / error states it might be the most overlooked mobile app UI elements. Despite its apparent simplicity, it serves the crucial function of keeping users informed about essential device statuses. Achieving its optimal design, gets more planning than the one might think.
 
 ## A true cross platform
-Once we acknowledge the significance of the status bar, the next step is determining its appearance. From the react native developer perspective, for a particular app screen the decision is not too complicated and it boils down to addressing 3 questions, before we jump into the code:
- - should we display the status bar icons at all
- - what color scheme should be used for the bar icons (dark or light)?
- - do we aim to maintain a consistent UX across both platforms
+Once we acknowledge the significance of the status bar, the next step is determining its appearance. From the react native developer perspective, for a particular app screen the decision is not too complicated and it boils down to addressing those 3 general questions:
+ - Should we display the status bar icons at all?
+ - What color scheme should be used for the bar icons (dark or light)?
+ - Do we aim to maintain a consistent UX across both platforms?
 
 While the first two questions may seem straightforward, they come with not that obvious design challenges, which I’ll try to elaborate in further sections. However, the answer for last question is most likely a resounding “YES”.
 
@@ -147,7 +147,7 @@ const AppStatusBar: React.FC<AppStatusBarProps> = () => {
 ```
 I like this way a lot, although I imagine it’s not that universal. The shade would probably not look that good in other colours than black, so in my opinion it better fits the dark themed apps.
 
-### hiding status bar dynamically
+### disappearing status bar
 
 <div class="gif-container">
   ![status bar example get your guide](./disappearing-status-bar.gif)
