@@ -1,0 +1,61 @@
+---
+path: '/blog/2024-boosting-map-vay'
+date: '2024-07-26T16:00:00.000Z'
+title: 'Boosting map scrolling performance'
+image: header.jpg
+author: Szymon Koper
+---
+
+## Pioneers in driverless mobility
+
+At Brains & Beards, we've been working with [Vay](https://vay.io/) from the start, helping them build and improve their React Native mobile app.
+
+Vay was the first company in Europe to put driverless cars on public roads, a major milestone in transportation. Now, in Las Vegas, they offer a service where users can either pick up a car from set locations or have it delivered by a remote driver. This setup not only makes things more convenient, but also cuts costs, making advanced mobility more affordable for everyone.
+
+![The main screen of the Vay app](./vay-app-map.png "The main screen of the Vay app showing service areas")
+
+
+## The challenge of scaling service areas
+
+As Vay expanded their service to include more areas in Las Vegas, the task of managing and displaying map data became increasingly complex. Initially, the app used GeoJSON data to define the self-parking and remote delivery zones, which were rendered using the `react-native-maps` library. While GeoJSON is effective for representing geographical data, the growing detailed service areas resulted in a significant increase in data load.
+
+The app now had to handle over **70,000 points** on the map, covering approximately **1,500 square kilometers (560 square miles)**.
+On some devices, attempting to display the entire GeoJSON dataset caused the UI to **freeze for more than 2 seconds**, severely affecting the user experience. Additionally, the sheer volume of data led to visible artifacts on the map, such as incomplete rendering or delayed updates, which made the situation even worse.
+
+These performance issues, including slow loading times, laggy map interactions, and visual artifacts, were problematic. We needed a solution that could efficiently manage this data and ensure the app ran smoothly.
+
+<div class="gif-container">
+
+![Changing zoom level on map with poor performance](vay-geojson-performance-8-220.gif)
+
+Changing the zoom level on the map caused lags and artifacts due to the large amount of data.
+
+</div>
+
+
+## Transitioning to map tiles
+
+To address these performance challenges, we transitioned from using raw GeoJSON data to _map tiles_ hosted on the **Mapbox Tiling Service**. Map tiles are square images that are pre-rendered for different zoom levels and cover specific sections of the map.
+This approach allows the app to load only the tiles needed for the user's current view, rather than loading the entire service area at once.
+
+This transition resulted in several key improvements:
+
+- **Elimination of UI freezes**: The app no longer experienced UI freezes when rendering large GeoJSON datasets.
+- **Resolution of visual artifacts**: Previously, the large dataset caused triangular artifacts to appear on the map. Switching to map tiles resolved these issues, providing a cleaner and more accurate display.
+- **Reduced data load**: By fetching only the relevant map tiles, the app significantly reduced the amount of data it needed to download and process.
+- **Simplified frontend code**: The use of map tiles reduced the complexity of frontend code. The service areas, including their styles, are now managed on the **Mapbox Tiling Service**. The `react-native-maps` library that we use supports displaying raster map tiles via `URLTile` component.
+
+<div class="gif-container">
+
+![Changing zoom level on map without lags](vay-maptiles-performance-8-220.gif)
+
+The app smoothly showing entire delivery service area after the transition to map tiles
+
+</div>
+
+
+## Conclusion
+
+Switching to map tiles has greatly improved Vay's mobile app performance. This upgrade helps them manage their growing service areas better and sets the stage for future updates.
+
+At Brains & Beards, we're excited to keep working with Vay to make their services more accessible and user-friendly. We're looking forward to sharing more updates as we continue to improve the Vay app.
