@@ -143,7 +143,7 @@ class ManoManoCaseStudy extends Component {
           <Testimonial
             quote="Brains & Beards team is made up of highly skilled professionals who are dedicated to delivering results. They are truly experts in their field and I would highly recommend them!"
             image={linaImage}
-            name="Lina Astier"
+            name="Lina A"
             position="Product Manager - B2B Mobile App"
             company="ManoMano - Colibri SAS"
           />
