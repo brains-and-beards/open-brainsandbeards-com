@@ -15,8 +15,6 @@ But the problem of stale callback values is not limited to asynchronous operatio
 
 You can also [explore the example code on Expo Snack](https://snack.expo.dev/@sakydpozrux/stale-callback-value) to follow along and experiment with the solutions.
 
----
-
 ### **The Problem: Stale Callback Values**
 
 Stale callback values occur when a function in React "closes over" a variable, such as state or props, and the variable is later updated. The function continues to reference the outdated value captured at the time of its creation.
@@ -106,8 +104,6 @@ setElapsedTime(prevElapsedTime => prevElapsedTime + 0.1);
 
 This ensures the callback always works with the most recent state value, preventing stale state issues. This approach works well not only for timers but also for event handlers or functions passed to child components.
 
----
-
 #### **Solution 2: Introduce `useRef` for Elapsed Time**
 
 Another approach is to use `useRef` to track the elapsed time. Since refs are mutable and don’t cause re-renders, they can hold the most up-to-date value without being affected by state closure:
@@ -119,8 +115,6 @@ setElapsedTime(elapsedTimeRef.current);
 ```
 
 This avoids the re-renders caused by frequent state updates and ensures the timer remains accurate. `useRef` is also useful for managing mutable data in other scenarios, such as tracking input focus or scroll positions.
-
----
 
 #### **Solution 3: Add `elapsedTime` as a Dependency in `useEffect`**
 
@@ -139,8 +133,6 @@ useEffect(() => {
 ```
 
 This ensures the interval callback always uses the latest `elapsedTime` value but may lead to more frequent interval restarts. The same approach can be used for data-fetching hooks or animations.
-
----
 
 #### **Solution 4: Switch to `useReducer` for State Management**
 
@@ -166,8 +158,6 @@ const [state, dispatch] = useReducer(timerReducer, { elapsedTime: 0, isRunning: 
 
 This approach is robust and extensible, making it ideal for scenarios involving complex state transitions, such as forms or wizards.
 
----
-
 #### **Solution 5: Replace Polling with Request Animation Frame (Bonus)**
 
 As a bonus, you can eliminate `setInterval` entirely and use `requestAnimationFrame` for smoother and more precise updates:
@@ -183,8 +173,6 @@ const animate = (timestamp) => {
 
 This solution improves performance and accuracy but is slightly more advanced. It’s particularly useful for animations or tasks requiring precision, such as updating game states or UI layouts.
 
----
-
 ### **Summary**
 
 Stale callback values can cause subtle bugs in React, especially in asynchronous scenarios. In this article, we explored:
@@ -194,8 +182,6 @@ Stale callback values can cause subtle bugs in React, especially in asynchronous
 - Five solutions, from simple fixes to advanced optimizations.
 
 By understanding and addressing this problem, you can build more robust and predictable React components.
-
----
 
 ### **Lesson Learned**
 
