@@ -1,6 +1,6 @@
 ---
 path: '/blog/2025-dont-rerender-new-flatlist-items'
-date: '2025-03-04T13:00:00.000Z'
+date: '2025-03-13T13:00:00.000Z'
 title: 'FlatList Optimization: Avoid Re-Rendering When Adding or Removing Items'
 image: header.jpg
 author: Szymon Koper
@@ -66,23 +66,6 @@ Rendering item: 3
 
 ---
 
-### **Why is FlatList Re-Rendering All Items?**  
-
-The issue comes from how **React re-renders components that consume state**.  
-
----
-
-### **Why is FlatList Re-Rendering All Items?**  
-
-The issue comes from how **React re-renders components that consume state**.  
-
-In the broken version:  
-- Each `ListItem` **subscribes to Redux state** using `useSelector()`.  
-- Since `ListItem` **is not memoized**, every Redux state update **triggers a re-render**.  
-- **Even unchanged items re-render!**  
-
----
-
 ### **The Fix: Just Add `React.memo`**  
 
 Here’s the best part: the **fix is incredibly simple**.  
@@ -91,22 +74,11 @@ Here’s the best part: the **fix is incredibly simple**.
 
 Now, `ListItem` will **only re-render when its props change**. Since each item’s `id` remains the same, old items won’t re-render when new ones are added.  
 
----
-
-### **Try It Yourself: Fix the Snack!**  
-
-👉 **[Open the same Snack](https://snack.expo.dev/@sakydpozrux/rerender-only-changed-items), but now edit the code yourself.**  
-
-**Your task:**  
-1. Find the `ListItem` component.  
-2. Wrap it with `React.memo`.  
-3. Click "Add Item" again and check the console logs.  
-
-Your new logs should look like this:
+#### **Console Output After the Fix:**  
 ```
 Rendering item: 1
 Rendering item: 2
-Rendering item: 3  <- Only the new item renders!
+Rendering item: 3  <- Only new items render now!
 ```
 
 <div class="gif-container">
@@ -121,40 +93,72 @@ After the fix, only new items render as expected.
 
 ---
 
-### **Common Misconceptions: Inline `renderItem` is NOT the Problem!**  
+### **When `useCallback` Becomes Necessary**  
 
-Many developers think that defining `renderItem` **inline** inside FlatList **causes unnecessary re-renders**.  
+In most cases, re-creating the `renderItem` function inside `FlatList` doesn’t cause re-renders. But there are situations where **wrapping it in `useCallback` is necessary**.  
 
-🚨 **That’s not true.**  
+Let’s modify the example by adding a **timer** at the top of the screen that updates every second, showing the current time (`hh:mm:ss`). This change will cause **the entire component to re-render every second**—which will **also re-render every FlatList item** unnecessarily.  
 
-FlatList **only re-renders items if their props change**. The `renderItem` function **being re-created on each render doesn’t affect this.**  
+#### **Updated Example: Now With a Timer**  
+```tsx
+const [time, setTime] = React.useState(new Date().toLocaleTimeString());
+React.useEffect(() => {
+  const interval = setInterval(() => {
+    setTime(new Date().toLocaleTimeString());
+  }, 1000);
+  return () => clearInterval(interval);
+}, []);
+```
 
-✅ **You don’t need `useCallback` or `useMemo` for every FlatList prop.**  
-✅ **The key issue is whether item components actually re-render, not whether renderItem is recreated.**  
+🚨 **All items re-render every second!** 🚨  
 
-**Takeaway:** **Use `React.memo`, not unnecessary `useCallback`/`useMemo`.**  
+This happens because **the parent component is re-rendering**, which causes `FlatList` to receive a **new function reference for `renderItem` on each render**. Since `FlatList` sees a new function, it **re-renders all items**.  
+
+#### **The Fix: Wrapping Callbacks in `useCallback`**  
+
+To fix this, we need to **wrap `renderItem` and `keyExtractor` in `useCallback`**. This ensures the function **stays the same across renders**, preventing unnecessary re-renders.  
+
+```tsx
+keyExtractor={React.useCallback((id) => id, [])}
+renderItem={React.useCallback(({ item: id }) => <ListItem id={id} />, [])}
+```
+
+Alternatively, we can **define them outside the component function** or **omit `keyExtractor`**, since `id => id` is the default behavior.  
 
 ---
 
-### **Summary & Lessons Learned**  
+### **Better Architecture: Extracting `Clock` Component**  
 
-✅ **FlatList should only re-render items that actually change.**  
-✅ **Unchanged items should not re-render when new ones are added.**  
-✅ **The fix was just adding `React.memo` to `ListItem`.**  
-✅ **Inline `renderItem` inside FlatList is fine—it’s not a performance issue.**  
+A better approach is to **extract the clock into its own component**. This keeps **state updates isolated**, preventing unnecessary re-renders.  
+
+```tsx
+const Clock = () => {
+  const [time, setTime] = React.useState(new Date().toLocaleTimeString());
+  React.useEffect(() => {
+    const interval = setInterval(() => {
+      setTime(new Date().toLocaleTimeString());
+    }, 1000);
+    return () => clearInterval(interval);
+  }, []);
+  return <Text style={{ fontSize: 18, fontWeight: "bold" }}>Current time: {time}</Text>;
+};
+```
+
+By using `<Clock />` inside `ListScreen`, only the clock updates, **keeping FlatList untouched**. This is a **better architectural choice** because:  
+✅ It isolates responsibilities (the clock only manages time).  
+✅ It prevents unnecessary re-renders in unrelated components.  
+✅ It makes the code cleaner and more maintainable.  
 
 ---
 
-### **Final Thoughts**  
+### **FlashList Handles This Differently**  
 
-This was a **tiny fix with a huge impact**. In bigger apps, avoiding unnecessary re-renders can **significantly improve performance**, especially with long lists.  
+If you’re using `FlashList` instead of `FlatList`, be aware that **FlashList has its own optimizations for re-renders**. Some of the techniques used here **may not be necessary with FlashList** because it already handles updates differently.  
 
-This optimization isn’t just for manually adding items—it also applies to **infinite scrolling and paginated lists**. If you're fetching new pages using `onEndReached`, applying `React.memo` ensures only new items render, keeping the list performant.
-
-Try optimizing your FlatLists today, and remember: **Don't go overboard with `useCallback` and `useMemo`—focus on real bottlenecks!**  
+We won’t cover FlashList in this post, but it’s worth exploring in the future. Let me know if you’d like a separate post about it!  
 
 ---
 
 👉 **What’s next?**  
 - If you missed it, check out **[Part 1: Don't Re-Render All FlatList Items](/blog/2022-dont-rerender-all-flatlist-items/)**.  
-- Let me know in the comments if you’ve encountered similar performance issues in your apps!
+- Let me know in the comments if you’ve encountered similar performance issues in your apps!  
