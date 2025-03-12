@@ -66,6 +66,31 @@ Rendering item: 3
 
 ---
 
+### **Why FlatList Thinks Everything Changed**
+
+When we add a new item to the list, **we expect only that new item to render**. However, FlatList **ends up re-rendering all items**. Why does this happen?
+
+The issue comes from how **React handles state updates**. In our app, the FlatList’s `data` prop is an array of `ids`.
+
+- **State in React is immutable**, which means we **can’t modify an existing array**—instead, we create a **new array with the updated data**.
+- When we add a new item, **Redux updates `ids` by creating a brand new array reference**.
+- Even though the contents of `ids` are almost the same (except for the new item), **FlatList sees a completely new array**.
+
+Since FlatList **relies on `data` to decide what to render**, React tells it:
+> "Hey, this is a new array. Maybe everything changed. You should re-render all items."
+
+#### **How This Triggers a Full Re-Render**
+
+1. The **user clicks "Add Item"**, triggering an update in Redux state.
+2. Redux **creates a new `ids` array** that includes the new item.
+3. The **ListScreen component re-renders** because it subscribes to Redux state.
+4. FlatList **receives a new `data` prop** (even though most items are unchanged).
+5. **FlatList re-renders all items**—not just the new one—because it thinks the whole list has changed.
+
+This isn’t a bug—FlatList is simply reacting to the updated state as intended. Fortunately, we don’t need to change how FlatList works. Instead, we can stop unnecessary re-renders by making **a small tweak** in how we define our list items.
+
+---
+
 ### **The Fix: Just Add `React.memo`**
 
 Here’s the best part: the **fix is incredibly simple**.
@@ -89,7 +114,13 @@ After the fix, only new items render as expected.
 
 </div>
 
-**Boom! No more unnecessary re-renders. 🎉**
+**Boom! No more unnecessary re-renders.**
+Now, only new items render when added—existing ones stay untouched. 🎉
+
+### **What Actually Happens?**
+
+- `FlatList` **calls `renderItem` when items enter or leave the screen**.
+- `React.memo` **prevents actual re-renders** unless an item’s props change.
 
 ---
 
@@ -153,11 +184,17 @@ By using `<Clock />` inside `ListScreen`, only the clock updates, **keeping Flat
 
 ### **FlashList Handles This Differently**
 
-If you’re using `FlashList` instead of `FlatList`, be aware that **FlashList has its own optimizations for re-renders**. Some of the techniques used here **may not be necessary with FlashList** because it already handles updates differently.
+**FlashList takes a different approach to optimizing re-renders.** Some of these techniques might not be necessary, but the details depend on how your app manages state and updates.
 
 We won’t cover FlashList in this post, but it’s worth exploring in the future. Let me know if you’d like a separate post about it!
 
 ---
+
+### **Final Thoughts**
+
+We saw how **FlatList re-renders all items** when new ones are added—**even though it doesn’t need to.** By making a simple tweak (`React.memo`), we **prevent unnecessary re-renders** and improve performance with minimal effort.
+
+If you use FlatList in your app, I encourage you to **test whether your list items are re-rendering more than necessary**. A small optimization can make a **huge difference** in performance—especially on lower-end devices. 🚀
 
 👉 **What’s next?**
 - If you missed it, check out **[Part 1: Don't Re-Render All FlatList Items](/blog/2022-dont-rerender-all-flatlist-items/)**.
