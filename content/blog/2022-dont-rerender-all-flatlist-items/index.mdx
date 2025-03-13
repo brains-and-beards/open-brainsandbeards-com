@@ -7,13 +7,15 @@ author: Szymon Koper
 ---
 
 
+#### Introduction  
 
-#### Introduction
+The `FlatList` component is often used in _React Native_ apps for rendering lists. It's easy to display a simple list, but using data in an unsuitable structure can lead to unnecessary re-renders and performance issues.  
 
-The `FlatList` component is often used in _React Native_ apps for rendering lists. It's easy to display a simple list, but using data in an unsuitable structure can lead to unnecessary re-renders and performance issues.
+This post focuses on **optimizing FlatList to prevent unnecessary re-renders when list item values change**.  
 
-In this blog post, we have an example app with this issue. I invite you to a step-by-step journey from discovering and investigating the problem to resolving it.
+**But what about when new items are added or removed?** If you're dealing with dynamically updating lists, check out our follow-up post:  
 
+👉 **[FlatList Optimization: Avoid Re-Rendering When Adding or Removing Items](/blog/2025-dont-rerender-new-flatlist-items)**  
 
 ### It's just a list
 
@@ -296,6 +298,19 @@ Now you are ready to answer those questions:
  - How to re-render only a single `FlatList` item instead of all when it's updated?
 
 
+### **What’s Next?**  
+
+Now that we’ve optimized FlatList to prevent re-renders when **list item values change**, what about **when new items are added or removed**?  
+
+In our follow-up post, we tackle that problem:  
+
+👉 **[FlatList Optimization: Avoid Re-Rendering When Adding or Removing Items](/blog/2025-dont-rerender-new-flatlist-items)**  
+
+Check it out and learn how a **tiny fix with `React.memo`** prevents unnecessary re-renders when dynamically updating lists. 🚀  
+
+
 ### Blog post updates:
 
 _January 10, 2023_: Added a link to [our new podcast episode about normalization](https://podcast.brainsandbeards.com/episodes/bbs-12-normalising-app-state).
+
+_March 4, 2025_: Added a link to the follow-up post **[FlatList Optimization: Avoid Re-Rendering When Adding or Removing Items](/blog/2025-dont-rerender-new-flatlist-items)**, which focuses on avoiding unnecessary re-renders when dynamically adding or removing items in FlatList. 
