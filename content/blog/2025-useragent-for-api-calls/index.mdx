@@ -1,0 +1,67 @@
+---
+path: '/blog/2025-useragent-for-api-calls'
+date: '2025-03-28T14:20:00.000Z'
+title: 'User-Agent for API calls'
+image: pop-zebra-NZ-9RqsE06I.jpg
+author: Wojciech Ogrodowczyk
+---
+
+> User-Agent header is an HTTP header intended to identify the user agent responsible for making a given HTTP request. Whereas the character sequence User-Agent comprises the name of the header itself, the header value that a given user agent uses to identify itself is colloquially known as its user agent string.
+
+Basically, that's a header to use to politely introduce yourself. Not as a particular user, but as the software that user is running.
+
+It's usually ignored by most developers when they're starting to build a new app and we send whatever the default is. But later down the line it often comes up that it's actually useful to have some structured data there. If we set it the right way, it's a low-effort, GDPR-friendly way of gathering basic user stats. GDPR-friendly, because we're not hooking up any analytics SDK, there are no unique IDs, just basic data about the user's app version and device, completely anonymous. How low-effort is it, though?
+
+## How Do I Set It Up?
+
+### Generating User Agent String
+
+First thing, all the data that we'll be sending in this example is stored on the native side, so either you gather it yourself with a native module or (preferred) use something like [react-native-device-info](https://github.com/react-native-device-info/react-native-device-info). Then you just need to query a few parameters, put them together and here's your own custom user agent string:
+
+```ts
+import {
+  getApplicationName,
+  getDeviceId,
+  getManufacturerSync,
+  getModel,
+  getReadableVersion,
+  getSystemVersion,
+} from 'react-native-device-info';
+
+import { isAndroid, capitalize } from './helpers';
+
+const app = `(${getApplicationName()}/${getReadableVersion()})`;
+
+const device = isAndroid
+  ? ` (${capitalize(getManufacturerSync())} ${getModel()}; Android ${getSystemVersion()})`
+  : ` (${getDeviceId()}; iOS ${getSystemVersion()})`;
+
+export const userAgent = app + device;
+```
+
+This results in something like `(Sleepy Possum App/1.8.9.12) (iPhone14,6; iOS 18.2)` for iOS or `Toaster Repair/1.2.6.66) (Samsung SM-A156B; Android 14)` for Android.
+
+### Sending Header
+
+Now we just need to hook it up to our API requests. For example, when using `axios` you'd set it up this way:
+
+```ts
+import {userAgent} from './userAgent'
+
+const apiClient = axios.create({
+  baseURL: `http://example.com',
+  headers: {
+    'User-Agent': userAgent,
+  },
+});
+```
+
+### Profit
+
+The last thing left is to reap the rewards. Now you can collect this data on each API request to the backend and make notes on things like:
+
+* What's the oldest app version still in use?
+* What's the breakdown of our iOS and Android user base?
+* Are our users using recent OS versions?
+
+I hope that was helpful. Have a great day / night / week! 👋
