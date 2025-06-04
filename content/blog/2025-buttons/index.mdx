@@ -1,0 +1,229 @@
+---
+path: '/blog/2025-buttons'
+date: '2025-06-05T16:00:00.000Z'
+title: 'Building a Reusable Animated Button in React Native'
+image: header.jpg
+author: Szymon Koper
+---
+
+## Why Build a Custom Button?
+
+In React Native development, having a consistent and polished button component is crucial for enhancing the user experience.
+While there are many UI libraries available, building your own button component gives you complete control over its behavior, animations, and styling.
+
+In this post, we'll create a reusable `NiceButton` component that:
+- Provides smooth press feedback with scale and opacity animations
+- Supports multiple states (active, disabled, loading)
+- Uses React Native's built-in components and Reanimated for animations
+- Is easy to customize and maintain
+
+## The Challenge
+
+Let's start by creating a button that feels native and responsive.
+We'll use `Pressable` as our base component since it provides better control over press interactions than the older `TouchableOpacity`.
+
+Here's our initial implementation:
+
+```tsx
+import { Pressable, StyleSheet, Text, View } from 'react-native';
+import Animated, {
+  useAnimatedStyle,
+  useSharedValue,
+  withSpring,
+} from 'react-native-reanimated';
+
+const NiceButton = ({ onPress }) => {
+  const pressAnim = useSharedValue(1);
+
+  const animatedStyle = useAnimatedStyle(() => ({
+    transform: [{ scale: pressAnim.value }],
+    opacity: pressAnim.value ** 4,
+  }));
+
+  const onPressIn = () => {
+    pressAnim.value = withSpring(0.96);
+  };
+
+  const onPressOut = () => {
+    pressAnim.value = withSpring(1);
+  };
+
+  return (
+    <Pressable 
+      onPressIn={onPressIn} 
+      onPressOut={onPressOut} 
+      onPress={onPress}
+    >
+      <Animated.View style={[styles.button, animatedStyle]}>
+        <Text style={styles.text}>NiceButton</Text>
+      </Animated.View>
+    </Pressable>
+  );
+};
+
+const styles = StyleSheet.create({
+  button: {
+    paddingVertical: 14,
+    paddingHorizontal: 28,
+    borderRadius: 8,
+    backgroundColor: '#007AFF',
+  },
+  text: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: 'white',
+  },
+});
+```
+
+This gives us a basic button with a nice press animation.
+The `pressAnim` shared value controls both the scale and opacity of the button, creating a satisfying feedback effect when pressed.
+
+## Adding States
+
+Now, let's enhance our button to support different states.
+We'll add support for disabled and loading states, with smooth transitions between them.
+
+```tsx
+type ButtonStatus = 'default' | 'disabled' | 'loading';
+
+interface NiceButtonProps {
+  status: ButtonStatus;
+  onPress?: () => void;
+}
+
+const NiceButton = ({ status, onPress }: NiceButtonProps) => {
+  const pressAnim = useSharedValue(1);
+  const stateAnim = useSharedValue(0);
+
+  const animatedStyle = useAnimatedStyle(() => ({
+    transform: [{ scale: pressAnim.value }],
+    opacity: pressAnim.value ** 4,
+    backgroundColor: interpolateColor(
+      stateAnim.value,
+      [0, 1],
+      ['#007AFF', '#E5E5EA']
+    ),
+  }));
+
+  const textAnimatedStyle = useAnimatedStyle(() => ({
+    color: interpolateColor(
+      stateAnim.value,
+      [0, 1],
+      ['white', '#8E8E93']
+    ),
+  }));
+
+  useEffect(() => {
+    stateAnim.value = withTiming(status === 'disabled' ? 1 : 0, {
+      duration: 300,
+    });
+  }, [status]);
+
+  // ... rest of the component
+};
+```
+
+## Adding Loading Animation
+
+For the loading state, we'll create a simple spinner using a bordered circle that rotates continuously.
+
+```tsx
+const NiceButton = ({ status, onPress }: NiceButtonProps) => {
+  const rotation = useSharedValue(0);
+
+  useEffect(() => {
+    if (status === 'loading') {
+      rotation.value = withRepeat(
+        withSequence(
+          withTiming(360, {
+            duration: 1000,
+            easing: Easing.linear,
+          })
+        ),
+        -1
+      );
+    } else {
+      rotation.value = withTiming(0);
+    }
+  }, [status]);
+
+  const spinnerStyle = useAnimatedStyle(() => ({
+    transform: [{ rotate: `${rotation.value}deg` }],
+  }));
+
+  return (
+    <Pressable 
+      onPressIn={onPressIn} 
+      onPressOut={onPressOut} 
+      onPress={handlePress} 
+      disabled={status !== 'default'}
+    >
+      <Animated.View style={[styles.button, animatedStyle]}>
+        {status === 'loading' ? (
+          <View style={styles.loadingContainer}>
+            <Animated.View style={[styles.spinner, spinnerStyle]} />
+          </View>
+        ) : (
+          <Animated.Text style={[styles.text, textAnimatedStyle]}>
+            NiceButton
+          </Animated.Text>
+        )}
+      </Animated.View>
+    </Pressable>
+  );
+};
+```
+
+## Final Touches
+
+Let's add the remaining styles and make sure our component is production-ready.
+
+```tsx
+const styles = StyleSheet.create({
+  button: {
+    paddingVertical: 14,
+    paddingHorizontal: 28,
+    borderRadius: 8,
+  },
+  text: {
+    fontSize: 16,
+    fontWeight: '600',
+  },
+  loadingContainer: {
+    width: 20,
+    height: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  spinner: {
+    width: 20,
+    height: 20,
+    borderRadius: 10,
+    borderWidth: 2,
+    borderColor: 'white',
+    borderTopColor: 'transparent',
+  },
+});
+```
+
+## Try It Yourself
+
+You can try the complete implementation in this [Expo Snack](https://snack.expo.dev/@sakydpozrux/nice-button).
+The component is ready to use in your projects - just copy the code and customize the styles to match your app's design.
+
+## Optional Enhancements
+
+While our button is already production-ready, here are some optional enhancements you might consider:
+
+- Add haptic feedback using `react-native-haptic-feedback`
+- Support different button variants (secondary, danger, etc.)
+- Add support for icons
+- Implement ripple effect for Android
+
+## Conclusion
+
+Building a custom button component gives you full control over its behavior and appearance.
+By using React Native's built-in components and Reanimated, we've created a performant and reusable button that provides a great user experience.
+The complete implementation is available in the [Expo Snack](https://snack.expo.dev/@sakydpozrux/nice-button).
+Feel free to use it in your projects and customize it to your needs!
