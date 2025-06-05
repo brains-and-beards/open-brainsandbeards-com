@@ -12,6 +12,8 @@ In React Native development, having a consistent and polished button component i
 
 While there are many UI libraries available, building your own button component gives you complete control over its behavior, animations, and styling.
 
+![A collection of different button states and animations in a mobile app](./header.jpg "Different states of our NiceButton component: default, pressed, disabled, and loading")
+
 In this post, we'll create a reusable `NiceButton` component that:
 - Provides smooth press feedback with scale and opacity animations
 - Supports multiple states (active, disabled, loading)
@@ -24,6 +26,8 @@ In this post, we'll create a reusable `NiceButton` component that:
 Let's start by creating a basic button component using React Native's `Pressable`.
 
 The `Pressable` component is perfect for our needs as it provides more control over touch interactions than the basic `TouchableOpacity`.
+
+![Basic button implementation with default styling](./header.jpg "Basic button with default styling and no animations")
 
 ```tsx
 import { Pressable, StyleSheet, Text, View } from 'react-native';
@@ -65,6 +69,8 @@ This gives us a basic button with a clean, modern look.
 Now, let's enhance our button with a satisfying press animation using `react-native-reanimated`.
 
 We'll use `useSharedValue` to track the press state and animate both scale and opacity.
+
+![Button press animation showing scale and opacity changes](./header.jpg "Button being pressed with scale and opacity animations")
 
 ```tsx
 import Animated, {
@@ -108,6 +114,8 @@ We use `withSpring` for a natural, bouncy feel when pressing and releasing.
 A good button component should handle different states gracefully.
 
 Let's add support for disabled and loading states:
+
+![Button in different states: default, disabled, and loading](./header.jpg "Button showing different states with smooth color transitions")
 
 ```tsx
 type ButtonStatus = 'default' | 'disabled' | 'loading';
@@ -185,6 +193,8 @@ For the loading state, we'll add a spinning animation.
 
 We'll use `withRepeat` and `withTiming` to create a continuous rotation:
 
+![Loading animation with rotating icon](./header.jpg "Button in loading state with spinning icon animation")
+
 ```tsx
 const NiceButton = ({ 
   status, 
@@ -244,6 +254,8 @@ This gives us flexibility to use any icon library or custom component for the lo
 
 Our `NiceButton` component is now complete with all the essential features.
 
+![Final button implementation with all features](./header.jpg "Complete button implementation with all states and animations")
+
 You can try it out in this [Expo Snack](https://snack.expo.dev/@sakydpozrux/nice-button).
 
 For production use, you might want to consider adding haptic feedback using `react-native-haptic-feedback`.
@@ -253,6 +265,8 @@ The component is now ready to be used across your app, providing a consistent an
 ## Usage Example
 
 Here's how to use the `NiceButton` in your app:
+
+![Example usage of NiceButton in different configurations](./header.jpg "Example showing different button configurations: basic, with save icon, and full width")
 
 ```tsx
 export default function HomeScreen() {
