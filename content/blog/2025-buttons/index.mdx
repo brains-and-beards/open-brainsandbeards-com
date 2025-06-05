@@ -9,6 +9,7 @@ author: Szymon Koper
 ## Why Build a Custom Button?
 
 In React Native development, having a consistent and polished button component is crucial for enhancing the user experience.
+
 While there are many UI libraries available, building your own button component gives you complete control over its behavior, animations, and styling.
 
 In this post, we'll create a reusable `NiceButton` component that:
@@ -20,19 +21,12 @@ In this post, we'll create a reusable `NiceButton` component that:
 
 ## Building from Scratch
 
-Let's start by creating a button that feels native and responsive.
-We'll use `Pressable` as our base component since it provides better control over press interactions than the older `TouchableOpacity`.
+Let's start by creating a basic button component using React Native's `Pressable`.
 
-Here's our basic implementation with a `title` prop to set the button text and basic press animations, with styles defined in `StyleSheet.create`:
+The `Pressable` component is perfect for our needs as it provides more control over touch interactions than the basic `TouchableOpacity`.
 
 ```tsx
-import { useCallback } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
-import Animated, {
-  useAnimatedStyle,
-  useSharedValue,
-  withSpring,
-} from 'react-native-reanimated';
 
 interface NiceButtonProps {
   onPress?: () => void;
@@ -40,30 +34,11 @@ interface NiceButtonProps {
 }
 
 const NiceButton = ({ onPress, title }: NiceButtonProps) => {
-  const pressAnim = useSharedValue(1);
-
-  const animatedStyle = useAnimatedStyle(() => ({
-    transform: [{ scale: pressAnim.value }],
-    opacity: pressAnim.value ** 4,
-  }));
-
-  const onPressIn = useCallback(() => {
-    pressAnim.value = withSpring(0.96);
-  }, []);
-
-  const onPressOut = useCallback(() => {
-    pressAnim.value = withSpring(1);
-  }, []);
-
   return (
-    <Pressable
-      onPressIn={onPressIn}
-      onPressOut={onPressOut}
-      onPress={onPress}
-    >
-      <Animated.View style={[styles.button, animatedStyle, styles.buttonContent]}>
+    <Pressable onPress={onPress}>
+      <View style={styles.button}>
         <Text style={styles.text}>{title}</Text>
-      </Animated.View>
+      </View>
     </Pressable>
   );
 };
@@ -75,12 +50,6 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     backgroundColor: '#007AFF',
   },
-  buttonContent: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    gap: 12,
-  },
   text: {
     fontSize: 16,
     fontWeight: '600',
@@ -89,88 +58,27 @@ const styles = StyleSheet.create({
 });
 ```
 
-This gives us a basic button with a nice press animation.
-The `pressAnim` shared value controls both the scale and opacity of the button, creating a satisfying feedback effect when pressed.
-We've also organized the styles using `StyleSheet.create` for better code structure and removed `useCallback` as it wasn't strictly necessary in this context.
+This gives us a basic button with a clean, modern look.
 
-## Adding States (Disabled and Loading)
+## Adding Press Animation
 
-Now, let's enhance our button to support different states: `default`, `disabled`, and `loading`.
-We'll use Reanimated's `interpolateColor` and `withTiming` to smoothly transition colors for the background and text based on the button's status.
-We also need to manage the button's interactivity based on its state and add the loading spinner, which will appear next to the text using `flexDirection` and `gap`.
+Now, let's enhance our button with a satisfying press animation using `react-native-reanimated`.
+
+We'll use `useSharedValue` to track the press state and animate both scale and opacity.
 
 ```tsx
-import { useEffect, useState } from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
 import Animated, {
-  Easing,
-  interpolateColor,
   useAnimatedStyle,
   useSharedValue,
-  withRepeat,
-  withSequence,
   withSpring,
-  withTiming,
 } from 'react-native-reanimated';
 
-type ButtonStatus = 'default' | 'disabled' | 'loading';
-
-interface NiceButtonProps {
-  status: ButtonStatus;
-  onPress?: () => void;
-  title: string;
-}
-
-const NiceButton = ({ status, onPress, title }: NiceButtonProps) => {
+const NiceButton = ({ onPress, title }: NiceButtonProps) => {
   const pressAnim = useSharedValue(1);
-  const stateAnim = useSharedValue(0);
-  const rotation = useSharedValue(0);
-
-  // Animate colors and interactivity based on status
-  useEffect(() => {
-    // stateAnim.value is 0 for default, 1 for disabled/loading
-    stateAnim.value = withTiming(status === 'default' ? 0 : 1, {
-      duration: 300,
-    });
-  }, [status]);
 
   const animatedStyle = useAnimatedStyle(() => ({
     transform: [{ scale: pressAnim.value }],
     opacity: pressAnim.value ** 4,
-    backgroundColor: interpolateColor(
-      stateAnim.value,
-      [0, 1],
-      ['#007AFF', '#E5E5EA']
-    ),
-  }));
-
-  const textAnimatedStyle = useAnimatedStyle(() => ({
-    color: interpolateColor(
-      stateAnim.value,
-      [0, 1],
-      ['white', '#8E8E93']
-    ),
-  }));
-
-  // Spinner animation for loading state
-  useEffect(() => {
-    if (status === 'loading') {
-      rotation.value = withRepeat(
-        withSequence(
-          withTiming(360, {
-            duration: 1000,
-            easing: Easing.linear,
-          })
-        ),
-        -1
-      );
-    } else {
-      rotation.value = withTiming(0);
-    }
-  }, [status]);
-
-  const spinnerStyle = useAnimatedStyle(() => ({
-    transform: [{ rotate: `${rotation.value}deg` }],
   }));
 
   const onPressIn = () => {
@@ -181,130 +89,50 @@ const NiceButton = ({ status, onPress, title }: NiceButtonProps) => {
     pressAnim.value = withSpring(1);
   };
 
-  // Handle press only in default state
-  const handlePress = () => {
-    if (status === 'default' && onPress) {
-      onPress();
-    }
-  };
-
-  // Disable pressable when not in default state
-  const isPressable = status === 'default';
-
   return (
-    <Pressable
-      onPressIn={isPressable ? onPressIn : undefined}
-      onPressOut={isPressable ? onPressOut : undefined}
-      onPress={handlePress}
-      disabled={!isPressable}
-    >
-      <Animated.View style={[styles.button, animatedStyle, styles.buttonContent]}>
-        {/* Conditionally render spinner */}
-        {status === 'loading' && (
-           <Animated.View style={[styles.spinner, spinnerStyle]} />
-        )}
-         <Animated.Text style={[styles.text, textAnimatedStyle]}>
-            {title}
-          </Animated.Text>
+    <Pressable onPressIn={onPressIn} onPressOut={onPressOut} onPress={onPress}>
+      <Animated.View style={[styles.button, animatedStyle]}>
+        <Text style={styles.text}>{title}</Text>
       </Animated.View>
     </Pressable>
   );
 };
-
-const styles = StyleSheet.create({
-  button: {
-    paddingVertical: 14,
-    paddingHorizontal: 28,
-    borderRadius: 8,
-    // Background color is now animated based on stateAnim
-  },
-  buttonContent: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    gap: 12,
-  },
-  text: {
-    fontSize: 16,
-    fontWeight: '600',
-    // Text color is now animated based on stateAnim
-  },
-  spinner: {
-    width: 20,
-    height: 20,
-    borderRadius: 10,
-    borderWidth: 2,
-    borderColor: 'white',
-    borderTopColor: 'transparent',
-  },
-});
 ```
 
-We've updated the component code and the explanation.
-The key changes are:
-- Added the `status` prop to manage button states (`default`, `disabled`, `loading`).
-- Used `interpolateColor` and `withTiming` to smoothly transition background and text colors based on the `status`.
-- Added a loading spinner using an `Animated.View` with a rotating border.
-- Conditionally render the spinner only when `status` is `loading`.
-- Used `flexDirection: 'row'`, `justifyContent: 'center'`, `alignItems: 'center'`, and `gap: 12` on the inner `Animated.View` to arrange the spinner and text horizontally with spacing.
-- Adjusted `Pressable` props (`onPressIn`, `onPressOut`, `disabled`) and `handlePress` logic to ensure the button is only interactive in the `default` state.
-- All styles are now defined in `StyleSheet.create`.\n- Removed `useCallback` from functions that didn\'t strictly require memoization for performance in this context.\n- Removed trivial comments from the code snippets for clarity.
+The `pressAnim` value controls both the scale and opacity of the button.
 
-Since we are not using fixed width or padding to reserve space for the spinner, the button's width will expand slightly when the spinner appears in the loading state. This is a design choice that simplifies the layout code.
+We use `withSpring` for a natural, bouncy feel when pressing and releasing.
 
-## Styling and Final Touches
+## Supporting Different States
 
-Let's review the final structure and styling of our `NiceButton` component.
-All styles are consolidated in `StyleSheet.create` for better organization.\nThe button's internal content (spinner and text) is laid out using flexbox properties and `gap`.
+A good button component should handle different states gracefully.
+
+Let's add support for disabled and loading states:
 
 ```tsx
-import { useEffect, useState } from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
-import Animated, {
-  Easing,
-  interpolateColor,
-  useAnimatedStyle,
-  useSharedValue,
-  withRepeat,
-  withSequence,
-  withSpring,
-  withTiming,
-} from 'react-native-reanimated';
-
 type ButtonStatus = 'default' | 'disabled' | 'loading';
 
 interface NiceButtonProps {
   status: ButtonStatus;
   onPress?: () => void;
   title: string;
+  loadingTitle?: string;
+  icon?: React.ReactNode;
+  loadingIcon?: React.ReactNode;
+  style?: any;
 }
 
-const NiceButton = ({ status, onPress, title }: NiceButtonProps) => {
+const NiceButton = ({ 
+  status, 
+  onPress, 
+  title, 
+  loadingTitle,
+  icon,
+  loadingIcon,
+  style
+}: NiceButtonProps) => {
   const pressAnim = useSharedValue(1);
   const stateAnim = useSharedValue(0);
-  const rotation = useSharedValue(0);
-
-  useEffect(() => {
-    stateAnim.value = withTiming(status === 'default' ? 0 : 1, {
-      duration: 300,
-    });
-  }, [status]);
-
-  useEffect(() => {
-    if (status === 'loading') {
-      rotation.value = withRepeat(
-        withSequence(
-          withTiming(360, {
-            duration: 1000,
-            easing: Easing.linear,
-          })
-        ),
-        -1
-      );
-    } else {
-      rotation.value = withTiming(0);
-    }
-  }, [status]);
 
   const animatedStyle = useAnimatedStyle(() => ({
     transform: [{ scale: pressAnim.value }],
@@ -324,23 +152,11 @@ const NiceButton = ({ status, onPress, title }: NiceButtonProps) => {
     ),
   }));
 
-  const spinnerStyle = useAnimatedStyle(() => ({
-    transform: [{ rotate: `${rotation.value}deg` }],
-  }));
-
-  const onPressIn = () => {
-    pressAnim.value = withSpring(0.96);
-  };
-
-  const onPressOut = () => {
-    pressAnim.value = withSpring(1);
-  };
-
-  const handlePress = () => {
-    if (status === 'default' && onPress) {
-      onPress();
-    }
-  };
+  useEffect(() => {
+    stateAnim.value = withTiming(status === 'default' ? 0 : 1, {
+      duration: 300,
+    });
+  }, [status]);
 
   const isPressable = status === 'default';
 
@@ -351,79 +167,156 @@ const NiceButton = ({ status, onPress, title }: NiceButtonProps) => {
       onPress={handlePress}
       disabled={!isPressable}
     >
-      <Animated.View style={[styles.button, animatedStyle, styles.buttonContent]}>
-        {/* Conditionally render spinner */}
-        {status === 'loading' && (
-           <Animated.View style={[styles.spinner, spinnerStyle]} />
-        )}
-         <Animated.Text style={[styles.text, textAnimatedStyle]}>
-            {title}
-          </Animated.Text>
+      <Animated.View style={[styles.button, animatedStyle, style]}>
+        <Animated.Text style={[styles.text, textAnimatedStyle]}>
+          {status === 'loading' && loadingTitle ? loadingTitle : title}
+        </Animated.Text>
       </Animated.View>
     </Pressable>
   );
 };
+```
+
+We use `interpolateColor` to smoothly transition between active and disabled states.
+
+## Adding Loading Animation
+
+For the loading state, we'll add a spinning animation.
+
+We'll use `withRepeat` and `withTiming` to create a continuous rotation:
+
+```tsx
+const NiceButton = ({ 
+  status, 
+  onPress, 
+  title, 
+  loadingTitle,
+  icon,
+  loadingIcon,
+  style 
+}: NiceButtonProps) => {
+  const rotation = useSharedValue(0);
+
+  useEffect(() => {
+    if (status === 'loading') {
+      rotation.value = withRepeat(
+        withSequence(
+          withTiming(360, {
+            duration: 1000,
+            easing: Easing.linear,
+          })
+        ),
+        -1
+      );
+    } else {
+      rotation.value = withTiming(0);
+    }
+  }, [status]);
+
+  const spinnerStyle = useAnimatedStyle(() => ({
+    transform: [{ rotate: `${rotation.value}deg` }],
+  }));
+
+  return (
+    <Pressable>
+      <Animated.View style={[styles.button, animatedStyle, styles.buttonContent, style]}>
+        {status === 'loading' && loadingIcon ? (
+          <Animated.View style={spinnerStyle}>
+            {loadingIcon}
+          </Animated.View>
+        ) : icon ? (
+          icon
+        ) : null}
+        <Animated.Text style={[styles.text, textAnimatedStyle]}>
+          {status === 'loading' && loadingTitle ? loadingTitle : title}
+        </Animated.Text>
+      </Animated.View>
+    </Pressable>
+  );
+};
+```
+
+The rotation animation will be applied to any icon we pass as `loadingIcon`.
+
+This gives us flexibility to use any icon library or custom component for the loading state.
+
+## Final Touches
+
+Our `NiceButton` component is now complete with all the essential features.
+
+You can try it out in this [Expo Snack](https://snack.expo.dev/@sakydpozrux/nice-button).
+
+For production use, you might want to consider adding haptic feedback using `react-native-haptic-feedback`.
+
+The component is now ready to be used across your app, providing a consistent and polished user experience.
+
+## Usage Example
+
+Here's how to use the `NiceButton` in your app:
+
+```tsx
+export default function HomeScreen() {
+  const [status, setStatus] = useState<ButtonStatus>('default');
+
+  return (
+    <View style={styles.container}>
+      <NiceButton
+        status={status}
+        onPress={() => console.log('Button pressed!')}
+        title="Nice Button"
+      />
+      <NiceButton
+        status={status}
+        onPress={() => console.log('Save pressed!')}
+        title="Save"
+        loadingTitle="Saving..."
+        icon={<Feather name="save" size={20} color="white" />}
+        loadingIcon={<AntDesign name="loading1" size={20} color="white" />}
+      />
+      <View style={styles.fullWidthButtonContainer}>
+        <NiceButton
+          status={status}
+          onPress={() => console.log('Full Width Button pressed!')}
+          icon={<Feather name="arrow-right" size={20} color="white" />}
+          title="Wide Button"
+          style={styles.fullWidthButton}
+        />
+      </View>
+    </View>
+  );
+}
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    gap: 20,
+    paddingHorizontal: 20,
   },
-  button: {
-    paddingVertical: 14,
-    paddingHorizontal: 28,
-    borderRadius: 8,
+  fullWidthButtonContainer: {
+    width: '100%',
   },
-  buttonContent: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    gap: 12,
+  fullWidthButton: {
+    width: '100%',
   },
-  text: {
-    fontSize: 16,
-    fontWeight: '600',
-  },
-  spinner: {
-    width: 20,
-    height: 20,
-    borderRadius: 10,
-    borderWidth: 2,
-    borderColor: 'white',
-    borderTopColor: 'transparent',
-  },
-  statusContainer: {
-    flexDirection: 'row',
-    gap: 10,
-    marginBottom: 20,
-  },
-  statusText: {
-    color: 'gray',
-  },
-  activeStatusText: {
-    color: '#007AFF',
-  }
 });
 ```
 
-## Try It Yourself
+The component is designed to be easily customizable through props and styles.
 
-You can try the complete implementation in this [Expo Snack](https://snack.expo.dev/@sakydpozrux/nice-button).
-The component is ready to use in your projects - just copy the code and customize the styles to match your app's design.
+You can extend it further by adding support for different sizes or custom animations.
 
-## Optional Enhancements
-
-While our button is already production-ready, here are some optional enhancements you might consider:
-
-- Add haptic feedback using `react-native-haptic-feedback`
-- Support different button variants (secondary, danger, etc.)
-- Add support for icons
-- Implement ripple effect for Android
+Remember to keep your button styles consistent across the app for the best user experience.
 
 ## Conclusion
 
-Building a custom button component gives you full control over its behavior and appearance.
-By using React Native's built-in components and Reanimated, we've created a performant and reusable button that provides a great user experience.
-The complete implementation is available in the [Expo Snack](https://snack.expo.dev/@sakydpozrux/nice-button).
-Feel free to use it in your projects and customize it to your needs!
+Building your own button component gives you full control over its behavior and appearance.
+
+The `NiceButton` component we created provides a solid foundation that you can build upon.
+
+It handles different states gracefully and provides satisfying feedback to user interactions.
+
+Feel free to customize it further to match your app's design system.
+
+Happy coding! 🚀
