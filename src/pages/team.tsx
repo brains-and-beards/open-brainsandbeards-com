@@ -47,9 +47,9 @@ const teamMembers = [
     bio: "React Native developer with web experience. Movie buff. Cooking enthusiast always willing to taste new food. Supporter of the statement that you're only one swim away from a good mood."
   },
   {
-    name: 'Ilya',
-    photo: 'ilya.jpg',
-    bio: "When he's not coding, you can find him cruising around town on his longboard or savoring a glass of good whiskey. Despite his love for React Native, Ilya also has a soft spot for C# and enjoys exploring its versatility and power."
+    name: 'Piotr',
+    photo: 'piotr.jpg',
+    bio: 'Cheerful and open by nature. Hardworking and goal-oriented, though a bit stubborn. In his free time, he enjoys programming, sports, gaming, and watching movies or football.'
   },
   {
     name: 'This could be you',
@@ -226,7 +226,7 @@ export const query = graphql`
             "lukasz.jpg"
             "blazej.jpg"
             "asia.jpg"
-            "ilya.jpg"
+            "piotr.jpg"
             "open-positions.jpg"
           ]
         }
