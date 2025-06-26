@@ -1,0 +1,57 @@
+---
+path: '/blog/2025-problem-with-large-prs'
+date: '2025-06-26T14:20:00.000Z'
+title: 'Problem with large PRs'
+image: pop-zebra-NZ-9RqsE06I.jpg
+author: Wojciech Ogrodowczyk
+---
+
+I don't think many people enjoy reviewing a large PR. But would it really be better to get five smaller ones instead? Let's find out!
+
+## Problems With Large PRs
+
+So what are the issues with big PRs exactly?
+
+### Blackmail
+
+Sometimes in a PR we can see a new programming pattern, or library. If it's in a small PR, it's sometimes hard to see the benefit, because the scale of a problem being solved there is also small. But the real risk comes in a large PR, where it's easier to evaluate, but much harder to reject the change. After all, the whole feature is already working (hopefully!), do we really want to re-write it now in the old way?
+
+I call it a PR blackmail, because the real choice is: do I accept the change as-is, with a controversial pattern, or do we re-write the whole thing, wasting the previous effort? It's hard to argue for the re-write.
+
+### Negative Reviews
+
+When you're going through a small change that's easy to understand, it's also easy to praise the parts you like. In a big PR however, it takes a lot of brain CPU just to parse it and keep the whole context in memory, so there's not much resources left for praising any clever or elegant solutions. Instead, we try to save the energy to scan for potential bugs.
+
+That leads to a review result that's focused on the negatives and it might be rough feedback for the author. It's never nice to get an email notification about twelve critical comments that have been left on the feature that you spend three days implementing.
+
+### Comment Ping-pong
+
+Nobody likes the PR comment ping-pong - replying to PR comments suggesting vague changes ("I'd implement it differently"), being asked open questions ("how does that work exactly?"), or opinions that are hard to interpret ("I'm not so sure about that line"), etc.
+
+The longer the PR, the more comments it'll get. The more comments we have, the longer the feedback loop is to respond to them. The longer the loop the more time passes until the PR gets approved. The more time passes, the bigger the chance of merge conflicts. This does not scale linearly with the size of the PR.
+
+### Hard to Understand What It Does
+
+Sometimes you'll get a PR with a vague description like "implements feature X". That often means a big homework to find what is "feature X" actually supposed to be doing, dig through the designs to spot the edge cases, make notes and finally, keep it all in mind when reviewing the PR. Obviously, the PR's author had to do this work himself, wouldn't it be nice if they shared what exactly they're implementing?
+
+## How to Deal With Large PRs
+
+There's a couple of strategies that help us resolve large PRs with less pain and effort.
+
+### Split Necessary Changes
+
+One thing that you probably don't want to be doing is adding to the length of the change. However, you also don't want to merge something as-id just because it'd take too long to make it right.
+
+For some changes you could describe them as a separate ticket to be implemented separately in another PR. This way you're not lowering the quality threshold to get stuff merged. Just make sure it's handled straight away and not crawls away to die in the deepest dungeons of your backlog.
+
+### Efficient Communication
+
+You want to avoid the comment ping-pong like the plague. One strategy that works for me in bigger PRs is to review it as I'd normally do, leaving comments on anything I find questionable. But instead of preparing some popcorn and sitting down for a round of ping-pong, I'd reach out to the author directly to schedule a pair-programming session as soon as they're able to familiarise themselves with my feedback. In that session we'd got through the comments one by one, usually resolving them straight away.
+
+Either by implementing the necessary changes on the spot, clearing up any doubts or misunderstandings, or discussing how a particular situation hould be addressed (if it requires a longer session to change, or test the changes). In this approach we basically treat the initial round of comments as a TODO list, or an agenda of topics to address in the pair-programming session.
+
+## Are Multiple Smaller PRs Better?
+
+I'd say yes. But they must be a result of splitting the work into smaller tasks, so each of them is still a meaningful, easy to describe change that brings value.
+
+They give faster feedback to the author, they result in higher quality reviews, and allow you a smoother flow of delivery.
