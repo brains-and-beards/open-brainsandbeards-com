@@ -346,12 +346,9 @@ const config: GatsbyConfig = {
       }
     },
     {
-      resolve: 'gatsby-plugin-matomo',
+      resolve: `gatsby-plugin-plausible`,
       options: {
-        siteId: '1',
-        matomoUrl: 'https://brainsandbeards.matomo.cloud',
-        siteUrl: 'https://brainsandbeards.com',
-        disableCookies: true
+        domain: `brainsandbeards.com`
       }
     }
     // 'gatsby-plugin-react-native-web',
