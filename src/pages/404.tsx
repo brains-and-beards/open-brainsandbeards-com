@@ -15,5 +15,11 @@ class NotFound extends Component {
 export default NotFound
 
 export const Head = ({ location }) => (
-  <SEO pathname={location.pathname} title={title} description={description} />
+  <SEO pathname={location.pathname} title={title} description={description}>
+    <script>
+      {
+        "document.addEventListener('DOMContentLoaded', function () { plausible('404', { props: { path: document.location.pathname } }); });"
+      }
+    </script>
+  </SEO>
 )
