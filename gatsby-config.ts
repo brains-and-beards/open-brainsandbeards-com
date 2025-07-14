@@ -353,6 +353,12 @@ const config: GatsbyConfig = {
         siteUrl: 'https://brainsandbeards.com',
         disableCookies: true
       }
+    },
+    {
+      resolve: `gatsby-plugin-plausible`,
+      options: {
+        domain: `brainsandbeards.com`
+      }
     }
     // 'gatsby-plugin-react-native-web',
   ]
