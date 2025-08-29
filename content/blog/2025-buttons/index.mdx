@@ -2,7 +2,7 @@
 path: '/blog/2025-buttons'
 date: '2025-08-29T16:00:00.000Z'
 title: 'Building a Reusable Animated Button in React Native'
-image: header.jpg
+image: header.png
 author: Szymon Koper
 ---
 
@@ -10,7 +10,7 @@ author: Szymon Koper
 
 When building apps in React Native having a consistent and polished button component is crucial for enhancing the user experience. While there are many UI libraries available, building your own button component gives you complete control over its behavior, animations, and styling.
 
-![A collection of different button states and animations in a mobile app](./1states.jpg "Different states of our NiceButton component: default, pressed, disabled, and loading")
+![A collection of different button states and animations in a mobile app](./1states.png "Different states of our NiceButton component: default, pressed, disabled, and loading")
 
 In this post, we'll create a reusable `NiceButton` component that:
 - provides smooth press feedback with scale and opacity animations
@@ -267,7 +267,13 @@ The rotation animation will be applied to any icon we pass as `loadingIcon`. Thi
 
 Our `NiceButton` component is now complete with all the essential features. You can try it out in this [Expo Snack](https://snack.expo.dev/@sakydpozrux/buttons).
 
-![Final button implementation with all features](./6final.jpg "Complete button implementation with all states and animations")
+<div class="gif-container">
+
+![All states animated](6final.gif)
+
+Complete button implementation with all states and animations.
+
+</div>
 
 The component is now ready to be used across your app, providing a consistent and polished user experience. For production use, you might want to consider adding haptic feedback using `react-native-haptic-feedback`.
 
