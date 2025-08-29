@@ -31,12 +31,14 @@ import { Pressable, StyleSheet, Text, View } from 'react-native';
 interface NiceButtonProps {
   onPress?: () => void;
   title: string;
+  icon?: React.ReactNode;
 }
 
-const NiceButton = ({ onPress, title }: NiceButtonProps) => {
+const NiceButton = ({ onPress, title, icon }: NiceButtonProps) => {
   return (
     <Pressable onPress={onPress}>
-      <View style={styles.button}>
+      <View style={[styles.button, styles.buttonContent]}>
+        {icon && icon}
         <Text style={styles.text}>{title}</Text>
       </View>
     </Pressable>
@@ -49,6 +51,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 28,
     borderRadius: 8,
     backgroundColor: '#007AFF',
+  },
+  buttonContent: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    gap: 12,
   },
   text: {
     fontSize: 16,
@@ -79,7 +87,7 @@ import Animated, {
   withSpring,
 } from 'react-native-reanimated';
 
-const NiceButton = ({ onPress, title }: NiceButtonProps) => {
+const NiceButton = ({ onPress, title, icon }: NiceButtonProps) => {
   const pressAnim = useSharedValue(1);
 
   const animatedStyle = useAnimatedStyle(() => ({
@@ -97,7 +105,8 @@ const NiceButton = ({ onPress, title }: NiceButtonProps) => {
 
   return (
     <Pressable onPressIn={onPressIn} onPressOut={onPressOut} onPress={onPress}>
-      <Animated.View style={[styles.button, animatedStyle]}>
+      <Animated.View style={[styles.button, styles.buttonContent, animatedStyle]}>
+        {icon && icon}
         <Text style={styles.text}>{title}</Text>
       </Animated.View>
     </Pressable>
