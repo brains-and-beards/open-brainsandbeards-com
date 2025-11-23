@@ -1,0 +1,152 @@
+---
+path: '/blog/2025-project-structure'
+date: '2025-11-24T14:20:00.000Z'
+title: 'React Native project structure'
+image: alvaro-pinot-czDvRp5V2b0.jpg
+author: Marcin Dziewulski
+---
+
+The React team says they [don't have strong opinions on how to organize your files](https://legacy.reactjs.org/docs/faq-structure.html#is-there-a-recommended-way-to-structure-react-projects), and the docs also [suggest not to stress too much about it](https://legacy.reactjs.org/docs/faq-structure.html#dont-overthink-it). Honestly, that can be a pretty risky suggestion. It gives developers total freedom, but for those who are still learning, it might end up hurting the project. Even experienced developers can sometimes feel lost in the chaos of unorganized files, but there are tools out there to help create and validate the folder structure you want. How you organize your folders is crucial, it lays the groundwork for a better developer experience in the long run.
+
+Before reading this document, please [read this blog post first](https://blog.webdevsimplified.com/2022-07/react-folder-structure/). I'm guessing you've already tried all the solutions mentioned there, but as the project grows, none of them work.
+
+## A perfect project structure doesn't exist
+
+Totally, it does not exist, period. However, we can consider several important aspects when thinking about the project structure. The structure should be:
+
+- easy to understand and simple enough for anyone on the team to recreate
+- so clear and intuitive that it kind of documents itself (like writing clean code or architecture)
+- set up in a way that lets us work independently on different parts of the app
+- make it simple to refactor when needed
+- validated (I mean it, you need some validation rules when working as a team)
+
+## Monorepo for the rescue
+
+If we want to organize everything in the project, a multi-package monorepo architecture is an awesome choice. In this case, breaking down the project is all about decomposition, which isolates things. This means looking at it as a collection of separate "features" instead of one huge thing (monolith). A monorepo contains several packages that share components, hooks, services, or utility functions. Therefore, the idea is simple: break the project into separate features and put each feature in its own package.
+
+A package in the monorepo structure is just a folder with a `package.json` file that has a few specific properties. These folders are linked using symlinks to the `node_modules` folder. All package managers support "workspaces", allowing local packages to be used just like any other package we download from `npm`.
+
+Seeing it this way has many benefits compared to traditional `React` setups. We can tackle various either features or bugs and work in parallel by treating them like `black boxes`. Once everything is set up right, it becomes pretty intuitive after a little getting used to it. We can easily add, remove, or change code without messing with other parts of the app.
+
+Here's what the structure could look:
+
+```
+/packages
+  /core
+    index.ts
+    package.json
+  /design-system
+    index.ts
+    package.json
+  /host
+    index.ts
+    package.json
+  /action-sheet
+    index.ts
+    package.json
+  /video-player
+    index.ts
+    package.json
+  /main
+    index.ts
+    package.json
+```
+
+The `package.json` includes some important details:
+
+```json
+{
+  "name": "@better-youtube/core",
+  "version": "0.1.0",
+  "private": true,
+  "main": "index.ts"
+}
+```
+
+The `name` acts as an alias for accessing the folder, while `main` tells you the entry point when importing from the package. It's worth mentioning that there are no dependencies listed. This is intentional, as all dependencies would be included in the root `package.json` file.
+
+Packages provide multiple advantages compared to simple folders, for example, aliasing gives more context:
+
+```tsx
+import { Button } from '@better-youtube/design-system/components';
+```
+ 
+  compared to
+ 
+```tsx
+import { Button } from '../../../../components/Button';
+```
+
+The first import makes it clear we're using a button component from the `design-system` package, while the second one doesn't provide context about the button’s purpose. This makes imports much clearer as well.
+
+  ```tsx
+  import { VideoPlayer, useVideoPlayer } from '@better-youtube/video-player';
+  import { ActionSheetManager } from '@better-youtube/action-sheet';
+  import { Screen } from '@better-youtube/screen';
+  ```
+  
+Let's compare the above to the relative imports:
+  
+  ```tsx
+  import { VideoPlayer } from '../../../components/VideoPlayer';
+  import { useVideoPlayer } from '../../../hooks/useVideoPlayer';
+  import { ActionSheetManager } from '../../../components/ActionSheetManager';
+  import { Screen } from '../../../components/Screen';
+  ```
+
+So, when we use packages, it kind of encourages us to see features as isolated modules with their own public APIs. We call this having a _better separation of concerns_.
+
+Next, easier refactoring. We can completely change the internals of a package without messing with other code, as long as the public API remains the same. Moving packages is as easy as drag-and-drop, and renaming packages just takes a quick search-and-replace. Also, we gain a full control over exports, we can decide exactly what's available to other packages, limiting deep imports.
+
+## What can be a package?
+
+When figuring out what to turn into packages, finding the right balance is important. We don't want to end up with a ton of tiny packages, but we definitely don't want them to be too huge either. Here's my take on it:
+
+- design system components
+- React Native's entry package (`host`, it's like what Expo does)
+- features that have clear UI boundaries (think video player, action/bottom sheet, or the reusable `Screen` component)
+- code that can be shared across other packages (the `core` package is perfect for this)
+- navigation screens and logic (various top navigators, such as `auth` or `main`)
+
+Above all, each package should really focus on just one main responsibility.
+
+## How to organize packages
+
+Here's a package structure that usually works for me:
+
+```
+/package  
+  /api  
+  /assets  
+  /components  
+  /hooks  
+  /navigation  
+  /providers  
+  /screens
+  /services  
+  /styles  
+  /utils  
+  index.ts  
+  package.json
+```
+
+It looks pretty straightforward and classic, doesn't it? You might have seen this structure before. Keep in mind that not every package will have all those folders, most will probably just include a few of them. 
+
+Also, we'd check each package structure using [eslint-plugin-project-structure](https://www.npmjs.com/package/eslint-plugin-project-structure). It helps make sure that folder names, file naming conventions, and package import patterns are correct. On top of that, with [dependency-cruiser](https://www.npmjs.com/package/dependency-cruiser) we could get even more checks.
+
+## Final words
+
+To sum up the project structure what we've covered here - _implement a monorepo by extracting features into packages_.
+
+## What if I don't like it?
+
+When you're preparing a project structure proposal for your app, there are a few things you should keep in mind:
+
+- define the overall architectural style you want to use
+- think about how the structure can handle growth in the future (scalability)
+- describe a clear naming system for files
+- define a linting strategy
+- figure out what should go in each folder
+- clarify how the modules flow between the different folders
+
+Thanks for reading! ❤️

@@ -38,6 +38,10 @@ export const blogAuthorsImages = {
   'Ilya Kushner': {
     imageName: 'ilya.jpg',
     title: 'React Native developer'
+  },
+  'Marcin Dziewulski': {
+    imageName: 'marcin.jpg',
+    title: 'Software developer'
   }
 }
 
