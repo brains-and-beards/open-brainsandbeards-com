@@ -54,7 +54,7 @@ const teamMembers = [
   {
     name: 'Dávid',
     photo: 'david.jpg',
-    bio: 'Enjoys building products, growing teams, and solving complex technical challenges. Experienced across the stack—from backend systems and mobile apps to DevOps and IoT—but happiest where technology and people come together. Always learning, always shipping. Tyranid at heart, piña colada appreciator, and someone who genuinely enjoys walks in the rain.'
+    bio: 'Full-stack product builder focused on turning ideas into useful, well-crafted products. Enjoys working across technology and teams, spending time with dogs and tackling challenges with a tabletop strategist’s mindset.'
   },
   {
     name: 'This could be you',
