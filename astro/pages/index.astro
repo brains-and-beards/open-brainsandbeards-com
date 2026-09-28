@@ -1,19 +1,17 @@
 ---
-const title = 'Astro migration preview'
+import PageHeader from '../components/layout/PageHeader.astro'
+import CalloutBar from '../components/ui/CalloutBar.astro'
+import BaseLayout from '../layouts/BaseLayout.astro'
 ---
 
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="robots" content="noindex, nofollow" />
-    <title>{title}</title>
-  </head>
-  <body>
-    <main>
-      <h1>{title}</h1>
-      <p>The Astro static build is configured alongside the current Gatsby site.</p>
-    </main>
-  </body>
-</html>
+<BaseLayout title="Astro migration preview" noIndex>
+  <div slot="header" class="yellow">
+    <div class="content row header">
+      <PageHeader title="Astro migration preview" subtitle="The shared Astro layout is ready for the first migrated page." />
+    </div>
+  </div>
+  <section class="content">
+    <p>This page validates the shared navigation, SEO metadata, global styles, and footer.</p>
+  </section>
+  <CalloutBar title="Ready for the next migration step?" />
+</BaseLayout>

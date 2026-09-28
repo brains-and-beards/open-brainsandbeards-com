@@ -1,0 +1,33 @@
+---
+interface Props {
+  title: string
+  subtitle?: string
+  imageUrl?: string
+  imageAlt?: string
+  columns?: boolean
+}
+
+const { title, subtitle, imageUrl, imageAlt = '', columns = false } = Astro.props
+---
+
+{columns ? (
+  <div class="header">
+    <div class="left-col">
+      <h1 class="text-center-mobile">{title}</h1>
+      {imageUrl && <img class="right-header-image mobile-only" src={imageUrl} alt={imageAlt} loading="eager" />}
+      {subtitle && <p class="sub2">{subtitle}</p>}
+      <slot name="subtitle" />
+    </div>
+    <div class="hero-right-col center">
+      <slot name="right-content">
+        {imageUrl && <img class="right-header-image" src={imageUrl} alt={imageAlt} loading="eager" />}
+      </slot>
+    </div>
+  </div>
+) : (
+  <div class="center">
+    <h1>{title}</h1>
+    {subtitle && <p class="sub2">{subtitle}</p>}
+    <slot name="subtitle" />
+  </div>
+)}

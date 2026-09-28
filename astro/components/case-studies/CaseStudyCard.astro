@@ -1,0 +1,23 @@
+---
+interface Props {
+  href: string
+  title: string
+  description: string
+  readMoreLabel?: string
+  flip?: boolean
+}
+
+const { href, title, description, readMoreLabel = 'Read full story', flip = false } = Astro.props
+---
+
+<article class:list={['row', 'client-details', { flip }]}>
+  <a class="case-study-link" href={href}>
+    <div class="our-clients-left-col">
+      <slot name="logo" />
+      <h3>{title}</h3>
+      <p>{description}</p>
+      <span class="button-text-2">{readMoreLabel}</span>
+    </div>
+    <div class="our-clients-pic"><slot name="image" /></div>
+  </a>
+</article>

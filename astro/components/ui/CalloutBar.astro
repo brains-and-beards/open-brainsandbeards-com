@@ -1,0 +1,21 @@
+---
+import ButtonLink from './ButtonLink.astro'
+
+interface Props {
+  title: string
+  body?: string
+  href?: string
+  actionLabel?: string
+  tonedDown?: boolean
+}
+
+const { title, body, href = '/hire-us/', actionLabel = 'Get in touch', tonedDown = false } = Astro.props
+---
+
+<section class:list={['estimateProject', { 'toned-down': tonedDown }]}>
+  <div class:list={[tonedDown ? 'narrow-column' : 'content', 'center']}>
+    <h2>{title}</h2>
+    {body && <p class="sub2">{body}</p>}
+    <ButtonLink href={href} variant={tonedDown ? 'yellow' : 'light'}>{actionLabel}</ButtonLink>
+  </div>
+</section>
