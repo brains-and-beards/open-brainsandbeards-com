@@ -14,7 +14,7 @@ You can see the development version on `http://localhost:8000/`.
 ## Astro migration preview
 
 Astro is configured in parallel while the current production build continues to
-use Gatsby. Use Node.js 22.12.0 or newer (see `.nvmrc`), then run:
+use Gatsby. Use Node.js 22.19.0 or newer (see `.nvmrc`), then run:
 
 ```
 npm install
