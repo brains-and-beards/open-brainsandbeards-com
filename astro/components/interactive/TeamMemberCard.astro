@@ -1,0 +1,15 @@
+---
+interface Props {
+  name: string
+  bio: string
+  imageUrl: string
+}
+
+const { name, bio, imageUrl } = Astro.props
+---
+
+<article class="team-member" id={name} data-team-member={name}>
+  <img src={imageUrl} alt={`Member: ${name}`} loading="lazy" />
+  <p class="sub1">{name}</p>
+  <p>{bio}</p>
+</article>

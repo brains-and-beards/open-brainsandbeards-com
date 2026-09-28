@@ -1,0 +1,12 @@
+<script>
+  const updateTeamFocus = () => {
+    const name = decodeURIComponent(window.location.hash.slice(1))
+    document.querySelectorAll<HTMLElement>('[data-team-member]').forEach(member => {
+      const isFocused = member.id === name || (name === 'Brains&Beards' && member.dataset.teamMember === 'Brains&Beards')
+      member.classList.toggle('isFocused', isFocused)
+    })
+  }
+
+  updateTeamFocus()
+  window.addEventListener('hashchange', updateTeamFocus)
+</script>

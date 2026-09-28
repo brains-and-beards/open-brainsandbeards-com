@@ -1,0 +1,57 @@
+---
+export interface CarouselItem {
+  id: string
+  quote: string
+  name: string
+  position: string
+  company: string
+  imageUrl?: string
+  imageAlt?: string
+}
+
+interface Props {
+  label: string
+  items: CarouselItem[]
+}
+
+const { label, items }: Props = Astro.props
+---
+
+<section class="astro-carousel" data-carousel aria-roledescription="carousel" aria-label={label}>
+  <div class="astro-carousel__track" data-carousel-track tabindex="0">
+    {items.map(({ id, quote, name, position, company, imageUrl, imageAlt }) => (
+      <article class="astro-carousel__slide" id={id} aria-roledescription="slide" aria-label={`${name}, ${company}`}>
+        {imageUrl && <img class="astro-carousel__image" src={imageUrl} alt={imageAlt ?? ''} width="152" height="152" loading="lazy" />}
+        <p class="quote">{quote}</p>
+        <p class="who"><b>{name}</b>,<br />{position},<br />{company}</p>
+      </article>
+    ))}
+  </div>
+  <div class="astro-carousel__controls" aria-label={`${label} controls`}>
+    <button type="button" data-carousel-prev aria-label="Previous slide">←</button>
+    <button type="button" data-carousel-next aria-label="Next slide">→</button>
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-carousel]').forEach(carousel => {
+    const track = carousel.querySelector<HTMLElement>('[data-carousel-track]')
+    const previous = carousel.querySelector<HTMLButtonElement>('[data-carousel-prev]')
+    const next = carousel.querySelector<HTMLButtonElement>('[data-carousel-next]')
+    if (!track) return
+
+    const move = (direction: 1 | -1) => track.scrollBy({ left: track.clientWidth * direction, behavior: 'smooth' })
+    previous?.addEventListener('click', () => move(-1))
+    next?.addEventListener('click', () => move(1))
+  })
+</script>
+
+<style is:global>
+  .astro-carousel { position: relative; }
+  .astro-carousel__track { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
+  .astro-carousel__track::-webkit-scrollbar { display: none; }
+  .astro-carousel__slide { flex: 0 0 100%; scroll-snap-align: start; text-align: center; padding: 0 48px; }
+  .astro-carousel__image { border-radius: 50%; object-fit: cover; }
+  .astro-carousel__controls { display: flex; justify-content: center; gap: 12px; margin-top: 20px; }
+  .astro-carousel__controls button { cursor: pointer; min-width: 44px; }
+</style>

@@ -1,0 +1,33 @@
+---
+import bicycleUrl from '../../../src/assets/illustrations/hero-bicycle.png?url'
+import joggerUrl from '../../../src/assets/illustrations/hero-jogin.png?url'
+import skateboardUrl from '../../../src/assets/illustrations/hero-skateboard.png?url'
+
+interface Props {
+  alt?: string
+  class?: string
+}
+
+const { alt = 'Brains & Beards illustration', class: className } = Astro.props
+const sources = [bicycleUrl, joggerUrl, skateboardUrl]
+---
+
+<img
+  class:list={['hero-image', className]}
+  data-random-hero
+  data-hero-sources={JSON.stringify(sources)}
+  src={sources[0]}
+  alt={alt}
+  width="740"
+  height="510"
+  decoding="async"
+  fetchpriority="high"
+/>
+
+<script>
+  document.querySelectorAll<HTMLImageElement>('[data-random-hero]').forEach(image => {
+    const sources = JSON.parse(image.dataset.heroSources ?? '[]') as string[]
+    if (sources.length < 2) return
+    image.src = sources[Math.floor(Math.random() * sources.length)]
+  })
+</script>

@@ -1,7 +1,26 @@
 ---
 import PageHeader from '../components/layout/PageHeader.astro'
+import Carousel from '../components/interactive/Carousel.astro'
+import RandomHero from '../components/interactive/RandomHero.astro'
 import CalloutBar from '../components/ui/CalloutBar.astro'
 import BaseLayout from '../layouts/BaseLayout.astro'
+
+const carouselItems = [
+  {
+    id: 'astro-carousel-one',
+    quote: 'A native scroll-snap carousel keeps this preview light.',
+    name: 'Astro migration',
+    position: 'Shared interaction layer',
+    company: 'Brains & Beards'
+  },
+  {
+    id: 'astro-carousel-two',
+    quote: 'Controls enhance the experience without shipping a carousel framework.',
+    name: 'Progressive enhancement',
+    position: 'Static-first rendering',
+    company: 'Astro'
+  }
+]
 ---
 
 <BaseLayout title="Astro migration preview" noIndex>
@@ -12,6 +31,8 @@ import BaseLayout from '../layouts/BaseLayout.astro'
   </div>
   <section class="content">
     <p>This page validates the shared navigation, SEO metadata, global styles, and footer.</p>
+    <RandomHero class="mobile-preview" />
+    <Carousel label="Astro interaction preview" items={carouselItems} />
   </section>
   <CalloutBar title="Ready for the next migration step?" />
 </BaseLayout>
