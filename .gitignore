@@ -5,6 +5,10 @@ src/gatsby-types.d.ts
 public/
 .cache/
 
+# Astro build artifacts
+.astro/
+dist-astro/
+
 # IDE
 .idea/
 .vscode/
@@ -14,3 +18,6 @@ public/
 
 # Blog post helpers
 .expo
+
+# Local Netlify folder
+.netlify

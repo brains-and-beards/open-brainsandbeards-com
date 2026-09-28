@@ -4,6 +4,9 @@
   "private": true,
   "description": "brains-beards-site",
   "author": "Wojciech Ogrodowczyk",
+  "engines": {
+    "node": ">=22.12.0"
+  },
   "keywords": [
     "gatsby"
   ],
@@ -13,6 +16,10 @@
     "build": "gatsby build",
     "serve": "gatsby serve",
     "clean": "gatsby clean",
+    "astro:dev": "astro dev",
+    "astro:build": "astro build",
+    "astro:preview": "astro preview",
+    "astro:check": "astro check",
     "global-prettier": "prettier --write .",
     "typecheck": "tsc --noEmit",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
@@ -49,6 +56,11 @@
     "swiper": "^5.4.1"
   },
   "devDependencies": {
+    "@astrojs/check": "^0.9.10",
+    "@astrojs/mdx": "^5.0.6",
+    "@astrojs/netlify": "^7.0.13",
+    "@astrojs/sitemap": "^3.7.4",
+    "astro": "^6.0.5",
     "@trivago/prettier-plugin-sort-imports": "^4.1.1",
     "@types/node": "^18.14.0",
     "@types/react": "^18.0.28",
@@ -58,6 +70,6 @@
     "eslint-plugin-eslint-comments": "^3.2.0",
     "eslint-plugin-prettier": "^4.2.1",
     "prettier": "2.8.7",
-    "typescript": "^4.9.5"
+    "typescript": "^5.9.3"
   }
 }
