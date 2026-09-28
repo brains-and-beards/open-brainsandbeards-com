@@ -1,0 +1,27 @@
+---
+import BaseLayout from './BaseLayout.astro'
+import PageHeader from '../components/layout/PageHeader.astro'
+
+interface Props {
+  title: string
+  description: string
+  heroImage?: string
+  heroImageAlt?: string
+  columns?: boolean
+  simpleNavbar?: boolean
+  greyNavbar?: boolean
+  projects?: boolean
+  noIndex?: boolean
+}
+
+const { title, description, heroImage, heroImageAlt, columns = false, simpleNavbar = false, greyNavbar = false, projects = false, noIndex = false } = Astro.props
+---
+
+<BaseLayout title={title} description={description} simpleNavbar={simpleNavbar} greyNavbar={greyNavbar} projects={projects} noIndex={noIndex}>
+  <div slot="header" class="yellow">
+    <div class="content row header">
+      <PageHeader title={title} subtitle={description} imageUrl={heroImage} imageAlt={heroImageAlt} columns={columns} />
+    </div>
+  </div>
+  <slot />
+</BaseLayout>

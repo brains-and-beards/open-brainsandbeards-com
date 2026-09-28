@@ -1,0 +1,21 @@
+---
+import MarketingPage from '../../layouts/MarketingPage.astro'
+import FeatureList from '../../components/ui/FeatureList.astro'
+import CalloutBar from '../../components/ui/CalloutBar.astro'
+import hero from '../../../src/assets/illustrations/services-native-hero.png?url'
+import focus from '../../../src/assets/illustrations/services-native-mobile-focus.png?url'
+import experience from '../../../src/assets/illustrations/services-native-experience.png?url'
+import reliability from '../../../src/assets/illustrations/services-native-reliability.png?url'
+---
+<MarketingPage title="Get the mobile app that your business deserves" description="Native development is the gold standard of quality for mobile applications. And we are all about quality." heroImage={hero} columns simpleNavbar>
+  <div class="service-description"><div class="narrow-column text-format">
+    <h3>Why choose us to deliver your next project?</h3>
+    <FeatureList items={[
+      { title: 'Focus on mobile', image: focus, imageAlt: '', paragraphs: ['We are specialists focused on creating great mobile apps for years.'] },
+      { title: 'Experience', image: experience, imageAlt: '', paragraphs: ['On average, our team has more than eight years of experience.'] },
+      { title: 'Reliability', image: reliability, imageAlt: '', paragraphs: ['You get individual skills plus shared delivery history, workflows, and processes.'] }
+    ]} />
+    <h3>Should my mobile app go native?</h3><p>It depends. Native is the right choice when UX is most important, performance on low-end devices is critical, the application does significant background work, or it needs the newest platform features.</p><p>If not, <a href="/services/cross-platform/">React Native</a> may be a better choice.</p>
+  </div></div>
+  <CalloutBar title="Contact us to find the best solution for your case" actionLabel="Tell us about your project" />
+</MarketingPage>

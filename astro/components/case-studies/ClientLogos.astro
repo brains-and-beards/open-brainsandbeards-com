@@ -1,0 +1,31 @@
+---
+import rakuten from '../../../src/assets/client-logos/rakuten.png?url'
+import manoMano from '../../../src/assets/client-logos/mano-mano.png?url'
+import xing from '../../../src/assets/client-logos/xing.png?url'
+import metro from '../../../src/assets/client-logos/metro.png?url'
+import mobilab from '../../../src/assets/client-logos/mobilab.png?url'
+import bsdex from '../../../src/assets/client-logos/bsdex.png?url'
+import liveArt from '../../../src/assets/client-logos/live-art.png?url'
+import vay from '../../../src/assets/client-logos/vay.png?url'
+import femtasy from '../../../src/assets/client-logos/femtasy.png?url'
+import vermietet from '../../../src/assets/client-logos/vermietet.png?url'
+import lokalportal from '../../../src/assets/client-logos/lokalportal.png?url'
+import donut from '../../../src/assets/client-logos/donut.png?url'
+import saloodo from '../../../src/assets/client-logos/saloodo.png?url'
+import sharoo from '../../../src/assets/client-logos/sharoo.png?url'
+import clincase from '../../../src/assets/client-logos/clincase.png?url'
+import visca from '../../../src/assets/client-logos/visca.png?url'
+const logos = [
+  ['Rakuten', rakuten], ['ManoMano', manoMano], ['XING', xing], ['Metro', metro],
+  ['Mobilab', mobilab], ['BSDEX', bsdex], ['LiveArt', liveArt], ['Vay', vay],
+  ['Femtasy', femtasy], ['Vermietet', vermietet], ['LokalPortal', lokalportal], ['Donut', donut],
+  ['Saloodo', saloodo], ['Sharoo', sharoo], ['Clincase', clincase], ['Visca', visca]
+]
+---
+<div class="clients">
+  {Array.from({ length: 4 }, (_, row) => (
+    <div class="logos">
+      {logos.slice(row * 4, row * 4 + 4).map(([name, image]) => <div class="logo"><img src={image} alt={name} loading="lazy" /></div>)}
+    </div>
+  ))}
+</div>

@@ -1,0 +1,25 @@
+---
+import MarketingPage from '../../layouts/MarketingPage.astro'
+import FeatureList from '../../components/ui/FeatureList.astro'
+import CalloutBar from '../../components/ui/CalloutBar.astro'
+import hero from '../../../src/assets/illustrations/services-cross-platform-hero.png?url'
+import faster from '../../../src/assets/illustrations/services-cross-platform-faster.png?url'
+import reuse from '../../../src/assets/illustrations/services-cross-platform-reuse.png?url'
+import team from '../../../src/assets/illustrations/services-cross-platform-team.png?url'
+import codebase from '../../../src/assets/illustrations/services-cross-platform-codebase.png?url'
+---
+<MarketingPage title="Build your product faster using cross-platform tools" description="We have already delivered successful React Native applications for our clients back in 2016. You can't beat experience." heroImage={hero} columns simpleNavbar>
+  <div class="service-description"><div class="narrow-column text-format">
+    <h3>What does cross-platform mean?</h3><p>Modern cross-platform solutions deliver quality and polish indistinguishable from native counterparts. We mean mobile-focused frameworks such as React Native and Flutter, which target iOS and Android while keeping control over the user experience.</p>
+    <h3>Pros of modern cross-platform solutions</h3>
+    <FeatureList items={[
+      { title: 'Faster development', image: faster, imageAlt: '', paragraphs: ['React Native and Flutter make it possible to create beautiful applications faster than native tooling.'] },
+      { title: 'Code reuse', image: reuse, imageAlt: '', paragraphs: ['React Native projects commonly share around 90% of their code between iOS and Android.'] },
+      { title: 'Single team', image: team, imageAlt: '', paragraphs: ['One team can deliver both applications consistently and solve each problem once.'] },
+      { title: 'Accessible codebase', image: codebase, imageAlt: '', paragraphs: ['JavaScript and React skills make it easier for your organisation to contribute.'] }
+    ]} />
+    <p class="effect effect-big-margins">If you read between the lines, it basically boils down to one thing — lower costs.</p>
+  </div></div>
+  <section class="trustBar"><ul class="trustBarList row"><li><span>7</span><p>years of experience with React Native</p></li><li><span>15+</span><p>cross-platform projects we worked on</p></li><li><span>50+</span><p>articles we wrote about cross-platform development</p></li></ul></section>
+  <CalloutBar title="Build your product faster with Brains & Beards" />
+</MarketingPage>

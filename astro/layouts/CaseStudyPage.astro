@@ -1,0 +1,10 @@
+---
+import MarketingPage from './MarketingPage.astro'
+import CalloutBar from '../components/ui/CalloutBar.astro'
+interface Props { title: string; description: string }
+const { title, description } = Astro.props
+---
+<MarketingPage title={title} description={description} simpleNavbar projects>
+  <article class="case-study-content content-page"><div class="narrow-column text-format"><slot /></div></article>
+  <CalloutBar title="Want to start a great project?" />
+</MarketingPage>

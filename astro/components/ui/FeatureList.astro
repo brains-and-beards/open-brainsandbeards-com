@@ -1,0 +1,17 @@
+---
+interface Item { title: string; image: string; imageAlt: string; paragraphs: string[] }
+interface Props { items: Item[] }
+const { items }: Props = Astro.props
+---
+
+<ul class="picture-list">
+  {items.map(({ title, image, imageAlt, paragraphs }) => (
+    <li>
+      <img class="image-wrapper" src={image} alt={imageAlt} loading="lazy" />
+      <div class="pic-description">
+        <p class="title">{title}</p>
+        {paragraphs.map(paragraph => <p>{paragraph}</p>)}
+      </div>
+    </li>
+  ))}
+</ul>

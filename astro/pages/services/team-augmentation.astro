@@ -1,0 +1,21 @@
+---
+import MarketingPage from '../../layouts/MarketingPage.astro'
+import FeatureList from '../../components/ui/FeatureList.astro'
+import CalloutBar from '../../components/ui/CalloutBar.astro'
+import hero from '../../../src/assets/illustrations/services-team-augmentation-hero.png?url'
+import faster from '../../../src/assets/illustrations/services-team-augmentation-faster.png?url'
+import learning from '../../../src/assets/illustrations/services-team-augmentation-learning.png?url'
+import scaling from '../../../src/assets/illustrations/services-team-augmentation-scaling.png?url'
+---
+<MarketingPage title="Bring your team to the next level" description="We're happy to work hand-in-hand with your existing team to give them the support they need to deliver great apps." heroImage={hero} columns simpleNavbar>
+  <div class="service-description"><div class="narrow-column text-format">
+    <h3>Why you might want to augment your staff?</h3>
+    <FeatureList items={[
+      { title: 'Getting work done faster', image: faster, imageAlt: '', paragraphs: ['When plans grow faster than your team can deliver, hiring is not always easy or quick.'] },
+      { title: 'Learning new skills', image: learning, imageAlt: '', paragraphs: ['We share the processes and workflow practices that help teams improve.'] },
+      { title: 'Quickly scaling your team', image: scaling, imageAlt: '', paragraphs: ['For a short push on particular features, an experienced contractor team can be a better fit than hiring.'] }
+    ]} />
+    <h3>How we work</h3><p>We help with legacy rescue missions and successful teams that need to deliver faster. Every project is unique, and we treat it as such.</p>
+  </div></div>
+  <CalloutBar title="We'd be happy to help and steer you towards the best solution" />
+</MarketingPage>

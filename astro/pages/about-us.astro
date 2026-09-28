@@ -1,0 +1,40 @@
+---
+import MarketingPage from '../layouts/MarketingPage.astro'
+import FeatureList from '../components/ui/FeatureList.astro'
+import CalloutBar from '../components/ui/CalloutBar.astro'
+import photo from '../../src/assets/photos/patryk-and-wojtek.jpg?url'
+import teamIcon from '../../src/assets/illustrations/about-team-icon.png?url'
+import workflowIcon from '../../src/assets/illustrations/about-workflow-icon.png?url'
+import brains from '../../src/assets/illustrations/about-brains-icon.png?url'
+import beards from '../../src/assets/illustrations/about-beards-icon.png?url'
+import hands from '../../src/assets/illustrations/about-hands-icon.png?url'
+---
+<MarketingPage title="Our story" description="Learn what drives us and what's the vision behind our company.">
+  <div class="content-page">
+    <div class="big-part-yellow"><img src={photo} alt="Patryk and Wojciech with motorbikes" class="our-story-header" loading="eager" /></div>
+    <div class="narrow-column text-format">
+      <h3 class="center">Why did we start Brains & Beards?</h3>
+      <p>The company was started by two developers: Patryk and Wojtek. They met years ago while working for a big German professional networking site. At some point they grew tired of the restraints of structured organisations and decided to become more independent. They shared ideas and principles, teamed up, and started Brains & Beards together.</p>
+      <p>We want to help others build better digital products faster. Years of work with different organisations and products taught us what works well. We help clients not only by delivering great software, but also by showing how effective a good team can be.</p>
+      <p class="quote center narrow">That's why Brains & Beards is a consultancy.<br />It lets us focus on constant improvement in the two most important areas.</p>
+      <FeatureList items={[
+        { title: 'Building a great team', image: teamIcon, imageAlt: '', paragraphs: ['Our employees are our greatest asset, so we help them become better versions of themselves. Every person brings their own perspective, and you can never see the full picture without many points of view.'] },
+        { title: 'Finding the best workflow', image: workflowIcon, imageAlt: '', paragraphs: ['There are no silver bullets or perfect workflows. Every team figures out what works for it; we document processes, standardise common tasks, and improve iteratively.'] }
+      ]} />
+      <p>Building a product means deciding on tradeoffs between improving the product and improving delivery. An experienced team that already works well together can focus completely on improving your business.</p>
+      <h3 class="center small-margin">Why remote?</h3>
+      <p class="quote inset center">Because remote work is the future<br />and we like living in the future 🚀</p>
+      <p>Remote work takes getting used to, but it brings meaningful benefits: less commuting stress, healthier routines, better work environments, and more time with family. It also makes deep, uninterrupted work possible.</p>
+      <p>Remote teams put extra effort into asynchronous communication and removing roadblocks before they occur. That usually makes work smoother and produces fewer surprises.</p>
+    </div>
+    <CalloutBar title="Want to know more?" body="Tell us about your project and we'll get in touch." />
+    <div class="narrow-column text-format center">
+      <h3>PS. Where does the name come from?</h3>
+      <p class="sub2">When organisations outsource a project, they're usually looking for one of three things:</p>
+      <div class="row">
+        {[['Brains', brains, 'Creativity, innovation, and problem-solving.'], ['Beards', beards, 'Experience and wisdom gained from many projects.'], ['Hands', hands, 'Extra capacity to assemble the parts.']].map(([title, image, text]) => <div class="serviceContainer"><img src={image} alt={title} class="image-wrapper" loading="lazy" /><p class="sub1">{title}</p><p>{text}</p></div>)}
+      </div>
+      <p class="text-left">We pride ourselves on intellectual curiosity, so the first two categories are what interest us. It's where the brains and the beards are that matters.</p>
+    </div>
+  </div>
+</MarketingPage>
