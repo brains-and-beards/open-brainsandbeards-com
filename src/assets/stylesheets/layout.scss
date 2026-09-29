@@ -217,6 +217,10 @@ section {
 }
 
 .our-story-header {
+  display: block;
+  height: auto;
+  aspect-ratio: 2000 / 1153;
+
   @include mobile-version {
     width: 300px;
   }
