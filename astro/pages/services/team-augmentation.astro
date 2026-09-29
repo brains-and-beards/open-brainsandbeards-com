@@ -2,7 +2,7 @@
 import MarketingPage from '../../layouts/MarketingPage.astro'
 import FeatureList from '../../components/ui/FeatureList.astro'
 import CalloutBar from '../../components/ui/CalloutBar.astro'
-import CaseStudyCard from '../../components/case-studies/CaseStudyCard.astro'
+import ServiceCaseStudy from '../../components/case-studies/ServiceCaseStudy.astro'
 import hero from '../../../src/assets/illustrations/services-team-augmentation-hero.png'
 import faster from '../../../src/assets/illustrations/services-team-augmentation-faster.png'
 import learning from '../../../src/assets/illustrations/services-team-augmentation-learning.png'
@@ -10,7 +10,7 @@ import scaling from '../../../src/assets/illustrations/services-team-augmentatio
 import lokalportalHero from '../../../src/assets/case-studies/lokalportal/lokalportal-web.jpg'
 ---
 <MarketingPage title="Bring your team to the next level" description="We're happy to work hand-in-hand with your existing team to give them the support they need to deliver great apps." heroImage={hero} columns simpleNavbar>
-  <div class="service-description"><div class="narrow-column">
+  <div class="service-description"><div class="content narrow-column">
     <h3>Why you might want to<br/>augment your staff?</h3>
     <FeatureList items={[
       { title: 'Getting work done faster', image: faster, imageAlt: '', paragraphs: ['When the plans that you have for your applications are growing faster than your current team can deliver, one of the obvious solutions is to get a bigger team. Unfortunately, hiring new developers is neither an easy, nor a quick process.'] },
@@ -19,6 +19,6 @@ import lokalportalHero from '../../../src/assets/case-studies/lokalportal/lokalp
     ]} />
     <h3>How we work</h3><p>We’re no strangers to clients coming to us with “legacy” projects. Ranging from rescue missions where we're brought in to help untangle the mess that the project has grown into, to helping successful teams deliver even faster, where we hit the ground running and fit into the already established processes.</p><p>Every project is a unique snowflake and we treat is as such. Contact us to learn more about how we can help with yours.</p>
   </div></div>
-  <CalloutBar title="We'd be happy to help and steer you towards the best solution" />
-  <div class="content row"><div class="narrow-column"><h3 class="center set-out">How about an example?</h3><p class="caption center case-study-teaser">If you want to learn more about how we work and what we can achieve, check a detailed case study of a native mobile project that we delivered in a small team for a huge Japanese client.</p><CaseStudyCard href="/projects/lokalportal/" title="We helped Lokalportal team reshape local journalism in Germany" description="How we helped speed up development by improving agile processes and setting up a resilient application architecture." image={lokalportalHero} imageAlt="Lokalportal app" flip /></div></div>
+  <CalloutBar title="We'd be happy to help and steer you towards the best solution" href="/hire-us/" tonedDown />
+  <section class="service-examples"><div class="content row"><div class="narrow-column"><h3 class="center set-out">How about an example?</h3><p class="caption center case-study-teaser">If you want to learn more about how we work and what we can achieve, check a detailed case study of a native mobile project that we delivered in a small team for a huge Japanese client.</p><ServiceCaseStudy href="/projects/lokalportal/" title="We helped Lokalportal team reshape local journalism in Germany" description="How we helped speed up development by improving agile processes and setting up a resilient application architecture." image={lokalportalHero} imageAlt="lokalportal banner" /></div></div></section>
 </MarketingPage>

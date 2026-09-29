@@ -20,7 +20,7 @@ const { title, body, href = '/hire-us/', actionLabel = 'Get in touch', tonedDown
       <div class="center">
         <h3 set:html={title} />
         {body && <p class="sub2">{body}</p>}
-        <div class="button estimate-link yellow"><a href={href}>{actionLabel}</a></div>
+        <a class="button estimate-link yellow" href={href}>{actionLabel}</a>
       </div>
     </div>
   ) : (
@@ -29,7 +29,7 @@ const { title, body, href = '/hire-us/', actionLabel = 'Get in touch', tonedDown
       <div class="center">
         <h2 set:html={title} />
         {body && <p class="sub2">{body}</p>}
-        <div class="button estimate-link"><a href={href}>{actionLabel}</a></div>
+        <a class="button estimate-link" href={href}>{actionLabel}</a>
       </div>
       <Image src={rightIllustration} class="cta-bar-image desktop-only" alt="Happy phone" width={400} densities={[1, 2]} format="webp" loading="lazy" decoding="async" />
     </div>

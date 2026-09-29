@@ -340,6 +340,11 @@ section {
   margin-bottom: 50px;
 }
 
+.service-examples {
+  background-color: $lightGrey;
+  display: flow-root;
+}
+
 .service-description {
   background-color: $lightGrey;
 
@@ -349,6 +354,14 @@ section {
 
   @include desktop-version {
     padding-top: 40px;
+  }
+}
+
+.native-service-description {
+  padding-bottom: 80px;
+
+  .content {
+    margin-bottom: 0;
   }
 }
 

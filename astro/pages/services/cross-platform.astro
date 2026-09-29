@@ -2,7 +2,7 @@
 import MarketingPage from '../../layouts/MarketingPage.astro'
 import FeatureList from '../../components/ui/FeatureList.astro'
 import CalloutBar from '../../components/ui/CalloutBar.astro'
-import CaseStudyCard from '../../components/case-studies/CaseStudyCard.astro'
+import ServiceCaseStudy from '../../components/case-studies/ServiceCaseStudy.astro'
 import hero from '../../../src/assets/illustrations/services-cross-platform-hero.png'
 import faster from '../../../src/assets/illustrations/services-cross-platform-faster.png'
 import reuse from '../../../src/assets/illustrations/services-cross-platform-reuse.png'
@@ -25,6 +25,6 @@ import femtasyHero from '../../../src/assets/case-studies/femtasy/femtasy-header
     <p class="effect effect-big-margins">If you read between the lines, it basically boils down to one thing - lower costs.</p>
   </div></div>
   <section class="trustBar"><ul class="trustBarList row"><li class="trustBarItem"><h2>7</h2><p class="sub2">years of experience<br/>with React Native</p></li><li class="trustBarItem"><h2>15+</h2><p class="sub2">cross-platform projects<br/>we worked on</p></li><li class="trustBarItem"><h2>50+</h2><p class="sub2">articles we wrote about<br/>cross-platform development</p></li></ul></section>
-  <CalloutBar title="Build your product faster with Brains & Beards" />
-  <div class="content row"><div class="narrow-column"><h3 class="center">How about an example?</h3><p class="caption center case-study-teaser">You can check a detailed case study how we worked with one of our clients on a React Native project.</p><CaseStudyCard href="/projects/femtasy/" title="We built a streaming audio player for femtasy" description="Story of a successful launch of a mobile app for an award-winning streaming platform." image={femtasyHero} imageAlt="Femtasy app" flip /></div></div>
+  <CalloutBar title="Build your product faster<br/>with Brains &amp; Beards" href="/hire-us/" />
+  <section class="service-examples"><div class="content row"><div class="narrow-column"><h3 class="center">How about an example?</h3><p class="caption center case-study-teaser">You can check a detailed case study how we worked with one of our clients on a React Native project.</p><ServiceCaseStudy href="/projects/femtasy/" title="We built a streaming audio player for femtasy" description="Story of a successful launch of a mobile app for an award-winning streaming platform." image={femtasyHero} imageAlt="Femtasy banner" /></div></div></section>
 </MarketingPage>

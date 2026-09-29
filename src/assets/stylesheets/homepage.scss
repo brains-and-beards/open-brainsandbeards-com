@@ -420,6 +420,27 @@ a:hover span.inner-text {
   }
 }
 
+.service-case-study-image {
+  flex: 0 0 680px;
+  width: 680px;
+
+  img {
+    height: auto !important;
+    width: 680px;
+  }
+
+  @include mobile-version {
+    flex-basis: auto;
+    max-width: 100%;
+    width: 100%;
+
+    img {
+      max-width: 100%;
+      width: 100%;
+    }
+  }
+}
+
 .client-details-case-study {
   margin-bottom: 100px;
   @include mobile-version {
