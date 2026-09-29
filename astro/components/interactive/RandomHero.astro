@@ -1,33 +1,37 @@
 ---
-import bicycleUrl from '../../../src/assets/illustrations/hero-bicycle.png?url'
-import joggerUrl from '../../../src/assets/illustrations/hero-jogin.png?url'
-import skateboardUrl from '../../../src/assets/illustrations/hero-skateboard.png?url'
+import { Image } from 'astro:assets'
+import bicycle from '../../../src/assets/illustrations/hero-bicycle.png'
+import jogger from '../../../src/assets/illustrations/hero-jogin.png'
+import skateboard from '../../../src/assets/illustrations/hero-skateboard.png'
 
 interface Props {
   alt?: string
-  class?: string
+  mobile?: boolean
 }
 
-const { alt = 'Brains & Beards illustration', class: className } = Astro.props
-const sources = [bicycleUrl, joggerUrl, skateboardUrl]
+const { alt = 'Hero image', mobile = false } = Astro.props
+const heroes = [
+  { image: bicycle, className: 'heroBicycle', width: 710 },
+  { image: jogger, className: 'heroJogin', width: 740 },
+  { image: skateboard, className: 'heroSkateboard', width: 710 }
+]
 ---
 
-<img
-  class:list={['hero-image', className]}
-  data-random-hero
-  data-hero-sources={JSON.stringify(sources)}
-  src={sources[0]}
-  alt={alt}
-  width="740"
-  height="510"
-  decoding="async"
-  fetchpriority="high"
-/>
+<div class:list={['random-hero', { 'mobile-only': mobile }]} data-random-hero>
+  {heroes.map(({ image, className, width }) => (
+    <Image class:list={['hero-image', className, 'random-hero__image']} src={image} alt={alt} {...(mobile ? { height: 510 } : { width })} densities={[1, 2]} format="webp" loading="eager" decoding="async" />
+  ))}
+</div>
 
 <script>
-  document.querySelectorAll<HTMLImageElement>('[data-random-hero]').forEach(image => {
-    const sources = JSON.parse(image.dataset.heroSources ?? '[]') as string[]
-    if (sources.length < 2) return
-    image.src = sources[Math.floor(Math.random() * sources.length)]
+  const selectedHero = Math.floor(Math.random() * 3)
+  document.querySelectorAll<HTMLElement>('[data-random-hero]').forEach(hero => {
+    const images = hero.querySelectorAll<HTMLElement>('.random-hero__image')
+    images[selectedHero]?.classList.add('is-active')
   })
 </script>
+
+<style is:global>
+  .random-hero .random-hero__image { display: none !important; }
+  .random-hero .random-hero__image.is-active { display: block !important; }
+</style>

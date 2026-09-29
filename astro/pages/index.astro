@@ -1,38 +1,102 @@
 ---
-import PageHeader from '../components/layout/PageHeader.astro'
 import Carousel from '../components/interactive/Carousel.astro'
 import RandomHero from '../components/interactive/RandomHero.astro'
 import CalloutBar from '../components/ui/CalloutBar.astro'
 import BaseLayout from '../layouts/BaseLayout.astro'
+import CaseStudyCard from '../components/case-studies/CaseStudyCard.astro'
+import ClientLogos from '../components/case-studies/ClientLogos.astro'
+import ContactForm from '../components/forms/ContactForm.astro'
+import { Image } from 'astro:assets'
+import crossPlatformIcon from '../../src/assets/illustrations/services-cross-platform-icon.png'
+import nativeIcon from '../../src/assets/illustrations/services-native-icon.png'
+import staffIcon from '../../src/assets/illustrations/services-staff-icon.png'
+import rotatingBadge from '../../src/assets/illustrations/also-in.svg?url'
+import reactNativeBadge from '../../src/assets/illustrations/rn.svg?url'
+import manoManoHero from '../../src/assets/case-studies/manomano/manomano-hero-banner.png'
+import marcImage from '../../src/assets/case-studies/manomano/marc-manomano.png?url'
+import sergioImage from '../../src/assets/testimonials/rakuten-sergio.jpg?url'
+import feyyazImage from '../../src/assets/testimonials/sharoo-feyyaz.jpg?url'
+import eliasImage from '../../src/assets/case-studies/manomano/elias-manomano.jpg?url'
+import sebastianImage from '../../src/assets/testimonials/xing-sebastian.jpg?url'
 
 const carouselItems = [
   {
     id: 'astro-carousel-one',
-    quote: 'A native scroll-snap carousel keeps this preview light.',
-    name: 'Astro migration',
-    position: 'Shared interaction layer',
-    company: 'Brains & Beards'
+    quote: '“Deep technical knowledge, human touch, high level of engagement, leadership skills, adaptability… there are many reasons for which I’m trusting completely in Brains & Beards to make the story of ManoMano apps a great success.”',
+    name: 'Marc Torrent',
+    position: 'Head of Engineering',
+    company: 'ManoMano - Colibri SAS',
+    imageUrl: marcImage,
+    imageAlt: 'Testimonial illustration'
   },
   {
     id: 'astro-carousel-two',
-    quote: 'Controls enhance the experience without shipping a carousel framework.',
-    name: 'Progressive enhancement',
-    position: 'Static-first rendering',
-    company: 'Astro'
+    quote: '“I\'ve approached Brains & Beards, because we needed a new mobile application for the Spanish market. The result was a product which is not only easy to maintain and robust, but as well great-looking and simple to understand for Rakuten users. Their years-long expertise helped us get rid of many problems before they even appeared.”',
+    name: 'Sergio Gago',
+    position: 'Technical Director',
+    company: 'Rakuten SL',
+    imageUrl: sergioImage,
+    imageAlt: 'Testimonial illustration'
+  },
+  {
+    id: 'astro-carousel-three',
+    quote: '“We started working with Brains & Beards back in 2016 and have been a customer ever since. They are a reliable partner to work with and have helped us bring many solutions to life both on desktop and mobile. Their expertise and experience shows in many different facets such as project planning, suggesting solutions and efficient problem solving. We can recommend Brains & Beards to companies that need skilled developers who are not scared of technical challenges.”',
+    name: 'Feyyaz Alingan',
+    position: 'Head of Product & Development',
+    company: 'sharoo AG',
+    imageUrl: feyyazImage,
+    imageAlt: 'Testimonial illustration'
+  },
+  {
+    id: 'astro-carousel-four',
+    quote: '“Working with Brains & Beards is very easy. They have integrated into the teams as if they were part of our internal team and have contributed their experience and professionalism in the creation of our apps. Both technically with their great knowledge of technology and at the process level with a clear mindset of continuous learning.”',
+    name: 'Jose Maria Elias',
+    position: 'Engineering Manager',
+    company: 'ManoMano - Colibri SAS',
+    imageUrl: eliasImage,
+    imageAlt: 'Testimonial illustration'
+  },
+  {
+    id: 'astro-carousel-five',
+    quote: '“Brains & Beards helped me by solving many technical impediments across various agile development teams through implementing the needed changes to the backend of those connected applications. The result was that we were able to release the product in time and scope. I would recommend Brains & Beards to people who need the profound support of experienced developers to solve technically challenging projects.”',
+    name: 'Sebastian Gerdemann',
+    position: 'Senior Product Manager',
+    company: 'XING E-Recruiting GmbH & Co. KG',
+    imageUrl: sebastianImage,
+    imageAlt: 'Testimonial illustration'
   }
 ]
 ---
 
-<BaseLayout title="Astro migration preview" noIndex>
+<BaseLayout title="We deliver great mobile applications" description="Brains & Beards is an unpretentious mobile studio that solves business problems through a mix of design and technology.">
   <div slot="header" class="yellow">
     <div class="content row header">
-      <PageHeader title="Astro migration preview" subtitle="The shared Astro layout is ready for the first migrated page." />
+      <div class="header">
+        <div class="left-col">
+          <h1 class="text-center-mobile">We deliver great mobile applications</h1>
+          <RandomHero mobile />
+          <p class="about-us">Brains & Beards is an unpretentious mobile studio that solves business problems through a mix of design and technology.</p>
+          <p class="about-us">We are a remote team of experienced developers spread all over Europe who know how to get a great product shipped.</p>
+        </div>
+        <div class="hero-right-col center">
+          <div class="badge-container"><img class="rotating badge" src={rotatingBadge} alt="" aria-hidden="true" /><img class="badge" src={reactNativeBadge} alt="React Native" /></div>
+          <RandomHero />
+        </div>
+      </div>
     </div>
   </div>
-  <section class="content">
-    <p>This page validates the shared navigation, SEO metadata, global styles, and footer.</p>
-    <RandomHero class="mobile-preview" />
-    <Carousel label="Astro interaction preview" items={carouselItems} />
+  <div class="half-yellow mobile-only"><div class="badge-container"><img class="rotating badge" src={rotatingBadge} alt="" aria-hidden="true" /><img class="badge" src={reactNativeBadge} alt="React Native" /></div></div>
+  <section class="center homepage-services">
+    <h2>What can we help you with?</h2>
+    <p>Pick a category to learn more:</p>
+    <div class="row">
+      <div class="serviceContainer"><a href="/services/cross-platform/"><Image src={crossPlatformIcon} class="image-wrapper" alt="Cross platform" width={192} densities={[1, 2]} quality={90} format="webp" loading="lazy" decoding="async" /><p class="quote">Cross-platform</p><p class="service-info">Mobile apps in React Native focused on fast delivery</p><span class="button-text-2">Read more</span></a></div>
+      <div class="serviceContainer"><a href="/services/native-development/"><Image src={nativeIcon} class="image-wrapper" alt="Native mobile development" width={192} densities={[1, 2]} quality={90} format="webp" loading="lazy" decoding="async" /><p class="quote">iOS and Android</p><p class="service-info">State-of-the-art applications built using native frameworks from Apple and Google</p><span class="button-text-2">Read more</span></a></div>
+      <div class="serviceContainer"><a href="/services/team-augmentation/"><Image src={staffIcon} class="image-wrapper" alt="Staff augmentation" width={192} densities={[1, 2]} quality={90} format="webp" loading="lazy" decoding="async" /><p class="quote">Staff Augmentation</p><p class="service-info">Additional developers for your existing team to help dynamically scale your efforts</p><span class="button-text-2">Read more</span></a></div>
+    </div>
   </section>
-  <CalloutBar title="Ready for the next migration step?" />
+  <section class="trustBar"><ul class="trustBarList row"><li><span class="number">11</span><p>years on the market</p></li><li><span class="number">52 months</span><p>longest ongoing client engagement</p></li><li><span class="number">9+</span><p>average years of programming experience on our team</p></li></ul></section>
+  <CalloutBar title="Build your product <br/>with Brains & Beards" />
+  <section class="clients"><div class="content"><h2>Our clients</h2><p class="sub2">We help technology-driven organizations – from start-ups to large enterprises – develop software more efficiently.</p><CaseStudyCard home href="/projects/manomano/" title="Ecommerce app for a French unicorn" description="Turning a quick prototype into a fully-fledged ecommerce app for several European markets." readMoreLabel="Read more" image={manoManoHero} imageAlt="ManoMano screens" /><ClientLogos short /><div class="references"><Carousel label="Client references" items={carouselItems} /></div></div></section>
+  <ContactForm />
 </BaseLayout>

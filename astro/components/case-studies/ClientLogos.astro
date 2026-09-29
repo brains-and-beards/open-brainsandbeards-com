@@ -1,31 +1,34 @@
 ---
-import rakuten from '../../../src/assets/client-logos/rakuten.png?url'
-import manoMano from '../../../src/assets/client-logos/mano-mano.png?url'
-import xing from '../../../src/assets/client-logos/xing.png?url'
-import metro from '../../../src/assets/client-logos/metro.png?url'
-import mobilab from '../../../src/assets/client-logos/mobilab.png?url'
-import bsdex from '../../../src/assets/client-logos/bsdex.png?url'
-import liveArt from '../../../src/assets/client-logos/live-art.png?url'
-import vay from '../../../src/assets/client-logos/vay.png?url'
-import femtasy from '../../../src/assets/client-logos/femtasy.png?url'
-import vermietet from '../../../src/assets/client-logos/vermietet.png?url'
-import lokalportal from '../../../src/assets/client-logos/lokalportal.png?url'
-import donut from '../../../src/assets/client-logos/donut.png?url'
-import saloodo from '../../../src/assets/client-logos/saloodo.png?url'
-import sharoo from '../../../src/assets/client-logos/sharoo.png?url'
-import clincase from '../../../src/assets/client-logos/clincase.png?url'
-import visca from '../../../src/assets/client-logos/visca.png?url'
-const logos = [
-  ['Rakuten', rakuten], ['ManoMano', manoMano], ['XING', xing], ['Metro', metro],
-  ['Mobilab', mobilab], ['BSDEX', bsdex], ['LiveArt', liveArt], ['Vay', vay],
-  ['Femtasy', femtasy], ['Vermietet', vermietet], ['LokalPortal', lokalportal], ['Donut', donut],
-  ['Saloodo', saloodo], ['Sharoo', sharoo], ['Clincase', clincase], ['Visca', visca]
+import { Image } from 'astro:assets'
+import rakuten from '../../../src/assets/client-logos/rakuten.png'
+import manoMano from '../../../src/assets/client-logos/mano-mano.png'
+import xing from '../../../src/assets/client-logos/xing.png'
+import metro from '../../../src/assets/client-logos/metro.png'
+import mobilab from '../../../src/assets/client-logos/mobilab.png'
+import bsdex from '../../../src/assets/client-logos/bsdex.png'
+import liveArt from '../../../src/assets/client-logos/live-art.png'
+import vay from '../../../src/assets/client-logos/vay.png'
+import femtasy from '../../../src/assets/client-logos/femtasy.png'
+import vermietet from '../../../src/assets/client-logos/vermietet.png'
+import lokalportal from '../../../src/assets/client-logos/lokalportal.png'
+import donut from '../../../src/assets/client-logos/donut.png'
+import saloodo from '../../../src/assets/client-logos/saloodo.png'
+import sharoo from '../../../src/assets/client-logos/sharoo.png'
+import clincase from '../../../src/assets/client-logos/clincase.png'
+import visca from '../../../src/assets/client-logos/visca.png'
+interface Props { short?: boolean }
+const { short = false } = Astro.props
+const logos: [string, any, number][] = [
+  ['Rakuten', rakuten, 50], ['ManoMano', manoMano, 50], ['XING', xing, 60], ['Metro', metro, 45],
+  ['Mobilab', mobilab, 27], ['BSDEX', bsdex, 70], ['LiveArt', liveArt, 50], ['Vay', vay, 30],
+  ['Femtasy', femtasy, 50], ['Vermietet', vermietet, 50], ['LokalPortal', lokalportal, 40], ['Donut', donut, 40],
+  ['Saloodo', saloodo, 65], ['Sharoo', sharoo, 50], ['Clincase', clincase, 30], ['Visca', visca, 45]
 ]
 ---
 <div class="clients">
-  {Array.from({ length: 4 }, (_, row) => (
+  {Array.from({ length: short ? 1 : 4 }, (_, row) => (
     <div class="logos">
-      {logos.slice(row * 4, row * 4 + 4).map(([name, image]) => <div class="logo"><img src={image} alt={name} loading="lazy" /></div>)}
+      {logos.slice(row * 4, row * 4 + 4).map(([name, image, height]) => <div class="logo"><Image src={image} alt={name} height={height} densities={[1, 2]} format="webp" loading="lazy" decoding="async" /></div>)}
     </div>
   ))}
 </div>
