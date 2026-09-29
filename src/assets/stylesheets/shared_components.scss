@@ -63,6 +63,12 @@
     align-items: center;
     height: 100%;
 
+    // The two 400px illustrations need room around the central CTA. The
+    // default content width leaves the headline with only ~224px on desktop.
+    @include desktop-version {
+      max-width: 1200px;
+    }
+
     h2 {
       margin-bottom: 56px;
     }

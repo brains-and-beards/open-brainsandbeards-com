@@ -1,5 +1,6 @@
 ---
 import { Image } from 'astro:assets'
+import ReadMore from '../ui/ReadMore.astro'
 interface Props {
   href: string
   title: string
@@ -19,7 +20,7 @@ const { href, title, description, readMoreLabel = 'Read full story', flip = fals
   <a href={href}>
     <div class="row client-details client-details-case-study">
       <div class="clients-pic mobile-only"><Image src={image} alt={imageAlt} widths={[320, 480, 680]} sizes="90vw" format="webp" loading={eager ? 'eager' : 'lazy'} decoding="async" /></div>
-      <div class="our-clients-left-col our-clients-any-element"><div class="left-col"><slot name="logo" /><h3>{title}</h3><p>{description}</p><span class="button-text-2">{readMoreLabel}</span></div></div>
+      <div class="our-clients-left-col our-clients-any-element"><div class="left-col"><slot name="logo" /><h3>{title}</h3><p>{description}</p><ReadMore text={readMoreLabel} /></div></div>
       <div class="our-clients-pic-first"><div class="right-col clients-pic"><Image src={image} alt={imageAlt} width={620} densities={[1, 2]} format="webp" loading={eager ? 'eager' : 'lazy'} decoding="async" /></div></div>
     </div>
   </a>
@@ -30,7 +31,7 @@ const { href, title, description, readMoreLabel = 'Read full story', flip = fals
         <slot name="logo" />
         <h3>{title}</h3>
         <p>{description}</p>
-        <span class="button-text-2">{readMoreLabel}</span>
+        <ReadMore text={readMoreLabel} />
       </div>
       <div class="our-clients-pic"><Image src={image} alt={imageAlt} widths={[320, 480, 680, 1024, 1360]} sizes="(max-width: 690px) 90vw, 50vw" format="webp" loading={eager ? 'eager' : 'lazy'} decoding="async" /></div>
     </a>

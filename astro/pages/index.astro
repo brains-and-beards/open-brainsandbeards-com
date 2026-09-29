@@ -2,6 +2,7 @@
 import Carousel from '../components/interactive/Carousel.astro'
 import RandomHero from '../components/interactive/RandomHero.astro'
 import CalloutBar from '../components/ui/CalloutBar.astro'
+import ReadMore from '../components/ui/ReadMore.astro'
 import BaseLayout from '../layouts/BaseLayout.astro'
 import CaseStudyCard from '../components/case-studies/CaseStudyCard.astro'
 import ClientLogos from '../components/case-studies/ClientLogos.astro'
@@ -13,6 +14,7 @@ import staffIcon from '../../src/assets/illustrations/services-staff-icon.png'
 import rotatingBadge from '../../src/assets/illustrations/also-in.svg?url'
 import reactNativeBadge from '../../src/assets/illustrations/rn.svg?url'
 import manoManoHero from '../../src/assets/case-studies/manomano/manomano-hero-banner.png'
+import manoManoLogo from '../../src/assets/case-studies/manomano/manomano-logo-colour.png'
 import marcImage from '../../src/assets/case-studies/manomano/marc-manomano.png?url'
 import sergioImage from '../../src/assets/testimonials/rakuten-sergio.jpg?url'
 import feyyazImage from '../../src/assets/testimonials/sharoo-feyyaz.jpg?url'
@@ -90,13 +92,19 @@ const carouselItems = [
     <h2>What can we help you with?</h2>
     <p>Pick a category to learn more:</p>
     <div class="row">
-      <div class="serviceContainer"><a href="/services/cross-platform/"><Image src={crossPlatformIcon} class="image-wrapper" alt="Cross platform" width={192} densities={[1, 2]} quality={90} format="webp" loading="lazy" decoding="async" /><p class="quote">Cross-platform</p><p class="service-info">Mobile apps in React Native focused on fast delivery</p><span class="button-text-2">Read more</span></a></div>
-      <div class="serviceContainer"><a href="/services/native-development/"><Image src={nativeIcon} class="image-wrapper" alt="Native mobile development" width={192} densities={[1, 2]} quality={90} format="webp" loading="lazy" decoding="async" /><p class="quote">iOS and Android</p><p class="service-info">State-of-the-art applications built using native frameworks from Apple and Google</p><span class="button-text-2">Read more</span></a></div>
-      <div class="serviceContainer"><a href="/services/team-augmentation/"><Image src={staffIcon} class="image-wrapper" alt="Staff augmentation" width={192} densities={[1, 2]} quality={90} format="webp" loading="lazy" decoding="async" /><p class="quote">Staff Augmentation</p><p class="service-info">Additional developers for your existing team to help dynamically scale your efforts</p><span class="button-text-2">Read more</span></a></div>
+      <div class="serviceContainer"><a href="/services/cross-platform/"><Image src={crossPlatformIcon} class="image-wrapper" alt="Cross platform" width={192} densities={[1, 2]} quality={90} format="webp" loading="lazy" decoding="async" /><p class="quote">Cross-platform</p><p class="service-info">Mobile apps in React Native focused on fast delivery</p><ReadMore text="Read more" /></a></div>
+      <div class="serviceContainer"><a href="/services/native-development/"><Image src={nativeIcon} class="image-wrapper" alt="Native mobile development" width={192} densities={[1, 2]} quality={90} format="webp" loading="lazy" decoding="async" /><p class="quote">iOS and Android</p><p class="service-info">State-of-the-art applications built using native frameworks from Apple and Google</p><ReadMore text="Read more" /></a></div>
+      <div class="serviceContainer"><a href="/services/team-augmentation/"><Image src={staffIcon} class="image-wrapper" alt="Staff augmentation" width={192} densities={[1, 2]} quality={90} format="webp" loading="lazy" decoding="async" /><p class="quote">Staff Augmentation</p><p class="service-info">Additional developers for your existing team to help dynamically scale your efforts</p><ReadMore text="Read more" /></a></div>
     </div>
   </section>
-  <section class="trustBar"><ul class="trustBarList row"><li><span class="number">11</span><p>years on the market</p></li><li><span class="number">52 months</span><p>longest ongoing client engagement</p></li><li><span class="number">9+</span><p>average years of programming experience on our team</p></li></ul></section>
+  <section class="trustBar">
+    <ul class="trustBarList row">
+      <li class="trustBarItem"><h2>11</h2><p class="sub2">years on the market</p></li>
+      <li class="trustBarItem"><h2>52 months</h2><p class="sub2">longest ongoing client engagement</p></li>
+      <li class="trustBarItem"><h2>9+</h2><p class="sub2">average years of programming experience on our team</p></li>
+    </ul>
+  </section>
   <CalloutBar title="Build your product <br/>with Brains & Beards" />
-  <section class="clients"><div class="content"><h2>Our clients</h2><p class="sub2">We help technology-driven organizations – from start-ups to large enterprises – develop software more efficiently.</p><CaseStudyCard home href="/projects/manomano/" title="Ecommerce app for a French unicorn" description="Turning a quick prototype into a fully-fledged ecommerce app for several European markets." readMoreLabel="Read more" image={manoManoHero} imageAlt="ManoMano screens" /><ClientLogos short /><div class="references"><Carousel label="Client references" items={carouselItems} /></div></div></section>
+  <section class="clients"><div class="content"><h2>Our clients</h2><p class="sub2">We help technology-driven organizations – from start-ups to large enterprises – develop software more efficiently.</p><CaseStudyCard home href="/projects/manomano/" title="Ecommerce app for a French unicorn" description="Turning a quick prototype into a fully-fledged ecommerce app for several European markets." image={manoManoHero} imageAlt="ManoMano screens"><Image slot="logo" src={manoManoLogo} alt="ManoMano logo" height={22} densities={[1, 2]} format="webp" loading="lazy" decoding="async" /></CaseStudyCard><ClientLogos short /><div class="references"><Carousel label="Client references" items={carouselItems} /></div></div></section>
   <ContactForm />
 </BaseLayout>
