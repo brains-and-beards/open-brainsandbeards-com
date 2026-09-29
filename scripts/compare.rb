@@ -237,6 +237,7 @@ end
 
 old_base = normalised_base_url(options[:old_url])
 new_base = normalised_base_url(options[:new_url])
+using_default_sitemap = options[:paths_file].nil? && ARGV.empty? && options[:sitemap].nil?
 
 paths = if options[:paths_file]
   File.readlines(options[:paths_file], chomp: true).map(&:strip).reject { |line| line.empty? || line.start_with?("#") }
@@ -258,6 +259,13 @@ else
 end
 
 paths = paths.map { |path| normalised_path(path) }.uniq.sort
+if using_default_sitemap
+  skipped_blog_paths, paths = paths.partition do |path|
+    pathname = URI.parse(path).path
+    pathname == "/blog" || pathname.start_with?("/blog/")
+  end
+  puts "Note: skipped #{skipped_blog_paths.length} /blog/* sitemap path#{skipped_blog_paths.length == 1 ? "" : "s"}; the blog is not implemented yet."
+end
 raise "no pages to compare" if paths.empty?
 
 changed = 0
