@@ -16,13 +16,13 @@ const { title, subtitle, image, imageAlt = '', columns = false } = Astro.props
   <div class="header">
     <div class="left-col">
       <h1 class="text-center-mobile">{title}</h1>
-      {image && <Image class="right-header-image mobile-only" src={image} alt={imageAlt} widths={[320, 504, 640]} sizes="(max-width: 690px) 80vw, 504px" format="webp" loading="eager" decoding="async" />}
+      {image && <Image class="right-header-image mobile-only" src={image} alt={imageAlt} width={504} format="webp" loading="eager" decoding="async" />}
       {subtitle && <p class="sub2">{subtitle}</p>}
       <slot name="subtitle" />
     </div>
     <div class="hero-right-col center">
       <slot name="right-content">
-        {image && <Image class="right-header-image" src={image} alt={imageAlt} widths={[320, 504, 640]} sizes="(max-width: 690px) 80vw, 504px" format="webp" loading="eager" decoding="async" />}
+        {image && <Image class="right-header-image" src={image} alt={imageAlt} width={504} format="webp" loading="eager" decoding="async" />}
       </slot>
     </div>
   </div>

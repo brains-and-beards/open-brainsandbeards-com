@@ -6,7 +6,7 @@ import hero from '../../src/assets/illustrations/estimate-hero.png'
 import reactDayBerlin from '../../src/assets/images/contact-page/wojtek-react-berlin.jpg'
 import reactAlicante from '../../src/assets/images/contact-page/wojtek-react-alicante.jpg'
 ---
-<MarketingPage title="Hire us" description="Every project is unique, so let's start with a chat about yours and how we can help." heroImage={hero} columns headerActionLabel="Book a free consultation" headerActionHref="/free-consultation">
+<MarketingPage title="Hire us" description="Every project is unique, so let's start with a chat about yours and how we can help." heroImage={hero} columns headerActionLabel="Book a free consultation" headerActionHref="/free-consultation" pageClass="hire-us">
   <div class="content-page">
     <div class="big-part-yellow"><div class="youtube-wrapper"><iframe src="https://www.youtube.com/embed/DmYJaoWFXsc" class="youtube" title="How it all started"></iframe></div></div>
     <div class="narrow-column text-format">
@@ -20,8 +20,8 @@ import reactAlicante from '../../src/assets/images/contact-page/wojtek-react-ali
   <section>
     <h3 class="small-headline center">Some of our speaking engagements</h3>
     <div class="content row speaker-images-bar">
-      <div class="speaker-image"><Image src={reactDayBerlin} class="center-mobile" alt="Speaking at React Day Berlin" widths={[320, 480]} sizes="(max-width: 690px) 90vw, 480px" format="webp" loading="lazy" decoding="async" /><figcaption class="center">React Day Berlin</figcaption></div>
-      <div class="speaker-image"><Image src={reactAlicante} class="desktop-only" alt="Speaking at React Alicante" widths={[320, 480]} sizes="(max-width: 690px) 90vw, 480px" format="webp" loading="lazy" decoding="async" /><figcaption class="center">React Alicante</figcaption></div>
+      <div class="speaker-image"><Image src={reactDayBerlin} class="center-mobile" alt="Speaking at React Day Berlin" width={375} height={250} format="webp" loading="lazy" decoding="async" /><figcaption class="center">React Day Berlin</figcaption></div>
+      <div class="speaker-image"><Image src={reactAlicante} class="desktop-only" alt="Speaking at React Alicante" width={333} height={250} format="webp" loading="lazy" decoding="async" /><figcaption class="center">React Alicante</figcaption></div>
     </div>
   </section>
   <CalloutBar title="Ready to start?" actionLabel="Book a free consultation" href="/free-consultation" />

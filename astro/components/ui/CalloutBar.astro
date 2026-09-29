@@ -1,5 +1,7 @@
 ---
-import ButtonLink from './ButtonLink.astro'
+import { Image } from 'astro:assets'
+import leftIllustration from '../../../src/assets/illustrations/estimate-project-bar-left.png'
+import rightIllustration from '../../../src/assets/illustrations/estimate-project-bar-right.png'
 
 interface Props {
   title: string
@@ -13,9 +15,23 @@ const { title, body, href = '/hire-us/', actionLabel = 'Get in touch', tonedDown
 ---
 
 <section class:list={['estimateProject', { 'toned-down': tonedDown }]}>
-  <div class:list={[tonedDown ? 'narrow-column' : 'content', 'center']}>
-    <h2>{title}</h2>
-    {body && <p class="sub2">{body}</p>}
-    <ButtonLink href={href} variant={tonedDown ? 'yellow' : 'light'}>{actionLabel}</ButtonLink>
-  </div>
+  {tonedDown ? (
+    <div class="narrow-column">
+      <div class="center">
+        <h3 set:html={title} />
+        {body && <p class="sub2">{body}</p>}
+        <div class="button estimate-link yellow"><a href={href}>{actionLabel}</a></div>
+      </div>
+    </div>
+  ) : (
+    <div class="content row">
+      <Image src={leftIllustration} class="center-mobile cta-bar-image" alt="Happy phone" widths={[226, 400]} sizes="(max-width: 690px) 226px, 400px" format="webp" loading="lazy" decoding="async" />
+      <div class="center">
+        <h2 set:html={title} />
+        {body && <p class="sub2">{body}</p>}
+        <div class="button estimate-link"><a href={href}>{actionLabel}</a></div>
+      </div>
+      <Image src={rightIllustration} class="cta-bar-image desktop-only" alt="Happy phone" widths={[226, 400]} sizes="400px" format="webp" loading="lazy" decoding="async" />
+    </div>
+  )}
 </section>

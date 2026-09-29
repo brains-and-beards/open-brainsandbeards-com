@@ -279,10 +279,12 @@ button.cta-action {
 .right-header-image {
   position: relative;
   width: auto;
+  height: auto;
   padding-right: 40px;
   margin-top: -50px;
 
   @include mobile-version {
+    width: 80vw;
     margin-top: 0px;
   }
 }
