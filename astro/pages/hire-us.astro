@@ -1,18 +1,28 @@
 ---
 import MarketingPage from '../layouts/MarketingPage.astro'
 import CalloutBar from '../components/ui/CalloutBar.astro'
+import { Image } from 'astro:assets'
 import hero from '../../src/assets/illustrations/estimate-hero.png'
+import reactDayBerlin from '../../src/assets/images/contact-page/wojtek-react-berlin.jpg'
+import reactAlicante from '../../src/assets/images/contact-page/wojtek-react-alicante.jpg'
 ---
-<MarketingPage title="Hire us" description="Every project is unique, so let's start with a chat about yours and how we can help." heroImage={hero} columns>
+<MarketingPage title="Hire us" description="Every project is unique, so let's start with a chat about yours and how we can help." heroImage={hero} columns headerActionLabel="Book a free consultation" headerActionHref="/free-consultation">
   <div class="content-page">
     <div class="big-part-yellow"><div class="youtube-wrapper"><iframe src="https://www.youtube.com/embed/DmYJaoWFXsc" class="youtube" title="How it all started"></iframe></div></div>
     <div class="narrow-column text-format">
       <h3 class="center">Start with a conversation</h3>
       <p>We believe that good communication is vital in making any project successful. That's why instead of filing an anonymous contact form, we encourage you to have a chat with us about your project instead.</p>
       <p>We'll use this time to discuss what you need and figure out together how Brains & Beards might fit into this picture. If all goes well, we'll identify the next steps towards delivering a great project together. Worst case scenario, you'll get free advice from industry experts.</p>
-      <p>PS. If you're not into starting off with sync communication, that's cool as well. <a href="/estimate-project/">Write to us using a regular contact form</a> and we'll get back to you.</p>
+      <p>PS. Of course, if you're not into starting off with sync communication, that's cool as well. Just write us about your project using a <a href="/estimate-project">regular contact form</a> and we'll get back to you.</p>
       <div class="button estimate-link"><a class="center" href="/free-consultation">Book a free consultation</a></div>
     </div>
   </div>
-  <CalloutBar title="Let's talk about your project" body="Book a free consultation and learn how we can help." actionLabel="Book a free consultation" href="/free-consultation/" />
+  <section>
+    <h3 class="small-headline center">Some of our speaking engagements</h3>
+    <div class="content row speaker-images-bar">
+      <div class="speaker-image"><Image src={reactDayBerlin} class="center-mobile" alt="Speaking at React Day Berlin" widths={[320, 480]} sizes="(max-width: 690px) 90vw, 480px" format="webp" loading="lazy" decoding="async" /><figcaption class="center">React Day Berlin</figcaption></div>
+      <div class="speaker-image"><Image src={reactAlicante} class="desktop-only" alt="Speaking at React Alicante" widths={[320, 480]} sizes="(max-width: 690px) 90vw, 480px" format="webp" loading="lazy" decoding="async" /><figcaption class="center">React Alicante</figcaption></div>
+    </div>
+  </section>
+  <CalloutBar title="Ready to start?" actionLabel="Book a free consultation" href="/free-consultation" />
 </MarketingPage>
