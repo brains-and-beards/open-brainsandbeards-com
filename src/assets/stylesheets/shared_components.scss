@@ -167,6 +167,10 @@
     border-bottom: 1px solid $black;
   }
 
+  &.footer-separator .content {
+    border-bottom: 1px solid $black;
+  }
+
   input[type='text'] {
     font-size: 14px;
     padding: 0 16px;

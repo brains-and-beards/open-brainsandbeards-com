@@ -15,7 +15,7 @@ import marcin from '../../src/assets/team/marcin.jpg'
 import piotr from '../../src/assets/team/piotr.jpg'
 import david from '../../src/assets/team/david.jpg'
 import openPositions from '../../src/assets/team/open-positions.jpg'
-import noOutsourcing from '../../src/assets/illustrations/team-no-outsourcing.png?url'
+import noOutsourcing from '../../src/assets/illustrations/team-no-outsourcing.png'
 import versatilityIcon from '../../src/assets/illustrations/team-versatility-icon.png'
 import reliabilityIcon from '../../src/assets/illustrations/team-reliability-icon.png'
 import diversityIcon from '../../src/assets/illustrations/team-diversity-icon.png'
@@ -54,9 +54,9 @@ const members: [string, any, string][] = [
         { title: 'Diversity', image: diversityIcon, imageAlt: 'Diversity', paragraphs: ["Monocultural teams create boring and one-sided products. That's not us. Instead, we strive to create depth that comes from combining different points of view. Currently we're seven developers spread over four countries all over Europe and we're not stopping there."] }
       ]} />
     </div>
-    <div class="contact-form"><div class="content center"><div class="text-left row no-outsourcing"><section><h3>NO OUTSOURCING POLICY</h3><p>We pride ourselves on the quality of our work and it's our top priority to ensure you get the best results. For this reason we never outsource any parts of our projects to 3rd parties.</p></section><img src={noOutsourcing} alt="No outsourcing policy" loading="lazy" /></div></div></div>
+    <div class="contact-form"><div class="content center"><div class="text-left row no-outsourcing"><section><h3>NO OUTSOURCING POLICY</h3><p>We pride ourselves on the quality of our work and it's our top priority to ensure you get the best results. For this reason we never outsource any parts of our projects to 3rd parties.</p></section><Image src={noOutsourcing} class="gatsby-image-wrapper" alt="No outsourcing policy" height={320} densities={[1, 2]} format="webp" loading="lazy" decoding="async" /></div></div></div>
     <div class="narrow-column center"><h3>Would you like to see us?</h3><p class="sub2">We understand that sometimes there's a need for a more personal contact. If you want to see better what drives us, take a look at our video channels:</p></div>
     <div class="row movies"><div class="column-400 youtube-container"><div class="youtube-wrapper"><iframe src="https://www.youtube.com/embed/udnxfH9me1Q" class="youtube" title="Expectations Management"></iframe></div><a class="sub1" href="https://www.youtube.com/@brains-and-beards-nobrainers">No Brainers</a><p>Curated look at new technologies, tools and ideas that will improve your daily work.</p></div><div class="column-400 youtube-container"><div class="youtube-wrapper"><iframe src="https://www.youtube.com/embed/grR9UmbjpsQ" class="youtube" title="ListView Animations"></iframe></div><a class="sub1" href="https://www.youtube.com/@brains-and-beards">Brain Picks</a><p>A place where we offer easy solutions to common problems in everyday development.</p></div></div>
   </div>
-  <ContactForm subtitle="If that's not enough and you crave for some face-to-face contact, feel free to use the contact form to get in touch with us!" />
+  <ContactForm footerSeparator subtitle="If that's not enough and you crave for some face-to-face contact, feel free to use the contact form to get in touch with us!" />
 </MarketingPage>

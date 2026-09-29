@@ -6,17 +6,19 @@ interface Props {
   title?: string
   subtitle?: string
   main?: boolean
+  footerSeparator?: boolean
 }
 
 const {
   title = 'Contact us',
   subtitle = 'Got something amazing for us? Fill in the form below to start a new project!',
-  main = false
+  main = false,
+  footerSeparator = false
 } = Astro.props
 const titleClass = title.length > 15 ? 'small-headline' : ''
 ---
 
-<section class="contact-form">
+<section class:list={['contact-form', { 'footer-separator': footerSeparator }]}>
   <form method="post" data-netlify="true" name="contact" action="/message-sent">
     <input type="hidden" name="form-name" value="contact" />
     <div class="content">
