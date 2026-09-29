@@ -45,23 +45,50 @@ const { label, items }: Props = Astro.props
 <script>
   document.querySelectorAll<HTMLElement>('[data-carousel]').forEach(carousel => {
     const track = carousel.querySelector<HTMLElement>('[data-carousel-track]')
-    const previous = carousel.querySelectorAll<HTMLButtonElement>('[data-carousel-prev]')
-    const next = carousel.querySelectorAll<HTMLButtonElement>('[data-carousel-next]')
-    const dots = Array.from(carousel.querySelectorAll<HTMLButtonElement>('[data-carousel-dot]'))
     if (!track) return
 
+    const slides = Array.from(track.querySelectorAll<HTMLElement>('.astro-carousel__slide'))
+    const dots = Array.from(carousel.querySelectorAll<HTMLButtonElement>('[data-carousel-dot]'))
+    if (slides.length < 2) return
+
+    const cloneSlide = (slide: HTMLElement) => {
+      const clone = slide.cloneNode(true) as HTMLElement
+      clone.removeAttribute('id')
+      clone.setAttribute('aria-hidden', 'true')
+      clone.querySelectorAll<HTMLElement>('[tabindex], button').forEach(element => element.tabIndex = -1)
+      return clone
+    }
+    track.prepend(cloneSlide(slides.at(-1)!))
+    track.append(cloneSlide(slides[0]))
+
+    const previous = carousel.querySelectorAll<HTMLButtonElement>('[data-carousel-prev]')
+    const next = carousel.querySelectorAll<HTMLButtonElement>('[data-carousel-next]')
     let dragStartX = 0
     let dragStartScrollLeft = 0
     let dragging = false
     let dragSnapTimer: ReturnType<typeof setTimeout> | undefined
+    let loopResetTimer: ReturnType<typeof setTimeout> | undefined
 
-    const getCurrentIndex = () => Math.round(track.scrollLeft / track.clientWidth)
+    const getPhysicalIndex = () => Math.round(track.scrollLeft / track.clientWidth)
+    const getCurrentIndex = () => (getPhysicalIndex() - 1 + slides.length) % slides.length
+    const scrollToPhysicalSlide = (index: number, behavior: ScrollBehavior = 'smooth') => {
+      track.scrollTo({ left: index * track.clientWidth, behavior })
+    }
+    const resetLoopPosition = () => {
+      const physicalIndex = getPhysicalIndex()
+      if (physicalIndex === 0) scrollToPhysicalSlide(slides.length, 'auto')
+      if (physicalIndex === slides.length + 1) scrollToPhysicalSlide(1, 'auto')
+    }
+    const scheduleLoopReset = () => {
+      clearTimeout(loopResetTimer)
+      loopResetTimer = setTimeout(resetLoopPosition, 400)
+    }
     const showSlide = (index: number) => {
       const nextIndex = (index + dots.length) % dots.length
-      track.scrollTo({ left: nextIndex * track.clientWidth, behavior: 'smooth' })
+      scrollToPhysicalSlide(nextIndex + 1)
     }
     const updatePagination = () => {
-      const currentIndex = Math.min(Math.max(getCurrentIndex(), 0), dots.length - 1)
+      const currentIndex = getCurrentIndex()
       dots.forEach((dot, index) => {
         const active = index === currentIndex
         dot.classList.toggle('is-active', active)
@@ -69,14 +96,22 @@ const { label, items }: Props = Astro.props
       })
     }
 
-    previous.forEach(button => button.addEventListener('click', () => showSlide(getCurrentIndex() - 1)))
-    next.forEach(button => button.addEventListener('click', () => showSlide(getCurrentIndex() + 1)))
+    requestAnimationFrame(() => scrollToPhysicalSlide(1, 'auto'))
+    previous.forEach(button => button.addEventListener('click', () => {
+      scrollToPhysicalSlide(getPhysicalIndex() - 1)
+      scheduleLoopReset()
+    }))
+    next.forEach(button => button.addEventListener('click', () => {
+      scrollToPhysicalSlide(getPhysicalIndex() + 1)
+      scheduleLoopReset()
+    }))
     dots.forEach((dot, index) => dot.addEventListener('click', () => showSlide(index)))
     track.addEventListener('scroll', updatePagination, { passive: true })
     track.addEventListener('keydown', event => {
       if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
         event.preventDefault()
-        showSlide(getCurrentIndex() + (event.key === 'ArrowLeft' ? -1 : 1))
+        scrollToPhysicalSlide(getPhysicalIndex() + (event.key === 'ArrowLeft' ? -1 : 1))
+        scheduleLoopReset()
       }
     })
     track.addEventListener('pointerdown', event => {
@@ -100,7 +135,8 @@ const { label, items }: Props = Astro.props
 
       dragging = false
       if (track.hasPointerCapture(event.pointerId)) track.releasePointerCapture(event.pointerId)
-      showSlide(getCurrentIndex())
+      scrollToPhysicalSlide(getPhysicalIndex())
+      scheduleLoopReset()
       clearTimeout(dragSnapTimer)
       dragSnapTimer = setTimeout(() => track.classList.remove('is-dragging'), 350)
     }
@@ -110,8 +146,8 @@ const { label, items }: Props = Astro.props
 </script>
 
 <style is:global>
-  .astro-carousel { position: relative; }
-  .astro-carousel__track { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; touch-action: pan-y; cursor: grab; }
+  .astro-carousel { position: relative; width: 100%; max-width: 100%; min-width: 0; }
+  .astro-carousel__track { display: flex; width: 100%; max-width: 100%; min-width: 0; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; touch-action: pan-y; cursor: grab; }
   .astro-carousel__track::-webkit-scrollbar { display: none; }
   .astro-carousel__track.is-dragging { cursor: grabbing; scroll-snap-type: none; user-select: none; }
   .astro-carousel__slide { flex: 0 0 100%; scroll-snap-align: start; text-align: center; padding: 0 20% 80px; }
