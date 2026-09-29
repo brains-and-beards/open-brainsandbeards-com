@@ -50,6 +50,11 @@ const { label, items }: Props = Astro.props
     const dots = Array.from(carousel.querySelectorAll<HTMLButtonElement>('[data-carousel-dot]'))
     if (!track) return
 
+    let dragStartX = 0
+    let dragStartScrollLeft = 0
+    let dragging = false
+    let dragSnapTimer: ReturnType<typeof setTimeout> | undefined
+
     const getCurrentIndex = () => Math.round(track.scrollLeft / track.clientWidth)
     const showSlide = (index: number) => {
       const nextIndex = (index + dots.length) % dots.length
@@ -74,13 +79,41 @@ const { label, items }: Props = Astro.props
         showSlide(getCurrentIndex() + (event.key === 'ArrowLeft' ? -1 : 1))
       }
     })
+    track.addEventListener('pointerdown', event => {
+      if ((event.target as HTMLElement).closest('button')) return
+
+      clearTimeout(dragSnapTimer)
+      dragging = true
+      dragStartX = event.clientX
+      dragStartScrollLeft = track.scrollLeft
+      track.classList.add('is-dragging')
+      track.setPointerCapture(event.pointerId)
+    })
+    track.addEventListener('pointermove', event => {
+      if (!dragging) return
+
+      track.scrollLeft = dragStartScrollLeft - (event.clientX - dragStartX)
+      event.preventDefault()
+    })
+    const finishDrag = (event: PointerEvent) => {
+      if (!dragging) return
+
+      dragging = false
+      if (track.hasPointerCapture(event.pointerId)) track.releasePointerCapture(event.pointerId)
+      showSlide(getCurrentIndex())
+      clearTimeout(dragSnapTimer)
+      dragSnapTimer = setTimeout(() => track.classList.remove('is-dragging'), 350)
+    }
+    track.addEventListener('pointerup', finishDrag)
+    track.addEventListener('pointercancel', finishDrag)
   })
 </script>
 
 <style is:global>
   .astro-carousel { position: relative; }
-  .astro-carousel__track { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
+  .astro-carousel__track { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; touch-action: pan-y; cursor: grab; }
   .astro-carousel__track::-webkit-scrollbar { display: none; }
+  .astro-carousel__track.is-dragging { cursor: grabbing; scroll-snap-type: none; user-select: none; }
   .astro-carousel__slide { flex: 0 0 100%; scroll-snap-align: start; text-align: center; padding: 0 20% 80px; }
   .astro-carousel__photo { display: flex; align-items: center; justify-content: center; width: 100%; margin: 40px 0; }
   .astro-carousel__image { border-radius: 50%; object-fit: cover; }
