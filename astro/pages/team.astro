@@ -3,6 +3,7 @@ import MarketingPage from '../layouts/MarketingPage.astro'
 import TeamMemberCard from '../components/interactive/TeamMemberCard.astro'
 import TeamHashFocus from '../components/interactive/TeamHashFocus.astro'
 import FeatureList from '../components/ui/FeatureList.astro'
+import { Image } from 'astro:assets'
 import patryk from '../../src/assets/team/patryk.jpg'
 import wojtek from '../../src/assets/team/wojtek.jpg'
 import marek from '../../src/assets/team/marek.jpg'
@@ -17,6 +18,7 @@ import noOutsourcing from '../../src/assets/illustrations/team-no-outsourcing.pn
 import versatilityIcon from '../../src/assets/illustrations/team-versatility-icon.png'
 import reliabilityIcon from '../../src/assets/illustrations/team-reliability-icon.png'
 import diversityIcon from '../../src/assets/illustrations/team-diversity-icon.png'
+import natalia from '../../src/assets/testimonials/team-natalia.jpg'
 const members: [string, any, string][] = [
   ['Patryk', patryk, 'Ideas machine. Reading too much. Teaching (functional) mobile and desktop development. I do funny faces on YouTube.'],
   ['Wojciech', wojtek, 'Polyglot software developer. Climber. Interested in renewable energy, electric vehicles, and reforestation. The easiest way to pronounce my name is: boy - tech.'],
@@ -34,7 +36,15 @@ const members: [string, any, string][] = [
   <div class="content-page">
     <div class="big-part-yellow"><div class="content members-box">{members.map(([name, image, bio]) => <TeamMemberCard name={name} image={image} bio={bio} />)}</div></div>
     <TeamHashFocus />
-    <section class="testimonial"><div class="content"><p class="quote">It was a pleasure working at Brains & Beards - a company where everyone is treated equally, fairly, and without discrimination. There was always time to develop yourself. I developed amazingly working with everyone on the team and gained valuable experience as a remote software engineer. In addition, my colleagues were always approachable and I'd always be eager to start a new working day.</p><p>Natalia Majkowska-Stewart</p><p>React Native Developer, Brains & Beards</p></div></section>
+    <div class="testimonial">
+      <div class="content">
+        <div class="row photo"><Image src={natalia} class="round" alt="Natalia Majkowska-Stewart" width={152} height={152} format="webp" loading="lazy" decoding="async" /></div>
+        <div>
+          <p class="quote">It was a pleasure working at Brains & Beards - a company where everyone is treated equally, fairly, and without discrimination. There was always time to develop yourself. I developed amazingly working with everyone on the team and gained valuable experience as a remote software engineer. In addition, my colleagues were always approachable and I'd always be eager to start a new working day.</p>
+          <p class="who row"><span class="name">Natalia Majkowska-Stewart,&nbsp;</span><span>React Native Developer,&nbsp;</span><span>Brains & Beards</span></p>
+        </div>
+      </div>
+    </div>
     <div class="narrow-column team-traits text-format">
       <p class="quote center">Above you saw a few words about each of us, but what's important are the qualities we all share. Here are a few traits that we consider vital:</p>
       <FeatureList items={[
