@@ -2,16 +2,22 @@
 import MarketingPage from '../layouts/MarketingPage.astro'
 import FeatureList from '../components/ui/FeatureList.astro'
 import CalloutBar from '../components/ui/CalloutBar.astro'
-import photo from '../../src/assets/photos/patryk-and-wojtek.jpg?url'
-import teamIcon from '../../src/assets/illustrations/about-team-icon.png?url'
-import workflowIcon from '../../src/assets/illustrations/about-workflow-icon.png?url'
-import brains from '../../src/assets/illustrations/about-brains-icon.png?url'
-import beards from '../../src/assets/illustrations/about-beards-icon.png?url'
-import hands from '../../src/assets/illustrations/about-hands-icon.png?url'
+import { Image } from 'astro:assets'
+import photo from '../../src/assets/photos/patryk-and-wojtek.jpg'
+import teamIcon from '../../src/assets/illustrations/about-team-icon.png'
+import workflowIcon from '../../src/assets/illustrations/about-workflow-icon.png'
+import brains from '../../src/assets/illustrations/about-brains-icon.png'
+import beards from '../../src/assets/illustrations/about-beards-icon.png'
+import hands from '../../src/assets/illustrations/about-hands-icon.png'
+const nameOrigins: [string, any, string][] = [
+  ['Brains', brains, 'Creativity, innovation, and problem-solving.'],
+  ['Beards', beards, 'Experience and wisdom gained from many projects.'],
+  ['Hands', hands, 'Extra capacity to assemble the parts.']
+]
 ---
 <MarketingPage title="Our story" description="Learn what drives us and what's the vision behind our company.">
   <div class="content-page">
-    <div class="big-part-yellow"><img src={photo} alt="Patryk and Wojciech with motorbikes" class="our-story-header" loading="eager" /></div>
+    <div class="big-part-yellow"><Image src={photo} alt="Patryk and Wojciech with motorbikes" class="our-story-header" widths={[480, 768, 1000]} sizes="(max-width: 690px) 100vw, 1000px" format="webp" loading="eager" decoding="async" /></div>
     <div class="narrow-column text-format">
       <h3 class="center">Why did we start Brains & Beards?</h3>
       <p>The company was started by two developers: Patryk and Wojtek. They met years ago while working for a big German professional networking site. At some point they grew tired of the restraints of structured organisations and decided to become more independent. They shared ideas and principles, teamed up, and started Brains & Beards together.</p>
@@ -32,7 +38,7 @@ import hands from '../../src/assets/illustrations/about-hands-icon.png?url'
       <h3>PS. Where does the name come from?</h3>
       <p class="sub2">When organisations outsource a project, they're usually looking for one of three things:</p>
       <div class="row">
-        {[['Brains', brains, 'Creativity, innovation, and problem-solving.'], ['Beards', beards, 'Experience and wisdom gained from many projects.'], ['Hands', hands, 'Extra capacity to assemble the parts.']].map(([title, image, text]) => <div class="serviceContainer"><img src={image} alt={title} class="image-wrapper" loading="lazy" /><p class="sub1">{title}</p><p>{text}</p></div>)}
+        {nameOrigins.map(([title, image, text]) => <div class="serviceContainer"><Image src={image} alt={title} class="image-wrapper" widths={[128, 192]} sizes="192px" format="webp" loading="lazy" decoding="async" /><p class="sub1">{title}</p><p>{text}</p></div>)}
       </div>
       <p class="text-left">We pride ourselves on intellectual curiosity, so the first two categories are what interest us. It's where the brains and the beards are that matters.</p>
     </div>

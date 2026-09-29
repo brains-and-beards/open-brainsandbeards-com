@@ -3,18 +3,18 @@ import MarketingPage from '../layouts/MarketingPage.astro'
 import TeamMemberCard from '../components/interactive/TeamMemberCard.astro'
 import TeamHashFocus from '../components/interactive/TeamHashFocus.astro'
 import CalloutBar from '../components/ui/CalloutBar.astro'
-import patryk from '../../src/assets/team/patryk.jpg?url'
-import wojtek from '../../src/assets/team/wojtek.jpg?url'
-import marek from '../../src/assets/team/marek.jpg?url'
-import szymon from '../../src/assets/team/szymon.jpg?url'
-import lukasz from '../../src/assets/team/lukasz.jpg?url'
-import asia from '../../src/assets/team/asia.jpg?url'
-import marcin from '../../src/assets/team/marcin.jpg?url'
-import piotr from '../../src/assets/team/piotr.jpg?url'
-import david from '../../src/assets/team/david.jpg?url'
-import openPositions from '../../src/assets/team/open-positions.jpg?url'
+import patryk from '../../src/assets/team/patryk.jpg'
+import wojtek from '../../src/assets/team/wojtek.jpg'
+import marek from '../../src/assets/team/marek.jpg'
+import szymon from '../../src/assets/team/szymon.jpg'
+import lukasz from '../../src/assets/team/lukasz.jpg'
+import asia from '../../src/assets/team/asia.jpg'
+import marcin from '../../src/assets/team/marcin.jpg'
+import piotr from '../../src/assets/team/piotr.jpg'
+import david from '../../src/assets/team/david.jpg'
+import openPositions from '../../src/assets/team/open-positions.jpg'
 import noOutsourcing from '../../src/assets/illustrations/team-no-outsourcing.png?url'
-const members = [
+const members: [string, any, string][] = [
   ['Patryk', patryk, 'Ideas machine. Reading too much. Teaching functional mobile and desktop development. I do funny faces on YouTube.'],
   ['Wojciech', wojtek, 'Polyglot software developer. Climber. Interested in renewable energy, electric vehicles, and reforestation.'],
   ['Marek', marek, 'React Native developer with Ruby on Rails backend experience. Ex-chemist. Enjoys climbing and travelling to remote places.'],
@@ -29,7 +29,7 @@ const members = [
 ---
 <MarketingPage title="Team" description="Technology is never enough to solve a problem. You'll need a team of experienced and caring developers as well. How about ours?">
   <div class="content-page">
-    <div class="big-part-yellow"><div class="content members-box">{members.map(([name, image, bio]) => <TeamMemberCard name={name} imageUrl={image} bio={bio} />)}</div></div>
+    <div class="big-part-yellow"><div class="content members-box">{members.map(([name, image, bio]) => <TeamMemberCard name={name} image={image} bio={bio} />)}</div></div>
     <TeamHashFocus />
     <div class="narrow-column team-traits text-format">
       <p class="quote center">Above you saw a few words about each of us, but what's important are the qualities we all share.</p>

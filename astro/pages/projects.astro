@@ -3,22 +3,22 @@ import MarketingPage from '../layouts/MarketingPage.astro'
 import CaseStudyCard from '../components/case-studies/CaseStudyCard.astro'
 import ClientLogos from '../components/case-studies/ClientLogos.astro'
 import CalloutBar from '../components/ui/CalloutBar.astro'
-import manoHero from '../../src/assets/case-studies/manomano/manomano-hero-banner.png?url'
-import femtasyHero from '../../src/assets/case-studies/femtasy/femtasy-header.png?url'
-import lokalportalHero from '../../src/assets/case-studies/lokalportal/lokalportal-web.jpg?url'
-import sharooHero from '../../src/assets/case-studies/sharoo/sharoo-hero.jpg?url'
-import clincaseHero from '../../src/assets/case-studies/clincase/epro-logo.jpg?url'
-import rakutenHero from '../../src/assets/case-studies/rakuten-team.jpg?url'
+import manoHero from '../../src/assets/case-studies/manomano/manomano-hero-banner.png'
+import femtasyHero from '../../src/assets/case-studies/femtasy/femtasy-header.png'
+import lokalportalHero from '../../src/assets/case-studies/lokalportal/lokalportal-web.jpg'
+import sharooHero from '../../src/assets/case-studies/sharoo/sharoo-hero.jpg'
+import clincaseHero from '../../src/assets/case-studies/clincase/epro-logo.jpg'
+import rakutenHero from '../../src/assets/case-studies/rakuten-team.jpg'
 ---
 <MarketingPage title="Case studies" description="Read in detail about some of the applications that we've built." projects>
   <div class="case-studies-container">
-    <div class="top-part-yellow"><div class="content"><CaseStudyCard href="/projects/manomano/" title="Ecommerce app for a French unicorn" description="Turning a quick prototype into a fully-fledged ecommerce app for several European markets."><img slot="image" src={manoHero} alt="ManoMano app" loading="eager" /></CaseStudyCard></div></div>
+    <div class="top-part-yellow"><div class="content"><CaseStudyCard href="/projects/manomano/" title="Ecommerce app for a French unicorn" description="Turning a quick prototype into a fully-fledged ecommerce app for several European markets." image={manoHero} imageAlt="ManoMano app" eager /></div></div>
     <div class="content">
-      <CaseStudyCard href="/projects/femtasy/" title="We built a streaming audio player for femtasy" description="Story of a successful launch of a mobile app for an award-winning streaming platform." flip><img slot="image" src={femtasyHero} alt="Femtasy app" loading="lazy" /></CaseStudyCard>
-      <CaseStudyCard href="/projects/lokalportal/" title="We helped Lokalportal team reshape local journalism in Germany" description="How we helped speed up development by improving agile processes and setting up a resilient application architecture."><img slot="image" src={lokalportalHero} alt="Lokalportal app" loading="lazy" /></CaseStudyCard>
-      <CaseStudyCard href="/projects/sharoo/" title="We helped sharoo team conquering carsharing economy in Switzerland" description="How we implemented unique mobile applications supporting renting and interacting with rented vehicles." flip><img slot="image" src={sharooHero} alt="Sharoo app" loading="lazy" /></CaseStudyCard>
-      <CaseStudyCard href="/projects/clincase/" title="How we've recently helped a German company from the medical sector" description="We built a mobile application that expanded Clincase's business to a whole new market."><img slot="image" src={clincaseHero} alt="Clincase app" loading="lazy" /></CaseStudyCard>
-      <CaseStudyCard href="/projects/rakuten/" title="Timely delivery of a premium shopping app for a market-leading enterprise" description="How we built a native iOS app for FC Barcelona sponsor with enough time to spare to help with their Android version." flip><img slot="image" src={rakutenHero} alt="Rakuten team" loading="lazy" /></CaseStudyCard>
+      <CaseStudyCard href="/projects/femtasy/" title="We built a streaming audio player for femtasy" description="Story of a successful launch of a mobile app for an award-winning streaming platform." image={femtasyHero} imageAlt="Femtasy app" flip />
+      <CaseStudyCard href="/projects/lokalportal/" title="We helped Lokalportal team reshape local journalism in Germany" description="How we helped speed up development by improving agile processes and setting up a resilient application architecture." image={lokalportalHero} imageAlt="Lokalportal app" />
+      <CaseStudyCard href="/projects/sharoo/" title="We helped sharoo team conquering carsharing economy in Switzerland" description="How we implemented unique mobile applications supporting renting and interacting with rented vehicles." image={sharooHero} imageAlt="Sharoo app" flip />
+      <CaseStudyCard href="/projects/clincase/" title="How we've recently helped a German company from the medical sector" description="We built a mobile application that expanded Clincase's business to a whole new market." image={clincaseHero} imageAlt="Clincase app" />
+      <CaseStudyCard href="/projects/rakuten/" title="Timely delivery of a premium shopping app for a market-leading enterprise" description="How we built a native iOS app for FC Barcelona sponsor with enough time to spare to help with their Android version." image={rakutenHero} imageAlt="Rakuten team" flip />
       <h3 class="awesome-people">We've helped some pretty great people at some pretty awesome companies:</h3>
       <ClientLogos />
     </div>

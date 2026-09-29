@@ -1,5 +1,5 @@
 ---
 import CaseStudyPage from '../../layouts/CaseStudyPage.astro'
-import image from '../../../src/assets/case-studies/rakuten-team.jpg?url'
+import image from '../../../src/assets/case-studies/rakuten-team.jpg'
 ---
-<CaseStudyPage title="Case study: Shibuya" description="Timely delivery of a premium shopping app for a market-leading enterprise."><img src={image} alt="Rakuten team" loading="eager" /><h3>Challenge</h3><p>Rakuten needed a premium shopping app delivered on a demanding timeline.</p><h3>Process</h3><p>Our native iOS team delivered the application and had time to support the Android version.</p><h3>Results</h3><p>The project launched on time for a market-leading enterprise.</p></CaseStudyPage>
+<CaseStudyPage title="Case study: Shibuya" description="Timely delivery of a premium shopping app for a market-leading enterprise." hero={image} heroAlt="Rakuten team"><h3>Challenge</h3><p>Rakuten needed a premium shopping app delivered on a demanding timeline.</p><h3>Process</h3><p>Our native iOS team delivered the application and had time to support the Android version.</p><h3>Results</h3><p>The project launched on time for a market-leading enterprise.</p></CaseStudyPage>

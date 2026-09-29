@@ -5,7 +5,7 @@ import PageHeader from '../components/layout/PageHeader.astro'
 interface Props {
   title: string
   description: string
-  heroImage?: string
+  heroImage?: any
   heroImageAlt?: string
   columns?: boolean
   simpleNavbar?: boolean
@@ -20,7 +20,7 @@ const { title, description, heroImage, heroImageAlt, columns = false, simpleNavb
 <BaseLayout title={title} description={description} simpleNavbar={simpleNavbar} greyNavbar={greyNavbar} projects={projects} noIndex={noIndex}>
   <div slot="header" class="yellow">
     <div class="content row header">
-      <PageHeader title={title} subtitle={description} imageUrl={heroImage} imageAlt={heroImageAlt} columns={columns} />
+      <PageHeader title={title} subtitle={description} image={heroImage} imageAlt={heroImageAlt} columns={columns} />
     </div>
   </div>
   <slot />

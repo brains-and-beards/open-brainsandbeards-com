@@ -1,5 +1,6 @@
 ---
-interface Item { title: string; image: string; imageAlt: string; paragraphs: string[] }
+import { Image } from 'astro:assets'
+interface Item { title: string; image: any; imageAlt: string; paragraphs: string[] }
 interface Props { items: Item[] }
 const { items }: Props = Astro.props
 ---
@@ -7,7 +8,7 @@ const { items }: Props = Astro.props
 <ul class="picture-list">
   {items.map(({ title, image, imageAlt, paragraphs }) => (
     <li>
-      <img class="image-wrapper" src={image} alt={imageAlt} loading="lazy" />
+      <Image class="image-wrapper" src={image} alt={imageAlt} widths={[96, 150, 192]} sizes="(max-width: 690px) 150px, 150px" format="webp" loading="lazy" decoding="async" />
       <div class="pic-description">
         <p class="title">{title}</p>
         {paragraphs.map(paragraph => <p>{paragraph}</p>)}

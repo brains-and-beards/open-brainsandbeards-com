@@ -1,15 +1,16 @@
 ---
+import { Image } from 'astro:assets'
 interface Props {
   name: string
   bio: string
-  imageUrl: string
+  image: any
 }
 
-const { name, bio, imageUrl } = Astro.props
+const { name, bio, image } = Astro.props
 ---
 
 <article class="team-member" id={name} data-team-member={name}>
-  <img src={imageUrl} alt={`Member: ${name}`} loading="lazy" />
+  <Image src={image} alt={`Member: ${name}`} widths={[160, 240, 320]} sizes="(max-width: 690px) 80vw, 240px" format="webp" loading="lazy" decoding="async" />
   <p class="sub1">{name}</p>
   <p>{bio}</p>
 </article>

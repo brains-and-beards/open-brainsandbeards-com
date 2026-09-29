@@ -1,10 +1,11 @@
 ---
 import MarketingPage from './MarketingPage.astro'
 import CalloutBar from '../components/ui/CalloutBar.astro'
-interface Props { title: string; description: string }
-const { title, description } = Astro.props
+import { Image } from 'astro:assets'
+interface Props { title: string; description: string; hero?: any; heroAlt?: string }
+const { title, description, hero, heroAlt = '' } = Astro.props
 ---
 <MarketingPage title={title} description={description} simpleNavbar projects>
-  <article class="case-study-content content-page"><div class="narrow-column text-format"><slot /></div></article>
+  <article class="case-study-content content-page"><div class="narrow-column text-format">{hero && <Image src={hero} alt={heroAlt} widths={[480, 680, 1024]} sizes="(max-width: 690px) 90vw, 680px" format="webp" loading="eager" decoding="async" />}<slot /></div></article>
   <CalloutBar title="Want to start a great project?" />
 </MarketingPage>

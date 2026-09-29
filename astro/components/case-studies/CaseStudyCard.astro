@@ -1,13 +1,17 @@
 ---
+import { Image } from 'astro:assets'
 interface Props {
   href: string
   title: string
   description: string
   readMoreLabel?: string
   flip?: boolean
+  image: any
+  imageAlt: string
+  eager?: boolean
 }
 
-const { href, title, description, readMoreLabel = 'Read full story', flip = false } = Astro.props
+const { href, title, description, readMoreLabel = 'Read full story', flip = false, image, imageAlt, eager = false } = Astro.props
 ---
 
 <article class:list={['row', 'client-details', { flip }]}>
@@ -18,6 +22,6 @@ const { href, title, description, readMoreLabel = 'Read full story', flip = fals
       <p>{description}</p>
       <span class="button-text-2">{readMoreLabel}</span>
     </div>
-    <div class="our-clients-pic"><slot name="image" /></div>
+    <div class="our-clients-pic"><Image src={image} alt={imageAlt} widths={[320, 480, 680]} sizes="(max-width: 690px) 90vw, 50vw" format="webp" loading={eager ? 'eager' : 'lazy'} decoding="async" /></div>
   </a>
 </article>

@@ -1,5 +1,5 @@
 ---
 import CaseStudyPage from '../../layouts/CaseStudyPage.astro'
-import image from '../../../src/assets/case-studies/sharoo/sharoo-hero.jpg?url'
+import image from '../../../src/assets/case-studies/sharoo/sharoo-hero.jpg'
 ---
-<CaseStudyPage title="Case study: sharoo" description="We've implemented native iOS and Android applications for sharoo and helped them conquering carsharing economy in Switzerland."><img src={image} alt="Sharoo" loading="eager" /><h3>Challenges</h3><p>Sharoo needed mobile applications for a complex carsharing experience.</p><h3>Process</h3><p>We implemented native iOS and Android apps for renting and interacting with vehicles.</p><h3>Results</h3><p>The applications helped sharoo compete in Switzerland's carsharing economy.</p></CaseStudyPage>
+<CaseStudyPage title="Case study: sharoo" description="We've implemented native iOS and Android applications for sharoo and helped them conquering carsharing economy in Switzerland." hero={image} heroAlt="Sharoo"><h3>Challenges</h3><p>Sharoo needed mobile applications for a complex carsharing experience.</p><h3>Process</h3><p>We implemented native iOS and Android apps for renting and interacting with vehicles.</p><h3>Results</h3><p>The applications helped sharoo compete in Switzerland's carsharing economy.</p></CaseStudyPage>
