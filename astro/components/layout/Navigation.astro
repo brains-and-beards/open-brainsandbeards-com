@@ -30,7 +30,7 @@ const backLabel = `Back to ${projects ? 'projects' : 'homepage'}`
       <a href="/" aria-label="Brains & Beards home"><img src={logoUrl} alt="Brains and Beards logo" /></a>
       <div class="back-to-homepage">
         <img class="reverse" src={chevronUrl} alt="" aria-hidden="true" />
-        <a href={backUrl}>{backLabel}</a>
+        <li class="menu-link"><a href={backUrl}> {backLabel} </a></li>
       </div>
     </div>
   ) : (
