@@ -2,6 +2,7 @@
 import MarketingPage from '../layouts/MarketingPage.astro'
 import FeatureList from '../components/ui/FeatureList.astro'
 import { Image } from 'astro:assets'
+import PortfolioForm from '../components/forms/PortfolioForm.astro'
 import photo from '../../src/assets/photos/patryk-and-wojtek.jpg'
 import teamIcon from '../../src/assets/illustrations/about-team-icon.png'
 import workflowIcon from '../../src/assets/illustrations/about-workflow-icon.png'
@@ -29,20 +30,7 @@ import hands from '../../src/assets/illustrations/about-hands-icon.png'
       <p>Of course, like everything else in software development, it's a tradeoff. Pair-programming is more difficult, meetings are harder to organise, and you can't just drop by somebody's desk for a quick question. But all of those are just growing pains, they can all be tackled. Remote teams work in asynchronous manner and that means you need to put extra effort to remove any potential roadblocks before they occur and keep clear communication on what we're trying to achieve. As a side effect, this usually results in work that goes smoother and much fewer surprises.</p>
       <p>Last thing that makes us excited about the remote work is that it makes it much easier to do <i>deep work</i>. A lot of times, teams which are co-located in an office aren't really more productive, they just <i>seem</i> more productive, because it's much easier to be engaged in so-called <i>shallow work</i> (discussing unimportant details, having meetings, etc.). However, to deliver milestones that actually push the project forward you need deep work: uninterrupted periods of time when you can focus on a single (hard!) problem and get it solved.</p>
     </div>
-    <section class="contact-form know-more">
-      <div class="content center">
-        <h3 class="small-headline">Still want to know more?</h3>
-        <p class="sub2">If you share with us your email address, we'll send you a detailed presentation on us:<br /> who we are, how we work, what kind of projects we recently delivered, etc.</p>
-        <div class="know-more narrow-column">
-          <form method="post" data-netlify="true" action="/message-sent" name="know_more">
-            <input type="hidden" name="form-name" value="know_more" />
-            <label for="email">Email address</label>
-            <div class="row form"><input type="text" name="email" /><button>I want to know more</button></div>
-          </form>
-        </div>
-        <div class="narrow-column"><p class="micro">Clicking "I want to know more" you consent to processing your data by Brains&nbsp;&amp;&nbsp;Beards&nbsp;sp.&nbsp;zo.o. for marketing purposes, including sending emails.</p></div>
-      </div>
-    </section>
+    <PortfolioForm />
     <div class="narrow-column text-format center">
       <h3>PS. Where does the name come from?</h3>
       <p class="sub2">When organisations decide to outsource a project (or parts of it), they're usually looking for one of three things:</p>

@@ -1,0 +1,9 @@
+---
+import MarketingPage from '../layouts/MarketingPage.astro'
+import EstimateProjectForm from '../components/forms/EstimateProjectForm.astro'
+import hero from '../../src/assets/illustrations/estimate-hero.png'
+---
+
+<MarketingPage title="Get an estimate" description="Let us know what you need, we'll contact you promptly to discuss how we can help with your project." heroImage={hero} columns simpleNavbar>
+  <div class="estimate-project-form"><div class="content"><EstimateProjectForm /></div></div>
+</MarketingPage>
