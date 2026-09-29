@@ -21,7 +21,7 @@ const titleClass = title.length > 15 ? 'small-headline' : ''
     <input type="hidden" name="form-name" value="contact" />
     <div class="content">
       <div class="contact-content">
-        <div><Image src={contactIllustration} height={192} alt="Contact us" format="webp" loading="lazy" decoding="async" /></div>
+        <div><Image src={contactIllustration} width={192} densities={[1, 2]} quality={90} alt="Contact us" format="webp" loading="lazy" decoding="async" /></div>
         {main ? <h1 class:list={['center', 'small-h1', titleClass]}>{title}</h1> : <h3 class:list={['center', titleClass]}>{title}</h3>}
         <p class="sub2 amazing">{subtitle}</p>
         <label for="contact-email">Email address</label>

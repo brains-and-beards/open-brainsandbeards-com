@@ -25,13 +25,13 @@ const { title, body, href = '/hire-us/', actionLabel = 'Get in touch', tonedDown
     </div>
   ) : (
     <div class="content row">
-      <Image src={leftIllustration} class="center-mobile cta-bar-image" alt="Happy phone" widths={[226, 400]} sizes="(max-width: 690px) 226px, 400px" format="webp" loading="lazy" decoding="async" />
+      <Image src={leftIllustration} class="center-mobile cta-bar-image" alt="Happy phone" width={400} densities={[1, 2]} format="webp" loading="lazy" decoding="async" />
       <div class="center">
         <h2 set:html={title} />
         {body && <p class="sub2">{body}</p>}
         <div class="button estimate-link"><a href={href}>{actionLabel}</a></div>
       </div>
-      <Image src={rightIllustration} class="cta-bar-image desktop-only" alt="Happy phone" widths={[226, 400]} sizes="400px" format="webp" loading="lazy" decoding="async" />
+      <Image src={rightIllustration} class="cta-bar-image desktop-only" alt="Happy phone" width={400} densities={[1, 2]} format="webp" loading="lazy" decoding="async" />
     </div>
   )}
 </section>
