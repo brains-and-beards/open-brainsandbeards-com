@@ -20,24 +20,64 @@ const { label, items }: Props = Astro.props
 <section class="astro-carousel" data-carousel aria-roledescription="carousel" aria-label={label}>
   <div class="astro-carousel__track" data-carousel-track tabindex="0">
     {items.map(({ id, quote, name, position, company, imageUrl, imageAlt }) => (
-      <article class="astro-carousel__slide" id={id} aria-roledescription="slide" aria-label={`${name}, ${company}`}>
+      <article
+        class="astro-carousel__slide"
+        id={id}
+        aria-roledescription="slide"
+        aria-label={`${name}, ${company}`}
+      >
         <div class="astro-carousel__photo">
-          <button class="astro-carousel__chevron astro-carousel__chevron--previous" type="button" data-carousel-prev aria-label="Previous reference">
-            <svg aria-hidden="true" viewBox="0 0 14 24"><path d="m13 0-12 12 12 12" /></svg>
+          <button
+            class="astro-carousel__chevron astro-carousel__chevron--previous"
+            type="button"
+            data-carousel-prev
+            aria-label="Previous reference"
+          >
+            <svg aria-hidden="true" viewBox="0 0 14 24">
+              <path d="m13 0-12 12 12 12" />
+            </svg>
           </button>
-          {imageUrl && <img class="astro-carousel__image" src={imageUrl} alt={imageAlt ?? ''} width="152" height="152" loading="lazy" />}
-          <button class="astro-carousel__chevron" type="button" data-carousel-next aria-label="Next reference">
-            <svg aria-hidden="true" viewBox="0 0 14 24"><path d="m1 0 12 12-12 12" /></svg>
+          {imageUrl && (
+            <img
+              class="astro-carousel__image"
+              src={imageUrl}
+              alt={imageAlt ?? ''}
+              width="152"
+              height="152"
+              loading="lazy"
+            />
+          )}
+          <button
+            class="astro-carousel__chevron"
+            type="button"
+            data-carousel-next
+            aria-label="Next reference"
+          >
+            <svg aria-hidden="true" viewBox="0 0 14 24">
+              <path d="m1 0 12 12-12 12" />
+            </svg>
           </button>
         </div>
         <p class="quote">{quote}</p>
-        <p class="who"><b>{name}</b>,<br />{position},<br />{company}</p>
+        <p class="who">
+          <b>{name}</b>,<br />
+          {position},<br />
+          {company}
+        </p>
       </article>
     ))}
   </div>
   <div class="astro-carousel__pagination" aria-label={`${label} pagination`}>
     {items.map(({ id, name }, index) => (
-      <button type="button" class:list={['astro-carousel__dot', { 'is-active': index === 0 }]} data-carousel-dot data-slide={index} aria-label={`Show reference from ${name}`} aria-controls={id} aria-current={index === 0 ? 'true' : undefined}></button>
+      <button
+        type="button"
+        class:list={['astro-carousel__dot', { 'is-active': index === 0 }]}
+        data-carousel-dot
+        data-slide={index}
+        aria-label={`Show reference from ${name}`}
+        aria-controls={id}
+        aria-current={index === 0 ? 'true' : undefined}
+      ></button>
     ))}
   </div>
 </section>
@@ -55,7 +95,9 @@ const { label, items }: Props = Astro.props
       const clone = slide.cloneNode(true) as HTMLElement
       clone.removeAttribute('id')
       clone.setAttribute('aria-hidden', 'true')
-      clone.querySelectorAll<HTMLElement>('[tabindex], button').forEach(element => element.tabIndex = -1)
+      clone
+        .querySelectorAll<HTMLElement>('[tabindex], button')
+        .forEach(element => (element.tabIndex = -1))
       return clone
     }
     track.prepend(cloneSlide(slides.at(-1)!))
@@ -97,14 +139,18 @@ const { label, items }: Props = Astro.props
     }
 
     requestAnimationFrame(() => scrollToPhysicalSlide(1, 'auto'))
-    previous.forEach(button => button.addEventListener('click', () => {
-      scrollToPhysicalSlide(getPhysicalIndex() - 1)
-      scheduleLoopReset()
-    }))
-    next.forEach(button => button.addEventListener('click', () => {
-      scrollToPhysicalSlide(getPhysicalIndex() + 1)
-      scheduleLoopReset()
-    }))
+    previous.forEach(button =>
+      button.addEventListener('click', () => {
+        scrollToPhysicalSlide(getPhysicalIndex() - 1)
+        scheduleLoopReset()
+      })
+    )
+    next.forEach(button =>
+      button.addEventListener('click', () => {
+        scrollToPhysicalSlide(getPhysicalIndex() + 1)
+        scheduleLoopReset()
+      })
+    )
     dots.forEach((dot, index) => dot.addEventListener('click', () => showSlide(index)))
     track.addEventListener('scroll', updatePagination, { passive: true })
     track.addEventListener('keydown', event => {
@@ -146,24 +192,109 @@ const { label, items }: Props = Astro.props
 </script>
 
 <style is:global>
-  .astro-carousel { position: relative; width: 100%; max-width: 100%; min-width: 0; }
-  .astro-carousel__track { display: flex; width: 100%; max-width: 100%; min-width: 0; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; touch-action: pan-y; cursor: grab; }
-  .astro-carousel__track::-webkit-scrollbar { display: none; }
-  .astro-carousel__track.is-dragging { cursor: grabbing; scroll-snap-type: none; user-select: none; }
-  .astro-carousel__slide { flex: 0 0 100%; scroll-snap-align: start; text-align: center; padding: 0 20% 80px; }
-  .astro-carousel__photo { display: flex; align-items: center; justify-content: center; width: 100%; margin: 40px 0; }
-  .astro-carousel__image { border-radius: 50%; object-fit: cover; }
-  .astro-carousel__chevron { display: grid; place-items: center; width: 44px; height: 44px; margin: 0 9%; padding: 0; border: 0; border-radius: 0; appearance: none; box-shadow: none; background: transparent; color: #414141; cursor: pointer; }
-  .astro-carousel__chevron svg { width: 14px; height: 24px; }
-  .astro-carousel__chevron path { fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; }
-  .astro-carousel__pagination { display: flex; justify-content: center; gap: 8px; }
-  .astro-carousel__dot { width: 8px; height: 8px; margin: 0; padding: 0; border: 0; border-radius: 50%; appearance: none; box-shadow: none; background: #c4c4c4; cursor: pointer; }
-  .astro-carousel__dot.is-active { background: #414141; }
-  .astro-carousel__chevron:focus-visible, .astro-carousel__dot:focus-visible { outline: 2px solid #414141; outline-offset: 3px; }
+  .astro-carousel {
+    position: relative;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+  }
+  .astro-carousel__track {
+    display: flex;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    touch-action: pan-y;
+    cursor: grab;
+  }
+  .astro-carousel__track::-webkit-scrollbar {
+    display: none;
+  }
+  .astro-carousel__track.is-dragging {
+    cursor: grabbing;
+    scroll-snap-type: none;
+    user-select: none;
+  }
+  .astro-carousel__slide {
+    flex: 0 0 100%;
+    scroll-snap-align: start;
+    text-align: center;
+    padding: 0 20% 80px;
+  }
+  .astro-carousel__photo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin: 40px 0;
+  }
+  .astro-carousel__image {
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  .astro-carousel__chevron {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    margin: 0 9%;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    appearance: none;
+    box-shadow: none;
+    background: transparent;
+    color: #414141;
+    cursor: pointer;
+  }
+  .astro-carousel__chevron svg {
+    width: 14px;
+    height: 24px;
+  }
+  .astro-carousel__chevron path {
+    fill: none;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .astro-carousel__pagination {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+  }
+  .astro-carousel__dot {
+    width: 8px;
+    height: 8px;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    appearance: none;
+    box-shadow: none;
+    background: #c4c4c4;
+    cursor: pointer;
+  }
+  .astro-carousel__dot.is-active {
+    background: #414141;
+  }
+  .astro-carousel__chevron:focus-visible,
+  .astro-carousel__dot:focus-visible {
+    outline: 2px solid #414141;
+    outline-offset: 3px;
+  }
 
   @media (max-width: 690px) {
-    .astro-carousel__slide { padding: 0 0 40px; }
-    .astro-carousel__chevron { display: none; }
-    .astro-carousel__slide .quote { width: 100%; padding: 0 25px; }
+    .astro-carousel__slide {
+      padding: 0 0 40px;
+    }
+    .astro-carousel__chevron {
+      display: none;
+    }
+    .astro-carousel__slide .quote {
+      width: 100%;
+      padding: 0 25px;
+    }
   }
 </style>

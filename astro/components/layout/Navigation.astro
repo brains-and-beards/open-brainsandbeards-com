@@ -27,23 +27,41 @@ const backLabel = `Back to ${projects ? 'projects' : 'homepage'}`
 <nav class:list={['menu-container', { grey }]} aria-label="Primary navigation">
   {simple ? (
     <div class="menu">
-      <a href="/" aria-label="Brains & Beards home"><img src={logoUrl} alt="Brains and Beards logo" /></a>
+      <a href="/" aria-label="Brains & Beards home">
+        <img src={logoUrl} alt="Brains and Beards logo" />
+      </a>
       <div class="back-to-homepage">
         <img class="reverse" src={chevronUrl} alt="" aria-hidden="true" />
-        <li class="menu-link"><a href={backUrl}> {backLabel} </a></li>
+        <li class="menu-link">
+          <a href={backUrl}> {backLabel} </a>
+        </li>
       </div>
     </div>
   ) : (
     <>
       <div class="menu">
-        <a href="/" aria-label="Brains & Beards home"><img src={logoUrl} alt="Brains and Beards logo" /></a>
+        <a href="/" aria-label="Brains & Beards home">
+          <img src={logoUrl} alt="Brains and Beards logo" />
+        </a>
         <ul class="menu-links desktop-only">
-          {menuLinks.map(({ url, label }) => <li class="menu-link"><a href={url}>{label}</a></li>)}
+          {menuLinks.map(({ url, label }) => (
+            <li class="menu-link">
+              <a href={url}>{label}</a>
+            </li>
+          ))}
         </ul>
         <ul class="menu-estimate-link desktop-only">
-          <li class="menu-link button menu-estimate-button"><a href="/hire-us/">Hire us</a></li>
+          <li class="menu-link button menu-estimate-button">
+            <a href="/hire-us/">Hire us</a>
+          </li>
         </ul>
-        <button class="menu-toggle mobile-only" type="button" aria-expanded="false" aria-controls="mobile-menu" data-menu-open>
+        <button
+          class="menu-toggle mobile-only"
+          type="button"
+          aria-expanded="false"
+          aria-controls="mobile-menu"
+          data-menu-open
+        >
           <img src={hamburgerUrl} alt="" aria-hidden="true" />
           <span class="sr-only">Open navigation menu</span>
         </button>
@@ -51,16 +69,26 @@ const backLabel = `Back to ${projects ? 'projects' : 'homepage'}`
       <div id="mobile-menu" class="mobile-only menu-overlay" hidden data-menu-overlay>
         <div class="mobile-menu-content">
           <div class="menu">
-            <a href="/" aria-label="Brains & Beards home"><img src={logoUrl} alt="Brains and Beards logo" /></a>
+            <a href="/" aria-label="Brains & Beards home">
+              <img src={logoUrl} alt="Brains and Beards logo" />
+            </a>
             <button class="menu-toggle" type="button" data-menu-close>
               <img src={closeUrl} alt="" aria-hidden="true" />
               <span class="sr-only">Close navigation menu</span>
             </button>
           </div>
           <ul>
-            {menuLinks.map(({ url, label }) => <li class="menu-link mobile-menu-link"><a href={url}>{label}</a></li>)}
+            {menuLinks.map(({ url, label }) => (
+              <li class="menu-link mobile-menu-link">
+                <a href={url}>{label}</a>
+              </li>
+            ))}
           </ul>
-          <ul><li class="menu-link mobile-menu-link button"><a href="/hire-us/">Hire us</a></li></ul>
+          <ul>
+            <li class="menu-link mobile-menu-link button">
+              <a href="/hire-us/">Hire us</a>
+            </li>
+          </ul>
         </div>
       </div>
     </>
@@ -93,9 +121,29 @@ const backLabel = `Back to ${projects ? 'projects' : 'homepage'}`
 </script>
 
 <style is:global>
-  [hidden] { display: none !important; }
-  .menu-toggle { border: 0; cursor: pointer; font: inherit; }
-  .menu-toggle img { display: block; }
-  .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
-  body.menu-open { overflow: hidden; }
+  [hidden] {
+    display: none !important;
+  }
+  .menu-toggle {
+    border: 0;
+    cursor: pointer;
+    font: inherit;
+  }
+  .menu-toggle img {
+    display: block;
+  }
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+  body.menu-open {
+    overflow: hidden;
+  }
 </style>

@@ -2,14 +2,57 @@
 import MarketingPage from './MarketingPage.astro'
 import CalloutBar from '../components/ui/CalloutBar.astro'
 import { Image } from 'astro:assets'
-interface Props { title: string; description: string; hero?: any; heroAlt?: string; trustBar?: boolean; trustItems?: Array<{ value: string; label: string }> }
-const { title, description, hero, heroAlt = '', trustBar = false, trustItems = [{ value: '11', label: 'years on the market' }, { value: '52 months', label: 'longest ongoing client engagement' }, { value: '9+', label: 'average years of programming experience on our team' }] } = Astro.props
+interface Props {
+  title: string
+  description: string
+  hero?: any
+  heroAlt?: string
+  trustBar?: boolean
+  trustItems?: Array<{ value: string; label: string }>
+}
+const {
+  title,
+  description,
+  hero,
+  heroAlt = '',
+  trustBar = false,
+  trustItems = [
+    { value: '11', label: 'years on the market' },
+    { value: '52 months', label: 'longest ongoing client engagement' },
+    { value: '9+', label: 'average years of programming experience on our team' }
+  ]
+} = Astro.props
 ---
+
 <MarketingPage title={title} description={description} simpleNavbar projects>
   <article id="case-study" class="text-format">
-    {hero && <div class="big-part-yellow"><Image src={hero} class="heading-pic" alt={heroAlt} width={1024} densities={[1, 2]} format="webp" loading="eager" decoding="async" /></div>}
+    {hero && (
+      <div class="big-part-yellow">
+        <Image
+          src={hero}
+          class="heading-pic"
+          alt={heroAlt}
+          width={1024}
+          densities={[1, 2]}
+          format="webp"
+          loading="eager"
+          decoding="async"
+        />
+      </div>
+    )}
     <slot />
   </article>
-  {trustBar && <section class="trustBar"><ul class="trustBarList row">{trustItems.map(({ value, label }) => <li><span>{value}</span><p>{label}</p></li>)}</ul></section>}
+  {trustBar && (
+    <section class="trustBar">
+      <ul class="trustBarList row">
+        {trustItems.map(({ value, label }: { value: string; label: string }) => (
+          <li>
+            <span>{value}</span>
+            <p>{label}</p>
+          </li>
+        ))}
+      </ul>
+    </section>
+  )}
   <CalloutBar title="Let us craft a custom solution<br/>for your product" />
 </MarketingPage>

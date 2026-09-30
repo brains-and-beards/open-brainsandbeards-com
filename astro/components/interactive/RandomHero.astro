@@ -19,7 +19,16 @@ const heroes = [
 
 <div class:list={['random-hero', { 'mobile-only': mobile }]} data-random-hero>
   {heroes.map(({ image, className, width }) => (
-    <Image class:list={['hero-image', className, 'random-hero__image']} src={image} alt={alt} {...(mobile ? { height: 510 } : { width })} densities={[1, 2]} format="webp" loading="eager" decoding="async" />
+    <Image
+      class:list={['hero-image', className, 'random-hero__image']}
+      src={image}
+      alt={alt}
+      {...(mobile ? { height: 510 } : { width })}
+      densities={[1, 2]}
+      format="webp"
+      loading="eager"
+      decoding="async"
+    />
   ))}
 </div>
 
@@ -32,6 +41,10 @@ const heroes = [
 </script>
 
 <style is:global>
-  .random-hero .random-hero__image { display: none !important; }
-  .random-hero .random-hero__image.is-active { display: block !important; }
+  .random-hero .random-hero__image {
+    display: none !important;
+  }
+  .random-hero .random-hero__image.is-active {
+    display: block !important;
+  }
 </style>

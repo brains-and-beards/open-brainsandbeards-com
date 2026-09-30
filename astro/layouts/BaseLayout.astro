@@ -17,7 +17,13 @@ interface Props {
   includeFooter?: boolean
 }
 
-const { includeFooter = true, simpleNavbar = false, greyNavbar = false, projects = false, ...seo } = Astro.props
+const {
+  includeFooter = true,
+  simpleNavbar = false,
+  greyNavbar = false,
+  projects = false,
+  ...seo
+} = Astro.props
 ---
 
 <!doctype html>
@@ -27,12 +33,18 @@ const { includeFooter = true, simpleNavbar = false, greyNavbar = false, projects
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" href="/favicon.png" />
     <Seo {...seo} />
-    <script defer data-domain="brainsandbeards.com" src="https://plausible.io/js/script.js"></script>
+    <script
+      defer
+      data-domain="brainsandbeards.com"
+      src="https://plausible.io/js/script.js"
+    ></script>
   </head>
   <body>
     <Navigation simple={simpleNavbar} grey={greyNavbar} projects={projects} />
     <slot name="header" />
-    <main><slot /></main>
+    <main>
+      <slot />
+    </main>
     {includeFooter && <Footer />}
   </body>
 </html>

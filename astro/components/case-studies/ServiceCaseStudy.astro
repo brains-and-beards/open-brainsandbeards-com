@@ -15,7 +15,18 @@ const { href, title, description, image, imageAlt } = Astro.props
 
 <a href={href}>
   <div class="row client-details flip clients-details-services">
-    <div class="clients-pic mobile-only"><div class="service-case-study-image"><Image src={image} alt={imageAlt} width={680} format="webp" loading="lazy" decoding="async" /></div></div>
+    <div class="clients-pic mobile-only">
+      <div class="service-case-study-image">
+        <Image
+          src={image}
+          alt={imageAlt}
+          width={680}
+          format="webp"
+          loading="lazy"
+          decoding="async"
+        />
+      </div>
+    </div>
     <div class="our-clients-left-col">
       <div class="left-col align-top">
         <p class="quote">{title}</p>
@@ -23,6 +34,21 @@ const { href, title, description, image, imageAlt } = Astro.props
         <ReadMore text="Read full story" />
       </div>
     </div>
-    <div class="services-clients-pic"><div class="our-clients-pic"><div class="right-col clients-pic"><div class="service-case-study-image"><Image src={image} alt={imageAlt} width={680} format="webp" loading="lazy" decoding="async" /></div></div></div></div>
+    <div class="services-clients-pic">
+      <div class="our-clients-pic">
+        <div class="right-col clients-pic">
+          <div class="service-case-study-image">
+            <Image
+              src={image}
+              alt={imageAlt}
+              width={680}
+              format="webp"
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </a>

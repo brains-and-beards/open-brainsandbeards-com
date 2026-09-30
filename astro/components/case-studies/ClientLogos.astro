@@ -16,19 +16,46 @@ import saloodo from '../../../src/assets/client-logos/saloodo.png'
 import sharoo from '../../../src/assets/client-logos/sharoo.png'
 import clincase from '../../../src/assets/client-logos/clincase.png'
 import visca from '../../../src/assets/client-logos/visca.png'
-interface Props { short?: boolean }
+interface Props {
+  short?: boolean
+}
 const { short = false } = Astro.props
 const logos: [string, any, number][] = [
-  ['Rakuten', rakuten, 50], ['ManoMano', manoMano, 50], ['XING', xing, 60], ['Metro', metro, 45],
-  ['Mobilab', mobilab, 27], ['BSDEX', bsdex, 70], ['LiveArt', liveArt, 50], ['Vay', vay, 30],
-  ['Femtasy', femtasy, 50], ['Vermietet', vermietet, 50], ['LokalPortal', lokalportal, 40], ['Donut', donut, 40],
-  ['Saloodo', saloodo, 65], ['Sharoo', sharoo, 50], ['Clincase', clincase, 30], ['Visca', visca, 45]
+  ['Rakuten', rakuten, 50],
+  ['ManoMano', manoMano, 50],
+  ['XING', xing, 60],
+  ['Metro', metro, 45],
+  ['Mobilab', mobilab, 27],
+  ['BSDEX', bsdex, 70],
+  ['LiveArt', liveArt, 50],
+  ['Vay', vay, 30],
+  ['Femtasy', femtasy, 50],
+  ['Vermietet', vermietet, 50],
+  ['LokalPortal', lokalportal, 40],
+  ['Donut', donut, 40],
+  ['Saloodo', saloodo, 65],
+  ['Sharoo', sharoo, 50],
+  ['Clincase', clincase, 30],
+  ['Visca', visca, 45]
 ]
 ---
+
 <div class="clients">
   {Array.from({ length: short ? 1 : 4 }, (_, row) => (
     <div class="logos">
-      {logos.slice(row * 4, row * 4 + 4).map(([name, image, height]) => <div class="logo"><Image src={image} alt={name} height={height} densities={[1, 2]} format="webp" loading="lazy" decoding="async" /></div>)}
+      {logos.slice(row * 4, row * 4 + 4).map(([name, image, height]) => (
+        <div class="logo">
+          <Image
+            src={image}
+            alt={name}
+            height={height}
+            densities={[1, 2]}
+            format="webp"
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
+      ))}
     </div>
   ))}
 </div>

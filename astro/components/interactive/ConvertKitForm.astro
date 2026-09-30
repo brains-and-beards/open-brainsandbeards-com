@@ -4,13 +4,16 @@ interface Props {
   formId?: string
 }
 
-const {
-  formUrl = 'https://brains-beards.ck.page/a54204fd58/index.js',
-  formId = 'a54204fd58'
-} = Astro.props
+const { formUrl = 'https://brains-beards.ck.page/a54204fd58/index.js', formId = 'a54204fd58' } =
+  Astro.props
 ---
 
-<div class="convertkit-form" data-convertkit-form data-form-url={formUrl} data-form-id={formId}></div>
+<div
+  class="convertkit-form"
+  data-convertkit-form
+  data-form-url={formUrl}
+  data-form-id={formId}
+></div>
 
 <script>
   document.querySelectorAll<HTMLElement>('[data-convertkit-form]').forEach(container => {

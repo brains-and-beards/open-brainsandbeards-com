@@ -1,28 +1,209 @@
 ---
 import CaseStudyPage from '../../layouts/CaseStudyPage.astro'
 ---
-<CaseStudyPage title="Case study: Vay" description="Creating a customer-facing mobile app for remote controlled cars in Las Vegas.">
-  <p>Founded in 2018 with a mission of redefining urban mobility, Vay is today a successfully operating company with with $200M+ funding and over 250 employees. The main idea behind their business is simple but powerful: make car-sharing a viable, cost-effective and environmentally friendly alternative to classic car ownership.</p>
-  <p>The company manages to achieve this goal thanks to a clever technical solution: their vehicles are capable of being remotely controlled, meaning a customer can order one to be delivered in a semi-autonomous manner, right to their door -- a sweet spot between car rental and ride-hailing.</p>
-  <p>We came to Vay at the beginning of their journey as a company, to transform their proof-of-concept customer app into a fully fledged mobile application, and we've been working with them since then, supporting the project with our mobile expertise. Today, we can be very proud of the app's consistent 4.8-star rating in both Google Play and App Store.</p>
+
+<CaseStudyPage
+  title="Case study: Vay"
+  description="Creating a customer-facing mobile app for remote controlled cars in Las Vegas."
+>
+  <p>
+    Founded in 2018 with a mission of redefining urban mobility, Vay is today a successfully
+    operating company with with $200M+ funding and over 250 employees. The main idea behind their
+    business is simple but powerful: make car-sharing a viable, cost-effective and environmentally
+    friendly alternative to classic car ownership.
+  </p>
+  <p>
+    The company manages to achieve this goal thanks to a clever technical solution: their vehicles
+    are capable of being remotely controlled, meaning a customer can order one to be delivered in a
+    semi-autonomous manner, right to their door -- a sweet spot between car rental and ride-hailing.
+  </p>
+  <p>
+    We came to Vay at the beginning of their journey as a company, to transform their
+    proof-of-concept customer app into a fully fledged mobile application, and we've been working
+    with them since then, supporting the project with our mobile expertise. Today, we can be very
+    proud of the app's consistent 4.8-star rating in both Google Play and App Store.
+  </p>
   <h3>Mobile App</h3>
-  <p>Our role was to develop the front-end for the customers: a mobile application which would allow them to find the right vehicle, book it, and unlock it upon delivery. The users were also able to inspect the areas in which remote driving was available, find possible places for ending their ride, and perform all actions from booking to payment, necessary to complete the trip.</p>
-  <p>The customers pay per minute of rental and per kilometer driven, like in a classic car sharing setup. Upon returning the vehicle, you can request the remote driver to take over once more, allowing the user to hop out of the car at the destination without worrying about finding a long-term parking space.</p>
+  <p>
+    Our role was to develop the front-end for the customers: a mobile application which would allow
+    them to find the right vehicle, book it, and unlock it upon delivery. The users were also able
+    to inspect the areas in which remote driving was available, find possible places for ending
+    their ride, and perform all actions from booking to payment, necessary to complete the trip.
+  </p>
+  <p>
+    The customers pay per minute of rental and per kilometer driven, like in a classic car sharing
+    setup. Upon returning the vehicle, you can request the remote driver to take over once more,
+    allowing the user to hop out of the car at the destination without worrying about finding a
+    long-term parking space.
+  </p>
   <h3>Challenges</h3>
-  <p>Most of the difficulties concerning this project stemmed from its size and the level of technical complexity. First of all, the sheer number of various teams engaged in the project (even just from the engineering perspective) required a very high degree of collaboration in order for everyone to understand each other's work. Another important factor was that while the majority of engineers were based in Europe, the service actually operated only in Las Vegas, which sometimes hampered the communication due to the Europe-US time zone difference.</p>
-  <p>On the technical side, connectivity was a topic of special importance. A significant part of Brains&amp;Beards' input to the project consisted of integrating the mobile app with an hardware device on board of the vehicle using Bluetooth.</p>
+  <p>
+    Most of the difficulties concerning this project stemmed from its size and the level of
+    technical complexity. First of all, the sheer number of various teams engaged in the project
+    (even just from the engineering perspective) required a very high degree of collaboration in
+    order for everyone to understand each other's work. Another important factor was that while the
+    majority of engineers were based in Europe, the service actually operated only in Las Vegas,
+    which sometimes hampered the communication due to the Europe-US time zone difference.
+  </p>
+  <p>
+    On the technical side, connectivity was a topic of special importance. A significant part of
+    Brains&amp;Beards' input to the project consisted of integrating the mobile app with an hardware
+    device on board of the vehicle using Bluetooth.
+  </p>
   <h3>Process</h3>
-  <p>Various Brains &amp; Beards members have taken part in this project over the last 8 years - each with their own lifestyle and work habits. Nevertheless, the challenges of the project led to some solutions which we all shared to make sure our work was productive.</p>
+  <p>
+    Various Brains &amp; Beards members have taken part in this project over the last 8 years - each
+    with their own lifestyle and work habits. Nevertheless, the challenges of the project led to
+    some solutions which we all shared to make sure our work was productive.
+  </p>
   <h4>Cross-team collaboration</h4>
-  <p>The whole process, in order to work smoothly, required cooperation of multiple teams. Let's pause for a moment and consider the typical example of an end user requesting a vehicle to be delivered to their location:</p>
-  <ul><li>First, the user would book a trip inside the mobile app. This part was developed by the mobile dev team, which consisted of (or at least consistently included) Brains &amp; Beards members since 2018.</li><li>The app would send a request to an intermediary API server, running Node.js (also maintained by our team).</li><li>The API would in turn fetch the required data from the backend via a gRPC call inside a company VPN (these servers were handled by the backend engineers).</li><li>Backend itself consisted of several subsystems, which handled the user bookings, vehicles state, routing, and also tackled many other issues such as rebalancing (dispatching free cars into higher-demand districts).</li><li>Once the vehicle delivery started, the car was operated remotely by one of the remote drivers, and monitored using a telematics service (which also had its own team of engineers).</li><li>The teledriving shift managers were able to monitor the status of the vehicles and trips using a separate web-based dashboard (which our company members took part in creating as well).</li></ul>
-  <p>The result of this multi-stage setup was that, from time to time, we had to do cross-system debugging, for example by inspecting logs from the API and multiple servers on the backend side, in order to pinpoint a bug in the mobile app.</p>
-  <p>And this is just the engineering side of things! In reality, the final product required much wider cooperation, ranging from designers (Product / UX) to final operational teams like Customer Support or Field Support Agents who would clean and recharge vehicles after use. In order to keep the mobile app functioning well, we had listen to the feedback not only from the end users and our direct supervisors, but also from the members of other teams.</p>
-  <p>Because of this, whenever a new feature was being discussed, a major task was communicating across various teams to work out the exact requirements and decide what kind of data structures needed to be used. Due to the technical nature of this task, it could not be handled purely by the management, since we had to take into account the capabilities and limitations of all the systems involved. This was often the most time-consuming part of the development work!</p>
-  <p>The amount of collaboration involved led us to working in slightly different ways than in other projects. While we retained the classic practices of Agile development (standups, retros, sprint planning, and tracking the workflow in JIRA), we kept these restricted to the mobile team only. However, there were also many impromptu quick calls or Slack conversations with other teams. In order not to lose track of the agreements, we put emphasis on documenting as much of the arrangements as possible.</p>
-  <p>The main premise was that every major feature that involved more than one team had to be accompanied by a proper Architecture Decision Record (ADR) which everyone could refer to. The process was quite "democratic" - not only because could anyone contribute by commenting on these documents, but also thanks to our team members taking turns on par with the team leaders in writing the first drafts of the ADRs and exploring various architectural options.</p>
-  <h4>Time zone difference</h4><p>Vay's car-sharing business developed in Las Vegas due to favorable local laws regarding driverless vehicles. The engineering teams, however, stayed mostly in Berlin, which caused delays in communication.</p><p>In this case, Brains&amp;Beards' work style was a great fit. Working remotely on a daily basis had already made our team experts in asynchronous communication. It was perfectly natural for us to describe problems in a thorough and clear manner which allowed the other person to provide all the necessary information in a single move, without lengthy back-and-forth discussions. Flexible working hours mean that it was also not uncommon for us to dedicate a few minutes in the evening in order to get priorities straight for the next workday.</p>
-  <h4>Hardware integration</h4><p>The heart of the project, which made it stand out against other car-sharing services, was the special teledriving hardware, which was installed in the cars. It was usually enough for the vehicle to respond to commands issued from the servers, but it turned out there was one crucial exception: unlocking the vehicle doors.</p><p>Vay's cars were only allowed to be remotely driven along the streets with good signal coverage. In order to maximize their delivery range, the company equipped them with a special device containing multiple SIM cards from different providers, automatically choosing the best one in a particular spot. The customers, however, had to rely only on their own telecommunications company, which often led to a situation where the car was connected to the Internet but the user wasn't. This often led to a frustrating user experience: the customer reached the car but was in an area with poor or missing Internet connection, and hence unable to reach the server which could order the car to open the doors.</p><p>The solution was simple: let the app "speak" directly to the vehicle over a Bluetooth Low Energy (BLE) connection. However, the execution was harder than it seemed, as the hardware was built into the cars and not readily available to us as external, remote developers. We had to rely, once again, on detailed documentation in order to make the mobile application compatible with the on-board hardware. Apart from communicating with the devices itself, we also had to consider multiple alternative scenarios regarding the user not allowing Bluetooth connections, having BT turned off, as well as intermittent to connection failures over longer distances.</p><p>After the Bluetooth interface in the mobile app was ready, the final integration tests were carried out in specially designated vehicles on the Tegel airport grounds. The feature was launched 2 years ago, and has since been the cornerstone of handling poor connectivity issues for users.</p>
-  <h4>Mobile app programming</h4><p>Apart from being complex in terms of communication and hardware-integration, Vay also had a number of challenges related simply to being a mobile app. A couple of interesting topics resolved within the mobile team included:</p><ul><li>Determining which data in the app should be hard-coded and which could be moved to the intermediary API for easier deployments</li><li>Optimizing the maps, visible at most stages of the trip: preventing unnecessary re-renders, and using map tiles to prevent UI freezes when zooming the map. You can read more on this topic in Szymon's blogpost here: https://brainsandbeards.com/blog/2024-boosting-map-vay/</li><li>Obtaining real-time state updates from the backend server via websockets for showing live vehicle position updates, their expected delivery routes, etc.</li><li>Extending the project to the Android platform (this was fairly easy thanks to the React Native architecture)</li><li>Creating automated app tests using Maestro (with simulator screenshots being taken automatically during each test step)</li></ul>
-  <h3>Conclusion</h3><p>Taking part in the journey from a rough prototype app to a fully functional innovative product has been a very interesting experience for us, both from the technical and organizational points of view. We believe we not only contributed to Vay's development as a company but also learned a lot about working in a complex environment.</p>
+  <p>
+    The whole process, in order to work smoothly, required cooperation of multiple teams. Let's
+    pause for a moment and consider the typical example of an end user requesting a vehicle to be
+    delivered to their location:
+  </p>
+  <ul>
+    <li>
+      First, the user would book a trip inside the mobile app. This part was developed by the mobile
+      dev team, which consisted of (or at least consistently included) Brains &amp; Beards members
+      since 2018.
+    </li>
+    <li>
+      The app would send a request to an intermediary API server, running Node.js (also maintained
+      by our team).
+    </li>
+    <li>
+      The API would in turn fetch the required data from the backend via a gRPC call inside a
+      company VPN (these servers were handled by the backend engineers).
+    </li>
+    <li>
+      Backend itself consisted of several subsystems, which handled the user bookings, vehicles
+      state, routing, and also tackled many other issues such as rebalancing (dispatching free cars
+      into higher-demand districts).
+    </li>
+    <li>
+      Once the vehicle delivery started, the car was operated remotely by one of the remote drivers,
+      and monitored using a telematics service (which also had its own team of engineers).
+    </li>
+    <li>
+      The teledriving shift managers were able to monitor the status of the vehicles and trips using
+      a separate web-based dashboard (which our company members took part in creating as well).
+    </li>
+  </ul>
+  <p>
+    The result of this multi-stage setup was that, from time to time, we had to do cross-system
+    debugging, for example by inspecting logs from the API and multiple servers on the backend side,
+    in order to pinpoint a bug in the mobile app.
+  </p>
+  <p>
+    And this is just the engineering side of things! In reality, the final product required much
+    wider cooperation, ranging from designers (Product / UX) to final operational teams like
+    Customer Support or Field Support Agents who would clean and recharge vehicles after use. In
+    order to keep the mobile app functioning well, we had listen to the feedback not only from the
+    end users and our direct supervisors, but also from the members of other teams.
+  </p>
+  <p>
+    Because of this, whenever a new feature was being discussed, a major task was communicating
+    across various teams to work out the exact requirements and decide what kind of data structures
+    needed to be used. Due to the technical nature of this task, it could not be handled purely by
+    the management, since we had to take into account the capabilities and limitations of all the
+    systems involved. This was often the most time-consuming part of the development work!
+  </p>
+  <p>
+    The amount of collaboration involved led us to working in slightly different ways than in other
+    projects. While we retained the classic practices of Agile development (standups, retros, sprint
+    planning, and tracking the workflow in JIRA), we kept these restricted to the mobile team only.
+    However, there were also many impromptu quick calls or Slack conversations with other teams. In
+    order not to lose track of the agreements, we put emphasis on documenting as much of the
+    arrangements as possible.
+  </p>
+  <p>
+    The main premise was that every major feature that involved more than one team had to be
+    accompanied by a proper Architecture Decision Record (ADR) which everyone could refer to. The
+    process was quite "democratic" - not only because could anyone contribute by commenting on these
+    documents, but also thanks to our team members taking turns on par with the team leaders in
+    writing the first drafts of the ADRs and exploring various architectural options.
+  </p>
+  <h4>Time zone difference</h4>
+  <p>
+    Vay's car-sharing business developed in Las Vegas due to favorable local laws regarding
+    driverless vehicles. The engineering teams, however, stayed mostly in Berlin, which caused
+    delays in communication.
+  </p>
+  <p>
+    In this case, Brains&amp;Beards' work style was a great fit. Working remotely on a daily basis
+    had already made our team experts in asynchronous communication. It was perfectly natural for us
+    to describe problems in a thorough and clear manner which allowed the other person to provide
+    all the necessary information in a single move, without lengthy back-and-forth discussions.
+    Flexible working hours mean that it was also not uncommon for us to dedicate a few minutes in
+    the evening in order to get priorities straight for the next workday.
+  </p>
+  <h4>Hardware integration</h4>
+  <p>
+    The heart of the project, which made it stand out against other car-sharing services, was the
+    special teledriving hardware, which was installed in the cars. It was usually enough for the
+    vehicle to respond to commands issued from the servers, but it turned out there was one crucial
+    exception: unlocking the vehicle doors.
+  </p>
+  <p>
+    Vay's cars were only allowed to be remotely driven along the streets with good signal coverage.
+    In order to maximize their delivery range, the company equipped them with a special device
+    containing multiple SIM cards from different providers, automatically choosing the best one in a
+    particular spot. The customers, however, had to rely only on their own telecommunications
+    company, which often led to a situation where the car was connected to the Internet but the user
+    wasn't. This often led to a frustrating user experience: the customer reached the car but was in
+    an area with poor or missing Internet connection, and hence unable to reach the server which
+    could order the car to open the doors.
+  </p>
+  <p>
+    The solution was simple: let the app "speak" directly to the vehicle over a Bluetooth Low Energy
+    (BLE) connection. However, the execution was harder than it seemed, as the hardware was built
+    into the cars and not readily available to us as external, remote developers. We had to rely,
+    once again, on detailed documentation in order to make the mobile application compatible with
+    the on-board hardware. Apart from communicating with the devices itself, we also had to consider
+    multiple alternative scenarios regarding the user not allowing Bluetooth connections, having BT
+    turned off, as well as intermittent to connection failures over longer distances.
+  </p>
+  <p>
+    After the Bluetooth interface in the mobile app was ready, the final integration tests were
+    carried out in specially designated vehicles on the Tegel airport grounds. The feature was
+    launched 2 years ago, and has since been the cornerstone of handling poor connectivity issues
+    for users.
+  </p>
+  <h4>Mobile app programming</h4>
+  <p>
+    Apart from being complex in terms of communication and hardware-integration, Vay also had a
+    number of challenges related simply to being a mobile app. A couple of interesting topics
+    resolved within the mobile team included:
+  </p>
+  <ul>
+    <li>
+      Determining which data in the app should be hard-coded and which could be moved to the
+      intermediary API for easier deployments
+    </li>
+    <li>
+      Optimizing the maps, visible at most stages of the trip: preventing unnecessary re-renders,
+      and using map tiles to prevent UI freezes when zooming the map. You can read more on this
+      topic in Szymon's blogpost here: https://brainsandbeards.com/blog/2024-boosting-map-vay/
+    </li>
+    <li>
+      Obtaining real-time state updates from the backend server via websockets for showing live
+      vehicle position updates, their expected delivery routes, etc.
+    </li>
+    <li>
+      Extending the project to the Android platform (this was fairly easy thanks to the React Native
+      architecture)
+    </li>
+    <li>
+      Creating automated app tests using Maestro (with simulator screenshots being taken
+      automatically during each test step)
+    </li>
+  </ul>
+  <h3>Conclusion</h3>
+  <p>
+    Taking part in the journey from a rough prototype app to a fully functional innovative product
+    has been a very interesting experience for us, both from the technical and organizational points
+    of view. We believe we not only contributed to Vay's development as a company but also learned a
+    lot about working in a complex environment.
+  </p>
 </CaseStudyPage>

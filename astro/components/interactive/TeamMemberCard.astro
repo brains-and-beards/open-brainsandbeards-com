@@ -10,7 +10,15 @@ const { name, bio, image } = Astro.props
 ---
 
 <div class="team-member" id={name} data-team-member={name}>
-  <Image src={image} alt={`member: ${name}`} width={280} densities={[1, 2]} format="webp" loading="lazy" decoding="async" />
+  <Image
+    src={image}
+    alt={`member: ${name}`}
+    width={280}
+    densities={[1, 2]}
+    format="webp"
+    loading="lazy"
+    decoding="async"
+  />
   <p class="sub1">{name}</p>
   <p>{bio}</p>
 </div>
