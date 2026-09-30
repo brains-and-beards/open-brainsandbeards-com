@@ -392,6 +392,15 @@
     border-radius: 0.3em;
   }
 
+  :not(pre) > code {
+    background-color: #dbdbdb;
+    color: #414141;
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+    font-size: 16px;
+    padding: 0.1em;
+    border-radius: 0.3em;
+  }
+
   table,
   th,
   td {
