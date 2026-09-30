@@ -46,9 +46,9 @@ const {
     <section class="trustBar">
       <ul class="trustBarList row">
         {trustItems.map(({ value, label }: { value: string; label: string }) => (
-          <li>
-            <span>{value}</span>
-            <p>{label}</p>
+          <li class="trustBarItem">
+            <h2>{value}</h2>
+            <p class="sub2">{label}</p>
           </li>
         ))}
       </ul>

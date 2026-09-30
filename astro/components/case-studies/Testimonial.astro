@@ -7,12 +7,13 @@ interface Props {
   name: string
   position: string
   company: string
+  final?: boolean
 }
 
-const { image, quote, name, position, company } = Astro.props
+const { image, quote, name, position, company, final = false } = Astro.props
 ---
 
-<div class="testimonial">
+<div class:list={['testimonial', { 'final-testimonial': final }]}>
   <div class="content">
     <div class="row photo">
       <Image

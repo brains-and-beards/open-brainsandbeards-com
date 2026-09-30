@@ -1,7 +1,9 @@
 ---
 import CaseStudyPage from '../../layouts/CaseStudyPage.astro'
 import Testimonial from '../../components/case-studies/Testimonial.astro'
+import { Image } from 'astro:assets'
 import image from '../../../src/assets/case-studies/manomano/manomano-store-screens.png'
+import storeB2b from '../../../src/assets/case-studies/manomano/manomano-pro-store-screens.png'
 import elias from '../../../src/assets/case-studies/manomano/elias-manomano.jpg'
 import gregoire from '../../../src/assets/case-studies/manomano/gregoire-manomano.png'
 import lina from '../../../src/assets/case-studies/manomano/lina-manomano.jpg'
@@ -117,7 +119,18 @@ import marc from '../../../src/assets/case-studies/manomano/marc-manomano.png'
     position="Product Manager - B2B Mobile App"
     company="ManoMano - Colibri SAS"
   />
+  <div class="narrow-column text-format">
   <h3>Outcome</h3>
+    <Image
+      src={storeB2b}
+      class="outcome-image"
+      alt="Femtasy reviews"
+      width={600}
+    densities={[1, 2]}
+    format="webp"
+    loading="lazy"
+    decoding="async"
+  />
   <p>
     And here we are, almost three years later. We touched virtually every part of the codebase and
     contributed to delivery of most of the features, including initiatives such as experimental
@@ -132,11 +145,13 @@ import marc from '../../../src/assets/case-studies/manomano/marc-manomano.png'
     We're still working with ManoMano to help them deliver the features their users need and the
     outcomes that the business side expects. One deploy at a time.
   </p>
+  </div>
   <Testimonial
     image={marc}
     quote="Deep technical knowledge, human touch, high level of engagement, leadership skills, adaptability… there are many reasons for which I’m trusting completely in Brains & Beards to make the story of ManoMano apps a great success."
     name="Marc Torrent"
     position="Head of Engineering"
     company="ManoMano - Colibri SAS"
+    final
   />
 </CaseStudyPage>
