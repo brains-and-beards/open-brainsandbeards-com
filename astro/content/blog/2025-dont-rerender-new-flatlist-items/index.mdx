@@ -1,0 +1,171 @@
+---
+path: '/blog/2025-dont-rerender-new-flatlist-items'
+date: '2025-03-14T13:00:00.000Z'
+title: 'FlatList Optimization: Avoid Re-Rendering When Adding or Removing Items'
+image: header.jpg
+author: Szymon Koper
+---
+
+This post is a follow-up to [Don't Re-Render All FlatList Items](/blog/2022-dont-rerender-all-flatlist-items). In the previous article, we optimized FlatList to prevent unnecessary re-renders when updating list item values. This time, we’ll tackle another common issue: avoiding re-renders when adding or removing items.
+
+Many developers believe they need to wrap every FlatList prop in `useCallback` or `useMemo` to optimize performance. But is that really necessary? Let’s find out.
+
+This issue is especially common in apps with infinite scrolling or pagination, where new items are fetched and added to a list dynamically. If your app uses `onEndReached` to fetch new pages from an API, the same principles apply.
+
+## The Problem: Every Item Re-Renders When Adding a New One
+
+Imagine an app that fetches data from the internet and appends new items to a FlatList. Here’s what we'd expect:
+
+- New items render when added
+- Existing items do not re-render (since they haven’t changed)
+
+But in many cases, all items re-render when a new one is added!
+
+### Let's See It in Action
+
+Here’s an [Expo Snack](https://snack.expo.dev/@sakydpozrux/rerender-only-changed-items) where all items re-render when we add a new one. You'll edit it yourself later!
+
+<div class="gif-container">
+
+![Recording of the example app - adding and deleting items](flatlist-app-demo.gif)
+
+An example app where items are added and removed.
+
+</div>
+
+
+How to test:
+- Open the console logs in your browser
+- Click "Add Item" and check the logs
+- Notice that every existing item re-renders, even though they haven’t changed!
+
+<div class="gif-container">
+
+![Logs before optimization - too many re-renders](flatlist-logs-before.gif)
+
+Here’s what happens in the console when adding items in the unoptimized version.
+
+</div>
+
+Example console output:
+```
+Rendering item: 1
+Rendering item: 2
+Rendering item: 1  <- Why is this rendering again?
+Rendering item: 2
+Rendering item: 3  <- Only this one is new
+Rendering item: 1
+Rendering item: 2
+Rendering item: 3
+```
+
+### Why FlatList Thinks Everything Changed
+
+When we add a new item to the list, we expect only that new item to render. However, FlatList ends up re-rendering all items. Why does this happen? The issue comes from how React handles state updates.
+
+In our app, the FlatList’s `data` prop is an array of `ids`. We're working with immutable data, which means we don’t modify an existing array to add a new elements. Instead, we create a new array with the updated data. That means that whenever we add a new item, `ids` gets a brand new array reference. Even though the contents of `ids` are almost the same (except for the new item), FlatList sees a completely new array it should render.
+
+### How This Triggers a Full Re-Render
+
+1. The user clicks "Add Item", triggering a state update.
+2. We create a new `ids` array that includes the new item.
+3. The ListScreen component re-renders because it subscribes to Redux state.
+4. FlatList receives a new value for the `data` prop (even though most items are unchanged).
+5. FlatList re-renders all items, because it thinks the whole list has changed.
+
+This isn’t a bug — FlatList is simply reacting to the updated state as intended. Fortunately, we don’t need to change how FlatList works. Instead, we can stop unnecessary re-renders by making a small tweak in how we define our list items.
+
+
+## The Fix: Just Add React.memo
+
+Here’s the best part: the fix is incredibly simple. Wrap `ListItem` in `React.memo`. That’s it.
+
+Now, `ListItem` will only re-render when its props change. Since it only takes an `id` and they remain the same, old items won’t re-render when a new one is added.
+
+### Console Output After the Fix
+```
+Rendering item: 1
+Rendering item: 2
+Rendering item: 3  <- Only new items render now!
+```
+
+<div class="gif-container">
+
+![Logs after optimization - only new items render](flatlist-logs-after.gif)
+
+After the fix, only new items render as expected.
+
+</div>
+
+Boom! No more unnecessary re-renders. Now, only new items render when added while existing ones stay untouched. 🎉
+
+### What Does Actually Happen?
+
+`FlatList` still calls `renderItem` for each item, but `React.memo` prevents actual re-renders unless the item’s props changed.
+
+
+## Do I Still Need useCallback?
+
+Let’s modify the example by adding a timer at the top of the screen that updates every second, showing the current time (`hh:mm:ss`). This change will cause the entire component to re-render every second, which will also re-render every FlatList item unnecessarily.
+
+### Timer Example
+
+```tsx
+const [time, setTime] = React.useState(new Date().toLocaleTimeString());
+React.useEffect(() => {
+  const interval = setInterval(() => {
+    setTime(new Date().toLocaleTimeString());
+  }, 1000);
+  return () => clearInterval(interval);
+}, []);
+```
+
+This makes all items re-render every second! 🚨
+
+This happens because the parent component re-renders and creates a new instance of `renderItem`. This means `FlatList` receives a new prop and re-renders all items.
+
+### The Fix: Wrapping Callbacks in `useCallback`
+
+To fix this, we need to wrap `renderItem` and `keyExtractor` in `useCallback`. This ensures those functions stay the same (not just in terms of what they _do_, but also in terms of what they _are_) across renders, so no new unnecessary props.
+
+```tsx
+keyExtractor={React.useCallback((id) => id, [])}
+renderItem={React.useCallback(({ item: id }) => <ListItem id={id} />, [])}
+```
+
+Alternatively, we can define them outside the component function or omit `keyExtractor`, since `id => id` is the default behavior.
+
+
+### Better Architecture: Separating Components
+
+A better approach is to extract the clock into its own component. This keeps state updates isolated, preventing unnecessary re-renders.
+
+```tsx
+const Clock = () => {
+  const [time, setTime] = React.useState(new Date().toLocaleTimeString());
+  React.useEffect(() => {
+    const interval = setInterval(() => {
+      setTime(new Date().toLocaleTimeString());
+    }, 1000);
+    return () => clearInterval(interval);
+  }, []);
+  return <Text style={{ fontSize: 18, fontWeight: "bold" }}>Current time: {time}</Text>;
+};
+```
+
+By using `<Clock />` inside `ListScreen`, only the clock updates, keeping FlatList untouched. This is a better architectural choice because it:
+- isolates responsibilities (the clock only manages time)
+- prevents unnecessary re-renders in unrelated components
+- makes code more maintainable
+
+## Note on FlashList
+
+[FlashList](https://shopify.github.io/flash-list/) takes a different approach to optimizing re-renders and some of these techniques might not be necessary. We won’t cover FlashList in this post, but it’s an alternative worth exploring. Let me know if you’d like a separate post about it!
+
+## Final Thoughts
+
+We saw how FlatList re-renders all items when new ones are added even when it's not neceąry. By making a simple tweak (`React.memo`), we prevent unnecessary re-renders and improve performance with minimal effort.
+
+If you use FlatList in your app, I encourage you to test whether your list items are re-rendering more than necessary. A small optimization can make a huge difference in performance — especially on lower-end devices. 🚀
+
+And if you missed it, check out part 1: [Don't Re-Render All FlatList Items](/blog/2022-dont-rerender-all-flatlist-items/).
