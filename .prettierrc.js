@@ -8,6 +8,7 @@ module.exports = {
   importOrder: ['<THIRD_PARTY_MODULES>', '^[./]'],
   importOrderSeparation: true,
   importOrderSortSpecifiers: true,
+  plugins: ['prettier-plugin-astro', '@trivago/prettier-plugin-sort-imports'],
   overrides: [
     {
       files: '*.ts',

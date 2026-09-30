@@ -68,7 +68,8 @@
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-eslint-comments": "^3.2.0",
     "eslint-plugin-prettier": "^4.2.1",
-    "prettier": "2.8.7",
+    "prettier": "^3.5.3",
+    "prettier-plugin-astro": "^1.1.0",
     "typescript": "^5.9.3"
   }
 }
