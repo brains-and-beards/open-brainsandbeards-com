@@ -1,6 +1,7 @@
 ---
 import { Image } from 'astro:assets'
 import type { CollectionEntry } from 'astro:content'
+import CourseEnrollBanner from '../components/blog/CourseEnrollBanner.astro'
 import BlogPostFootnote from '../components/blog/BlogPostFootnote.astro'
 import MarketingPage from './MarketingPage.astro'
 import { formatBlogDate } from '../lib/blog'
@@ -38,4 +39,5 @@ const { post } = Astro.props
       <BlogPostFootnote author={post.data.author} />
     </div>
   </article>
+  <CourseEnrollBanner />
 </MarketingPage>

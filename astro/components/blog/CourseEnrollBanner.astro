@@ -1,0 +1,51 @@
+---
+import { Image } from 'astro:assets'
+import leftIllustration from '../../../src/assets/illustrations/estimate-project-bar-left.png'
+import rightIllustration from '../../../src/assets/illustrations/estimate-project-bar-right.png'
+import ConvertKitForm from '../interactive/ConvertKitForm.astro'
+---
+
+<section class="estimateProject">
+  <div class="content row">
+    <Image
+      class="center-mobile cta-bar-image course-enroll-illustration desktop-only"
+      src={leftIllustration}
+      alt="Happy puzzle phone"
+      width={400}
+      height={400}
+      densities={[1, 2]}
+      format="webp"
+      loading="lazy"
+      decoding="async"
+    />
+    <div class="center newsletter-content">
+      <h2>Maintainable React Native</h2>
+      <p class="sub2">
+        This course is aimed at advanced React Native developers who already know how to make things
+        work, but are looking for ways to make their apps stand the test of time.
+      </p>
+      <p class="sub2">
+        We'll help you put all the pieces together for a successful app. Get to know the best
+        practises we use in Brains &amp; Beards to deliver successful React Native apps since 2016.
+        Enroll directly below or learn more on
+        <a href="https://brains-beards.ck.page/maintainable-react-native">a dedicated page</a>.
+      </p>
+      <div class="narrow-column">
+        <div class="center">
+          <ConvertKitForm />
+        </div>
+      </div>
+    </div>
+    <Image
+      class="cta-bar-image course-enroll-illustration desktop-only newsletter-image-right"
+      src={rightIllustration}
+      alt="Happy puzzle phone"
+      width={400}
+      height={400}
+      densities={[1, 2]}
+      format="webp"
+      loading="lazy"
+      decoding="async"
+    />
+  </div>
+</section>
