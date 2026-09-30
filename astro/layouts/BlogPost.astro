@@ -1,0 +1,39 @@
+---
+import { Image } from 'astro:assets'
+import type { CollectionEntry } from 'astro:content'
+import MarketingPage from './MarketingPage.astro'
+import { formatBlogDate } from '../lib/blog'
+
+interface Props {
+  post: CollectionEntry<'blog'>
+}
+
+const { post } = Astro.props
+---
+
+<MarketingPage
+  title={post.data.title}
+  description={post.data.title}
+  headerSubtitle={formatBlogDate(post.data.date)}
+>
+  <article class="blog-body line-numbers">
+    {post.data.image && (
+      <div class="top-part-yellow">
+        <div class="content">
+          <Image
+            class="main-blog-image"
+            src={post.data.image}
+            alt={post.data.imageCaption || post.data.title}
+            width={1024}
+          />
+          {post.data.imageCaption && (
+            <figcaption class="main-blog-image-caption" set:html={post.data.imageCaption} />
+          )}
+        </div>
+      </div>
+    )}
+    <div class="narrow-column">
+      <slot />
+    </div>
+  </article>
+</MarketingPage>

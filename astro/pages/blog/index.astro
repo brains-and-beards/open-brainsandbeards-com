@@ -1,0 +1,8 @@
+---
+import BlogList from '../../components/blog/BlogList.astro'
+import { getBlogPosts } from '../../lib/blog'
+
+const posts = await getBlogPosts()
+---
+
+<BlogList posts={posts} currentPage={1} />

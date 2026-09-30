@@ -1,0 +1,105 @@
+---
+import { Image } from 'astro:assets'
+import type { CollectionEntry } from 'astro:content'
+import BaseLayout from '../../layouts/BaseLayout.astro'
+import technology from '../../../src/assets/images/technology.png'
+import shipping from '../../../src/assets/images/shipping.png'
+import buildingTeams from '../../../src/assets/images/building-teams.png'
+import BlogCard from './BlogCard.astro'
+
+interface Props {
+  posts: CollectionEntry<'blog'>[]
+  currentPage: number
+}
+
+const { posts, currentPage } = Astro.props
+const postsPerPage = 12
+const totalPages = Math.ceil(posts.length / postsPerPage)
+const firstPost = posts[0]
+const pagePosts = posts.slice((currentPage - 1) * postsPerPage + 1, currentPage * postsPerPage + 1)
+const pageHref = (page: number) => (page === 1 ? '/blog/' : `/blog/${page}/`)
+---
+
+<BaseLayout
+  title="Read our insights"
+  description="Technology, Shipping great products, Building successful teams"
+>
+  <div slot="header" class="yellow">
+    <div class="content row header">
+      <div class="center">
+        <h1>Read our insights</h1>
+        <div class="row header-subtitle">
+          <div class="one-third">
+            <Image src={technology} alt="Technology" width={80} height={80} />
+            <p class="sub2">Technology</p>
+          </div>
+          <div class="one-third">
+            <Image src={shipping} alt="Shipping products" width={80} height={80} />
+            <p class="sub2">Shipping great products</p>
+          </div>
+          <div class="one-third">
+            <Image src={buildingTeams} alt="Building teams" width={80} height={80} />
+            <p class="sub2">Building successful teams</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <main class="content-page">
+    <div class="top-part-yellow">
+      <div class="content">
+        {firstPost && (
+          <article class="first-post-big">
+            <a href={firstPost.data.path}>
+              <div class="first-post">
+                {firstPost.data.image && (
+                  <Image
+                    class="blog-image"
+                    src={firstPost.data.image}
+                    alt={`Miniature for post titled "${firstPost.data.title}"`}
+                    width={672}
+                  />
+                )}
+                <div class="blurb">
+                  <h3>{firstPost.data.title}</h3>
+                  <p class="author-name">{firstPost.data.author}</p>
+                </div>
+              </div>
+            </a>
+          </article>
+        )}
+        <div id="posts-list">
+          {pagePosts.map(post => (
+            <BlogCard post={post} />
+          ))}
+        </div>
+      </div>
+    </div>
+    <nav class="row" id="load-more" aria-label="Blog pagination">
+      <a
+        class:list={['button', 'left', 'sub2', 'big', { disabled: currentPage === 1 }]}
+        href={pageHref(Math.max(currentPage - 1, 1))}
+        aria-disabled={currentPage === 1}
+      >
+        <span>Newer posts</span>
+      </a>
+      <div class="page-links mobile-hide">
+        {Array.from({ length: totalPages }, (_, index) => index + 1).map(page => (
+          <a
+            class:list={['page-link', 'right', 'sub2', { current: page === currentPage }]}
+            href={`${pageHref(page)}#posts-list`}
+          >
+            <span>{page}</span>
+          </a>
+        ))}
+      </div>
+      <a
+        class:list={['button', 'right', 'sub2', 'big', { disabled: currentPage === totalPages }]}
+        href={pageHref(Math.min(currentPage + 1, totalPages))}
+        aria-disabled={currentPage === totalPages}
+      >
+        <span>Older posts</span>
+      </a>
+    </nav>
+  </main>
+</BaseLayout>
