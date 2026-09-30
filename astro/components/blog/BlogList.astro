@@ -28,6 +28,13 @@ const lastPageLink = Math.min(firstPageLink + 4, totalPages)
   title="Read our insights"
   description="Technology, Shipping great products, Building successful teams"
 >
+  <link
+    slot="head"
+    rel="alternate"
+    type="application/rss+xml"
+    title="Brains & Beards - all posts"
+    href="/blog/feed.xml"
+  />
   <div slot="header" class="yellow">
     <div class="content row header">
       <div class="center">

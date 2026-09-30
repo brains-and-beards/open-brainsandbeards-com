@@ -25,6 +25,7 @@
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
   },
   "dependencies": {
+    "@astrojs/rss": "^4.0.19",
     "@mdx-js/react": "^2.3.0",
     "@netlify/plugin-gatsby": "^3.6.1",
     "gatsby": "^5.7.0",
