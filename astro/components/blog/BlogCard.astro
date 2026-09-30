@@ -20,6 +20,8 @@ const { post } = Astro.props
           alt={`Miniature for post: ${post.data.title}`}
           width={320}
           height={200}
+          densities={[1, 2]}
+          format="webp"
         />
       )}
       <p class="quote blog-list-item-title">{post.data.title}</p>

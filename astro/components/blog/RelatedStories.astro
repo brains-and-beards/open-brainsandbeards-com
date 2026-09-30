@@ -1,0 +1,32 @@
+---
+import type { CollectionEntry } from 'astro:content'
+import BlogCard from './BlogCard.astro'
+
+interface Props {
+  post: CollectionEntry<'blog'>
+  posts: CollectionEntry<'blog'>[]
+}
+
+const { post, posts } = Astro.props
+const postIndex = posts.findIndex(candidate => candidate.id === post.id)
+
+// This intentionally follows Gatsby's getRelatedStories: the two adjacent
+// posts in reverse-chronological order, looping around at either end.
+const relatedPosts =
+  postIndex === -1 || posts.length < 2
+    ? []
+    : [posts[(postIndex - 1 + posts.length) % posts.length], posts[(postIndex + 1) % posts.length]]
+---
+
+{relatedPosts.length > 0 && (
+  <div class="narrow-column">
+    <section class="related-stories">
+      <h3>More Brains and Beards stories</h3>
+      <div class="more-stories">
+        {relatedPosts.map(relatedPost => (
+          <BlogCard post={relatedPost} />
+        ))}
+      </div>
+    </section>
+  </div>
+)}

@@ -3,8 +3,9 @@ import { Image } from 'astro:assets'
 import type { CollectionEntry } from 'astro:content'
 import CourseEnrollBanner from '../components/blog/CourseEnrollBanner.astro'
 import BlogPostFootnote from '../components/blog/BlogPostFootnote.astro'
+import RelatedStories from '../components/blog/RelatedStories.astro'
 import MarketingPage from './MarketingPage.astro'
-import { formatBlogDate } from '../lib/blog'
+import { formatBlogDate, getBlogPosts } from '../lib/blog'
 
 interface Props {
   post: CollectionEntry<'blog'>
@@ -40,4 +41,5 @@ const { post } = Astro.props
     </div>
   </article>
   <CourseEnrollBanner />
+  <RelatedStories post={post} posts={await getBlogPosts()} />
 </MarketingPage>
