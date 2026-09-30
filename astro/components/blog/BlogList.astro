@@ -6,6 +6,8 @@ import technology from '../../../src/assets/images/technology.png'
 import shipping from '../../../src/assets/images/shipping.png'
 import buildingTeams from '../../../src/assets/images/building-teams.png'
 import BlogCard from './BlogCard.astro'
+import BlogAuthor from './BlogAuthor.astro'
+import ContactForm from '../forms/ContactForm.astro'
 
 interface Props {
   posts: CollectionEntry<'blog'>[]
@@ -18,6 +20,8 @@ const totalPages = Math.ceil(posts.length / postsPerPage)
 const firstPost = posts[0]
 const pagePosts = posts.slice((currentPage - 1) * postsPerPage + 1, currentPage * postsPerPage + 1)
 const pageHref = (page: number) => (page === 1 ? '/blog/' : `/blog/${page}/`)
+const firstPageLink = Math.max(currentPage - 2, 1)
+const lastPageLink = Math.min(firstPageLink + 4, totalPages)
 ---
 
 <BaseLayout
@@ -30,15 +34,36 @@ const pageHref = (page: number) => (page === 1 ? '/blog/' : `/blog/${page}/`)
         <h1>Read our insights</h1>
         <div class="row header-subtitle">
           <div class="one-third">
-            <Image src={technology} alt="Technology" width={80} height={80} />
+            <Image
+              src={technology}
+              alt="Technology"
+              width={80}
+              height={80}
+              densities={[1, 2]}
+              format="webp"
+            />
             <p class="sub2">Technology</p>
           </div>
           <div class="one-third">
-            <Image src={shipping} alt="Shipping products" width={80} height={80} />
+            <Image
+              src={shipping}
+              alt="Shipping products"
+              width={80}
+              height={80}
+              densities={[1, 2]}
+              format="webp"
+            />
             <p class="sub2">Shipping great products</p>
           </div>
           <div class="one-third">
-            <Image src={buildingTeams} alt="Building teams" width={80} height={80} />
+            <Image
+              src={buildingTeams}
+              alt="Building teams"
+              width={80}
+              height={80}
+              densities={[1, 2]}
+              format="webp"
+            />
             <p class="sub2">Building successful teams</p>
           </div>
         </div>
@@ -62,7 +87,7 @@ const pageHref = (page: number) => (page === 1 ? '/blog/' : `/blog/${page}/`)
                 )}
                 <div class="blurb">
                   <h3>{firstPost.data.title}</h3>
-                  <p class="author-name">{firstPost.data.author}</p>
+                  <BlogAuthor author={firstPost.data.author} firstPost />
                 </div>
               </div>
             </a>
@@ -84,7 +109,10 @@ const pageHref = (page: number) => (page === 1 ? '/blog/' : `/blog/${page}/`)
         <span>Newer posts</span>
       </a>
       <div class="page-links mobile-hide">
-        {Array.from({ length: totalPages }, (_, index) => index + 1).map(page => (
+        {Array.from(
+          { length: lastPageLink - firstPageLink + 1 },
+          (_, index) => firstPageLink + index
+        ).map(page => (
           <a
             class:list={['page-link', 'right', 'sub2', { current: page === currentPage }]}
             href={`${pageHref(page)}#posts-list`}
@@ -102,4 +130,9 @@ const pageHref = (page: number) => (page === 1 ? '/blog/' : `/blog/${page}/`)
       </a>
     </nav>
   </main>
+  <ContactForm
+    title="Get in touch"
+    subtitle="If you'd like to get in touch with us about something we wrote on our blog, please do!"
+    footerSeparator
+  />
 </BaseLayout>

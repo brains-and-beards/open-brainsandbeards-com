@@ -2,6 +2,7 @@
 import { Image } from 'astro:assets'
 import type { CollectionEntry } from 'astro:content'
 import { formatBlogDate } from '../../lib/blog'
+import BlogAuthor from './BlogAuthor.astro'
 
 interface Props {
   post: CollectionEntry<'blog'>
@@ -24,7 +25,7 @@ const { post } = Astro.props
       <p class="quote blog-list-item-title">{post.data.title}</p>
       <h3 class="mobile-only text-center-mobile">{post.data.title}</h3>
     </div>
-    {post.data.author && <p class="author-name">{post.data.author}</p>}
+    <BlogAuthor author={post.data.author} />
     <p class="caption blog-list-item-date">{formatBlogDate(post.data.date)}</p>
   </a>
 </article>

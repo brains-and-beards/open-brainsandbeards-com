@@ -458,6 +458,10 @@ blockquote {
   height: 100%;
 }
 
+img.circular-image {
+  object-fit: cover;
+}
+
 .author-content {
   float: left;
   margin-right: 10px;
