@@ -1,8 +1,11 @@
 ---
 import CaseStudyPage from '../../layouts/CaseStudyPage.astro'
 import Testimonial from '../../components/case-studies/Testimonial.astro'
+import { Image } from 'astro:assets'
 import image from '../../../src/assets/case-studies/lokalportal/lokalportal-web.jpg'
 import logo from '../../../src/assets/testimonials/lokalportal-logo.png'
+import iosScreenshot from '../../../src/assets/case-studies/lokalportal/lokalportal-ios.png'
+import androidScreenshot from '../../../src/assets/case-studies/lokalportal/lokalportal-android.png'
 ---
 
 <CaseStudyPage
@@ -77,6 +80,17 @@ import logo from '../../../src/assets/testimonials/lokalportal-logo.png'
     and took off the Scrum Master hat. Now everybody is in charge of keeping the work process nice,
     smooth, and efficient.
   </p>
+  <div class="mobileScreenshots">
+    <Image
+      src={iosScreenshot}
+      alt="iOS screenshot"
+      width={540}
+      densities={[1, 2]}
+      format="webp"
+      loading="lazy"
+      decoding="async"
+    />
+  </div>
   <h4>Put compiler to work for us</h4>
   <p>
     How did we address the architecture problem? If you have people joining and leaving the team
@@ -116,6 +130,17 @@ import logo from '../../../src/assets/testimonials/lokalportal-logo.png'
     over to <a href="https://prettier.io/">prettier</a> and <a href="https://eslint.org/">eslint</a>
     .
   </p>
+  <div class="mobileScreenshots">
+    <Image
+      src={androidScreenshot}
+      alt="Android screenshot"
+      width={540}
+      densities={[1, 2]}
+      format="webp"
+      loading="lazy"
+      decoding="async"
+    />
+  </div>
   <h4>Improving testing setup</h4>
   <p>
     Having a setup where the compiler can save you a lot of time is one thing, but empowering the

@@ -1,6 +1,9 @@
 ---
 import CaseStudyPage from '../../layouts/CaseStudyPage.astro'
+import { Image } from 'astro:assets'
 import image from '../../../src/assets/case-studies/clincase-warning-modal.png'
+import signInError from '../../../src/assets/case-studies/clincase-sign-in-error.png'
+import tutorialBack from '../../../src/assets/case-studies/clincase-tutorial-back.png'
 ---
 
 <CaseStudyPage
@@ -30,6 +33,16 @@ import image from '../../../src/assets/case-studies/clincase-warning-modal.png'
     platform for them and there is a lot of strict requirements over the software quality and
     reliability they needed someone with the right experience to help. That's where we came in.
   </p>
+  <Image
+    src={signInError}
+    alt="ePRO screenshot"
+    class="screenshot"
+    width={740}
+    densities={[1, 2]}
+    format="webp"
+    loading="lazy"
+    decoding="async"
+  />
   <p>There were various requirements in this project that made it particularly challenging:</p>
   <ul>
     <li>
@@ -58,6 +71,16 @@ import image from '../../../src/assets/case-studies/clincase-warning-modal.png'
       resource-constrained environment of a low-end Android device that it was run on.
     </li>
   </ul>
+  <Image
+    src={tutorialBack}
+    alt="ePRO screenshot"
+    class="screenshot"
+    width={740}
+    densities={[1, 2]}
+    format="webp"
+    loading="lazy"
+    decoding="async"
+  />
   <h3>Process</h3>
   <p>
     We built the application as a React Native Android application, running inside a MDM solution

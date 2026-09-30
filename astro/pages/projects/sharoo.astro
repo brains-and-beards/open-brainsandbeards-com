@@ -1,8 +1,12 @@
 ---
 import CaseStudyPage from '../../layouts/CaseStudyPage.astro'
 import Testimonial from '../../components/case-studies/Testimonial.astro'
+import { Image } from 'astro:assets'
 import image from '../../../src/assets/case-studies/sharoo/sharoo-hero.jpg'
 import feyyaz from '../../../src/assets/testimonials/sharoo-feyyaz.jpg'
+import iosScreenshot from '../../../src/assets/case-studies/sharoo/sharoo-ios.jpg'
+import androidScreenshot from '../../../src/assets/case-studies/sharoo/sharoo-android.jpg'
+import award from '../../../src/assets/case-studies/sharoo/sharoo-award.jpg'
 ---
 
 <CaseStudyPage
@@ -80,7 +84,19 @@ import feyyaz from '../../../src/assets/testimonials/sharoo-feyyaz.jpg'
     significantly reduces the number of potential bugs in the code, which of course saves our
     client's time and money.
   </p>
-  <p>sharoo iOS app is rated 4.6 stars</p>
+  <div class="case-study-inline-image">
+    <Image
+      src={iosScreenshot}
+      title="sharoo iOS app is rated 4.6 stars"
+      alt="Sharoo rankings"
+      width={740}
+      densities={[1, 2]}
+      format="webp"
+      loading="lazy"
+      decoding="async"
+    />
+    <figcaption>sharoo iOS app is rated 4.6 stars</figcaption>
+  </div>
   <h4>Designed with offline capabilities in mind</h4>
   <p>
     Cars waiting for renters can be parked anywhere, so odds are some parking spots don't have great
@@ -102,7 +118,19 @@ import feyyaz from '../../../src/assets/testimonials/sharoo-feyyaz.jpg'
       RxRealm.
     </a>
   </p>
-  <p>sharoo Android app is rated 4.1 stars</p>
+  <div class="case-study-inline-image">
+    <Image
+      src={androidScreenshot}
+      title="sharoo Android app is rated 4.1 stars"
+      alt="Sharoo ranking - android"
+      width={740}
+      densities={[1, 2]}
+      format="webp"
+      loading="lazy"
+      decoding="async"
+    />
+    <figcaption>sharoo Android app is rated 4.1 stars</figcaption>
+  </div>
   <h4>Security as the key component</h4>
   <p>
     When you are managing a big fleet of expensive vehicles, security can't be an afterthought.
@@ -133,10 +161,22 @@ import feyyaz from '../../../src/assets/testimonials/sharoo-feyyaz.jpg'
     closer to the car", etc. This is a massive quality of life improvement for everyone involved.
     It's like sending a chat message instead of posting a letter.
   </p>
-  <p>
-    sharoo European P2P Carsharing Price/Performance Value Leadership Award from Frost &amp;
-    Sullivan
-  </p>
+  <div class="case-study-inline-image">
+    <Image
+      src={award}
+      title="sharoo European P2P Carsharing Price/Performance Value Leadership Award from Frost & Sullivan"
+      alt="award"
+      width={740}
+      densities={[1, 2]}
+      format="webp"
+      loading="lazy"
+      decoding="async"
+    />
+    <figcaption>
+      sharoo European P2P Carsharing Price/Performance Value Leadership Award from Frost &amp;
+      Sullivan
+    </figcaption>
+  </div>
   <h3>Results</h3>
   <p>
     We were delighted with the results of the collaboration with sharoo. And turns out so were the

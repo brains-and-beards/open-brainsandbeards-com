@@ -1,7 +1,9 @@
 ---
 import CaseStudyPage from '../../layouts/CaseStudyPage.astro'
 import Testimonial from '../../components/case-studies/Testimonial.astro'
+import { Image } from 'astro:assets'
 import image from '../../../src/assets/case-studies/femtasy/femtasy-header.png'
+import reviews from '../../../src/assets/case-studies/femtasy/femtasy-reviews.png'
 import michael from '../../../src/assets/testimonials/femtasy-michael.jpg'
 import ale from '../../../src/assets/testimonials/femtasy-ale.png'
 import peter from '../../../src/assets/testimonials/femtasy-peter.jpg'
@@ -115,7 +117,18 @@ import peter from '../../../src/assets/testimonials/femtasy-peter.jpg'
     the app on time, but even this first prototype version gathered great feedback from the users.
     We got a straight 5,0 score on App Store on the first 20 app reviews 🎉
   </p>
-  <p>Overwhelmingly positive app reviews since Day 1</p>
+  <div class="case-study-inline-image">
+    <Image
+      src={reviews}
+      alt="Femtasy reviews"
+      width={740}
+      densities={[1, 2]}
+      format="webp"
+      loading="lazy"
+      decoding="async"
+    />
+    <figcaption>Overwhelmingly positive app reviews since Day 1</figcaption>
+  </div>
   <p>
     Users also reached out directly and we were able to use their feedback to prioritise what
     features should be built next and iteratively improved the app. It was clear from the engagement
