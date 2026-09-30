@@ -9,8 +9,11 @@ interface Props {
   flip?: boolean
   image: any
   imageAlt: string
+  imageWidth?: number
+  imageHeight?: number
   eager?: boolean
   home?: boolean
+  first?: boolean
 }
 
 const {
@@ -21,8 +24,11 @@ const {
   flip = false,
   image,
   imageAlt,
+  imageWidth = 680,
+  imageHeight,
   eager = false,
-  home = false
+  home = false,
+  first = false
 } = Astro.props
 ---
 
@@ -64,25 +70,53 @@ const {
     </div>
   </a>
 ) : (
-  <article class:list={['row', 'client-details', { flip }]}>
-    <a class="case-study-link" href={href}>
-      <div class="our-clients-left-col">
-        <slot name="logo" />
-        <h3>{title}</h3>
-        <p>{description}</p>
-        <ReadMore text={readMoreLabel} />
-      </div>
-      <div class="our-clients-pic">
+  <a href={href}>
+    <div
+      class:list={[
+        'row',
+        'client-details',
+        'client-details-case-study',
+        { flip, 'client-details-case-study-elements': !first }
+      ]}
+    >
+      <div class:list={[first ? 'clients-pic-first' : 'clients-pic', 'mobile-only']}>
         <Image
           src={image}
           alt={imageAlt}
-          widths={[320, 480, 680, 1024, 1360]}
-          sizes="(max-width: 690px) 90vw, 50vw"
+          widths={[320, 480, 680]}
+          sizes="90vw"
           format="webp"
           loading={eager ? 'eager' : 'lazy'}
           decoding="async"
         />
       </div>
-    </a>
-  </article>
+      <div
+        class:list={[
+          'our-clients-left-col',
+          first ? 'our-clients-first-element' : 'our-clients-any-element'
+        ]}
+      >
+        <div class="left-col">
+          <slot name="logo" />
+          <h3>{title}</h3>
+          <p>{description}</p>
+          <ReadMore text={readMoreLabel} />
+        </div>
+      </div>
+      <div class="our-clients-pic-first">
+        <div class="right-col clients-pic">
+          <Image
+            src={image}
+            alt={imageAlt}
+            width={imageWidth}
+            {...(imageHeight ? { height: imageHeight } : {})}
+            densities={[1, 2]}
+            format="webp"
+            loading={eager ? 'eager' : 'lazy'}
+            decoding="async"
+          />
+        </div>
+      </div>
+    </div>
+  </a>
 )}

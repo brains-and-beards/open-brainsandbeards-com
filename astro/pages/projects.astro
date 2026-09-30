@@ -3,12 +3,19 @@ import MarketingPage from '../layouts/MarketingPage.astro'
 import CaseStudyCard from '../components/case-studies/CaseStudyCard.astro'
 import ClientLogos from '../components/case-studies/ClientLogos.astro'
 import CalloutBar from '../components/ui/CalloutBar.astro'
+import { Image } from 'astro:assets'
 import manoHero from '../../src/assets/case-studies/manomano/manomano-hero-banner.png'
+import manoLogo from '../../src/assets/case-studies/manomano/manomano-logo-colour.png'
 import femtasyHero from '../../src/assets/case-studies/femtasy/femtasy-header.png'
+import femtasyLogo from '../../src/assets/case-studies/femtasy/femtasy-logo.png'
 import lokalportalHero from '../../src/assets/case-studies/lokalportal/lokalportal-web.jpg'
+import lokalportalLogo from '../../src/assets/case-studies/lokalportal/logo_lokal_full.png'
 import sharooHero from '../../src/assets/case-studies/sharoo/sharoo-hero.jpg'
+import sharooLogo from '../../src/assets/case-studies/sharoo/sharoo-logo.png'
 import clincaseHero from '../../src/assets/case-studies/clincase/epro-logo.jpg'
+import clincaseLogo from '../../src/assets/client-logos/clincase.png'
 import rakutenHero from '../../src/assets/case-studies/rakuten-team.jpg'
+import rakutenLogo from '../../src/assets/client-logos/rakuten-alt.png'
 ---
 
 <MarketingPage
@@ -25,8 +32,20 @@ import rakutenHero from '../../src/assets/case-studies/rakuten-team.jpg'
           description="Turning a quick prototype into a fully-fledged ecommerce app for several European markets."
           image={manoHero}
           imageAlt="ManoMano app"
+          imageWidth={620}
+          imageHeight={408}
           eager
-        />
+          first
+        >
+          <Image
+            slot="logo"
+            src={manoLogo}
+            alt="ManoMano logo"
+            height={22}
+            densities={[1, 2]}
+            format="webp"
+          />
+        </CaseStudyCard>
       </div>
     </div>
     <div class="content">
@@ -37,29 +56,68 @@ import rakutenHero from '../../src/assets/case-studies/rakuten-team.jpg'
         image={femtasyHero}
         imageAlt="Femtasy app"
         flip
-      />
+      >
+        <Image
+          slot="logo"
+          src={femtasyLogo}
+          alt="Femtasy logo"
+          height={22}
+          densities={[1, 2]}
+          format="webp"
+        />
+      </CaseStudyCard>
       <CaseStudyCard
         href="/projects/lokalportal/"
         title="We helped Lokalportal team reshape local journalism in Germany"
         description="How we helped speed up development by improving agile processes and setting up a resilient application architecture."
         image={lokalportalHero}
         imageAlt="Lokalportal app"
-      />
+      >
+        <Image
+          slot="logo"
+          src={lokalportalLogo}
+          alt="Lokalportal logo"
+          height={22}
+          densities={[1, 2]}
+          format="webp"
+        />
+      </CaseStudyCard>
       <CaseStudyCard
         href="/projects/sharoo/"
         title="We helped sharoo team conquering carsharing economy in Switzerland"
         description="How we implemented unique mobile applications supporting renting and interacting with rented vehicles."
         image={sharooHero}
         imageAlt="Sharoo app"
+        imageHeight={334}
         flip
-      />
+      >
+        <Image
+          slot="logo"
+          src={sharooLogo}
+          alt="Sharoo logo"
+          height={22}
+          densities={[1, 2]}
+          format="webp"
+        />
+      </CaseStudyCard>
       <CaseStudyCard
         href="/projects/clincase/"
         title="How we've recently helped a German company from the medical sector"
         description="Clincase is a long-standing company that has been handling medical data for their customers for fifteen years. We built for them a mobile application that expanded their business to a whole new market."
         image={clincaseHero}
         imageAlt="Clincase app"
-      />
+        imageWidth={620}
+        imageHeight={419}
+      >
+        <Image
+          slot="logo"
+          src={clincaseLogo}
+          alt="Clincase logo"
+          height={22}
+          densities={[1, 2]}
+          format="webp"
+        />
+      </CaseStudyCard>
       <CaseStudyCard
         href="/projects/rakuten/"
         title="Timely delivery of a premium shopping app for a market-leading enterprise"
@@ -67,7 +125,16 @@ import rakutenHero from '../../src/assets/case-studies/rakuten-team.jpg'
         image={rakutenHero}
         imageAlt="Rakuten team"
         flip
-      />
+      >
+        <Image
+          slot="logo"
+          src={rakutenLogo}
+          alt="Rakuten logo"
+          height={22}
+          densities={[1, 2]}
+          format="webp"
+        />
+      </CaseStudyCard>
       <h3 class="awesome-people">
         We've helped some pretty great people at some pretty awesome companies:
       </h3>
