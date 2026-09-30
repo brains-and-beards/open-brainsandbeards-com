@@ -2,10 +2,11 @@
 import MarketingPage from './MarketingPage.astro'
 import CalloutBar from '../components/ui/CalloutBar.astro'
 import { Image } from 'astro:assets'
-interface Props { title: string; description: string; hero?: any; heroAlt?: string }
-const { title, description, hero, heroAlt = '' } = Astro.props
+interface Props { title: string; description: string; hero?: any; heroAlt?: string; trustBar?: boolean; trustItems?: Array<{ value: string; label: string }> }
+const { title, description, hero, heroAlt = '', trustBar = false, trustItems = [{ value: '11', label: 'years on the market' }, { value: '52 months', label: 'longest ongoing client engagement' }, { value: '9+', label: 'average years of programming experience on our team' }] } = Astro.props
 ---
 <MarketingPage title={title} description={description} simpleNavbar projects>
   <article class="case-study-content content-page"><div class="narrow-column text-format">{hero && <Image src={hero} alt={heroAlt} widths={[480, 680, 1024, 1360]} sizes="(max-width: 690px) 90vw, 680px" format="webp" loading="eager" decoding="async" />}<slot /></div></article>
-  <CalloutBar title="Want to start a great project?" />
+  {trustBar && <section class="trustBar"><ul class="trustBarList row">{trustItems.map(({ value, label }) => <li><span>{value}</span><p>{label}</p></li>)}</ul></section>}
+  <CalloutBar title="Let us craft a custom solution<br/>for your product" />
 </MarketingPage>
