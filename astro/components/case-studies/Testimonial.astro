@@ -1,0 +1,25 @@
+---
+import { Image } from 'astro:assets'
+
+interface Props {
+  image: any
+  quote: string
+  name: string
+  position: string
+  company: string
+}
+
+const { image, quote, name, position, company } = Astro.props
+---
+
+<div class="testimonial">
+  <div class="content">
+    <div class="row photo">
+      <Image src={image} class="round" alt="testimonial" height={152} densities={[1, 2]} format="webp" loading="lazy" decoding="async" />
+    </div>
+    <div>
+      <p class="quote">{quote}</p>
+      <p class="who row"><span class="name">{name},&nbsp;</span><span>{position},&nbsp;</span><span>{company}</span></p>
+    </div>
+  </div>
+</div>

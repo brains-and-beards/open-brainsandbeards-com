@@ -74,6 +74,19 @@
   p > a {
     border-bottom: 1px solid $black;
   }
+
+  > :not(.big-part-yellow):not(.testimonial) {
+    width: 65%;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+
+    @include mobile-version {
+      width: auto;
+      margin-left: 20px;
+      margin-right: 20px;
+    }
+  }
 }
 
 .testimonial {
