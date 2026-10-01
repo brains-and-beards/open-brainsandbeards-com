@@ -683,11 +683,11 @@ img.circular-image {
     }
   }
 
-  // Gatsby's StaticImage wrapper can shrink in the banner flex row. Astro's
-  // direct image element needs this explicitly, otherwise its intrinsic width
-  // leaves the central newsletter column too narrow.
+  // Match Gatsby's image wrapper: allow flex shrinking while preserving the
+  // artwork's proportions within the fixed-height banner image box.
   .course-enroll-illustration {
     min-width: 0;
+    object-fit: cover;
   }
 }
 
