@@ -491,51 +491,6 @@ a:hover span.inner-text {
   @include mobile-version {
     padding-bottom: 84px;
   }
-  .swiper-container {
-    width: 100%;
-  }
-
-  .swiper-wrapper {
-    max-width: 1040px;
-  }
-
-  .swiper {
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
-    .row {
-      margin: 40px 0 40px;
-    }
-
-    .quote {
-      @include mobile-version {
-        padding: 0 25px;
-      }
-    }
-
-    @include mobile-version {
-      padding-bottom: 40px;
-    }
-
-    @include tablet-version {
-      padding-bottom: 40px;
-    }
-
-    @include desktop-version {
-      padding-bottom: 80px;
-    }
-  }
-
-  .reference {
-    display: block;
-    margin: 0 9%;
-    @include mobile-version {
-      display: none !important;
-    }
-  }
-
   .quote {
     line-height: 40px;
 

@@ -99,36 +99,6 @@
   }
 }
 
-.team-swiper {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  @include mobile-version {
-    width: 100vw;
-  }
-  .swiper-container {
-    width: 100%;
-  }
-
-  .swiper-wrapper {
-    width: 60%;
-  }
-
-  .swiper {
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
-    @include desktop-version {
-      padding-bottom: 80px;
-    }
-    .row {
-      margin: 40px 0 40px;
-    }
-  }
-}
-
 .content.members-box {
   @extend .row;
   @extend .wrap;
@@ -168,10 +138,6 @@
       height: 83vw;
     }
 
-    &.colour {
-      display: none;
-    }
-
     &.isFocused {
       filter: grayscale(0);
     }
@@ -179,13 +145,6 @@
 
   .sub1 {
     font-size: 18px;
-  }
-
-  .overlay {
-    opacity: 1;
-    position: 'absolute';
-    top: -300px;
-    right: 30px;
   }
 
   &:hover {

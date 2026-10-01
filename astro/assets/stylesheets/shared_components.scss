@@ -224,7 +224,7 @@ button.cta-action {
   }
 }
 
-.form-elements {
+%form-elements {
   label,
   input,
   textarea {
@@ -274,19 +274,7 @@ button.cta-action {
     margin: 40px 0;
   }
 
-  @extend .form-elements;
-}
-
-.swiper-pagination-bullets {
-  .swiper-pagination-bullet {
-    height: 8px;
-    width: 8px;
-    border-radius: 4px;
-    margin: 0 4px;
-  }
-  .swiper-pagination-bullet-active {
-    background-color: $darkGrey !important;
-  }
+  @extend %form-elements;
 }
 
 .right-header-image {

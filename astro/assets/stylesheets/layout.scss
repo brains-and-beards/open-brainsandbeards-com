@@ -151,10 +151,6 @@ button {
   }
 }
 
-img#logo {
-  height: 40px;
-}
-
 section {
   padding: 25px 0;
 
@@ -175,16 +171,10 @@ section {
     @include tablet-version {
       max-width: 400px;
       width: auto;
-      .h1 {
-        word-break: keep-all;
-      }
     }
 
     @include desktop-version {
       width: 38%;
-      .h1 {
-        word-break: keep-all;
-      }
     }
   }
 
@@ -209,10 +199,6 @@ section {
 
   p.sub2 {
     margin-bottom: 0;
-  }
-
-  p.date {
-    font-size: 14px;
   }
 }
 
@@ -427,10 +413,6 @@ ul.picture-list {
       margin: auto;
     }
   }
-}
-
-.not-found {
-  padding: 0 20px;
 }
 
 h1.small-h1 {

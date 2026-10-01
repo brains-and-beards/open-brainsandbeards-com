@@ -191,7 +191,7 @@ ol.estimate-list {
     }
   }
 
-  @extend .form-elements;
+  @extend %form-elements;
 
   button {
     font-size: 16px;
@@ -212,18 +212,4 @@ ol.estimate-list {
   legend {
     margin-bottom: 48px;
   }
-}
-
-.center-vertically {
-  display: flex;
-  align-items: center;
-
-  h2 {
-    margin-top: 0;
-  }
-}
-
-img.estimate-image {
-  max-width: 100%;
-  max-height: 355px;
 }
