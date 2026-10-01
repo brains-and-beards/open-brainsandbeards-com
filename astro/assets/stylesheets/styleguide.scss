@@ -1,0 +1,121 @@
+h1 {
+  font-family: 'Recoleta';
+  font-size: 56px;
+  line-height: 64px;
+  font-weight: normal;
+  @include mobile-version {
+    font-size: 40px;
+    line-height: 48px;
+    letter-spacing: -0.5px;
+  }
+}
+
+h2 {
+  font-family: 'Recoleta';
+  font-size: 40px;
+  line-height: 1.2;
+  font-weight: normal;
+  @include mobile-version {
+    font-size: 32px;
+    line-height: 40px;
+  }
+}
+
+h3 {
+  font-family: 'Recoleta';
+  font-size: 32px;
+  line-height: 40px;
+  font-weight: normal;
+  @include mobile-version {
+    font-size: 24px;
+    line-height: 32px;
+  }
+  padding-top: 48px;
+  margin-bottom: 48px;
+  margin-top: 0px;
+}
+
+h4 {
+  font-family: 'Neutrif Medium';
+  font-size: 24px;
+  line-height: 24px;
+  font-weight: normal;
+}
+
+.sub1 {
+  font-family: 'Neutrif Medium';
+  font-size: 24px;
+  line-height: 32px;
+  font-weight: normal;
+}
+
+.sub2 {
+  font-family: 'Neutrif';
+  font-size: 18px;
+  line-height: 24px;
+  font-weight: normal;
+}
+
+.quote {
+  font-family: 'Recoleta';
+  font-size: 24px;
+  line-height: 32px;
+  font-weight: normal;
+
+  @include mobile-version {
+    font-size: 18px;
+    line-height: 32px;
+  }
+}
+
+.button-text-1 {
+  font-family: 'Neutrif Medium';
+  font-size: 18px;
+  line-height: 24px;
+  font-weight: normal;
+}
+
+.button-text-2 {
+  font-family: 'Neutrif';
+  font-size: 12px;
+  line-height: 24px;
+  text-transform: uppercase;
+  font-weight: normal;
+}
+
+.caption {
+  font-family: 'Neutrif';
+  font-size: 14px;
+  line-height: 24px;
+  font-weight: normal;
+}
+
+.micro {
+  font-family: 'Neutrif';
+  font-size: 12px;
+  line-height: 24px;
+  font-weight: normal;
+  width: 75%;
+  margin: 0 auto;
+  margin-top: 48px;
+}
+
+.highlight {
+  background-color: $yellow;
+  padding: 0 3px;
+}
+
+a:hover {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p,
+  span {
+    opacity: 0.8;
+  }
+
+  color: $slightlyDarkGrey;
+}
