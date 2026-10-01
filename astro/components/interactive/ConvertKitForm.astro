@@ -16,7 +16,7 @@ const { formUrl = 'https://brains-beards.ck.page/a54204fd58/index.js', formId = 
 ></div>
 
 <script>
-  document.querySelectorAll<HTMLElement>('[data-convertkit-form]').forEach(container => {
+  const loadForm = (container: HTMLElement) => {
     if (container.dataset.loaded === 'true') return
     const script = document.createElement('script')
     script.src = container.dataset.formUrl ?? ''
@@ -24,5 +24,26 @@ const { formUrl = 'https://brains-beards.ck.page/a54204fd58/index.js', formId = 
     script.dataset.uid = container.dataset.formId ?? ''
     container.dataset.loaded = 'true'
     container.appendChild(script)
-  })
+  }
+
+  const containers = document.querySelectorAll<HTMLElement>('[data-convertkit-form]')
+
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver(
+      entries => {
+        entries.forEach(entry => {
+          if (!entry.isIntersecting) return
+          observer.unobserve(entry.target)
+          loadForm(entry.target as HTMLElement)
+        })
+      },
+      // Start fetching before the visitor reaches the form.
+      { rootMargin: '300px 0px' }
+    )
+    containers.forEach(container => {
+      if (container.dataset.loaded !== 'true') observer.observe(container)
+    })
+  } else {
+    containers.forEach(loadForm)
+  }
 </script>
