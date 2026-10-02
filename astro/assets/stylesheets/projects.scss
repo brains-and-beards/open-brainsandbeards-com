@@ -172,7 +172,8 @@
 }
 
 .heading-pic {
-  max-width: 1024px;
+  max-width: 100%;
+  height: auto;
   margin-bottom: 32px;
 
   @include mobile-version {

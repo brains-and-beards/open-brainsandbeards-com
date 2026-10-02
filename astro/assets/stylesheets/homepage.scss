@@ -220,6 +220,7 @@ section {
 .clients-pic-first {
   img {
     max-width: 100%;
+    height: auto;
   }
 
   @include mobile-version {
@@ -235,6 +236,7 @@ section {
 
   img {
     max-width: 100%;
+    height: auto;
   }
 
   @include mobile-version {
