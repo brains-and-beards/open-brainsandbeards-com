@@ -1,13 +1,13 @@
-import szymon from '../../src/assets/images/blogAuthors/Szymon.jpg'
-import brainsAndBeards from '../../src/assets/images/blogAuthors/bb.png'
-import blazej from '../../src/assets/images/blogAuthors/blazej.jpeg'
-import ilya from '../../src/assets/images/blogAuthors/ilya.jpg'
-import lukasz from '../../src/assets/images/blogAuthors/lukasz.jpeg'
-import marek from '../../src/assets/images/blogAuthors/marek.jpeg'
-import mihaly from '../../src/assets/images/blogAuthors/mihaly.jpeg'
-import natalia from '../../src/assets/images/blogAuthors/natalia.png'
-import patryk from '../../src/assets/images/blogAuthors/patryk.jpeg'
-import wojtek from '../../src/assets/images/blogAuthors/wojtek.jpeg'
+import szymon from '../assets/images/blogAuthors/Szymon.jpg'
+import brainsAndBeards from '../assets/images/blogAuthors/bb.png'
+import blazej from '../assets/images/blogAuthors/blazej.jpeg'
+import ilya from '../assets/images/blogAuthors/ilya.jpg'
+import lukasz from '../assets/images/blogAuthors/lukasz.jpeg'
+import marek from '../assets/images/blogAuthors/marek.jpeg'
+import mihaly from '../assets/images/blogAuthors/mihaly.jpeg'
+import natalia from '../assets/images/blogAuthors/natalia.png'
+import patryk from '../assets/images/blogAuthors/patryk.jpeg'
+import wojtek from '../assets/images/blogAuthors/wojtek.jpeg'
 
 export const blogAuthors = {
   'Natalia Majkowska-Stewart': { image: natalia, title: 'React and React Native developer' },
