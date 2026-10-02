@@ -75,7 +75,8 @@
 
     @include mobile-version {
       padding-bottom: 84px;
-      margin: 0 40px;
+      margin: 0 auto;
+      width: 100%;
     }
   }
 
@@ -85,10 +86,37 @@
     margin: 32px 0 24px 0;
 
     @include mobile-version {
-      height: 226px;
+      height: auto;
       width: 226px;
+      max-width: 100%;
       margin: 24px 0 -32px 0;
     }
+  }
+}
+
+@media screen and (max-width: 1199px) {
+  .estimateProject {
+    &.toned-down {
+      height: auto;
+      min-height: 344px;
+    }
+
+    .content {
+      flex-direction: column;
+    }
+
+    .cta-bar-image {
+      max-width: 100%;
+      height: auto;
+    }
+  }
+
+  .hero-right-col {
+    min-width: 0;
+  }
+
+  .right-header-image {
+    max-width: 100%;
   }
 }
 

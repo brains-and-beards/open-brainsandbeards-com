@@ -600,6 +600,11 @@ img.circular-image {
   .newsletter-content.center {
     padding: 20px 30px 20px;
 
+    @include mobile-version {
+      padding-left: 0;
+      padding-right: 0;
+    }
+
     h2 {
       margin-bottom: 0;
     }

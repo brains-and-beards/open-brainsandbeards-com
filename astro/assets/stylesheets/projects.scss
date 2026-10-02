@@ -213,6 +213,10 @@
     margin-top: 4px;
     width: 100%;
 
+    @include mobile-version {
+      margin-right: 0;
+    }
+
     input {
       background: transparent;
       height: 48px;
