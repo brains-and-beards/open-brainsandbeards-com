@@ -88,6 +88,7 @@ export default function TestimonialsCarousel({ label, items }: Props) {
     <article
       key={clone ?? item.id}
       className="astro-carousel__slide"
+      data-active={item.id === items[activeIndex]?.id ? '' : undefined}
       id={clone ? undefined : item.id}
       aria-hidden={clone ? true : undefined}
       aria-roledescription="slide"

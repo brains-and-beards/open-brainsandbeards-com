@@ -42,6 +42,7 @@
 }
 .astro-carousel__chevron {
   display: grid;
+  flex: 0 0 44px;
   place-items: center;
   width: 44px;
   height: 44px;
@@ -92,11 +93,29 @@
 }
 
 @media (max-width: 690px) {
+  .astro-carousel {
+    padding-bottom: 0;
+  }
+  .astro-carousel__track {
+    align-items: flex-start;
+  }
   .astro-carousel__slide {
-    padding: 0 0 40px;
+    height: 0;
+    overflow: hidden;
+    padding: 0;
+  }
+  .astro-carousel__slide[data-active] {
+    height: auto;
+    overflow: visible;
+  }
+  .astro-carousel__pagination {
+    display: none;
   }
   .astro-carousel__chevron {
-    display: none;
+    margin: 0;
+  }
+  .astro-carousel__photo {
+    gap: 16px;
   }
   .astro-carousel__slide .quote {
     width: 100%;

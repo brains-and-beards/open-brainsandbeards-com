@@ -518,7 +518,7 @@ a:hover span.inner-text {
   flex-direction: column;
   align-items: center;
   @include mobile-version {
-    padding-bottom: 84px;
+    padding-bottom: 16px;
   }
   .quote {
     line-height: 40px;
