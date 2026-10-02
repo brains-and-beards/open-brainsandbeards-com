@@ -81,8 +81,8 @@ const members: [string, any, string][] = [
   <div class="content-page">
     <div class="big-part-yellow">
       <div class="content members-box">
-        {members.map(([name, image, bio]) => (
-          <TeamMemberCard name={name} image={image} bio={bio} />
+        {members.map(([name, image, bio], index) => (
+          <TeamMemberCard name={name} image={image} bio={bio} priority={index === 0} />
         ))}
       </div>
     </div>

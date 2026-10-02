@@ -39,10 +39,11 @@ const {
         <Image
           src={image}
           alt={imageAlt}
-          widths={[320, 480, 680]}
-          sizes="90vw"
+          widths={[320, 480, 680, 960, 1360]}
+          sizes="(max-width: 690px) calc(100vw - 40px), 680px"
           format="webp"
           loading={eager ? 'eager' : 'lazy'}
+          fetchpriority={eager ? 'high' : 'auto'}
           decoding="async"
         />
       </div>
@@ -63,6 +64,7 @@ const {
             densities={[1, 2]}
             format="webp"
             loading={eager ? 'eager' : 'lazy'}
+            fetchpriority={eager ? 'high' : 'auto'}
             decoding="async"
           />
         </div>
@@ -83,10 +85,11 @@ const {
         <Image
           src={image}
           alt={imageAlt}
-          widths={[320, 480, 680]}
-          sizes="90vw"
+          widths={[320, 480, 680, 960, 1360]}
+          sizes="(max-width: 690px) calc(100vw - 40px), 680px"
           format="webp"
           loading={eager ? 'eager' : 'lazy'}
+          fetchpriority={eager ? 'high' : 'auto'}
           decoding="async"
         />
       </div>
@@ -113,6 +116,7 @@ const {
             densities={[1, 2]}
             format="webp"
             loading={eager ? 'eager' : 'lazy'}
+            fetchpriority={eager ? 'high' : 'auto'}
             decoding="async"
           />
         </div>

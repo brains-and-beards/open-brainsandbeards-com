@@ -8,6 +8,7 @@ import buildingTeams from '../../../src/assets/images/building-teams.png'
 import BlogCard from './BlogCard.astro'
 import BlogAuthor from './BlogAuthor.astro'
 import ContactForm from '../forms/ContactForm.astro'
+import ImagePriority from '../ui/ImagePriority.astro'
 
 interface Props {
   posts: CollectionEntry<'blog'>[]
@@ -90,8 +91,14 @@ const lastPageLink = Math.min(firstPageLink + 4, totalPages)
                     src={firstPost.data.image}
                     alt={`Miniature for post titled "${firstPost.data.title}"`}
                     width={672}
+                    widths={[500, 672, 1000, 1344].filter(
+                      width => width <= firstPost.data.image!.width
+                    )}
+                    sizes="(min-width: 1200px) 672px, 500px"
+                    loading="lazy"
                   />
                 )}
+                {firstPost.data.image && <ImagePriority media="(min-width: 691px)" />}
                 <div class="blurb">
                   <h3>{firstPost.data.title}</h3>
                   <BlogAuthor author={firstPost.data.author} firstPost />
@@ -101,8 +108,12 @@ const lastPageLink = Math.min(firstPageLink + 4, totalPages)
           </article>
         )}
         <div id="posts-list">
-          {pagePosts.map(post => (
-            <BlogCard post={post} />
+          {pagePosts.map((post: CollectionEntry<'blog'>, index: number) => (
+            <BlogCard
+              post={post}
+              priorityOnMobile={index === 0}
+              sizes="(max-width: 690px) calc(100vw - 130px), 320px"
+            />
           ))}
         </div>
       </div>

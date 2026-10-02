@@ -1,0 +1,18 @@
+---
+interface Props {
+  media: string
+}
+
+const { media } = Astro.props
+---
+
+<!-- Place directly after an image whose initial priority depends on the viewport. -->
+<script is:inline define:vars={{ media }}>
+  ;(() => {
+    const image = document.currentScript.previousElementSibling
+    if (image?.tagName === 'IMG' && window.matchMedia(media).matches) {
+      image.setAttribute('fetchpriority', 'high')
+      image.setAttribute('loading', 'eager')
+    }
+  })()
+</script>

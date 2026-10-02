@@ -1,12 +1,14 @@
 ---
 import { Image } from 'astro:assets'
+import ImagePriority from '../ui/ImagePriority.astro'
 interface Props {
   name: string
   bio: string
   image: any
+  priority?: boolean
 }
 
-const { name, bio, image } = Astro.props
+const { name, bio, image, priority = false } = Astro.props
 ---
 
 <div class="team-member" id={name} data-team-member={name}>
@@ -19,6 +21,7 @@ const { name, bio, image } = Astro.props
     loading="lazy"
     decoding="async"
   />
+  {priority && <ImagePriority media="(min-width: 691px)" />}
   <p class="sub1">{name}</p>
   <p>{bio}</p>
 </div>

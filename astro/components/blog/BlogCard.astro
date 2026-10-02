@@ -3,12 +3,19 @@ import { Image } from 'astro:assets'
 import type { CollectionEntry } from 'astro:content'
 import { formatBlogDate } from '../../lib/blog'
 import BlogAuthor from './BlogAuthor.astro'
+import ImagePriority from '../ui/ImagePriority.astro'
 
 interface Props {
   post: CollectionEntry<'blog'>
+  priorityOnMobile?: boolean
+  sizes?: string
 }
 
-const { post } = Astro.props
+const {
+  post,
+  priorityOnMobile = false,
+  sizes = '(max-width: 690px) calc(100vw - 128px), 320px'
+} = Astro.props
 ---
 
 <article class="blogpost-preview">
@@ -20,10 +27,13 @@ const { post } = Astro.props
           alt={`Miniature for post: ${post.data.title}`}
           width={320}
           height={200}
-          densities={[1, 2]}
+          widths={[320, 400, 480, 640, 800, 960, 1280]}
+          sizes={sizes}
           format="webp"
+          loading="lazy"
         />
       )}
+      {post.data.image && priorityOnMobile && <ImagePriority media="(max-width: 690px)" />}
       <p class="quote blog-list-item-title">{post.data.title}</p>
       <h3 class="mobile-only text-center-mobile">{post.data.title}</h3>
     </div>

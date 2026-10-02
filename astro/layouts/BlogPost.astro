@@ -28,6 +28,13 @@ const { post } = Astro.props
             src={post.data.image}
             alt={post.data.imageCaption || post.data.title}
             width={1024}
+            widths={[320, 480, 640, 800, 984, 1280, 1600, 1968].filter(
+              width => width <= post.data.image!.width
+            )}
+            sizes="(min-width: 1024px) 984px, calc(100vw - 40px)"
+            format="webp"
+            loading="eager"
+            fetchpriority="high"
           />
           {post.data.imageCaption && (
             <figcaption class="main-blog-image-caption" set:html={post.data.imageCaption} />

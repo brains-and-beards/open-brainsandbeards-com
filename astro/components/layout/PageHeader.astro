@@ -22,9 +22,11 @@ const { title, subtitle, image, imageAlt = '', columns = false } = Astro.props
           src={image}
           alt={imageAlt}
           width={504}
-          densities={[1, 2]}
+          widths={[320, 400, 504, 640, 800, 1008]}
+          sizes="(max-width: 690px) calc(80vw - 40px), 504px"
           format="webp"
           loading="eager"
+          fetchpriority="high"
           decoding="async"
         />
       )}
@@ -39,9 +41,11 @@ const { title, subtitle, image, imageAlt = '', columns = false } = Astro.props
             src={image}
             alt={imageAlt}
             width={504}
-            densities={[1, 2]}
+            widths={[320, 400, 504, 640, 800, 1008]}
+            sizes="(max-width: 690px) calc(80vw - 40px), 504px"
             format="webp"
             loading="eager"
+            fetchpriority="high"
             decoding="async"
           />
         )}

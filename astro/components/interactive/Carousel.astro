@@ -1,11 +1,13 @@
 ---
+import { Image } from 'astro:assets'
+
 export interface CarouselItem {
   id: string
   quote: string
   name: string
   position: string
   company: string
-  imageUrl?: string
+  image?: ImageMetadata
   imageAlt?: string
 }
 
@@ -19,7 +21,7 @@ const { label, items }: Props = Astro.props
 
 <section class="astro-carousel" data-carousel aria-roledescription="carousel" aria-label={label}>
   <div class="astro-carousel__track" data-carousel-track tabindex="0">
-    {items.map(({ id, quote, name, position, company, imageUrl, imageAlt }) => (
+    {items.map(({ id, quote, name, position, company, image, imageAlt }) => (
       <article
         class="astro-carousel__slide"
         id={id}
@@ -37,14 +39,17 @@ const { label, items }: Props = Astro.props
               <path d="m13 0-12 12 12 12" />
             </svg>
           </button>
-          {imageUrl && (
-            <img
+          {image && (
+            <Image
               class="astro-carousel__image"
-              src={imageUrl}
+              src={image}
               alt={imageAlt ?? ''}
-              width="152"
-              height="152"
+              width={152}
+              height={152}
+              densities={[1, 2]}
+              format="webp"
               loading="lazy"
+              decoding="async"
             />
           )}
           <button

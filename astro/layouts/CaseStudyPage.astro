@@ -33,9 +33,11 @@ const {
           class="heading-pic"
           alt={heroAlt}
           width={1024}
-          densities={[1, 2]}
+          widths={[300, 500, 600, 1000, 1024, 1536, 2048].filter(width => width <= hero.width)}
+          sizes="(max-width: 690px) 300px, (max-width: 1199px) 500px, 1024px"
           format="webp"
           loading="eager"
+          fetchpriority="high"
           decoding="async"
         />
       </div>
