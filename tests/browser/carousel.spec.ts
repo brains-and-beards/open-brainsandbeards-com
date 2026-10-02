@@ -133,3 +133,69 @@ test('mobile touch taps keep advancing right and recover after reversing directi
     }).toBeLessThanOrEqual(1)
   }
 })
+
+test('quick swipes interrupting a previous animation always settle on a slide', async ({ page }, testInfo) => {
+  const session = testInfo.project.name === 'mobile'
+    ? await page.context().newCDPSession(page) : null
+  const track = page.locator(trackSelector)
+  await track.evaluate(element => element.scrollIntoView({ block: 'start' }))
+  const box = (await track.boundingBox())!
+  const x = box.x + box.width / 2
+  const y = box.y + 260 // Quote area, away from chevron buttons.
+  const swipe = async (distance: number) => {
+    if (session) {
+      await session.send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: [{ x, y }] })
+      for (let step = 1; step <= 3; step++) {
+        await session.send('Input.dispatchTouchEvent', {
+          type: 'touchMove', touchPoints: [{ x: x - distance * step / 3, y }]
+        })
+      }
+      await session.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] })
+    } else {
+      await page.mouse.move(x, y)
+      await page.mouse.down()
+      await page.mouse.move(x - distance, y, { steps: 3 })
+      await page.mouse.up()
+    }
+  }
+  for (let attempt = 0; attempt < 8; attempt++) {
+    await swipe(box.width * (attempt % 2 === 0 ? 0.7 : -0.7))
+    await page.waitForTimeout(40)
+    await swipe(box.width * (attempt % 2 === 0 ? -0.25 : 0.25))
+    await expect.poll(() => track.evaluate(element => {
+      const position = element.scrollLeft / element.clientWidth
+      return Math.abs(position - Math.round(position))
+    }), { timeout: 5000 }).toBeLessThan(0.001)
+    await expect(track).not.toHaveClass(/is-dragging/)
+    // Leave time for delayed snap/reset callbacks, then verify it stays aligned.
+    await page.waitForTimeout(500)
+    const position = await track.evaluate(element => element.scrollLeft / element.clientWidth)
+    expect(Math.abs(position - Math.round(position))).toBeLessThan(0.001)
+  }
+})
+
+test('an interrupted pointer capture cannot leave the carousel between slides', async ({ page }) => {
+  const track = page.locator(trackSelector)
+  await track.evaluate(element => {
+    element.scrollIntoView({ block: 'start' })
+    element.addEventListener('gotpointercapture', event => {
+      element.setAttribute('data-test-pointer-id', String((event as PointerEvent).pointerId))
+    }, { once: true })
+  })
+  const box = (await track.boundingBox())!
+  const x = box.x + box.width / 2
+  const y = box.y + 260
+  await page.mouse.move(x, y)
+  await page.mouse.down()
+  await expect(track).toHaveClass(/is-dragging/)
+  await page.mouse.move(x - box.width * 0.35, y, { steps: 3 })
+  // Browser interruptions can release capture before a pointerup/cancel reaches
+  // the track. Use the browser's real capture API to reproduce that sequence.
+  await track.evaluate(element => {
+    element.releasePointerCapture(Number(element.getAttribute('data-test-pointer-id')))
+  })
+  await page.mouse.move(0, 0)
+  await page.mouse.up()
+  await expect(track).not.toHaveClass(/is-dragging/)
+  await settled(page, 0)
+})
