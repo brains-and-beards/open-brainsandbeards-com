@@ -106,3 +106,30 @@ test('touch swipes and mouse drags continue past both loop boundaries', async ({
     }
   }
 })
+
+test('mobile touch taps keep advancing right and recover after reversing direction', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name === 'desktop')
+  const count = await page.locator(dotsSelector).count()
+  const first = await currentSlide(page)
+  await first.locator('.astro-carousel__photo').evaluate(element =>
+    element.scrollIntoView({ block: 'center', inline: 'nearest' }))
+  let index = 0
+  for (const direction of [...Array(count * 2).fill(1), -1, -1, -1, ...Array(count * 2).fill(1)]) {
+    await page.waitForTimeout(500)
+    const slide = await currentSlide(page)
+    const button = slide.locator(direction === 1
+      ? '.astro-carousel__chevron:not(.astro-carousel__chevron--previous)'
+      : '.astro-carousel__chevron--previous')
+    const box = (await button.boundingBox())!
+    // Tap at the rendered chevron; do not scroll or refocus it between taps.
+    await page.touchscreen.tap(box.x + box.width / 2, box.y + box.height / 2)
+    index = (index + direction + count) % count
+    await settled(page, index)
+    const activeSlide = page.locator('.astro-carousel__slide[id]').nth(index)
+    await expect.poll(async () => {
+      const height = await page.locator(trackSelector).evaluate(track => track.clientHeight)
+      const slideHeight = await activeSlide.evaluate(slide => slide.getBoundingClientRect().height)
+      return Math.abs(height - slideHeight)
+    }).toBeLessThanOrEqual(1)
+  }
+})
