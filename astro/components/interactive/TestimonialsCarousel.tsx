@@ -63,6 +63,21 @@ export default function TestimonialsCarousel({ label, items }: Props) {
 
   useEffect(() => {
     const track = trackRef.current
+    const slide = track?.children[activeIndex + offset] as HTMLElement | undefined
+    if (!track || !slide) return
+    // Size the viewport, not the slides: zero-height slides are unreliable
+    // scroll-snap targets in Firefox. Observe fonts, images and width changes.
+    const updateHeight = () => {
+      track.style.setProperty('--active-slide-height', `${slide.offsetHeight}px`)
+    }
+    updateHeight()
+    const observer = new ResizeObserver(updateHeight)
+    observer.observe(slide)
+    return () => observer.disconnect()
+  }, [activeIndex, offset, items.length])
+
+  useEffect(() => {
+    const track = trackRef.current
     if (!track) return
     // Add loop slides only after hydration, keeping Marc first in the static HTML.
     track.scrollTo({ left: (currentIndex.current + offset) * track.clientWidth, behavior: 'auto' })
