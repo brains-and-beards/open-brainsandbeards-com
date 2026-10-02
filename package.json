@@ -23,7 +23,7 @@
     "global-prettier": "prettier --write .",
     "typecheck": "astro check",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
-    "test:carousel": "playwright test tests/browser/carousel.spec.ts"
+    "test": "playwright test tests"
   },
   "dependencies": {
     "@astrojs/rss": "^4.0.19",
