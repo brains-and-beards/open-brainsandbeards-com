@@ -1,5 +1,5 @@
 ---
-import Carousel from '../components/interactive/Carousel.astro'
+import TestimonialsCarousel from '../components/interactive/TestimonialsCarousel'
 import RandomHero from '../components/interactive/RandomHero.astro'
 import CalloutBar from '../components/ui/CalloutBar.astro'
 import ReadMore from '../components/ui/ReadMore.astro'
@@ -7,7 +7,7 @@ import BaseLayout from '../layouts/BaseLayout.astro'
 import CaseStudyCard from '../components/case-studies/CaseStudyCard.astro'
 import ClientLogos from '../components/case-studies/ClientLogos.astro'
 import ContactForm from '../components/forms/ContactForm.astro'
-import { Image } from 'astro:assets'
+import { getImage, Image } from 'astro:assets'
 import crossPlatformIcon from '../assets/illustrations/services-cross-platform-icon.png'
 import nativeIcon from '../assets/illustrations/services-native-icon.png'
 import staffIcon from '../assets/illustrations/services-staff-icon.png'
@@ -73,6 +73,19 @@ const carouselItems = [
     imageAlt: 'Testimonial illustration'
   }
 ]
+
+const testimonials = await Promise.all(
+  carouselItems.map(async ({ image, ...item }) => {
+    const optimized = await getImage({
+      src: image,
+      width: 152,
+      height: 152,
+      densities: [1, 2],
+      format: 'webp'
+    })
+    return { ...item, image: { src: optimized.src, srcSet: optimized.srcSet.attribute } }
+  })
+)
 ---
 
 <BaseLayout
@@ -219,7 +232,11 @@ const carouselItems = [
       </CaseStudyCard>
       <ClientLogos short />
       <div class="references">
-        <Carousel label="Client references" items={carouselItems} />
+        <TestimonialsCarousel
+          label="Client references"
+          items={testimonials}
+          client:visible={{ rootMargin: '300px' }}
+        />
       </div>
     </div>
   </section>
