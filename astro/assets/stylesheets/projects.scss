@@ -217,6 +217,12 @@
       margin-right: 0;
     }
 
+    @media screen and (min-width: 691px) and (max-width: 1199px) {
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-right: 0;
+    }
+
     input {
       background: transparent;
       height: 48px;
@@ -227,6 +233,12 @@
       padding: 12px;
       flex: 1;
 
+      @media screen and (min-width: 691px) and (max-width: 1199px) {
+        min-width: 0;
+        flex-basis: 240px;
+        margin-right: 0;
+      }
+
       @include mobile-version {
         margin-right: 0;
         width: 100%;
@@ -235,6 +247,7 @@
 
     button {
       height: 48px;
+      min-height: 48px;
       font-size: 16px;
       font-family: 'Neutrif';
       align-items: center;
@@ -242,6 +255,12 @@
       background: $yellow;
       border: none;
       box-shadow: none;
+
+      @media screen and (max-width: 1199px) {
+        height: auto;
+        max-width: 100%;
+        white-space: normal;
+      }
 
       @include mobile-version {
         margin-top: 23px;
