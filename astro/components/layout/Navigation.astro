@@ -43,20 +43,20 @@ const backLabel = `Back to ${projects ? 'projects' : 'homepage'}`
         <a href="/" aria-label="Brains & Beards home">
           <img src={logoUrl} alt="Brains and Beards logo" />
         </a>
-        <ul class="menu-links desktop-only">
+        <ul class="menu-links">
           {menuLinks.map(({ url, label }) => (
             <li class="menu-link">
               <a href={url}>{label}</a>
             </li>
           ))}
         </ul>
-        <ul class="menu-estimate-link desktop-only">
+        <ul class="menu-estimate-link">
           <li class="menu-link button menu-estimate-button">
             <a href="/hire-us/">Hire us</a>
           </li>
         </ul>
         <button
-          class="menu-toggle mobile-only"
+          class="menu-toggle"
           type="button"
           aria-expanded="false"
           aria-controls="mobile-menu"
@@ -66,7 +66,7 @@ const backLabel = `Back to ${projects ? 'projects' : 'homepage'}`
           <span class="sr-only">Open navigation menu</span>
         </button>
       </div>
-      <div id="mobile-menu" class="mobile-only menu-overlay" hidden data-menu-overlay>
+      <div id="mobile-menu" class="menu-overlay" hidden data-menu-overlay>
         <div class="mobile-menu-content">
           <div class="menu">
             <a href="/" aria-label="Brains & Beards home">
@@ -132,6 +132,11 @@ const backLabel = `Back to ${projects ? 'projects' : 'homepage'}`
   .menu-toggle img {
     display: block;
   }
+  .menu-toggle[data-menu-open],
+  .menu-toggle[data-menu-close] {
+    background: transparent;
+    box-shadow: none;
+  }
   .sr-only {
     position: absolute;
     width: 1px;
@@ -142,8 +147,5 @@ const backLabel = `Back to ${projects ? 'projects' : 'homepage'}`
     clip: rect(0, 0, 0, 0);
     white-space: nowrap;
     border: 0;
-  }
-  body.menu-open {
-    overflow: hidden;
   }
 </style>
