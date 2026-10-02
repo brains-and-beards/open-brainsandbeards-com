@@ -367,6 +367,13 @@
     height: auto;
   }
 
+  // Gatsby centered standalone Markdown images inside responsive wrappers.
+  // Keep explicit GIF groups and floated illustrations in their own layouts.
+  .narrow-column p > img:not(.gif-container img, .wrap-left img, .wrap-right img) {
+    display: block;
+    margin-inline: auto;
+  }
+
   .narrow-column {
     min-width: 0;
     max-width: 100%;
