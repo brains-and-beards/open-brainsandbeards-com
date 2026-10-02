@@ -337,3 +337,9 @@ h3.small-margin {
   font-size: 18px;
   line-height: 27px;
 }
+
+.name-origin > .row {
+  @include mobile-version {
+    align-items: center;
+  }
+}
