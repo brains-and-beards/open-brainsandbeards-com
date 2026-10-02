@@ -20,7 +20,6 @@ export default function TestimonialsCarousel({ label, items }: Props) {
   const trackRef = useRef<HTMLDivElement>(null)
   const drag = useRef<{ x: number; left: number } | null>(null)
   const resetTimer = useRef<ReturnType<typeof setTimeout>>()
-  const dragTimer = useRef<ReturnType<typeof setTimeout>>()
   const currentIndex = useRef(0)
   const [activeIndex, setActiveIndex] = useState(0)
   const [loop, setLoop] = useState(false)
@@ -46,7 +45,14 @@ export default function TestimonialsCarousel({ label, items }: Props) {
     clearTimeout(resetTimer.current)
     if (!loop) return
     resetTimer.current = setTimeout(() => {
-      if (!drag.current) normalizeLoopPosition()
+      if (drag.current) return
+      const index = normalizeLoopPosition()
+      const track = trackRef.current
+      // Interrupted animations can finish between slides. Once scrolling is
+      // idle, correct the remaining offset without starting another animation.
+      if (track && Math.abs(track.scrollLeft - index * track.clientWidth) > 0.5) {
+        scrollToSlide(index, 'instant')
+      }
     }, 400)
   }
   const move = (direction: number) => {
@@ -95,20 +101,22 @@ export default function TestimonialsCarousel({ label, items }: Props) {
     return () => {
       observer.disconnect()
       clearTimeout(resetTimer.current)
-      clearTimeout(dragTimer.current)
     }
   }, [offset])
 
   const finishDrag = (event: React.PointerEvent<HTMLDivElement>) => {
     if (!drag.current) return
+    const index = physicalIndex()
     drag.current = null
     if (event.currentTarget.hasPointerCapture(event.pointerId)) {
       event.currentTarget.releasePointerCapture(event.pointerId)
     }
-    scrollToSlide(physicalIndex())
+    // Restore snapping before the animation starts, rather than toggling it
+    // halfway through on a timer. Update the DOM now; React mirrors the class.
+    event.currentTarget.classList.remove('is-dragging')
+    setDragging(false)
+    scrollToSlide(index)
     scheduleReset()
-    clearTimeout(dragTimer.current)
-    dragTimer.current = setTimeout(() => setDragging(false), 350)
   }
 
   const renderSlide = (item: Testimonial, clone?: string) => (
@@ -189,7 +197,6 @@ export default function TestimonialsCarousel({ label, items }: Props) {
           if (event.button !== 0 || (event.target as HTMLElement).closest('button')) return
           clearTimeout(resetTimer.current)
           normalizeLoopPosition()
-          clearTimeout(dragTimer.current)
           drag.current = { x: event.clientX, left: event.currentTarget.scrollLeft }
           setDragging(true)
           event.currentTarget.setPointerCapture(event.pointerId)
@@ -201,6 +208,7 @@ export default function TestimonialsCarousel({ label, items }: Props) {
         }}
         onPointerUp={finishDrag}
         onPointerCancel={finishDrag}
+        onLostPointerCapture={finishDrag}
       >
         {loop && renderSlide(items[items.length - 1], 'last-clone')}
         {items.map(item => renderSlide(item))}
