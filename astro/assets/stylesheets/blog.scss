@@ -118,7 +118,9 @@
 
   img {
     width: 320px;
-    height: 200px;
+    max-width: 100%;
+    height: auto;
+    aspect-ratio: 8 / 5;
     object-fit: cover;
     filter: none;
     transition: none;
@@ -142,7 +144,6 @@
     max-width: 100%;
     img {
       width: 100%;
-      height: calc(0.67 * (100vw - 24px));
     }
 
     h3 {
@@ -167,6 +168,12 @@
       justify-content: space-between;
     }
   }
+}
+
+.first-post .blog-image {
+  min-width: 0;
+  max-width: 100%;
+  height: auto;
 }
 
 #posts-list {
@@ -360,6 +367,29 @@
     height: auto;
   }
 
+  .narrow-column {
+    min-width: 0;
+    max-width: 100%;
+
+    iframe,
+    video {
+      max-width: 100%;
+      height: auto;
+    }
+
+    pre {
+      max-width: 100%;
+      overflow-x: auto;
+    }
+
+    table {
+      display: block;
+      width: fit-content;
+      max-width: 100%;
+      overflow-x: auto;
+    }
+  }
+
   // Astro's Shiki output uses an inline dark background by default. Keep the
   // existing Solarized-light code treatment used by the Gatsby site.
   pre.astro-code {
@@ -368,9 +398,9 @@
     font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
     font-size: 1em;
     line-height: 1.5;
-    white-space: pre-wrap !important;
-    overflow-wrap: anywhere;
-    word-break: break-word;
+    white-space: pre !important;
+    overflow-wrap: normal;
+    word-break: normal;
     padding: 1em !important;
     margin: 0.5em 0;
     overflow: auto;
@@ -378,6 +408,7 @@
   }
 
   :not(pre) > code {
+    overflow-wrap: anywhere;
     background-color: #dbdbdb;
     color: #414141;
     font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
