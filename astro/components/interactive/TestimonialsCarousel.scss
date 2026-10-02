@@ -1,0 +1,120 @@
+.astro-carousel {
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+}
+.astro-carousel__track {
+  display: flex;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  touch-action: pan-y;
+  cursor: grab;
+}
+.astro-carousel__track::-webkit-scrollbar {
+  display: none;
+}
+.astro-carousel__track.is-dragging {
+  cursor: grabbing;
+  scroll-snap-type: none;
+  user-select: none;
+}
+.astro-carousel__slide {
+  flex: 0 0 100%;
+  scroll-snap-align: start;
+  text-align: center;
+  padding: 0 20% 80px;
+}
+.astro-carousel__photo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin: 40px 0;
+}
+.astro-carousel__image {
+  border-radius: 50%;
+  object-fit: cover;
+}
+.astro-carousel__chevron {
+  display: grid;
+  flex: 0 0 44px;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  margin: 0 9%;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  appearance: none;
+  box-shadow: none;
+  background: transparent;
+  color: #414141;
+  cursor: pointer;
+}
+.astro-carousel__chevron svg {
+  width: 14px;
+  height: 24px;
+}
+.astro-carousel__chevron path {
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.astro-carousel__pagination {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+.astro-carousel__dot {
+  width: 8px;
+  height: 8px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  appearance: none;
+  box-shadow: none;
+  background: #c4c4c4;
+  cursor: pointer;
+}
+.astro-carousel__dot.is-active {
+  background: #414141;
+}
+.astro-carousel__chevron:focus-visible,
+.astro-carousel__dot:focus-visible {
+  outline: 2px solid #414141;
+  outline-offset: 3px;
+}
+
+@media (max-width: 690px) {
+  .astro-carousel {
+    padding-bottom: 0;
+  }
+  .astro-carousel__track {
+    align-items: flex-start;
+    height: var(--active-slide-height, auto);
+    overflow-y: hidden;
+  }
+  .astro-carousel__slide {
+    padding: 0;
+  }
+  .astro-carousel__pagination {
+    display: none;
+  }
+  .astro-carousel__chevron {
+    margin: 0;
+  }
+  .astro-carousel__photo {
+    gap: 16px;
+  }
+  .astro-carousel__slide .quote {
+    width: 100%;
+    padding: 0 25px;
+  }
+}

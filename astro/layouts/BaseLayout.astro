@@ -1,0 +1,51 @@
+---
+import '../assets/stylesheets/main.scss'
+import Seo from '../components/Seo.astro'
+import Footer from '../components/layout/Footer.astro'
+import Navigation from '../components/layout/Navigation.astro'
+
+interface Props {
+  title?: string
+  description?: string
+  image?: string
+  pathname?: string
+  article?: boolean
+  noIndex?: boolean
+  simpleNavbar?: boolean
+  greyNavbar?: boolean
+  projects?: boolean
+  includeFooter?: boolean
+}
+
+const {
+  includeFooter = true,
+  simpleNavbar = false,
+  greyNavbar = false,
+  projects = false,
+  ...seo
+} = Astro.props
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href="/favicon.png" />
+    <Seo {...seo} />
+    <slot name="head" />
+    <script
+      defer
+      data-domain="brainsandbeards.com"
+      src="https://plausible.io/js/script.js"
+    ></script>
+  </head>
+  <body>
+    <Navigation simple={simpleNavbar} grey={greyNavbar} projects={projects} />
+    <slot name="header" />
+    <main>
+      <slot />
+    </main>
+    {includeFooter && <Footer />}
+  </body>
+</html>

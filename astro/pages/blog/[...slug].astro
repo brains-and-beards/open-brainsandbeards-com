@@ -1,0 +1,33 @@
+---
+import { render } from 'astro:content'
+import BlogList from '../../components/blog/BlogList.astro'
+import BlogPost from '../../layouts/BlogPost.astro'
+import { getBlogPosts } from '../../lib/blog'
+
+export async function getStaticPaths() {
+  const posts = await getBlogPosts()
+  const totalPages = Math.ceil(posts.length / 12)
+
+  return [
+    ...posts.map(post => ({
+      params: { slug: post.data.path.replace(/^\/blog\//, '') },
+      props: { post }
+    })),
+    ...Array.from({ length: totalPages - 1 }, (_, index) => ({
+      params: { slug: String(index + 2) },
+      props: { page: index + 2 }
+    }))
+  ]
+}
+
+const { post, page } = Astro.props
+const { Content } = post ? await render(post) : { Content: null }
+---
+
+{page ? (
+  <BlogList posts={await getBlogPosts()} currentPage={page} />
+) : (
+  <BlogPost post={post}>
+    <Content />
+  </BlogPost>
+)}

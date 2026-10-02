@@ -1,0 +1,156 @@
+---
+import { Image } from 'astro:assets'
+import type { CollectionEntry } from 'astro:content'
+import BaseLayout from '../../layouts/BaseLayout.astro'
+import technology from '../../assets/images/technology.png'
+import shipping from '../../assets/images/shipping.png'
+import buildingTeams from '../../assets/images/building-teams.png'
+import BlogCard from './BlogCard.astro'
+import BlogAuthor from './BlogAuthor.astro'
+import ContactForm from '../forms/ContactForm.astro'
+import ImagePriority from '../ui/ImagePriority.astro'
+
+interface Props {
+  posts: CollectionEntry<'blog'>[]
+  currentPage: number
+}
+
+const { posts, currentPage } = Astro.props
+const postsPerPage = 12
+const totalPages = Math.ceil(posts.length / postsPerPage)
+const firstPost = posts[0]
+const pagePosts = posts.slice((currentPage - 1) * postsPerPage + 1, currentPage * postsPerPage + 1)
+const pageHref = (page: number) => (page === 1 ? '/blog/' : `/blog/${page}/`)
+const firstPageLink = Math.max(currentPage - 2, 1)
+const lastPageLink = Math.min(firstPageLink + 4, totalPages)
+---
+
+<BaseLayout
+  title="Read our insights"
+  description="Technology, Shipping great products, Building successful teams"
+>
+  <link
+    slot="head"
+    rel="alternate"
+    type="application/rss+xml"
+    title="Brains & Beards - all posts"
+    href="/blog/feed.xml"
+  />
+  <div slot="header" class="yellow">
+    <div class="content row header">
+      <div class="center">
+        <h1>Read our insights</h1>
+        <div class="row header-subtitle">
+          <div class="one-third">
+            <Image
+              src={technology}
+              alt="Technology"
+              width={80}
+              height={80}
+              densities={[1, 2]}
+              format="webp"
+            />
+            <p class="sub2">Technology</p>
+          </div>
+          <div class="one-third">
+            <Image
+              src={shipping}
+              alt="Shipping products"
+              width={80}
+              height={80}
+              densities={[1, 2]}
+              format="webp"
+            />
+            <p class="sub2">Shipping great products</p>
+          </div>
+          <div class="one-third">
+            <Image
+              src={buildingTeams}
+              alt="Building teams"
+              width={80}
+              height={80}
+              densities={[1, 2]}
+              format="webp"
+            />
+            <p class="sub2">Building successful teams</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <main class="content-page">
+    <div class="top-part-yellow">
+      <div class="content">
+        {firstPost && (
+          <article class="first-post-big">
+            <a href={firstPost.data.path}>
+              <div class="first-post">
+                {firstPost.data.image && (
+                  <Image
+                    class="blog-image"
+                    src={firstPost.data.image}
+                    alt={`Miniature for post titled "${firstPost.data.title}"`}
+                    width={672}
+                    widths={[500, 672, 1000, 1344].filter(
+                      width => width <= firstPost.data.image!.width
+                    )}
+                    sizes="(min-width: 1200px) 672px, 500px"
+                    loading="lazy"
+                  />
+                )}
+                {firstPost.data.image && <ImagePriority media="(min-width: 691px)" />}
+                <div class="blurb">
+                  <h3>{firstPost.data.title}</h3>
+                  <BlogAuthor author={firstPost.data.author} firstPost />
+                </div>
+              </div>
+            </a>
+          </article>
+        )}
+        <div id="posts-list">
+          {pagePosts.map((post: CollectionEntry<'blog'>, index: number) => (
+            <BlogCard
+              post={post}
+              priorityOnMobile={index === 0}
+              sizes="(max-width: 690px) calc(100vw - 130px), 320px"
+            />
+          ))}
+        </div>
+      </div>
+    </div>
+    <nav class="row" id="load-more" aria-label="Blog pagination">
+      <a
+        class:list={['button', 'left', 'sub2', 'big', { disabled: currentPage === 1 }]}
+        href={pageHref(Math.max(currentPage - 1, 1))}
+        aria-disabled={currentPage === 1}
+      >
+        <span>Newer posts</span>
+      </a>
+      <div class="page-links mobile-hide">
+        {Array.from(
+          { length: lastPageLink - firstPageLink + 1 },
+          (_, index) => firstPageLink + index
+        ).map(page => (
+          <a
+            class:list={['page-link', 'right', 'sub2', { current: page === currentPage }]}
+            href={`${pageHref(page)}#posts-list`}
+          >
+            <span>{page}</span>
+          </a>
+        ))}
+      </div>
+      <a
+        class:list={['button', 'right', 'sub2', 'big', { disabled: currentPage === totalPages }]}
+        href={pageHref(Math.min(currentPage + 1, totalPages))}
+        aria-disabled={currentPage === totalPages}
+      >
+        <span>Older posts</span>
+      </a>
+    </nav>
+  </main>
+  <ContactForm
+    title="Get in touch"
+    subtitle="If you'd like to get in touch with us about something we wrote on our blog, please do!"
+    footerSeparator
+  />
+</BaseLayout>

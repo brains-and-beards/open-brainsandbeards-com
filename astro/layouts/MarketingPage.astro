@@ -1,0 +1,68 @@
+---
+import BaseLayout from './BaseLayout.astro'
+import PageHeader from '../components/layout/PageHeader.astro'
+
+interface Props {
+  title: string
+  description: string
+  headerSubtitle?: string
+  headerActionLabel?: string
+  headerActionHref?: string
+  heroImage?: any
+  heroImageAlt?: string
+  columns?: boolean
+  simpleNavbar?: boolean
+  greyNavbar?: boolean
+  projects?: boolean
+  noIndex?: boolean
+  pageClass?: string
+}
+
+const {
+  title,
+  description,
+  headerSubtitle = description,
+  headerActionLabel,
+  headerActionHref = '/hire-us/',
+  heroImage,
+  heroImageAlt,
+  columns = false,
+  simpleNavbar = false,
+  greyNavbar = false,
+  projects = false,
+  noIndex = false,
+  pageClass
+} = Astro.props
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  simpleNavbar={simpleNavbar}
+  greyNavbar={greyNavbar}
+  projects={projects}
+  noIndex={noIndex}
+>
+  <div slot="header" class:list={['yellow', pageClass]}>
+    <div class="content row header">
+      <PageHeader
+        title={title}
+        subtitle={headerSubtitle}
+        image={heroImage}
+        imageAlt={heroImageAlt}
+        columns={columns}
+      >
+        {headerActionLabel && (
+          <div slot="subtitle" class="button estimate-link header-cta">
+            <a class="center" href={headerActionHref}>
+              {headerActionLabel}
+            </a>
+          </div>
+        )}
+      </PageHeader>
+    </div>
+  </div>
+  <div class={pageClass}>
+    <slot />
+  </div>
+</BaseLayout>

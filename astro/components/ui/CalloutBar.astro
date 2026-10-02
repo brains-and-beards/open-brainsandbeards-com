@@ -1,0 +1,65 @@
+---
+import { Image } from 'astro:assets'
+import leftIllustration from '../../assets/illustrations/estimate-project-bar-left.png'
+import rightIllustration from '../../assets/illustrations/estimate-project-bar-right.png'
+
+interface Props {
+  title: string
+  body?: string
+  href?: string
+  actionLabel?: string
+  tonedDown?: boolean
+}
+
+const {
+  title,
+  body,
+  href = '/hire-us/',
+  actionLabel = 'Get in touch',
+  tonedDown = false
+} = Astro.props
+---
+
+<section class:list={['estimateProject', { 'toned-down': tonedDown }]}>
+  {tonedDown ? (
+    <div class="narrow-column">
+      <div class="center">
+        <h3 set:html={title} />
+        {body && <p class="sub2">{body}</p>}
+        <a class="button estimate-link yellow" href={href}>
+          {actionLabel}
+        </a>
+      </div>
+    </div>
+  ) : (
+    <div class="content row">
+      <Image
+        src={leftIllustration}
+        class="center-mobile cta-bar-image"
+        alt="Happy phone"
+        width={400}
+        densities={[1, 2]}
+        format="webp"
+        loading="lazy"
+        decoding="async"
+      />
+      <div class="center">
+        <h2 set:html={title} />
+        {body && <p class="sub2">{body}</p>}
+        <a class="button estimate-link" href={href}>
+          {actionLabel}
+        </a>
+      </div>
+      <Image
+        src={rightIllustration}
+        class="cta-bar-image desktop-only"
+        alt="Happy phone"
+        width={400}
+        densities={[1, 2]}
+        format="webp"
+        loading="lazy"
+        decoding="async"
+      />
+    </div>
+  )}
+</section>

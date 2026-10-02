@@ -367,6 +367,40 @@
     }
   }
 
+  // Gatsby constrained responsive Markdown images to the article column. MDX
+  // emits regular images, so retain that constraint here rather than changing
+  // each post's source.
+  .narrow-column img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  // Astro's Shiki output uses an inline dark background by default. Keep the
+  // existing Solarized-light code treatment used by the Gatsby site.
+  pre.astro-code {
+    background-color: #fdf6e3 !important;
+    color: #657b83 !important;
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+    font-size: 1em;
+    line-height: 1.5;
+    white-space: pre-wrap !important;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+    padding: 1em !important;
+    margin: 0.5em 0;
+    overflow: auto;
+    border-radius: 0.3em;
+  }
+
+  :not(pre) > code {
+    background-color: #dbdbdb;
+    color: #414141;
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+    font-size: 16px;
+    padding: 0.1em;
+    border-radius: 0.3em;
+  }
+
   table,
   th,
   td {
@@ -456,6 +490,10 @@ blockquote {
 .circular-image img {
   width: auto;
   height: 100%;
+}
+
+img.circular-image {
+  object-fit: cover;
 }
 
 .author-content {
@@ -643,6 +681,13 @@ blockquote {
     p {
       line-height: 27px;
     }
+  }
+
+  // Match Gatsby's image wrapper: allow flex shrinking while preserving the
+  // artwork's proportions within the fixed-height banner image box.
+  .course-enroll-illustration {
+    min-width: 0;
+    object-fit: cover;
   }
 }
 

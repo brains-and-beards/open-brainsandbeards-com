@@ -1,0 +1,52 @@
+---
+import { Image } from 'astro:assets'
+import type { CollectionEntry } from 'astro:content'
+import CourseEnrollBanner from '../components/blog/CourseEnrollBanner.astro'
+import BlogPostFootnote from '../components/blog/BlogPostFootnote.astro'
+import RelatedStories from '../components/blog/RelatedStories.astro'
+import MarketingPage from './MarketingPage.astro'
+import { formatBlogDate, getBlogPosts } from '../lib/blog'
+
+interface Props {
+  post: CollectionEntry<'blog'>
+}
+
+const { post } = Astro.props
+---
+
+<MarketingPage
+  title={post.data.title}
+  description={post.data.title}
+  headerSubtitle={formatBlogDate(post.data.date)}
+>
+  <article class="blog-body line-numbers">
+    {post.data.image && (
+      <div class="top-part-yellow">
+        <div class="content">
+          <Image
+            class="main-blog-image"
+            src={post.data.image}
+            alt={post.data.imageCaption || post.data.title}
+            width={1024}
+            widths={[320, 480, 640, 800, 984, 1280, 1600, 1968].filter(
+              width => width <= post.data.image!.width
+            )}
+            sizes="(min-width: 1024px) 984px, calc(100vw - 40px)"
+            format="webp"
+            loading="eager"
+            fetchpriority="high"
+          />
+          {post.data.imageCaption && (
+            <figcaption class="main-blog-image-caption" set:html={post.data.imageCaption} />
+          )}
+        </div>
+      </div>
+    )}
+    <div class="narrow-column">
+      <slot />
+      <BlogPostFootnote author={post.data.author} />
+    </div>
+  </article>
+  <CourseEnrollBanner />
+  <RelatedStories post={post} posts={await getBlogPosts()} />
+</MarketingPage>

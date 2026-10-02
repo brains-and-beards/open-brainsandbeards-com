@@ -1,0 +1,345 @@
+.trustBar {
+  text-align: center;
+  background-color: $lightYellow;
+  @include tablet-version {
+    padding: 0 20px;
+  }
+}
+
+.trustBarList {
+  list-style: none;
+  justify-content: space-between;
+  margin: 0 auto;
+  max-width: 1024px;
+  padding: 0;
+  width: auto;
+
+  @include desktop-version {
+    padding: 25px 100px;
+  }
+
+  h2 {
+    line-height: 40px;
+  }
+}
+
+.trustBarItem {
+  @include desktop-version {
+    width: 30%;
+  }
+
+  @include tablet-version {
+    width: 30%;
+  }
+}
+
+.yellow {
+  background-color: $yellow;
+  display: flex;
+  @include desktop-version {
+    // padding-bottom: 140px;
+  }
+}
+
+.estimateProject {
+  background: $yellow;
+  padding: 0;
+
+  &.toned-down {
+    background: $paleYellow;
+    height: 344px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .narrow-column {
+      padding-bottom: 50px;
+    }
+  }
+
+  .content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+
+    // The two 400px illustrations need room around the central CTA. The
+    // default content width leaves the headline with only ~224px on desktop.
+    @include desktop-version {
+      max-width: 1200px;
+    }
+
+    h2 {
+      margin-bottom: 56px;
+    }
+
+    @include mobile-version {
+      padding-bottom: 84px;
+      margin: 0 auto;
+      width: 100%;
+    }
+  }
+
+  .cta-bar-image {
+    width: 400px;
+    height: 400px;
+    margin: 32px 0 24px 0;
+
+    @include mobile-version {
+      height: auto;
+      width: 226px;
+      max-width: 100%;
+      margin: 24px 0 -32px 0;
+    }
+  }
+}
+
+@media screen and (max-width: 1199px) {
+  .estimateProject {
+    &.toned-down {
+      height: auto;
+      min-height: 344px;
+    }
+
+    .content {
+      flex-direction: column;
+    }
+
+    .cta-bar-image {
+      max-width: 100%;
+      height: auto;
+    }
+  }
+
+  .hero-right-col {
+    min-width: 0;
+  }
+
+  .right-header-image {
+    max-width: 100%;
+  }
+}
+
+#footer {
+  background-color: $paleYellow;
+  padding: 80px 0 64px;
+
+  .row {
+    justify-content: space-between;
+    &.sitemap {
+      flex-wrap: wrap;
+
+      .column {
+        margin-right: 8px;
+        min-width: 70px;
+      }
+    }
+  }
+
+  .nerd-text {
+    font-size: 12px;
+    line-height: 18px;
+  }
+
+  p,
+  a {
+    margin: 0;
+    font-size: 14px;
+    line-height: 24px;
+
+    &.sub2 {
+      font-size: 18px;
+      display: block;
+      font-family: 'Neutrif Medium';
+      margin-bottom: 16px;
+      width: 88px;
+    }
+  }
+
+  a {
+    border: 0;
+    white-space: nowrap;
+  }
+
+  .col {
+    @include tablet-version {
+      &:last-child {
+        width: 38%;
+      }
+    }
+    @include mobile-version {
+      width: 100%;
+      & + .col {
+        margin-top: 56px;
+      }
+    }
+  }
+
+  .binoculars {
+    margin: -55px 0 0 -15px;
+  }
+}
+
+.estimate-link {
+  display: inline-block;
+  padding: 18px 30px;
+  font-family: 'Neutrif';
+  font-size: 18px;
+  line-height: 1.78;
+
+  a {
+    font-size: 18px;
+    line-height: 1.78;
+    font-family: 'Neutrif';
+  }
+
+  @include darken-link-on-hover;
+}
+
+.contact-form {
+  background-color: $paleYellow;
+  padding-bottom: 0;
+
+  &:last-child .content {
+    border-bottom: 1px solid $black;
+  }
+
+  &.footer-separator .content {
+    border-bottom: 1px solid $black;
+  }
+
+  input[type='text'] {
+    font-size: 14px;
+    padding: 0 16px;
+    @media screen and (max-width: 1199px) {
+      font-size: 16px;
+    }
+    &:focus {
+      border-width: 2px;
+    }
+  }
+
+  textarea {
+    font-size: 14px;
+    font-family: 'Neutrif';
+    padding: 16px;
+    flex: 1;
+    @media screen and (max-width: 1199px) {
+      font-size: 16px;
+    }
+    &:focus {
+      border-width: 2px;
+    }
+  }
+
+  h3 {
+    font-family: 'Recoleta';
+    font-size: 40px;
+    margin-bottom: 0;
+  }
+
+  h3.small-headline {
+    font-size: 32px;
+  }
+}
+
+.contact-form.know-more h3 {
+  margin-top: 104px;
+}
+
+button.cta-action {
+  border: 0 !important;
+  padding: 17px 0 !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  &:hover {
+    opacity: 0.9;
+  }
+}
+
+%form-elements {
+  label,
+  input,
+  textarea {
+    width: 100%;
+    border-radius: 8px;
+    background-color: transparent;
+  }
+
+  input {
+    height: 48px;
+    margin-bottom: 16px;
+    border: 1px solid $black;
+  }
+
+  textarea {
+    min-height: 144px;
+    margin-bottom: 16px;
+    border: 1px solid $black;
+    resize: none;
+  }
+
+  button {
+    background: $black;
+    font-size: 18px;
+    border-radius: 8px;
+    color: white;
+    width: 192px;
+    padding: 12px;
+    margin-top: 40px;
+
+    @include mobile-version {
+      width: 100%;
+    }
+  }
+}
+
+.contact-content {
+  max-width: 400px;
+  margin: auto;
+  padding: 65px 0 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .amazing {
+    text-align: center;
+    margin: 40px 0;
+  }
+
+  @extend %form-elements;
+}
+
+.right-header-image {
+  position: relative;
+  width: auto;
+  height: auto;
+  padding-right: 40px;
+  margin-top: -50px;
+
+  @include mobile-version {
+    width: 80vw;
+    margin-top: 0px;
+  }
+}
+
+h3.small-margin {
+  margin-top: 12px;
+  margin-bottom: 12px;
+}
+
+.case-study-teaser {
+  margin-bottom: 48px;
+}
+
+.text-format {
+  font-size: 18px;
+  line-height: 27px;
+}
+
+.name-origin > .row {
+  @include mobile-version {
+    align-items: center;
+  }
+}
