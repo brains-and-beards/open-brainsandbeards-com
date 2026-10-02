@@ -86,6 +86,33 @@ section {
   display: block;
 }
 
+@media screen and (max-width: 1199px) {
+  .homepage-hero {
+    .header {
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+    }
+
+    .left-col,
+    .hero-right-col {
+      min-width: 0;
+    }
+
+    .random-hero {
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+    }
+
+    .hero-image {
+      max-width: 100%;
+      height: auto;
+      margin-inline: auto;
+    }
+  }
+}
+
 .badge-container {
   position: relative;
   max-width: 200px;
