@@ -21,3 +21,7 @@ dist-astro/
 
 # Local Netlify folder
 .netlify
+
+# Browser test artifacts
+playwright-report/
+test-results/
