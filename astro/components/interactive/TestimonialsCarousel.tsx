@@ -35,17 +35,25 @@ export default function TestimonialsCarousel({ label, items }: Props) {
     const track = trackRef.current
     if (track) track.scrollTo({ left: index * track.clientWidth, behavior })
   }
+  const normalizeLoopPosition = () => {
+    const index = physicalIndex()
+    if (!loop) return index
+    const normalized = index === 0 ? items.length : index === items.length + 1 ? 1 : index
+    if (normalized !== index) scrollToSlide(normalized, 'instant')
+    return normalized
+  }
   const scheduleReset = () => {
     clearTimeout(resetTimer.current)
     if (!loop) return
     resetTimer.current = setTimeout(() => {
-      const index = physicalIndex()
-      if (index === 0) scrollToSlide(items.length, 'auto')
-      if (index === items.length + 1) scrollToSlide(1, 'auto')
+      if (!drag.current) normalizeLoopPosition()
     }, 400)
   }
   const move = (direction: number) => {
-    scrollToSlide(physicalIndex() + direction)
+    // A new interaction can arrive before the delayed clone reset.
+    // Start it from the matching original so neither end becomes a dead end.
+    clearTimeout(resetTimer.current)
+    scrollToSlide(normalizeLoopPosition() + direction)
     scheduleReset()
   }
 
@@ -58,7 +66,11 @@ export default function TestimonialsCarousel({ label, items }: Props) {
     if (!track) return
     // Add loop slides only after hydration, keeping Marc first in the static HTML.
     track.scrollTo({ left: (currentIndex.current + offset) * track.clientWidth, behavior: 'auto' })
+    let width = track.clientWidth
     const observer = new ResizeObserver(() => {
+      // Mobile quote height changes should not interrupt horizontal animation.
+      if (track.clientWidth === width) return
+      width = track.clientWidth
       track.scrollTo({
         left: (currentIndex.current + offset) * track.clientWidth,
         behavior: 'auto'
@@ -160,6 +172,8 @@ export default function TestimonialsCarousel({ label, items }: Props) {
         }}
         onPointerDown={event => {
           if (event.button !== 0 || (event.target as HTMLElement).closest('button')) return
+          clearTimeout(resetTimer.current)
+          normalizeLoopPosition()
           clearTimeout(dragTimer.current)
           drag.current = { x: event.clientX, left: event.currentTarget.scrollLeft }
           setDragging(true)
