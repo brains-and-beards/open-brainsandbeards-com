@@ -1,0 +1,28 @@
+---
+import { Image } from 'astro:assets'
+import type { HTMLAttributes } from 'astro/types'
+import type { LocalImage } from '../../lib/responsive-images'
+import ResponsiveImage from '../ui/ResponsiveImage.astro'
+
+interface Props extends Omit<HTMLAttributes<'img'>, 'src' | 'alt'> {
+  src: string | LocalImage | Promise<LocalImage>
+  alt: string
+}
+
+const { src, alt, ...attributes } = Astro.props
+const image = await src
+---
+
+{typeof image === 'string' ? (
+  <img src={image} alt={alt} {...attributes} />
+) : image.format === 'gif' ? (
+  <Image src={image} alt={alt} {...attributes} />
+) : (
+  <ResponsiveImage
+    src={image}
+    alt={alt}
+    preset="article"
+    maxWidth={Math.min(image.width, 1600)}
+    {...attributes}
+  />
+)}

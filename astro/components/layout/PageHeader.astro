@@ -1,5 +1,5 @@
 ---
-import { Image } from 'astro:assets'
+import ResponsiveImage from '../ui/ResponsiveImage.astro'
 
 interface Props {
   title: string
@@ -17,17 +17,14 @@ const { title, subtitle, image, imageAlt = '', columns = false } = Astro.props
     <div class="left-col">
       <h1 class="text-center-mobile">{title}</h1>
       {image && (
-        <Image
+        <ResponsiveImage
+          preset="page-header"
           class="right-header-image mobile-only"
           src={image}
           alt={imageAlt}
           width={504}
-          widths={[320, 400, 504, 640, 800, 1008]}
-          sizes="(max-width: 690px) calc(80vw - 40px), 504px"
-          format="webp"
           loading="eager"
           fetchpriority="high"
-          decoding="async"
         />
       )}
       {subtitle && <p class="sub2">{subtitle}</p>}
@@ -36,17 +33,14 @@ const { title, subtitle, image, imageAlt = '', columns = false } = Astro.props
     <div class="hero-right-col center">
       <slot name="right-content">
         {image && (
-          <Image
+          <ResponsiveImage
+            preset="page-header"
             class="right-header-image"
             src={image}
             alt={imageAlt}
             width={504}
-            widths={[320, 400, 504, 640, 800, 1008]}
-            sizes="(max-width: 690px) calc(80vw - 40px), 504px"
-            format="webp"
             loading="eager"
             fetchpriority="high"
-            decoding="async"
           />
         )}
       </slot>

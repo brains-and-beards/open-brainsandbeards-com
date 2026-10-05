@@ -1,5 +1,5 @@
 ---
-import { Image } from 'astro:assets'
+import ResponsiveImage from '../ui/ResponsiveImage.astro'
 import type { CollectionEntry } from 'astro:content'
 import { formatBlogDate } from '../../lib/blog'
 import BlogAuthor from './BlogAuthor.astro'
@@ -8,29 +8,22 @@ import ImagePriority from '../ui/ImagePriority.astro'
 interface Props {
   post: CollectionEntry<'blog'>
   priorityOnMobile?: boolean
-  sizes?: string
+  listing?: boolean
 }
 
-const {
-  post,
-  priorityOnMobile = false,
-  sizes = '(max-width: 690px) calc(100vw - 128px), 320px'
-} = Astro.props
+const { post, priorityOnMobile = false, listing = false } = Astro.props
 ---
 
 <article class="blogpost-preview">
   <a href={post.data.path}>
     <div class="post-container">
       {post.data.image && (
-        <Image
+        <ResponsiveImage
+          preset={listing ? 'blog-list-card' : 'blog-card'}
           src={post.data.image}
           alt={`Miniature for post: ${post.data.title}`}
           width={320}
           height={200}
-          widths={[320, 400, 480, 640, 800, 960, 1280]}
-          sizes={sizes}
-          format="webp"
-          loading="lazy"
         />
       )}
       {post.data.image && priorityOnMobile && <ImagePriority media="(max-width: 690px)" />}

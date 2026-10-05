@@ -1,5 +1,5 @@
 ---
-import { Image } from 'astro:assets'
+import ResponsiveImage from '../ui/ResponsiveImage.astro'
 import ReadMore from '../ui/ReadMore.astro'
 interface Props {
   href: string
@@ -30,26 +30,18 @@ const {
   home = false,
   first = false
 } = Astro.props
-
-const homeImageWidths = [280, 360, 400, 450, 620, 720, 900, 1080, 1240, 1360, 1522].filter(
-  width => width <= image.width
-)
-const homeImageSizes = '(max-width: 690px) calc(100vw - 48px), (max-width: 1199px) 450px, 610px'
 ---
 
 {home ? (
   <a href={href}>
     <div class="row client-details client-details-case-study">
       <div class="clients-pic mobile-only">
-        <Image
+        <ResponsiveImage
+          preset="home-project"
           src={image}
           alt={imageAlt}
-          widths={homeImageWidths}
-          sizes={homeImageSizes}
-          format="webp"
           loading={eager ? 'eager' : 'lazy'}
           fetchpriority={eager ? 'high' : 'auto'}
-          decoding="async"
         />
       </div>
       <div class="our-clients-left-col our-clients-any-element">
@@ -62,16 +54,13 @@ const homeImageSizes = '(max-width: 690px) calc(100vw - 48px), (max-width: 1199p
       </div>
       <div class="our-clients-pic-first">
         <div class="right-col clients-pic">
-          <Image
+          <ResponsiveImage
+            preset="home-project"
             src={image}
             alt={imageAlt}
             width={620}
-            widths={homeImageWidths}
-            sizes={homeImageSizes}
-            format="webp"
             loading={eager ? 'eager' : 'lazy'}
             fetchpriority={eager ? 'high' : 'auto'}
-            decoding="async"
           />
         </div>
       </div>
@@ -88,15 +77,12 @@ const homeImageSizes = '(max-width: 690px) calc(100vw - 48px), (max-width: 1199p
       ]}
     >
       <div class:list={[first ? 'clients-pic-first' : 'clients-pic', 'mobile-only']}>
-        <Image
+        <ResponsiveImage
+          preset="project-card"
           src={image}
           alt={imageAlt}
-          widths={[320, 480, 680, 960, 1360]}
-          sizes="(max-width: 690px) calc(100vw - 40px), 680px"
-          format="webp"
           loading={eager ? 'eager' : 'lazy'}
           fetchpriority={eager ? 'high' : 'auto'}
-          decoding="async"
         />
       </div>
       <div
@@ -114,16 +100,15 @@ const homeImageSizes = '(max-width: 690px) calc(100vw - 48px), (max-width: 1199p
       </div>
       <div class="our-clients-pic-first">
         <div class="right-col clients-pic">
-          <Image
+          <ResponsiveImage
+            preset="project-card"
             src={image}
             alt={imageAlt}
             width={imageWidth}
+            maxWidth={imageWidth}
             {...(imageHeight ? { height: imageHeight } : {})}
-            densities={[1, 2]}
-            format="webp"
             loading={eager ? 'eager' : 'lazy'}
             fetchpriority={eager ? 'high' : 'auto'}
-            decoding="async"
           />
         </div>
       </div>

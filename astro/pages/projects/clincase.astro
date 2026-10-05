@@ -1,6 +1,6 @@
 ---
 import CaseStudyPage from '../../layouts/CaseStudyPage.astro'
-import { Image } from 'astro:assets'
+import ResponsiveImage from '../../components/ui/ResponsiveImage.astro'
 import image from '../../assets/case-studies/clincase-warning-modal.png'
 import signInError from '../../assets/case-studies/clincase-sign-in-error.png'
 import tutorialBack from '../../assets/case-studies/clincase-tutorial-back.png'
@@ -33,16 +33,12 @@ import tutorialBack from '../../assets/case-studies/clincase-tutorial-back.png'
     platform for them and there is a lot of strict requirements over the software quality and
     reliability they needed someone with the right experience to help. That's where we came in.
   </p>
-  <Image
+  <ResponsiveImage
+    preset="case-study-inline"
     src={signInError}
     alt="ePRO screenshot"
     class="screenshot"
     width={740}
-    widths={[320, 400, 540, 800, 1080]}
-    sizes="(max-width: 580px) calc(100vw - 40px), 540px"
-    format="webp"
-    loading="lazy"
-    decoding="async"
   />
   <p>There were various requirements in this project that made it particularly challenging:</p>
   <ul>
@@ -72,16 +68,12 @@ import tutorialBack from '../../assets/case-studies/clincase-tutorial-back.png'
       resource-constrained environment of a low-end Android device that it was run on.
     </li>
   </ul>
-  <Image
+  <ResponsiveImage
+    preset="case-study-inline"
     src={tutorialBack}
     alt="ePRO screenshot"
     class="screenshot"
     width={740}
-    widths={[320, 400, 540, 800, 1080]}
-    sizes="(max-width: 580px) calc(100vw - 40px), 540px"
-    format="webp"
-    loading="lazy"
-    decoding="async"
   />
   <h3>Process</h3>
   <p>

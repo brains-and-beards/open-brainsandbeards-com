@@ -1,7 +1,7 @@
 ---
 import CaseStudyPage from '../../layouts/CaseStudyPage.astro'
 import Testimonial from '../../components/case-studies/Testimonial.astro'
-import { Image } from 'astro:assets'
+import ResponsiveImage from '../../components/ui/ResponsiveImage.astro'
 import image from '../../assets/case-studies/manomano/manomano-store-screens.png'
 import storeB2b from '../../assets/case-studies/manomano/manomano-pro-store-screens.png'
 import elias from '../../assets/case-studies/manomano/elias-manomano.jpg'
@@ -121,15 +121,12 @@ import marc from '../../assets/case-studies/manomano/marc-manomano.png'
   />
   <div class="narrow-column text-format">
     <h3>Outcome</h3>
-    <Image
+    <ResponsiveImage
+      preset="case-study-outcome"
       src={storeB2b}
       class="outcome-image"
       alt="Femtasy reviews"
       width={600}
-      densities={[1, 2]}
-      format="webp"
-      loading="lazy"
-      decoding="async"
     />
     <p>
       And here we are, almost three years later. We touched virtually every part of the codebase and

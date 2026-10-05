@@ -1,7 +1,7 @@
 ---
 import CaseStudyPage from '../../layouts/CaseStudyPage.astro'
 import Testimonial from '../../components/case-studies/Testimonial.astro'
-import { Image } from 'astro:assets'
+import ResponsiveImage from '../../components/ui/ResponsiveImage.astro'
 import image from '../../assets/case-studies/femtasy/femtasy-header.png'
 import reviews from '../../assets/case-studies/femtasy/femtasy-reviews.png'
 import michael from '../../assets/testimonials/femtasy-michael.jpg'
@@ -118,16 +118,7 @@ import peter from '../../assets/testimonials/femtasy-peter.jpg'
     We got a straight 5,0 score on App Store on the first 20 app reviews 🎉
   </p>
   <div class="case-study-inline-image">
-    <Image
-      src={reviews}
-      alt="Femtasy reviews"
-      width={740}
-      widths={[320, 400, 540, 800, 1080]}
-      sizes="(max-width: 580px) calc(100vw - 40px), 540px"
-      format="webp"
-      loading="lazy"
-      decoding="async"
-    />
+    <ResponsiveImage preset="case-study-inline" src={reviews} alt="Femtasy reviews" width={740} />
     <figcaption>Overwhelmingly positive app reviews since Day 1</figcaption>
   </div>
   <p>

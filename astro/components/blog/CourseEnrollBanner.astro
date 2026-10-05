@@ -1,5 +1,5 @@
 ---
-import { Image } from 'astro:assets'
+import ResponsiveImage from '../ui/ResponsiveImage.astro'
 import leftIllustration from '../../assets/illustrations/estimate-project-bar-left.png'
 import rightIllustration from '../../assets/illustrations/estimate-project-bar-right.png'
 import ConvertKitForm from '../interactive/ConvertKitForm.astro'
@@ -7,16 +7,13 @@ import ConvertKitForm from '../interactive/ConvertKitForm.astro'
 
 <section class="estimateProject">
   <div class="content row">
-    <Image
+    <ResponsiveImage
+      preset="callout"
       class="center-mobile cta-bar-image course-enroll-illustration desktop-only"
       src={leftIllustration}
       alt="Happy puzzle phone"
       width={400}
       height={400}
-      densities={[1, 2]}
-      format="webp"
-      loading="lazy"
-      decoding="async"
     />
     <div class="center newsletter-content">
       <h2>Maintainable React Native</h2>
@@ -36,16 +33,13 @@ import ConvertKitForm from '../interactive/ConvertKitForm.astro'
         </div>
       </div>
     </div>
-    <Image
+    <ResponsiveImage
+      preset="callout"
       class="cta-bar-image course-enroll-illustration desktop-only newsletter-image-right"
       src={rightIllustration}
       alt="Happy puzzle phone"
       width={400}
       height={400}
-      densities={[1, 2]}
-      format="webp"
-      loading="lazy"
-      decoding="async"
     />
   </div>
 </section>

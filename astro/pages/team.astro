@@ -1,4 +1,5 @@
 ---
+import ResponsiveImage from '../components/ui/ResponsiveImage.astro'
 import MarketingPage from '../layouts/MarketingPage.astro'
 import TeamMemberCard from '../components/interactive/TeamMemberCard.astro'
 import TeamHashFocus from '../components/interactive/TeamHashFocus.astro'
@@ -162,15 +163,12 @@ const members: [string, any, string][] = [
               3rd parties.
             </p>
           </section>
-          <Image
+          <ResponsiveImage
+            preset="team-illustration"
             src={noOutsourcing}
             class="gatsby-image-wrapper"
             alt="No outsourcing policy"
             height={320}
-            densities={[1, 2]}
-            format="webp"
-            loading="lazy"
-            decoding="async"
           />
         </div>
       </div>

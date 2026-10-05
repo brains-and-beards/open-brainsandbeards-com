@@ -313,7 +313,8 @@ button.cta-action {
 
 .right-header-image {
   position: relative;
-  width: auto;
+  // Keep the 504px artwork plus padding independent of srcset's intrinsic size.
+  width: 544px;
   height: auto;
   padding-right: 40px;
   margin-top: -50px;

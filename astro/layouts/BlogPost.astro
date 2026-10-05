@@ -1,5 +1,5 @@
 ---
-import { Image } from 'astro:assets'
+import ResponsiveImage from '../components/ui/ResponsiveImage.astro'
 import type { CollectionEntry } from 'astro:content'
 import CourseEnrollBanner from '../components/blog/CourseEnrollBanner.astro'
 import BlogPostFootnote from '../components/blog/BlogPostFootnote.astro'
@@ -23,16 +23,12 @@ const { post } = Astro.props
     {post.data.image && (
       <div class="top-part-yellow">
         <div class="content">
-          <Image
+          <ResponsiveImage
+            preset="blog-hero"
             class="main-blog-image"
             src={post.data.image}
             alt={post.data.imageCaption || post.data.title}
             width={1024}
-            widths={[320, 480, 640, 800, 984, 1280, 1600, 1968].filter(
-              width => width <= post.data.image!.width
-            )}
-            sizes="(min-width: 1024px) 984px, calc(100vw - 40px)"
-            format="webp"
             loading="eager"
             fetchpriority="high"
           />

@@ -1,7 +1,7 @@
 ---
 import CaseStudyPage from '../../layouts/CaseStudyPage.astro'
 import Testimonial from '../../components/case-studies/Testimonial.astro'
-import { Image } from 'astro:assets'
+import ResponsiveImage from '../../components/ui/ResponsiveImage.astro'
 import image from '../../assets/case-studies/sharoo/sharoo-hero.jpg'
 import feyyaz from '../../assets/testimonials/sharoo-feyyaz.jpg'
 import iosScreenshot from '../../assets/case-studies/sharoo/sharoo-ios.jpg'
@@ -85,16 +85,12 @@ import award from '../../assets/case-studies/sharoo/sharoo-award.jpg'
     client's time and money.
   </p>
   <div class="case-study-inline-image">
-    <Image
+    <ResponsiveImage
+      preset="case-study-inline"
       src={iosScreenshot}
       title="sharoo iOS app is rated 4.6 stars"
       alt="Sharoo rankings"
       width={740}
-      widths={[320, 400, 540, 800, 1080]}
-      sizes="(max-width: 580px) calc(100vw - 40px), 540px"
-      format="webp"
-      loading="lazy"
-      decoding="async"
     />
     <figcaption>sharoo iOS app is rated 4.6 stars</figcaption>
   </div>
@@ -120,16 +116,12 @@ import award from '../../assets/case-studies/sharoo/sharoo-award.jpg'
     </a>
   </p>
   <div class="case-study-inline-image">
-    <Image
+    <ResponsiveImage
+      preset="case-study-inline"
       src={androidScreenshot}
       title="sharoo Android app is rated 4.1 stars"
       alt="Sharoo ranking - android"
       width={740}
-      widths={[320, 400, 540, 800, 1080]}
-      sizes="(max-width: 580px) calc(100vw - 40px), 540px"
-      format="webp"
-      loading="lazy"
-      decoding="async"
     />
     <figcaption>sharoo Android app is rated 4.1 stars</figcaption>
   </div>
@@ -164,16 +156,12 @@ import award from '../../assets/case-studies/sharoo/sharoo-award.jpg'
     It's like sending a chat message instead of posting a letter.
   </p>
   <div class="case-study-inline-image">
-    <Image
+    <ResponsiveImage
+      preset="case-study-inline"
       src={award}
       title="sharoo European P2P Carsharing Price/Performance Value Leadership Award from Frost & Sullivan"
       alt="award"
       width={740}
-      widths={[320, 400, 540, 800, 1080]}
-      sizes="(max-width: 580px) calc(100vw - 40px), 540px"
-      format="webp"
-      loading="lazy"
-      decoding="async"
     />
     <figcaption>
       sharoo European P2P Carsharing Price/Performance Value Leadership Award from Frost &amp;

@@ -1,5 +1,5 @@
 ---
-import { Image } from 'astro:assets'
+import ResponsiveImage from '../ui/ResponsiveImage.astro'
 import ImagePriority from '../ui/ImagePriority.astro'
 interface Props {
   name: string
@@ -12,15 +12,7 @@ const { name, bio, image, priority = false } = Astro.props
 ---
 
 <div class="team-member" id={name} data-team-member={name}>
-  <Image
-    src={image}
-    alt={`member: ${name}`}
-    width={280}
-    densities={[1, 2]}
-    format="webp"
-    loading="lazy"
-    decoding="async"
-  />
+  <ResponsiveImage preset="team" src={image} alt={`member: ${name}`} width={280} />
   {priority && <ImagePriority media="(min-width: 691px)" />}
   <p class="sub1">{name}</p>
   <p>{bio}</p>

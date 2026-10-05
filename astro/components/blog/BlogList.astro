@@ -1,4 +1,5 @@
 ---
+import ResponsiveImage from '../ui/ResponsiveImage.astro'
 import { Image } from 'astro:assets'
 import type { CollectionEntry } from 'astro:content'
 import BaseLayout from '../../layouts/BaseLayout.astro'
@@ -86,16 +87,12 @@ const lastPageLink = Math.min(firstPageLink + 4, totalPages)
             <a href={firstPost.data.path}>
               <div class="first-post">
                 {firstPost.data.image && (
-                  <Image
+                  <ResponsiveImage
+                    preset="blog-featured"
                     class="blog-image"
                     src={firstPost.data.image}
                     alt={`Miniature for post titled "${firstPost.data.title}"`}
                     width={672}
-                    widths={[500, 672, 1000, 1344].filter(
-                      width => width <= firstPost.data.image!.width
-                    )}
-                    sizes="(min-width: 1200px) 672px, 500px"
-                    loading="lazy"
                   />
                 )}
                 {firstPost.data.image && <ImagePriority media="(min-width: 691px)" />}
@@ -109,11 +106,7 @@ const lastPageLink = Math.min(firstPageLink + 4, totalPages)
         )}
         <div id="posts-list">
           {pagePosts.map((post: CollectionEntry<'blog'>, index: number) => (
-            <BlogCard
-              post={post}
-              priorityOnMobile={index === 0}
-              sizes="(max-width: 690px) calc(100vw - 130px), 320px"
-            />
+            <BlogCard post={post} priorityOnMobile={index === 0} listing />
           ))}
         </div>
       </div>

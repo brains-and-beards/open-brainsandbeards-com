@@ -1,5 +1,5 @@
 ---
-import { Image } from 'astro:assets'
+import ResponsiveImage from '../ui/ResponsiveImage.astro'
 import bicycle from '../../assets/illustrations/hero-bicycle.png'
 import jogger from '../../assets/illustrations/hero-jogin.png'
 import skateboard from '../../assets/illustrations/hero-skateboard.png'
@@ -15,11 +15,6 @@ const heroes = [
   { image: jogger, className: 'heroJogin', width: 740 },
   { image: skateboard, className: 'heroSkateboard', width: 710 }
 ]
-const heroWidths = [280, 320, 360, 400, 480, 600, 640, 710, 740, 960, 1080, 1200, 1280, 1420, 1480, 1800]
-const heroSizes = (width: number) =>
-  mobile
-    ? 'min(calc(100vw - 48px), 594px)'
-    : `(max-width: 1199px) min(60vw, calc(100vw - 400px)), ${width}px`
 ---
 
 <div
@@ -29,32 +24,28 @@ const heroSizes = (width: number) =>
 >
   {heroes.map(({ image, className, width }) => (
     <template>
-      <Image
+      <ResponsiveImage
+        preset={mobile ? 'home-hero-mobile' : 'home-hero'}
+        maxWidth={mobile ? 594 : width}
         class:list={['hero-image', className, 'random-hero__image']}
         src={image}
         alt={alt}
         {...(mobile ? { height: 510 } : { width })}
-        widths={heroWidths}
-        sizes={heroSizes(width)}
-        format="webp"
         loading="eager"
         fetchpriority="high"
-        decoding="async"
       />
     </template>
   ))}
   <noscript>
-    <Image
+    <ResponsiveImage
+      preset={mobile ? 'home-hero-mobile' : 'home-hero'}
+      maxWidth={mobile ? 594 : heroes[0].width}
       class:list={['hero-image', heroes[0].className, 'random-hero__image']}
       src={heroes[0].image}
       alt={alt}
       {...(mobile ? { height: 510 } : { width: heroes[0].width })}
-      widths={heroWidths}
-      sizes={heroSizes(heroes[0].width)}
-      format="webp"
       loading="eager"
       fetchpriority="high"
-      decoding="async"
     />
   </noscript>
   <script is:inline>

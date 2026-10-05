@@ -1,7 +1,7 @@
 ---
 import CaseStudyPage from '../../layouts/CaseStudyPage.astro'
 import Testimonial from '../../components/case-studies/Testimonial.astro'
-import { Image } from 'astro:assets'
+import ResponsiveImage from '../../components/ui/ResponsiveImage.astro'
 import image from '../../assets/case-studies/lokalportal/lokalportal-web.jpg'
 import logo from '../../assets/testimonials/lokalportal-logo.png'
 import iosScreenshot from '../../assets/case-studies/lokalportal/lokalportal-ios.png'
@@ -81,14 +81,11 @@ import androidScreenshot from '../../assets/case-studies/lokalportal/lokalportal
     smooth, and efficient.
   </p>
   <div class="mobileScreenshots">
-    <Image
+    <ResponsiveImage
+      preset="case-study-phone"
       src={iosScreenshot}
       alt="iOS screenshot"
       width={270}
-      densities={[1, 2]}
-      format="webp"
-      loading="lazy"
-      decoding="async"
     />
   </div>
   <h4>Put compiler to work for us</h4>
@@ -131,14 +128,11 @@ import androidScreenshot from '../../assets/case-studies/lokalportal/lokalportal
     .
   </p>
   <div class="mobileScreenshots">
-    <Image
+    <ResponsiveImage
+      preset="case-study-phone"
       src={androidScreenshot}
       alt="Android screenshot"
       width={270}
-      densities={[1, 2]}
-      format="webp"
-      loading="lazy"
-      decoding="async"
     />
   </div>
   <h4>Improving testing setup</h4>

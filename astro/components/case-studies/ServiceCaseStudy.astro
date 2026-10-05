@@ -1,5 +1,5 @@
 ---
-import { Image } from 'astro:assets'
+import ResponsiveImage from '../ui/ResponsiveImage.astro'
 import ReadMore from '../ui/ReadMore.astro'
 
 interface Props {
@@ -17,16 +17,7 @@ const { href, title, description, image, imageAlt } = Astro.props
   <div class="row client-details flip clients-details-services">
     <div class="clients-pic mobile-only">
       <div class="service-case-study-image">
-        <Image
-          src={image}
-          alt={imageAlt}
-          width={680}
-          widths={[320, 480, 680, 960, 1360]}
-          sizes="(max-width: 690px) calc(100vw - 48px), 680px"
-          format="webp"
-          loading="lazy"
-          decoding="async"
-        />
+        <ResponsiveImage preset="service-project" src={image} alt={imageAlt} width={680} />
       </div>
     </div>
     <div class="our-clients-left-col">
@@ -40,15 +31,7 @@ const { href, title, description, image, imageAlt } = Astro.props
       <div class="our-clients-pic">
         <div class="right-col clients-pic">
           <div class="service-case-study-image">
-            <Image
-              src={image}
-              alt={imageAlt}
-              width={680}
-              densities={[1, 2]}
-              format="webp"
-              loading="lazy"
-              decoding="async"
-            />
+            <ResponsiveImage preset="service-project" src={image} alt={imageAlt} width={680} />
           </div>
         </div>
       </div>

@@ -1,4 +1,5 @@
 ---
+import ResponsiveImage from '../components/ui/ResponsiveImage.astro'
 import MarketingPage from '../layouts/MarketingPage.astro'
 import FeatureList from '../components/ui/FeatureList.astro'
 import { Image } from 'astro:assets'
@@ -18,17 +19,14 @@ import hands from '../assets/illustrations/about-hands-icon.png'
 >
   <div class="content-page">
     <div class="big-part-yellow">
-      <Image
+      <ResponsiveImage
+        preset="case-study-hero"
         src={photo}
         alt="Patryk and Wojciech with motorbikes"
         class="our-story-header"
         width={1000}
-        widths={[300, 500, 600, 1000, 1024, 1536, 2000]}
-        sizes="(max-width: 690px) 300px, (max-width: 1199px) 500px, 1024px"
-        format="webp"
         loading="eager"
         fetchpriority="high"
-        decoding="async"
       />
     </div>
     <div class="narrow-column text-format">

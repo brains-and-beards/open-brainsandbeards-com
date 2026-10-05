@@ -1,7 +1,7 @@
 ---
 import MarketingPage from '../layouts/MarketingPage.astro'
 import CalloutBar from '../components/ui/CalloutBar.astro'
-import { Image } from 'astro:assets'
+import ResponsiveImage from '../components/ui/ResponsiveImage.astro'
 import hero from '../assets/illustrations/estimate-hero.png'
 import reactDayBerlin from '../assets/images/contact-page/wojtek-react-berlin.jpg'
 import reactAlicante from '../assets/images/contact-page/wojtek-react-alicante.jpg'
@@ -55,28 +55,24 @@ import reactAlicante from '../assets/images/contact-page/wojtek-react-alicante.j
     <h3 class="small-headline center">Some of our speaking engagements</h3>
     <div class="content row speaker-images-bar">
       <div class="speaker-image">
-        <Image
+        <ResponsiveImage
+          preset="speaker"
+          maxWidth={375}
           src={reactDayBerlin}
           class="center-mobile"
           alt="Speaking at React Day Berlin"
           width={375}
-          densities={[1, 2]}
-          format="webp"
-          loading="lazy"
-          decoding="async"
         />
         <figcaption class="center">React Day Berlin</figcaption>
       </div>
       <div class="speaker-image">
-        <Image
+        <ResponsiveImage
+          preset="speaker"
+          maxWidth={333}
           src={reactAlicante}
           class="desktop-only"
           alt="Speaking at React Alicante"
           width={333}
-          densities={[1, 2]}
-          format="webp"
-          loading="lazy"
-          decoding="async"
         />
         <figcaption class="center">React Alicante</figcaption>
       </div>

@@ -1,5 +1,6 @@
 ---
 import { render } from 'astro:content'
+import MarkdownImage from '../../components/blog/MarkdownImage.astro'
 import BlogList from '../../components/blog/BlogList.astro'
 import BlogPost from '../../layouts/BlogPost.astro'
 import { getBlogPosts } from '../../lib/blog'
@@ -28,6 +29,6 @@ const { Content } = post ? await render(post) : { Content: null }
   <BlogList posts={await getBlogPosts()} currentPage={page} />
 ) : (
   <BlogPost post={post}>
-    <Content />
+    <Content components={{ img: MarkdownImage }} />
   </BlogPost>
 )}

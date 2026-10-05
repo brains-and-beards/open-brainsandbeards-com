@@ -1,5 +1,5 @@
 ---
-import { Image } from 'astro:assets'
+import ResponsiveImage from './ResponsiveImage.astro'
 import leftIllustration from '../../assets/illustrations/estimate-project-bar-left.png'
 import rightIllustration from '../../assets/illustrations/estimate-project-bar-right.png'
 
@@ -33,15 +33,12 @@ const {
     </div>
   ) : (
     <div class="content row">
-      <Image
+      <ResponsiveImage
+        preset="callout"
         src={leftIllustration}
         class="center-mobile cta-bar-image"
         alt="Happy phone"
         width={400}
-        densities={[1, 2]}
-        format="webp"
-        loading="lazy"
-        decoding="async"
       />
       <div class="center">
         <h2 set:html={title} />
@@ -50,15 +47,12 @@ const {
           {actionLabel}
         </a>
       </div>
-      <Image
+      <ResponsiveImage
+        preset="callout"
         src={rightIllustration}
         class="cta-bar-image desktop-only"
         alt="Happy phone"
         width={400}
-        densities={[1, 2]}
-        format="webp"
-        loading="lazy"
-        decoding="async"
       />
     </div>
   )}
