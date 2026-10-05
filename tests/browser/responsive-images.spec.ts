@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test'
+
 import { responsiveImageProps } from '../../astro/lib/responsive-images'
 
 test('image candidates stay sorted, unique, and within source resolution', () => {
@@ -56,9 +57,10 @@ for (const route of routes) {
         const width = box.width - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight)
         // Cropped images need enough pixels for the larger of their two axes.
         const height = box.height - parseFloat(style.paddingTop) - parseFloat(style.paddingBottom)
-        const renderedWidth = style.objectFit === 'cover'
-          ? Math.max(width, height * img.naturalWidth / img.naturalHeight)
-          : width
+        const renderedWidth =
+          style.objectFit === 'cover'
+            ? Math.max(width, (height * img.naturalWidth) / img.naturalHeight)
+            : width
         const candidates = img.srcset.split(',').map(candidate => {
           const [src, descriptor] = candidate.trim().split(/\s+/)
           return { src: new URL(src, document.baseURI).href, width: parseInt(descriptor) }
@@ -97,4 +99,47 @@ test('blog content receives responsive images and keeps image alignment', async 
   })
   expect(offset).toBeLessThan(1)
   await expect(image).toHaveAttribute('decoding', 'async')
+})
+
+test('retina phones download appropriately sized hero and project images', async ({
+  browser
+}, testInfo) => {
+  test.skip(testInfo.project.name !== 'desktop', 'Use Chrome with an explicit retina phone context')
+  const context = await browser.newContext({
+    viewport: { width: 390, height: 900 },
+    deviceScaleFactor: 2,
+    isMobile: true
+  })
+  try {
+    const page = await context.newPage()
+    await page.goto('/')
+    for (const preset of ['home-hero-mobile', 'home-project']) {
+      const image = page.locator(`img[data-responsive-preset="${preset}"]:visible`).first()
+      await image.scrollIntoViewIfNeeded()
+      await expect
+        .poll(() =>
+          image.evaluate(element => {
+            const img = element as HTMLImageElement
+            return img.complete && img.naturalWidth > 0
+          })
+        )
+        .toBe(true)
+      const pixels = await image.evaluate(element => {
+        const img = element as HTMLImageElement
+        const candidate = img.srcset
+          .split(',')
+          .find(
+            candidate =>
+              new URL(candidate.trim().split(/\s+/)[0], document.baseURI).href === img.currentSrc
+          )!
+        return parseInt(candidate.trim().split(/\s+/)[1])
+      })
+      // The rendered width is 342px: enough detail at 2x, without fetching
+      // the original 1240px illustration.
+      expect(pixels).toBeGreaterThanOrEqual(680)
+      expect(pixels).toBeLessThanOrEqual(740)
+    }
+  } finally {
+    await context.close()
+  }
 })
