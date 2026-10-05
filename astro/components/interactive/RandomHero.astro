@@ -15,6 +15,11 @@ const heroes = [
   { image: jogger, className: 'heroJogin', width: 740 },
   { image: skateboard, className: 'heroSkateboard', width: 710 }
 ]
+const heroWidths = [280, 320, 360, 400, 480, 600, 640, 710, 740, 960, 1080, 1200, 1280, 1420, 1480, 1800]
+const heroSizes = (width: number) =>
+  mobile
+    ? 'min(calc(100vw - 48px), 594px)'
+    : `(max-width: 1199px) min(60vw, calc(100vw - 400px)), ${width}px`
 ---
 
 <div
@@ -29,7 +34,8 @@ const heroes = [
         src={image}
         alt={alt}
         {...(mobile ? { height: 510 } : { width })}
-        densities={[1, 2]}
+        widths={heroWidths}
+        sizes={heroSizes(width)}
         format="webp"
         loading="eager"
         fetchpriority="high"
@@ -43,7 +49,8 @@ const heroes = [
       src={heroes[0].image}
       alt={alt}
       {...(mobile ? { height: 510 } : { width: heroes[0].width })}
-      densities={[1, 2]}
+      widths={heroWidths}
+      sizes={heroSizes(heroes[0].width)}
       format="webp"
       loading="eager"
       fetchpriority="high"

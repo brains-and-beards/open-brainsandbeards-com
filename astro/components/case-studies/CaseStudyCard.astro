@@ -30,6 +30,11 @@ const {
   home = false,
   first = false
 } = Astro.props
+
+const homeImageWidths = [280, 360, 400, 450, 620, 720, 900, 1080, 1240, 1360, 1522].filter(
+  width => width <= image.width
+)
+const homeImageSizes = '(max-width: 690px) calc(100vw - 48px), (max-width: 1199px) 450px, 610px'
 ---
 
 {home ? (
@@ -39,8 +44,8 @@ const {
         <Image
           src={image}
           alt={imageAlt}
-          widths={[320, 480, 680, 960, 1360]}
-          sizes="(max-width: 690px) calc(100vw - 40px), 680px"
+          widths={homeImageWidths}
+          sizes={homeImageSizes}
           format="webp"
           loading={eager ? 'eager' : 'lazy'}
           fetchpriority={eager ? 'high' : 'auto'}
@@ -61,7 +66,8 @@ const {
             src={image}
             alt={imageAlt}
             width={620}
-            densities={[1, 2]}
+            widths={homeImageWidths}
+            sizes={homeImageSizes}
             format="webp"
             loading={eager ? 'eager' : 'lazy'}
             fetchpriority={eager ? 'high' : 'auto'}
