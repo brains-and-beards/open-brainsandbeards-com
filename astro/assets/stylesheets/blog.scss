@@ -293,13 +293,16 @@
 }
 
 .main-blog-image {
+  display: block;
+  align-self: center;
   width: 100%;
   max-width: 100%;
-  object-fit: contain;
+  height: auto;
   margin-bottom: 32px;
+  margin-top: 24px;
 
   @include tablet-version {
-    max-height: 700px;
+    max-width: min(100%, var(--blog-hero-max-width));
   }
 
   &-caption {

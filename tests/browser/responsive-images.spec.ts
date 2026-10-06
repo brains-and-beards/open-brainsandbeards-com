@@ -143,3 +143,57 @@ test('retina phones download appropriately sized hero and project images', async
     await context.close()
   }
 })
+
+for (const route of ['/blog/2024-boosting-map-vay/', '/blog/to-persist-or-not-to-persist/']) {
+  test(`blog hero keeps its proportions before and after loading on ${route}`, async ({ page }) => {
+    for (const width of [320, 390, 768, 1440]) {
+      await page.setViewportSize({ width, height: 1000 })
+      let releaseImages!: () => void
+      const imageGate = new Promise<void>(resolve => {
+        releaseImages = resolve
+      })
+      await page.route('**/_image?*', async route => {
+        await imageGate
+        await route.continue()
+      })
+      try {
+        await page.goto(route, { waitUntil: 'domcontentloaded' })
+        const image = page.locator('.main-blog-image')
+        await expect(image).toBeVisible()
+        const measure = () =>
+          image.evaluate(element => {
+            const img = element as HTMLImageElement
+            const box = img.getBoundingClientRect()
+            return {
+              width: box.width,
+              height: box.height,
+              ratio: Number(img.getAttribute('width')) / Number(img.getAttribute('height')),
+              containerWidth:
+                img.parentElement!.clientWidth -
+                parseFloat(getComputedStyle(img.parentElement!).paddingLeft) -
+                parseFloat(getComputedStyle(img.parentElement!).paddingRight)
+            }
+          })
+        const before = await measure()
+        expect(before.width / before.height).toBeCloseTo(before.ratio, 2)
+        expect(before.width).toBeLessThanOrEqual(before.containerWidth + 1)
+        if (width >= 691) expect(before.height).toBeLessThanOrEqual(701)
+        releaseImages()
+        await expect
+          .poll(() =>
+            image.evaluate(element => {
+              const img = element as HTMLImageElement
+              return img.complete && img.naturalWidth > 0
+            })
+          )
+          .toBe(true)
+        const after = await measure()
+        expect(after.width).toBeCloseTo(before.width, 0)
+        expect(after.height).toBeCloseTo(before.height, 0)
+      } finally {
+        releaseImages()
+        await page.unrouteAll({ behavior: 'wait' })
+      }
+    }
+  })
+}

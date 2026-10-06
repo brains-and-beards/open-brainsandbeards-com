@@ -12,6 +12,9 @@ interface Props {
 }
 
 const { post } = Astro.props
+const heroMaxWidth = post.data.image
+  ? Math.min(984, (700 * post.data.image.width) / post.data.image.height)
+  : 984
 ---
 
 <MarketingPage
@@ -26,9 +29,11 @@ const { post } = Astro.props
           <ResponsiveImage
             preset="blog-hero"
             class="main-blog-image"
+            style={`--blog-hero-max-width: ${heroMaxWidth}px`}
             src={post.data.image}
             alt={post.data.imageCaption || post.data.title}
             width={1024}
+            sizes={`(max-width: 690px) min(calc(100vw - 40px), 1024px), min(calc(100vw - 40px), ${heroMaxWidth}px)`}
             loading="eager"
             fetchpriority="high"
           />
