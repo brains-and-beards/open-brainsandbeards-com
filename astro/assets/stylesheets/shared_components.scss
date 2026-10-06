@@ -1,8 +1,12 @@
 .trustBar {
   text-align: center;
   background-color: $lightYellow;
+  padding: 20px;
   @include tablet-version {
-    padding: 0 20px;
+    padding-top: 0px;
+  }
+  @include mobile-version {
+    padding-top: 0px;
   }
 }
 
