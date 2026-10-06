@@ -124,13 +124,16 @@ a {
   }
 }
 
-.button {
+.button,
+button {
   white-space: nowrap;
   background-color: #fff;
   border-radius: 8px;
   padding: 8px 18px;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+}
 
+.button {
   &:disabled,
   &.disabled {
     pointer-events: none;
@@ -139,12 +142,6 @@ a {
 }
 
 button {
-  white-space: nowrap;
-  background-color: #fff;
-  border-radius: 8px;
-  padding: 8px 18px;
-  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
-
   &:disabled {
     pointer-events: none;
     opacity: 0.4;

@@ -1,8 +1,13 @@
-h1 {
+h1,
+h2,
+h3 {
   font-family: 'Recoleta';
+  font-weight: normal;
+}
+
+h1 {
   font-size: 56px;
   line-height: 64px;
-  font-weight: normal;
   @include mobile-version {
     font-size: 40px;
     line-height: 48px;
@@ -11,10 +16,8 @@ h1 {
 }
 
 h2 {
-  font-family: 'Recoleta';
   font-size: 40px;
   line-height: 1.2;
-  font-weight: normal;
   @include mobile-version {
     font-size: 32px;
     line-height: 40px;
@@ -22,10 +25,8 @@ h2 {
 }
 
 h3 {
-  font-family: 'Recoleta';
   font-size: 32px;
   line-height: 40px;
-  font-weight: normal;
   @include mobile-version {
     font-size: 24px;
     line-height: 32px;

@@ -113,7 +113,7 @@
 }
 
 .blogpost-preview {
-  @extend .team-member;
+  @extend %profile-card-layout;
   display: flex;
 
   img {
@@ -504,27 +504,15 @@ img.circular-image {
 }
 
 .author-content {
-  float: left;
   margin-right: 10px;
   display: flex;
-  @include tablet-version {
-    float: unset;
-    margin-top: 20px;
-    justify-content: center;
-  }
-
-  @include mobile-version {
-    float: unset;
-    margin-top: 20px;
-    justify-content: center;
-  }
+  margin-top: 20px;
+  justify-content: center;
 }
 
 .author-container {
   overflow: hidden;
   @include tablet-version {
-    width: 100%;
-    max-width: 400px;
     margin: 0px auto;
   }
   max-width: 400px;
@@ -547,21 +535,11 @@ img.circular-image {
 .author-container-list {
   max-width: 400px;
   width: 100%;
-  text-align: left;
+  text-align: center;
 
   .circular-image {
     width: 40px;
     height: 40px;
-  }
-
-  @include tablet-version {
-    width: 100%;
-    text-align: center;
-  }
-
-  @include mobile-version {
-    width: 100%;
-    text-align: center;
   }
 
   .author-name {
@@ -599,15 +577,7 @@ img.circular-image {
   width: 100%;
   margin: 0px;
 
-  @include tablet-version {
-    width: 100%;
-    text-align: center;
-  }
-
-  @include mobile-version {
-    width: 100%;
-    text-align: center;
-  }
+  text-align: center;
 }
 
 .written-by {
@@ -629,13 +599,7 @@ img.circular-image {
   }
 
   &-container {
-    @include tablet-version {
-      text-align: center;
-    }
-
-    @include mobile-version {
-      text-align: center;
-    }
+    text-align: center;
   }
 }
 
