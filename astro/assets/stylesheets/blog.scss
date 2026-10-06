@@ -126,6 +126,7 @@
     object-fit: cover;
     filter: none;
     transition: none;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
   }
 
   h3.blog-list-item-title {
@@ -199,6 +200,7 @@
   min-width: 0;
   max-width: 100%;
   height: auto;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 #posts-list {
@@ -306,6 +308,7 @@
   height: auto;
   margin-bottom: 32px;
   margin-top: 24px;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
 
   @include tablet-version {
     max-width: min(100%, var(--blog-hero-max-width));
