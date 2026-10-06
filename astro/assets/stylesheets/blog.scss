@@ -45,7 +45,13 @@
     padding: 0 20px;
   }
   @include mobile-version {
+    align-items: center;
     padding-bottom: 15px;
+
+    > .one-third {
+      width: 100%;
+      max-width: 250px;
+    }
   }
 }
 
