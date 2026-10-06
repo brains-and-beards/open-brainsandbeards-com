@@ -17,17 +17,18 @@
   @include tablet-version {
     text-align: center;
     width: auto;
-    display: block;
+    display: flex;
 
     .gatsby-image-wrapper {
       display: block;
+      align-self: center;
       height: auto;
       max-width: 300px;
-      width: auto;
+      width: 40%;
     }
 
     section {
-      width: auto;
+      width: 60%;
     }
   }
 
