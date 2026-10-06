@@ -63,7 +63,7 @@ export const imagePresets = {
   'blog-card': {
     maxWidth: 600,
     sizes: () =>
-      '(max-width: 690px) calc(100vw - 128px), (max-width: 1199px) calc(50vw - 30px), 280px'
+      '(max-width: 690px) calc(100vw - 128px), (max-width: 1199px) calc(50vw - 42px), 280px'
   },
   'blog-list-card': {
     maxWidth: 974,

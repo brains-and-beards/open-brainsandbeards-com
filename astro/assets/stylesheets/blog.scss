@@ -302,6 +302,14 @@
   justify-content: space-between;
   width: 100%;
 
+  @media screen and (min-width: 691px) and (max-width: 1199px) {
+    column-gap: 24px;
+
+    .blogpost-preview {
+      min-width: 0;
+    }
+  }
+
   @include mobile-version {
     flex-direction: column;
   }
