@@ -94,20 +94,21 @@ a {
     justify-content: space-between;
     padding: 0 24px;
   }
-}
-.menu-links {
-  flex-grow: 1;
-  justify-content: center;
-  text-align: right;
-}
 
-.menu-estimate-link {
-  flex-grow: 0;
-  justify-content: flex-end;
+  &-links {
+    flex-grow: 1;
+    justify-content: center;
+    text-align: right;
+  }
 
-  li {
-    padding-top: 10px;
-    padding-bottom: 10px;
+  &-estimate-link {
+    flex-grow: 0;
+    justify-content: flex-end;
+
+    li {
+      padding-top: 10px;
+      padding-bottom: 10px;
+    }
   }
 }
 .back-to-homepage {

@@ -35,26 +35,27 @@ ol.estimate-list {
     @include desktop-version {
       margin: 0 0 60px 60px;
     }
-  }
-  & > li:before {
-    content: counter(li);
-    counter-increment: li;
-    display: block;
-    position: absolute;
-    left: -10px;
-    top: 6px;
-    border-radius: 20px;
-    border: 1px solid $black;
-    width: 40px;
-    height: 40px;
-    line-height: 40px;
-    color: $black;
-    font-family: 'Neutrif Medium';
-    font-size: 24px;
-    text-align: center;
 
-    @include desktop-version {
-      left: -40px;
+    &:before {
+      content: counter(li);
+      counter-increment: li;
+      display: block;
+      position: absolute;
+      left: -10px;
+      top: 6px;
+      border-radius: 20px;
+      border: 1px solid $black;
+      width: 40px;
+      height: 40px;
+      line-height: 40px;
+      color: $black;
+      font-family: 'Neutrif Medium';
+      font-size: 24px;
+      text-align: center;
+
+      @include desktop-version {
+        left: -40px;
+      }
     }
   }
 
