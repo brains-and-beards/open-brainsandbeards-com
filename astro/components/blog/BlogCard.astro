@@ -4,6 +4,7 @@ import type { CollectionEntry } from 'astro:content'
 import { formatBlogDate } from '../../lib/blog'
 import BlogAuthor from './BlogAuthor.astro'
 import ImagePriority from '../ui/ImagePriority.astro'
+import separatorSvg from '../../assets/illustrations/separator.svg?url'
 
 interface Props {
   post: CollectionEntry<'blog'>
@@ -31,5 +32,6 @@ const { post, priorityOnMobile = false, listing = false } = Astro.props
     </div>
     <BlogAuthor author={post.data.author} />
     <p class="caption blog-list-item-date">{formatBlogDate(post.data.date)}</p>
+    <img class="separator" src={separatorSvg} alt="" aria-hidden="true" />
   </a>
 </article>
