@@ -1,0 +1,117 @@
+---
+import ResponsiveImage from '../ui/ResponsiveImage.astro'
+import ReadMore from '../ui/ReadMore.astro'
+interface Props {
+  href: string
+  title: string
+  description: string
+  readMoreLabel?: string
+  flip?: boolean
+  image: any
+  imageAlt: string
+  imageWidth?: number
+  imageHeight?: number
+  eager?: boolean
+  home?: boolean
+  first?: boolean
+}
+
+const {
+  href,
+  title,
+  description,
+  readMoreLabel = 'Read full story',
+  flip = false,
+  image,
+  imageAlt,
+  imageWidth = 680,
+  imageHeight,
+  eager = false,
+  home = false,
+  first = false
+} = Astro.props
+---
+
+{home ? (
+  <a href={href}>
+    <div class="row client-details client-details-case-study">
+      <div class="clients-pic mobile-only">
+        <ResponsiveImage
+          preset="home-project"
+          src={image}
+          alt={imageAlt}
+          loading={eager ? 'eager' : 'lazy'}
+          fetchpriority={eager ? 'high' : 'auto'}
+        />
+      </div>
+      <div class="our-clients-left-col our-clients-any-element">
+        <div class="left-col">
+          <slot name="logo" />
+          <h3>{title}</h3>
+          <p>{description}</p>
+          <ReadMore text={readMoreLabel} />
+        </div>
+      </div>
+      <div class="our-clients-pic-first">
+        <div class="right-col clients-pic">
+          <ResponsiveImage
+            preset="home-project"
+            src={image}
+            alt={imageAlt}
+            width={620}
+            loading={eager ? 'eager' : 'lazy'}
+            fetchpriority={eager ? 'high' : 'auto'}
+          />
+        </div>
+      </div>
+    </div>
+  </a>
+) : (
+  <a href={href}>
+    <div
+      class:list={[
+        'row',
+        'client-details',
+        'client-details-case-study',
+        { flip, 'client-details-case-study-elements': !first }
+      ]}
+    >
+      <div class:list={[first ? 'clients-pic-first' : 'clients-pic', 'mobile-only']}>
+        <ResponsiveImage
+          preset="project-card"
+          src={image}
+          alt={imageAlt}
+          loading={eager ? 'eager' : 'lazy'}
+          fetchpriority={eager ? 'high' : 'auto'}
+        />
+      </div>
+      <div
+        class:list={[
+          'our-clients-left-col',
+          first ? 'our-clients-first-element' : 'our-clients-any-element'
+        ]}
+      >
+        <div class="left-col">
+          <slot name="logo" />
+          <h3>{title}</h3>
+          <p>{description}</p>
+          <ReadMore text={readMoreLabel} />
+        </div>
+      </div>
+      <div class="our-clients-pic-first">
+        <div class="right-col clients-pic">
+          <ResponsiveImage
+            preset="project-card"
+            src={image}
+            alt={imageAlt}
+            width={imageWidth}
+            maxWidth={imageWidth}
+            {...(imageHeight ? { height: imageHeight } : {})}
+            loading={eager ? 'eager' : 'lazy'}
+            fetchpriority={eager ? 'high' : 'auto'}
+          />
+        </div>
+      </div>
+    </div>
+  </a>
+)}

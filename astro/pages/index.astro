@@ -1,0 +1,244 @@
+---
+import TestimonialsCarousel from '../components/interactive/TestimonialsCarousel'
+import RandomHero from '../components/interactive/RandomHero.astro'
+import CalloutBar from '../components/ui/CalloutBar.astro'
+import ReadMore from '../components/ui/ReadMore.astro'
+import BaseLayout from '../layouts/BaseLayout.astro'
+import CaseStudyCard from '../components/case-studies/CaseStudyCard.astro'
+import ClientLogos from '../components/case-studies/ClientLogos.astro'
+import ContactForm from '../components/forms/ContactForm.astro'
+import { getImage, Image } from 'astro:assets'
+import crossPlatformIcon from '../assets/illustrations/services-cross-platform-icon.png'
+import nativeIcon from '../assets/illustrations/services-native-icon.png'
+import staffIcon from '../assets/illustrations/services-staff-icon.png'
+import rotatingBadge from '../assets/illustrations/also-in.svg?url'
+import reactNativeBadge from '../assets/illustrations/rn.svg?url'
+import manoManoHero from '../assets/case-studies/manomano/manomano-hero-banner.png'
+import manoManoLogo from '../assets/case-studies/manomano/manomano-logo-colour.png'
+import marcImage from '../assets/case-studies/manomano/marc-manomano.png'
+import sergioImage from '../assets/testimonials/rakuten-sergio.jpg'
+import feyyazImage from '../assets/testimonials/sharoo-feyyaz.jpg'
+import eliasImage from '../assets/case-studies/manomano/elias-manomano.jpg'
+import sebastianImage from '../assets/testimonials/xing-sebastian.jpg'
+
+const carouselItems = [
+  {
+    id: 'astro-carousel-one',
+    quote:
+      '“Deep technical knowledge, human touch, high level of engagement, leadership skills, adaptability… there are many reasons for which I’m trusting completely in Brains & Beards to make the story of ManoMano apps a great success.”',
+    name: 'Marc Torrent',
+    position: 'Head of Engineering',
+    company: 'ManoMano - Colibri SAS',
+    image: marcImage,
+    imageAlt: 'Testimonial illustration'
+  },
+  {
+    id: 'astro-carousel-two',
+    quote:
+      "“I've approached Brains & Beards, because we needed a new mobile application for the Spanish market. The result was a product which is not only easy to maintain and robust, but as well great-looking and simple to understand for Rakuten users. Their years-long expertise helped us get rid of many problems before they even appeared.”",
+    name: 'Sergio Gago',
+    position: 'Technical Director',
+    company: 'Rakuten SL',
+    image: sergioImage,
+    imageAlt: 'Testimonial illustration'
+  },
+  {
+    id: 'astro-carousel-three',
+    quote:
+      '“We started working with Brains & Beards back in 2016 and have been a customer ever since. They are a reliable partner to work with and have helped us bring many solutions to life both on desktop and mobile. Their expertise and experience shows in many different facets such as project planning, suggesting solutions and efficient problem solving. We can recommend Brains & Beards to companies that need skilled developers who are not scared of technical challenges.”',
+    name: 'Feyyaz Alingan',
+    position: 'Head of Product & Development',
+    company: 'sharoo AG',
+    image: feyyazImage,
+    imageAlt: 'Testimonial illustration'
+  },
+  {
+    id: 'astro-carousel-four',
+    quote:
+      '“Working with Brains & Beards is very easy. They have integrated into the teams as if they were part of our internal team and have contributed their experience and professionalism in the creation of our apps. Both technically with their great knowledge of technology and at the process level with a clear mindset of continuous learning.”',
+    name: 'Jose Maria Elias',
+    position: 'Engineering Manager',
+    company: 'ManoMano - Colibri SAS',
+    image: eliasImage,
+    imageAlt: 'Testimonial illustration'
+  },
+  {
+    id: 'astro-carousel-five',
+    quote:
+      '“Brains & Beards helped me by solving many technical impediments across various agile development teams through implementing the needed changes to the backend of those connected applications. The result was that we were able to release the product in time and scope. I would recommend Brains & Beards to people who need the profound support of experienced developers to solve technically challenging projects.”',
+    name: 'Sebastian Gerdemann',
+    position: 'Senior Product Manager',
+    company: 'XING E-Recruiting GmbH & Co. KG',
+    image: sebastianImage,
+    imageAlt: 'Testimonial illustration'
+  }
+]
+
+const testimonials = await Promise.all(
+  carouselItems.map(async ({ image, ...item }) => {
+    const optimized = await getImage({
+      src: image,
+      width: 152,
+      height: 152,
+      densities: [1, 2],
+      format: 'webp'
+    })
+    return { ...item, image: { src: optimized.src, srcSet: optimized.srcSet.attribute } }
+  })
+)
+---
+
+<BaseLayout
+  title="We deliver great mobile applications"
+  description="Brains & Beards is an unpretentious mobile studio that solves business problems through a mix of design and technology."
+>
+  <div slot="header" class="yellow homepage-hero">
+    <div class="content row header">
+      <div class="header">
+        <div class="left-col">
+          <h1 class="text-center-mobile">We deliver great mobile applications</h1>
+          <RandomHero mobile />
+          <p class="about-us">
+            Brains & Beards is an unpretentious mobile studio that solves business problems through
+            a mix of design and technology.
+          </p>
+          <p class="about-us">
+            We are a remote team of experienced developers spread all over Europe who know how to
+            get a great product shipped.
+          </p>
+        </div>
+        <div class="hero-right-col center">
+          <div class="badge-container">
+            <img class="rotating badge" src={rotatingBadge} alt="" aria-hidden="true" />
+            <img class="badge" src={reactNativeBadge} alt="React Native" />
+          </div>
+          <RandomHero />
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="half-yellow mobile-only">
+    <div class="badge-container">
+      <img class="rotating badge" src={rotatingBadge} alt="" aria-hidden="true" />
+      <img class="badge" src={reactNativeBadge} alt="React Native" />
+    </div>
+  </div>
+  <section class="center homepage-services">
+    <h2>What can we help you with?</h2>
+    <p>Pick a category to learn more:</p>
+    <div class="row">
+      <div class="serviceContainer">
+        <a href="/services/cross-platform/">
+          <Image
+            src={crossPlatformIcon}
+            class="image-wrapper"
+            alt="Cross platform"
+            width={192}
+            densities={[1, 2]}
+            quality={90}
+            format="webp"
+            loading="lazy"
+            decoding="async"
+          />
+          <p class="quote">Cross-platform</p>
+          <p class="service-info">Mobile apps in React Native focused on fast delivery</p>
+          <ReadMore text="Read more" />
+        </a>
+      </div>
+      <div class="serviceContainer">
+        <a href="/services/native-development/">
+          <Image
+            src={nativeIcon}
+            class="image-wrapper"
+            alt="Native mobile development"
+            width={192}
+            densities={[1, 2]}
+            quality={90}
+            format="webp"
+            loading="lazy"
+            decoding="async"
+          />
+          <p class="quote">iOS and Android</p>
+          <p class="service-info">
+            State-of-the-art applications built using native frameworks from Apple and Google
+          </p>
+          <ReadMore text="Read more" />
+        </a>
+      </div>
+      <div class="serviceContainer">
+        <a href="/services/team-augmentation/">
+          <Image
+            src={staffIcon}
+            class="image-wrapper"
+            alt="Staff augmentation"
+            width={192}
+            densities={[1, 2]}
+            quality={90}
+            format="webp"
+            loading="lazy"
+            decoding="async"
+          />
+          <p class="quote">Staff Augmentation</p>
+          <p class="service-info">
+            Additional developers for your existing team to help dynamically scale your efforts
+          </p>
+          <ReadMore text="Read more" />
+        </a>
+      </div>
+    </div>
+  </section>
+  <section class="trustBar">
+    <ul class="trustBarList row">
+      <li class="trustBarItem">
+        <h2>11</h2>
+        <p class="sub2">years on the market</p>
+      </li>
+      <li class="trustBarItem">
+        <h2>52 months</h2>
+        <p class="sub2">longest ongoing client engagement</p>
+      </li>
+      <li class="trustBarItem">
+        <h2>9+</h2>
+        <p class="sub2">average years of programming experience on our team</p>
+      </li>
+    </ul>
+  </section>
+  <CalloutBar title="Build your product <br/>with Brains & Beards" />
+  <section class="clients">
+    <div class="content">
+      <h2>Our clients</h2>
+      <p class="sub2">
+        We help technology-driven organizations – from start-ups to large enterprises – develop
+        software more efficiently.
+      </p>
+      <CaseStudyCard
+        home
+        href="/projects/manomano/"
+        title="Ecommerce app for a French unicorn"
+        description="Turning a quick prototype into a fully-fledged ecommerce app for several European markets."
+        image={manoManoHero}
+        imageAlt="ManoMano screens"
+      >
+        <Image
+          slot="logo"
+          src={manoManoLogo}
+          alt="ManoMano logo"
+          height={22}
+          densities={[1, 2]}
+          format="webp"
+          loading="lazy"
+          decoding="async"
+        />
+      </CaseStudyCard>
+      <ClientLogos short />
+      <div class="references">
+        <TestimonialsCarousel
+          label="Client references"
+          items={testimonials}
+          client:visible={{ rootMargin: '300px' }}
+        />
+      </div>
+    </div>
+  </section>
+  <ContactForm />
+</BaseLayout>

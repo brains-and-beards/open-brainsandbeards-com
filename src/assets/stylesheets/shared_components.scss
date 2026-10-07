@@ -63,6 +63,12 @@
     align-items: center;
     height: 100%;
 
+    // The two 400px illustrations need room around the central CTA. The
+    // default content width leaves the headline with only ~224px on desktop.
+    @include desktop-version {
+      max-width: 1200px;
+    }
+
     h2 {
       margin-bottom: 56px;
     }
@@ -147,8 +153,11 @@
 }
 
 .estimate-link {
-  display: inline;
+  display: inline-block;
   padding: 18px 30px;
+  font-family: 'Neutrif';
+  font-size: 18px;
+  line-height: 1.78;
 
   a {
     font-size: 18px;
@@ -164,6 +173,10 @@
   padding-bottom: 0;
 
   &:last-child .content {
+    border-bottom: 1px solid $black;
+  }
+
+  &.footer-separator .content {
     border-bottom: 1px solid $black;
   }
 
@@ -279,10 +292,12 @@ button.cta-action {
 .right-header-image {
   position: relative;
   width: auto;
+  height: auto;
   padding-right: 40px;
   margin-top: -50px;
 
   @include mobile-version {
+    width: 80vw;
     margin-top: 0px;
   }
 }

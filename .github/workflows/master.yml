@@ -43,15 +43,16 @@ jobs:
           echo "##[set-output name=hash;]$(git rev-parse HEAD)"
         id: commit_hash
 
-      - uses: actions/setup-node@v1
+      - uses: actions/setup-node@v4
         with:
-          node-version: '12.x'
+          node-version: '22.19.0'
+          cache: 'npm'
 
       - name: Install packages
-        run: yarn install
+        run: npm ci
 
       - name: Build the Gatsby website
-        run: yarn build
+        run: npm run build
 
       # Deploy prebuilt stuff to Netlify
       - name: Publish to Netlify

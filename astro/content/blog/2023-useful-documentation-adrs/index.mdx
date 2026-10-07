@@ -1,0 +1,74 @@
+---
+path: '/blog/2023-useful-documentation-adrs'
+date: '2023-10-17T19:12:41.253Z'
+title: 'Useful documentation: ADRs'
+image: header.jpg
+author: Wojciech Ogrodowczyk
+---
+
+## What's an ADR?
+It's an [Architecture Decision Record](https://github.com/joelparkerhenderson/architecture-decision-record) document. It documents architecture decisions _together with its context_.
+
+## Okay, what's an "architecture decision"?
+
+I could keep playing this game and tell you that's a decision that influences your app's architecture, but I'll stop myself here. Instead, I'll give you a few guidelines on what I think is worth documenting using ADRs:
+
+* Picking tools, programming languages, frameworks, external libraries, etc. Some decisions are obvious and don't need a discussion (`zod` for data validation, or `prettier` for code formatting), but some are a tradeoff (state management) and involve a discussion in the team or consideration of alternative options with all their pros and cons. That's the kind of decision that you'd want to capture (along with its reasoning and other options that you've considered).
+
+* Deciding which 3rd party service to use. It's especially useful to be able to look back at your reasoning when re-evaluating this decision months or years later. For example, you might be just launching beta tests of your app and decide to use Amplitude and the reason you picked it was "good features, reasonable price". However, as you go public and start gaining more users, costs might blow up and when CFO asks you why are we paying so much you'll know why (because you forgot that you wanted to change providers before going public). However, the original reason could also have been the existence of a particular feature that is very important for your project and not available in competing solutions. Then it's even more valuable to be reminded of it when considering migrating elsewhere.
+
+* Contracts between services. Network protocols, data formats, etc. You'd document it if that was _your team's_ decision.
+
+* Anything that you've created a _spike_ or _proof of concept_ for. If this work rests only in Jira, I have a feeling it might get lost. Might be a good idea to co-locate it alongside your code. Whether the result was _not_ to do something, do it, or wait.
+
+
+## Why would I want to document that?
+
+It will help you make decisions. An ADR needs to contain the _context_ around the decision. So, you'll need to clear up exactly what problem you're trying to solve (deciding how to solve) and specify what options you're considering. Once you write that down, it's usually much easier to propose a decision. Probably because writing _is_ thinking.
+
+Once somebody worked on the problem, did the research and has a proposal, you can forward the in-progress document to your team as the agenda for a group discussion. This will let everybody come prepared and know what you did (and didn't) consider.
+
+It stops you from blindly making and changing decisions. Writing down what options are on the table helps consider all the alternatives and writing down your reasoning prevents you from overturning this decision in the future on a whim.
+
+Finally, it saves onboarding time. Often, when a new member joins a team they might wonder why something is built a particular way, or try to port over their favourite solutions from previous projects. Having clear ADRs that explain your patterns and choices helps new hires quickly learn the reasoning behind them and see whether there's a better solution that they could offer.
+
+
+## I'm sold, how would I want to document that?
+
+First, setup a place for your ADRs, probably somewhere in the `docs` folder in your repo. You have a `docs` folder, right?
+
+Second, ADRs are time-bound, meaning you've made a decision at a particular point in time and it's important to track that. Of course, you can always check the date in the document, but I find it helpful to number the filenames. For example: `adr-1-i18n-library.md`, `adr-2-state-management-provider.md`, etc.
+
+Third, decide on a format. You can [pick one of the popular ones](https://github.com/joelparkerhenderson/architecture-decision-record/tree/main/locales/en/templates) or write your own. It doesn't matter much which one you pick, but having _a_ structure will make it easier to write them.
+
+Here's a couple of things I like to see in an ADR:
+
+### Title 
+
+Obviously.
+
+### Summary
+
+_Date_ when the decision was taken.
+
+Explanation of the _issue_ we want to decide on. Often the problem statement is as important (if not more!) as the solution itself. If you structure this section clearly, it'll make it not only much easier for you to evaluate possible options, for your teammates to review your proposal, but also for future team members to decide whether the landscape has changed and this problem can now be solved differently.
+
+The _decision_ that was made.
+
+_Status_ of the decision. ADRs are immutable (because they're just a record of a decision made in the past), but decisions change. This means that we need a way to represent change. So, an ADR document might be "proposed" (or pending) when it's still being worked on, "accepted" (decided), but it can also be "superseded" by a newer decision that was made later. For example, when you decide to change a 3rd party provider for a service you'd change the status of the ADR that picked the old one from "accepted" to "superseded" and link a new ADR that picks a new provider.
+
+### Details
+
+A list of _assumptions_ (and constraints) that we're working on. For example, we might be picking a framework to use for a mobile app and we assume that we're not going to release na iOS version ever (assumption), but we don't have any team member who knows Kotlin (constraint).
+
+_Options_ (also called "positions") that you've considered _along with their relevant pros and cons_. You don't need to write _all_ the options and their characteristics (because universe is infinite and that's a losing game), just stick to the ones that might raise a reasonable question (starting with "Did you consider…").
+
+Reasoning and _arguments_ behind the decision that was made.
+
+_Implications_ (for you, for other teams, for the future, etc.) of the decision that has been made.
+
+_Notes_ section for house-keeping.
+
+
+
+

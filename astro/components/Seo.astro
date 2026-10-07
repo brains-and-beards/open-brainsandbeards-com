@@ -1,0 +1,46 @@
+---
+import { site } from '../lib/site'
+
+interface Props {
+  title?: string
+  description?: string
+  image?: string
+  pathname?: string
+  article?: boolean
+  noIndex?: boolean
+}
+
+const {
+  title = site.title,
+  description = site.description,
+  image = site.image,
+  pathname = Astro.url.pathname,
+  article = false,
+  noIndex = false
+} = Astro.props
+
+const url = new URL(pathname, site.url).toString()
+const imageUrl = new URL(image, site.url).toString()
+const pageTitle = site.titleTemplate.replace('%s', title)
+---
+
+<title>{pageTitle}</title>
+<meta name="description" content={description} />
+<meta name="image" content={imageUrl} />
+<link rel="canonical" href={url} />
+{noIndex && <meta name="robots" content="noindex, nofollow" />}
+
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={url} />
+<meta property="og:image" content={imageUrl} />
+<meta property="og:type" content={article ? 'article' : 'website'} />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:creator" content={site.twitterUsername} />
+<meta name="twitter:image" content={imageUrl} />
+<meta name="twitter:url" content={url} />
+
+<meta name="google-site-verification" content="BcbkPGxOMtXOUPAOFSU3DxA3gb_51mPzyidC4VE_mXg" />

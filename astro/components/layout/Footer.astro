@@ -1,0 +1,53 @@
+---
+import binocularsUrl from '../../assets/illustrations/footer-binoculars.png?url'
+---
+
+<footer id="footer">
+  <div class="content row">
+    <div class="col">
+      <p class="sub2">Contact</p>
+      <p class="caption">Brains & Beards sp. z o.o.</p>
+      <p class="caption">VAT ID: PL9721298520</p>
+      <p class="caption">
+        <a href="mailto:smile@brainsandbeards.com">smile@brainsandbeards.com</a>
+      </p>
+    </div>
+    <div class="col">
+      <p class="sub2">Sitemap</p>
+      <div class="row row-mobile sitemap">
+        <div class="column">
+          <a href="/about-us/">About us</a>
+          <a href="/team/">Team</a>
+          <a href="/projects/">Case studies</a>
+        </div>
+        <div class="column">
+          <a href="/blog/">Blog</a>
+          <a href="/jobs">Careers</a>
+          <a href="/contact-us/">Contact us</a>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <p class="sub2">Services</p>
+      <div class="column">
+        <a href="/services/native-development/">Native iOS and Android</a>
+        <a href="/services/cross-platform/">Cross-platform apps</a>
+        <a href="/services/team-augmentation/">Staff augmentation</a>
+      </div>
+    </div>
+    <div class="col">
+      <img
+        class="binoculars"
+        src={binocularsUrl}
+        alt="Peeping computer"
+        width="88"
+        loading="lazy"
+      />
+      <p class="nerd-text">
+        If you're a bit of a technical nerd (like us!) you can keep on reading. This site has been
+        built with Astro to keep things fast, and is hosted using Netlify. All of those products are
+        great and we're so happy to be able to use them 💯❤️🚀
+      </p>
+    </div>
+  </div>
+</footer>

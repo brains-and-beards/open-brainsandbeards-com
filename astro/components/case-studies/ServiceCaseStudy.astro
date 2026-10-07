@@ -1,0 +1,40 @@
+---
+import ResponsiveImage from '../ui/ResponsiveImage.astro'
+import ReadMore from '../ui/ReadMore.astro'
+
+interface Props {
+  href: string
+  title: string
+  description: string
+  image: any
+  imageAlt: string
+}
+
+const { href, title, description, image, imageAlt } = Astro.props
+---
+
+<a href={href}>
+  <div class="row client-details flip clients-details-services">
+    <div class="clients-pic mobile-only">
+      <div class="service-case-study-image">
+        <ResponsiveImage preset="service-project" src={image} alt={imageAlt} width={680} />
+      </div>
+    </div>
+    <div class="our-clients-left-col">
+      <div class="left-col align-top">
+        <p class="quote">{title}</p>
+        <p>{description}</p>
+        <ReadMore text="Read full story" />
+      </div>
+    </div>
+    <div class="services-clients-pic">
+      <div class="our-clients-pic">
+        <div class="right-col clients-pic">
+          <div class="service-case-study-image">
+            <ResponsiveImage preset="service-project" src={image} alt={imageAlt} width={680} />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</a>

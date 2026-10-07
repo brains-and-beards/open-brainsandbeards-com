@@ -1,0 +1,72 @@
+---
+import ResponsiveImage from '../ui/ResponsiveImage.astro'
+import bicycle from '../../assets/illustrations/hero-bicycle.png'
+import jogger from '../../assets/illustrations/hero-jogin.png'
+import skateboard from '../../assets/illustrations/hero-skateboard.png'
+
+interface Props {
+  alt?: string
+  mobile?: boolean
+}
+
+const { alt = 'Hero image', mobile = false } = Astro.props
+const heroes = [
+  { image: bicycle, className: 'heroBicycle', width: 710 },
+  { image: jogger, className: 'heroJogin', width: 740 },
+  { image: skateboard, className: 'heroSkateboard', width: 710 }
+]
+---
+
+<div
+  class:list={['random-hero', { 'mobile-only': mobile }]}
+  data-random-hero
+  data-mobile={String(mobile)}
+>
+  {heroes.map(({ image, className, width }) => (
+    <template>
+      <ResponsiveImage
+        preset={mobile ? 'home-hero-mobile' : 'home-hero'}
+        maxWidth={mobile ? 594 : width}
+        class:list={['hero-image', className, 'random-hero__image']}
+        src={image}
+        alt={alt}
+        {...(mobile ? { height: 510 } : { width })}
+        loading="eager"
+        fetchpriority="high"
+      />
+    </template>
+  ))}
+  <noscript>
+    <ResponsiveImage
+      preset={mobile ? 'home-hero-mobile' : 'home-hero'}
+      maxWidth={mobile ? 594 : heroes[0].width}
+      class:list={['hero-image', heroes[0].className, 'random-hero__image']}
+      src={heroes[0].image}
+      alt={alt}
+      {...(mobile ? { height: 510 } : { width: heroes[0].width })}
+      loading="eager"
+      fetchpriority="high"
+    />
+  </noscript>
+  <script is:inline>
+    ;(() => {
+      const hero = document.currentScript.parentElement
+      const templates = hero.querySelectorAll('template')
+      const page = document.documentElement
+      // Both layout positions use the same artwork for this page visit.
+      page.dataset.randomHero ??= String(Math.floor(Math.random() * templates.length))
+      const selected = templates[Number(page.dataset.randomHero)]
+      const mobileViewport = window.matchMedia('(max-width: 690px)')
+      const renderHero = () => {
+        const active = mobileViewport.matches === (hero.dataset.mobile === 'true')
+        const image = hero.querySelector('.random-hero__image')
+        if (active && !image) hero.appendChild(selected.content.cloneNode(true))
+        if (!active && image) image.remove()
+      }
+
+      // Run during HTML parsing rather than waiting for a deferred module.
+      renderHero()
+      mobileViewport.addEventListener('change', renderHero)
+    })()
+  </script>
+</div>

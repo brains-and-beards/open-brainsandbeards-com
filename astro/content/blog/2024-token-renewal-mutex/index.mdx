@@ -1,0 +1,207 @@
+---
+path: '/blog/2024-token-renewal-mutex'
+date: '2024-01-30T16:00:00.000Z'
+title: 'Common Pitfalls in Authentication Token Renewal'
+image: header.jpg
+author: Szymon Koper
+---
+
+In this blog post we'll talk about how to avoid common concurrency pitfalls when renewing authentication tokens in React Native apps.
+
+
+## Intro to authentication tokens
+
+In apps with logins, we rely on **tokens** from the server to validate user identities.
+These tokens act as keys, allowing users to stay logged in.
+Since tokens have a lifespan, we periodically request new ones by sending a _refresh token_.
+
+The server responds with a fresh _authentication token_, extending the user's login duration.
+However, when the server invalidates a token (indicated by a `401 Unauthorized` message), we gracefully initiate a renewal process.
+
+Join us in navigating the nuances of token renewal in React Native apps. 🗝️
+
+
+### Naive implementation
+
+Let's explore a simple method for handling authorized requests and authentication token renewals.
+
+Take a moment to review the code snippet below. Can you spot potential issues?
+
+```tsx
+const renewAuthenticationToken = async () => {
+  // It renews the access token, by sending refresh token to the server
+  await authService.renewAccessToken()
+}
+
+const makeAuthenticatedRequest = async (url: string, options: RequestInit) => {
+  const response = await fetch(url, options)
+
+  if (response.status === 401) {
+    await renewAuthenticationToken()
+    // Retry the request after successful token renewal using recursion
+    return await makeAuthenticatedRequest(url, options)
+  }
+
+  return response
+}
+```
+
+In the snippet, we've identified a few general network handling concerns:
+
+ - No possibility to cancel fetch requests
+   - Introducing the AbortController would enhance control over network calls by providing the ability to cancel ongoing fetch requests.
+ - No request timeout set up
+   - Adding a timeout feature ensures that requests do not linger indefinitely, improving the application's responsiveness.
+ - Infinite retry risk
+   - To mitigate the risk of endless retries in case of token renewal failures, implementing a retry count limit is crucial. This prevents the system from repeatedly attempting requests beyond a reasonable threshold.
+ - Error handling enhancement
+   - Improving error handling by providing more detailed information about the cause of errors can aid in better understanding and debugging.
+
+While these aspects contribute to robust network handling, our main focus in this blog post is to elevate the token renewal process. 🚀
+
+
+### Navigating concurrency pitfails
+
+Let's revisit our naive implementation and envision the following scenario: an authorized request fails with a `401 Unauthorized` message, triggering the token renewal process.
+
+In the world of apps, it's common to send multiple requests concurrently.
+What happens if a previous token renewal is still in progress, and the app initiates another authorized request?
+In our naive implementation, it sparks another renewal process, unintentionally creating a [race condition](https://en.wikipedia.org/wiki/Race_condition).
+
+We've unintentionally introduced a race condition where multiple token renewal operations can be in progress simultaneously when a single operation would suffice.
+
+Depending on the backend token renewal implementation, each consecutive renewal might invalidate the previous tokens, leading to a cascade of failed requests.
+This not only wastes resources but also negatively impacts performance, drains the battery, and creates a frustrating experience for both users and developers.
+
+Stay tuned as we uncover solutions to navigate these concurrency pitfalls and refine our token renewal process. 🚧
+
+
+#### JavaScript concurrency
+
+A common misconception is assuming JavaScript is immune to race conditions because of its single-threaded nature.
+
+Yes, JavaScript operates on a single thread, but the underlying environment (JavaScriptCore on iOS, V8 on Android, or Node.js during app development) empowers operations like network requests to run in parallel without blocking the main JS thread.
+
+To renew tokens correctly, we must fortify ourselves against potential race conditions.
+
+
+#### Don't send multiple renewal requests
+
+When the token renewal process is underway, we don't need to initiate another renewal request until we secure a new token.
+By abstaining from additional renewal requests, we allow the initial process to conclude seamlessly.
+
+Consider this (overly) simplified implementation:
+
+```tsx{1,3-5,8-10,13,16}
+let isDuringRenewal = false
+
+const waitForRenewalToFinish = async (): Promise<boolean> => {
+  // Imagine a function that resolves when `isDuringRenewal === true`
+}
+
+const renewAuthenticationToken = async () => {
+  if (isDuringRenewal) {
+    await waitForRenewalToFinish()
+  }
+
+  try {
+    isDuringRenewal = true
+    await authService.renewAccessToken()
+  } finally {
+    isDuringRenewal = false
+  }
+}
+```
+
+This ensures that the token renewal is an exclusive operation.
+
+#### Don't send requests that will surely fail
+
+However, we've addressed one issue, but another persists.
+Even with our newfound restraint, subsequent requests might still fail with `401 Unauthorized` before the renewal process completes.
+
+We know that after the first `401 Unauthorized` message, all subsequent authorized requests with the same outdated token are destined to fail.
+
+So, why send them?
+Instead, we delay sending authorized requests until we acquire a new token from the renewal operation triggered by one of the previous requests.
+
+```tsx{2-3}
+const makeAuthenticatedRequest = async (url: string, options: RequestInit) => {
+  // if token is being renewed now - wait for the new token
+  await waitForRenewalToFinish()
+  const response = await fetch(url, options)
+
+  if (response.status === 401) {
+    await renewAuthenticationToken()
+    return await makeAuthenticatedRequest(url, options)
+  }
+
+  return response
+}
+```
+
+### Truly resolving the race condition
+
+Hold on!
+The above code is an improvement, but it's still **not entirely** free from the race condition.
+
+There's a small window between the check `if (isDuringRenewal)` and setting the flag `isDuringRenewal = true`, where another function could potentially start the renewal process concurrently.
+
+![Van Gogh screaming](./vangoghscream.jpg "RN developer happily resolving race conditions")
+
+Stay tuned as we introduce a powerful tool, the mighty mutex, to put a complete end to these concurrency challenges. 🛡️
+
+
+#### Mutex to the rescue
+
+To ensure the integrity of our token renewal process, consider making our checks atomic
+Enter the formidable [_mutex_](https://www.npmjs.com/package/async-mutex), an object designed to synchronize parallel operations.
+
+Let's leverage the `Mutex` from the `async-mutex` package for a robust solution:
+
+```tsx{1,3,6-8,11,14,19-20}
+import { Mutex } from 'async-mutex'
+
+const tokenRenewalMutex = new Mutex()
+
+const renewAuthenticationToken = async () => {
+  if (tokenRenewalMutex.isLocked()) {
+    await tokenRenewalMutex.waitForUnlock()
+  }
+
+  try {
+    tokenRenewalMutex.acquire()
+    await authService.renewAccessToken()
+  } finally {
+    tokenRenewalMutex.release()
+  }
+}
+
+const makeAuthenticatedRequest = async (url: string, options: RequestInit) => {
+  await tokenRenewalMutex.waitForUnlock()
+  const newOptions = getOptionsWithCurrentToken(options)
+  const response = await fetch(url, newOptions)
+
+  if (response.status === 401) {
+    await renewAuthenticationToken()
+    return await makeAuthenticatedRequest(url, newOptions)
+  }
+
+  return response
+}
+```
+
+With the introduction of the `async-mutex` library, we've fortified our solution against concurrent token renewal processes.
+
+The `Mutex` ensures a single, synchronized renewal at any given time. It not only resolves the race condition but also promotes a more robust and efficient token renewal process.
+
+
+## Conclusion
+
+In this blog, we explored pitfalls in renewing authentication tokens in React Native apps.
+
+The naive approach led to race conditions with multiple token renewals.
+To address this, we introduced a `Mutex`, ensuring a single, synchronized renewal process.
+The solution prevents race conditions and enhances app efficiency.
+
+Happy coding! 🚀

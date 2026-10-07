@@ -1,0 +1,181 @@
+@include mobile-version {
+  .row {
+    flex-direction: column;
+  }
+
+  .row-mobile {
+    flex-direction: row;
+    justify-content: flex-start;
+  }
+
+  .desktop-only {
+    display: none !important;
+  }
+
+  .mobile-hide {
+    display: none !important;
+  }
+
+  .column {
+    flex-grow: 1;
+  }
+
+  .center-mobile {
+    align-self: center;
+  }
+
+  .text-center-mobile {
+    text-align: center;
+  }
+
+  .left-col,
+  .right-col {
+    width: 100%;
+  }
+
+  .content {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+
+  .narrow-column {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+
+  .content .narrow-column {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .button,
+  button {
+    max-width: 100%;
+    white-space: normal;
+  }
+}
+
+@include desktop-version {
+  .mobile-only {
+    display: none !important;
+  }
+}
+
+@media screen and (min-width: 600px) and (max-width: 1199px) {
+  .desktop-only {
+    display: none !important;
+  }
+}
+
+@include tablet-version {
+  .mobile-only {
+    display: none !important;
+  }
+
+  .menu {
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+
+  .narrow-column {
+    padding: 0 30px;
+  }
+
+  .content {
+    width: 100%;
+  }
+
+  .col {
+    padding: 0 10px;
+  }
+}
+
+// Navigation switches independently of the page layout breakpoints.
+.menu-container {
+  [data-menu-open],
+  .menu-overlay {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 1199px) {
+  body.menu-open {
+    overflow: hidden;
+  }
+
+  .menu-container {
+    .menu-links,
+    .menu-estimate-link {
+      display: none;
+    }
+
+    [data-menu-open] {
+      display: block;
+    }
+
+    .menu {
+      margin-inline: 0;
+      padding-left: max(24px, env(safe-area-inset-left, 0px));
+      padding-right: max(24px, env(safe-area-inset-right, 0px));
+    }
+
+    .menu-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      height: 100dvh;
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      background: $lightYellow;
+      z-index: 10;
+      align-items: center;
+      display: flex;
+      flex-direction: column;
+      .menu {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        flex: 0;
+        width: 100%;
+      }
+
+      ul {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        .button {
+          white-space: nowrap;
+          background-color: $yellow;
+          border-radius: 8px;
+          padding: 16px 48px;
+          margin-top: 56px;
+          margin-bottom: 16px;
+          font-size: 18px;
+          text-align: center;
+          box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+        }
+      }
+    }
+
+    .mobile-menu-link {
+      font-size: 24px;
+      line-height: 32px;
+      font-family: 'Neutrif Medium';
+      margin: 8px 0;
+    }
+
+    .mobile-menu-content {
+      flex: 0 0 auto;
+      padding: calc(51px + env(safe-area-inset-top, 0px)) 0
+        calc(24px + env(safe-area-inset-bottom, 0px));
+      width: 100%;
+      align-items: center;
+
+      ul {
+        padding: 0;
+      }
+    }
+  }
+}

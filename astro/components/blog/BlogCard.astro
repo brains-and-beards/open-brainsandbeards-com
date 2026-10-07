@@ -1,0 +1,37 @@
+---
+import ResponsiveImage from '../ui/ResponsiveImage.astro'
+import type { CollectionEntry } from 'astro:content'
+import { formatBlogDate } from '../../lib/blog'
+import BlogAuthor from './BlogAuthor.astro'
+import ImagePriority from '../ui/ImagePriority.astro'
+import separatorSvg from '../../assets/illustrations/separator.svg?url'
+
+interface Props {
+  post: CollectionEntry<'blog'>
+  priorityOnMobile?: boolean
+  listing?: boolean
+}
+
+const { post, priorityOnMobile = false, listing = false } = Astro.props
+---
+
+<article class="blogpost-preview">
+  <a href={post.data.path}>
+    <div class="post-container">
+      {post.data.image && (
+        <ResponsiveImage
+          preset={listing ? 'blog-list-card' : 'blog-card'}
+          src={post.data.image}
+          alt={`Miniature for post: ${post.data.title}`}
+          width={320}
+          height={200}
+        />
+      )}
+      {post.data.image && priorityOnMobile && <ImagePriority media="(max-width: 690px)" />}
+      <h3 class="blog-list-item-title">{post.data.title}</h3>
+    </div>
+    <BlogAuthor author={post.data.author} />
+    <p class="caption blog-list-item-date">{formatBlogDate(post.data.date)}</p>
+    <img class="separator" src={separatorSvg} alt="" aria-hidden="true" />
+  </a>
+</article>

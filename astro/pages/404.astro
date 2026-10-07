@@ -1,0 +1,15 @@
+---
+import MarketingPage from '../layouts/MarketingPage.astro'
+---
+
+<MarketingPage
+  title="404 Not found"
+  description="You just hit a route that doesn't exist... the sadness."
+  noIndex
+>
+  <script is:inline>
+    document.addEventListener('DOMContentLoaded', () =>
+      window.plausible?.('404', { props: { path: location.pathname } })
+    )
+  </script>
+</MarketingPage>

@@ -1,0 +1,152 @@
+---
+import { Image } from 'astro:assets'
+import androidIcon from '../../assets/illustrations/estimate-android-icon.png'
+import iosIcon from '../../assets/illustrations/estimate-ios-icon.png'
+import bothIcon from '../../assets/illustrations/estimate-both-icon.png'
+import scratchIcon from '../../assets/illustrations/estimate-scratch-icon.png'
+import legacyIcon from '../../assets/illustrations/estimate-legacy-icon.png'
+---
+
+<form method="post" data-netlify="true" name="estimate" action="/estimate-requested">
+  <input type="hidden" name="form-name" value="estimate" />
+  <ol class="estimate-list">
+    <li class="radio">
+      <legend class="sub1">
+        <span class="mobile-only">1. </span>Which mobile platform do you want to target?
+      </legend>
+      <div class="row">
+        <input type="radio" id="android" name="system" value="android" />
+        <label for="android">
+          <Image
+            class="image-wrapper"
+            src={androidIcon}
+            width={192}
+            densities={[1, 2]}
+            quality={90}
+            alt="Android platform"
+            format="webp"
+            loading="lazy"
+          />
+          <p class="image-label">Android</p>
+        </label>
+        <input type="radio" id="ios" name="system" value="ios" />
+        <label for="ios">
+          <Image
+            class="image-wrapper"
+            src={iosIcon}
+            width={192}
+            densities={[1, 2]}
+            quality={90}
+            alt="iOS platform"
+            format="webp"
+            loading="lazy"
+          />
+          <p class="image-label">iOS</p>
+        </label>
+        <input type="radio" id="both" name="system" value="both" />
+        <label for="both">
+          <Image
+            class="image-wrapper"
+            src={bothIcon}
+            width={192}
+            densities={[1, 2]}
+            quality={90}
+            alt="Android & iOS platforms"
+            format="webp"
+            loading="lazy"
+          />
+          <p class="image-label">Both</p>
+        </label>
+      </div>
+    </li>
+    <li class="radio">
+      <legend class="sub1">
+        <span class="mobile-only">2. </span>What's the state of the project?
+      </legend>
+      <div class="row">
+        <div>
+          <input type="radio" id="greenfield" name="state" value="greenfield" />
+          <label for="greenfield">
+            <Image
+              class="image-wrapper"
+              src={scratchIcon}
+              width={192}
+              densities={[1, 2]}
+              quality={90}
+              alt="From scratch"
+              format="webp"
+              loading="lazy"
+            />
+            <p class="image-label">Starting from scratch</p>
+          </label>
+        </div>
+        <div>
+          <input type="radio" id="legacy" name="state" value="legacy" />
+          <label for="legacy">
+            <Image
+              class="image-wrapper"
+              src={legacyIcon}
+              width={192}
+              densities={[1, 2]}
+              quality={90}
+              alt="Legacy project"
+              format="webp"
+              loading="lazy"
+            />
+            <p class="image-label">There's an app already</p>
+          </label>
+        </div>
+      </div>
+    </li>
+    <li>
+      <legend class="sub1">
+        <span class="mobile-only">3. </span>Tell us a bit about the project
+      </legend>
+      <div class="row">
+        <div class="column-400">
+          <div>
+            <label for="estimate-name">Your name</label>
+            <input id="estimate-name" type="text" name="name" />
+          </div>
+          <div>
+            <label for="estimate-email">Email address</label>
+            <input id="estimate-email" type="text" name="email" data-email-validation />
+          </div>
+          <div>
+            <label for="estimate-phone">Phone (only if you prefer us to call)</label>
+            <input id="estimate-phone" type="text" name="phone" />
+          </div>
+        </div>
+        <div class="column-400">
+          <label for="estimate-text">Tell us about your idea</label>
+          <textarea id="estimate-text" name="text"></textarea>
+        </div>
+      </div>
+      <p>
+        Need NDA first? E-mail us at
+        <br />
+        <a href="mailto:urgent-nda@brainsandbeards.com">urgent-nda@brainsandbeards.com</a>
+      </p>
+      <button disabled class="cta-action">
+        Estimate project
+      </button>
+    </li>
+  </ol>
+</form>
+
+<script>
+  const emailPattern =
+    /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+  document.querySelectorAll<HTMLInputElement>('[data-email-validation]').forEach(input => {
+    const form = input.closest('form')
+    const button = form?.querySelector<HTMLButtonElement>(
+      'button[type="submit"], button:not([type])'
+    )
+    if (!button) return
+    const validate = () => {
+      button.disabled = !emailPattern.test(input.value.toLowerCase())
+    }
+    input.addEventListener('input', validate)
+    validate()
+  })
+</script>

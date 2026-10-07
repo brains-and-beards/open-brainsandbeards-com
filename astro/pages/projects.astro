@@ -1,0 +1,161 @@
+---
+import MarketingPage from '../layouts/MarketingPage.astro'
+import CaseStudyCard from '../components/case-studies/CaseStudyCard.astro'
+import ClientLogos from '../components/case-studies/ClientLogos.astro'
+import CalloutBar from '../components/ui/CalloutBar.astro'
+import { Image } from 'astro:assets'
+import manoHero from '../assets/case-studies/manomano/manomano-hero-banner.png'
+import manoLogo from '../assets/case-studies/manomano/manomano-logo-colour.png'
+import femtasyHero from '../assets/case-studies/femtasy/femtasy-header.png'
+import femtasyLogo from '../assets/case-studies/femtasy/femtasy-logo.png'
+import lokalportalHero from '../assets/case-studies/lokalportal/lokalportal-web.jpg'
+import lokalportalLogo from '../assets/case-studies/lokalportal/logo_lokal_full.png'
+import sharooHero from '../assets/case-studies/sharoo/sharoo-hero.jpg'
+import sharooLogo from '../assets/case-studies/sharoo/sharoo-logo.png'
+import clincaseHero from '../assets/case-studies/clincase/epro-logo.jpg'
+import clincaseLogo from '../assets/client-logos/clincase.png'
+import rakutenHero from '../assets/case-studies/rakuten-team.jpg'
+import rakutenLogo from '../assets/client-logos/rakuten-alt.png'
+---
+
+<MarketingPage
+  title="Case studies"
+  description="Read in detail about some of the applications that we've built."
+  projects
+>
+  <div class="case-studies-container">
+    <div class="top-part-yellow">
+      <div class="content">
+        <CaseStudyCard
+          href="/projects/manomano/"
+          title="Ecommerce app for a French unicorn"
+          description="Turning a quick prototype into a fully-fledged ecommerce app for several European markets."
+          image={manoHero}
+          imageAlt="ManoMano app"
+          imageWidth={620}
+          imageHeight={408}
+          eager
+          first
+        >
+          <Image
+            slot="logo"
+            src={manoLogo}
+            alt="ManoMano logo"
+            height={22}
+            densities={[1, 2]}
+            format="webp"
+          />
+        </CaseStudyCard>
+      </div>
+    </div>
+    <div class="content">
+      <CaseStudyCard
+        href="/projects/femtasy/"
+        title="We built a streaming audio player for femtasy"
+        description="Story of a successful launch of a mobile app for an award-winning streaming platform."
+        image={femtasyHero}
+        imageAlt="Femtasy app"
+        flip
+      >
+        <Image
+          slot="logo"
+          src={femtasyLogo}
+          alt="Femtasy logo"
+          height={22}
+          densities={[1, 2]}
+          format="webp"
+        />
+      </CaseStudyCard>
+      <CaseStudyCard
+        href="/projects/lokalportal/"
+        title="We helped Lokalportal team reshape local journalism in Germany"
+        description="How we helped speed up development by improving agile processes and setting up a resilient application architecture."
+        image={lokalportalHero}
+        imageAlt="Lokalportal app"
+      >
+        <Image
+          slot="logo"
+          src={lokalportalLogo}
+          alt="Lokalportal logo"
+          height={22}
+          densities={[1, 2]}
+          format="webp"
+        />
+      </CaseStudyCard>
+      <CaseStudyCard
+        href="/projects/sharoo/"
+        title="We helped sharoo team conquering carsharing economy in Switzerland"
+        description="How we implemented unique mobile applications supporting renting and interacting with rented vehicles."
+        image={sharooHero}
+        imageAlt="Sharoo app"
+        imageHeight={334}
+        flip
+      >
+        <Image
+          slot="logo"
+          src={sharooLogo}
+          alt="Sharoo logo"
+          height={22}
+          densities={[1, 2]}
+          format="webp"
+        />
+      </CaseStudyCard>
+      <CaseStudyCard
+        href="/projects/clincase/"
+        title="How we've recently helped a German company from the medical sector"
+        description="Clincase is a long-standing company that has been handling medical data for their customers for fifteen years. We built for them a mobile application that expanded their business to a whole new market."
+        image={clincaseHero}
+        imageAlt="Clincase app"
+        imageWidth={620}
+        imageHeight={419}
+      >
+        <Image
+          slot="logo"
+          src={clincaseLogo}
+          alt="Clincase logo"
+          height={22}
+          densities={[1, 2]}
+          format="webp"
+        />
+      </CaseStudyCard>
+      <CaseStudyCard
+        href="/projects/rakuten/"
+        title="Timely delivery of a premium shopping app for a market-leading enterprise"
+        description="How we built a native iOS app for FC Barcelona sponsor with enough time to spare to help with their Android version."
+        image={rakutenHero}
+        imageAlt="Rakuten team"
+        flip
+      >
+        <Image
+          slot="logo"
+          src={rakutenLogo}
+          alt="Rakuten logo"
+          height={22}
+          densities={[1, 2]}
+          format="webp"
+        />
+      </CaseStudyCard>
+      <h3 class="awesome-people">
+        We've helped some pretty great people at some pretty awesome companies:
+      </h3>
+      <ClientLogos />
+    </div>
+  </div>
+  <section class="trustBar">
+    <ul class="trustBarList row">
+      <li class="trustBarItem">
+        <h2>11</h2>
+        <p class="sub2">years on the market</p>
+      </li>
+      <li class="trustBarItem">
+        <h2>52 months</h2>
+        <p class="sub2">longest ongoing client engagement</p>
+      </li>
+      <li class="trustBarItem">
+        <h2>9+</h2>
+        <p class="sub2">average years of programming experience on our team</p>
+      </li>
+    </ul>
+  </section>
+  <CalloutBar title="Want to start a great project?" />
+</MarketingPage>

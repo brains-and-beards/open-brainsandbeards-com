@@ -1,0 +1,230 @@
+.estimate-project-form {
+  background-color: $lightGrey;
+
+  .content {
+    padding: 40px 0;
+    @media screen and (max-width: 1199px) {
+      padding-left: 24px;
+      padding-right: 24px;
+    }
+  }
+
+  .column-400 {
+    margin-left: 0;
+    margin-right: 0;
+    min-width: 0;
+    flex: 1;
+  }
+
+  @include desktop-version {
+    margin-top: -60px;
+  }
+}
+
+ol.estimate-list {
+  padding-left: 0;
+
+  counter-reset: li;
+  margin: 48px 0;
+  & > li {
+    position: relative;
+    margin: 0 0 60px 30px;
+    list-style: none;
+    padding: 10px 0 0 64px;
+
+    @include desktop-version {
+      margin: 0 0 60px 60px;
+    }
+
+    &:before {
+      content: counter(li);
+      counter-increment: li;
+      display: block;
+      position: absolute;
+      left: -10px;
+      top: 6px;
+      border-radius: 20px;
+      border: 1px solid $black;
+      width: 40px;
+      height: 40px;
+      line-height: 40px;
+      color: $black;
+      font-family: 'Neutrif Medium';
+      font-size: 24px;
+      text-align: center;
+
+      @include desktop-version {
+        left: -40px;
+      }
+    }
+  }
+
+  @include mobile-version {
+    & > li {
+      list-style: none;
+      margin-left: 0px;
+      margin-bottom: 40px;
+      padding: 0;
+    }
+
+    li:before {
+      content: none;
+    }
+
+    .sub1 {
+      font-family: 'Recoleta';
+    }
+  }
+
+  .radio > .row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 224px));
+    gap: 16px;
+
+    @include mobile-version {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+
+  > li:not(.radio) > .row {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px;
+
+    @media screen and (max-width: 900px) {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+
+  input[type='radio'] {
+    display: none;
+
+    & + label {
+      position: relative;
+      cursor: pointer;
+      @include darken-link-on-hover(5%);
+    }
+
+    &:checked + label {
+      background-color: $yellow;
+      &:after {
+        content: '✓';
+        font-size: 26px;
+        line-height: 28px;
+        text-align: center;
+        display: block;
+        position: absolute;
+        top: 20px;
+        right: 18px;
+        border-radius: 50%;
+        border: 2px solid $black;
+        width: 32px;
+        height: 32px;
+
+        @include mobile-version {
+          top: 50%;
+          right: 12px;
+          transform: translateY(-50%);
+        }
+      }
+    }
+  }
+
+  input[type='text'] {
+    margin-right: 0;
+    font-size: 14px;
+    padding: 0 16px;
+    &:focus {
+      border-width: 2px;
+    }
+  }
+
+  textarea {
+    font-size: 14px;
+    font-family: 'Neutrif';
+    padding: 16px;
+    flex: 1;
+    &:focus {
+      border-width: 2px;
+    }
+  }
+
+  .radio label {
+    width: 100%;
+    min-width: 0;
+    min-height: 224px;
+    height: auto;
+    padding: 16px;
+    border-radius: 8px;
+    background-color: $paleYellow;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+
+    @include mobile-version {
+      min-height: 96px;
+      padding: 12px 52px 12px 12px;
+      flex-direction: row;
+      justify-content: flex-start;
+    }
+
+    .image-wrapper {
+      display: block;
+      width: 82%;
+      max-width: 184px;
+      height: auto;
+      object-fit: contain;
+
+      @include mobile-version {
+        width: 72px;
+        max-width: 40%;
+        flex: 0 1 72px;
+      }
+    }
+
+    .image-label {
+      width: 100%;
+      margin: 0;
+      text-align: center;
+
+      @include mobile-version {
+        flex: 1;
+        min-width: 0;
+        width: auto;
+        text-align: left;
+      }
+    }
+  }
+
+  @media screen and (max-width: 1199px) {
+    input[type='text'],
+    textarea {
+      min-width: 0;
+      font-size: 16px;
+    }
+  }
+
+  @extend %form-elements;
+
+  button {
+    font-size: 16px;
+    font-family: 'Neutrif';
+    background: $yellow;
+    color: $black;
+    border: none;
+    box-shadow: none;
+
+    @include mobile-version {
+      margin-top: 23px;
+      width: 100%;
+    }
+
+    @include darken-link-on-hover(10%);
+  }
+
+  legend {
+    margin-bottom: 48px;
+  }
+}

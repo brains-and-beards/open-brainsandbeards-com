@@ -1,0 +1,30 @@
+---
+import { Image } from 'astro:assets'
+import type { ComponentProps } from 'astro/types'
+import {
+  responsiveImageProps,
+  type LocalImage,
+  type ResponsiveImagePreset
+} from '../../lib/responsive-images'
+
+type Props = Omit<ComponentProps<typeof Image>, 'src' | 'widths' | 'densities' | 'sizes'> & {
+  src: LocalImage
+  preset: ResponsiveImagePreset
+  maxWidth?: number
+  sizes?: string
+}
+
+const { src, preset, maxWidth, sizes, ...attributes } = Astro.props
+const responsive = responsiveImageProps(src, preset, { maxWidth, sizes })
+---
+
+<Image
+  src={src}
+  layout="none"
+  format="webp"
+  loading="lazy"
+  decoding="async"
+  data-responsive-preset={preset}
+  {...attributes}
+  {...responsive}
+/>

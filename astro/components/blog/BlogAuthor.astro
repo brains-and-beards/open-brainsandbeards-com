@@ -1,0 +1,33 @@
+---
+import { Image } from 'astro:assets'
+import { blogAuthors } from '../../lib/blog-authors'
+
+interface Props {
+  author?: string
+  firstPost?: boolean
+}
+
+const { author, firstPost = false } = Astro.props
+const details = author ? blogAuthors[author as keyof typeof blogAuthors] : undefined
+---
+
+{details && (
+  <div class:list={['author-container', { 'author-container-list': !firstPost }]}>
+    <div class="author-content">
+      <Image
+        class="circular-image"
+        src={details.image}
+        alt={`Blog author: ${author}`}
+        height={80}
+        densities={[1, 2]}
+        format="webp"
+        loading="lazy"
+        decoding="async"
+      />
+    </div>
+    <div>
+      <p class="author-name">{author}</p>
+      <p class="author-title">{details.title}</p>
+    </div>
+  </div>
+)}

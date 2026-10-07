@@ -217,6 +217,10 @@ section {
 }
 
 .our-story-header {
+  display: block;
+  height: auto;
+  aspect-ratio: 2000 / 1153;
+
   @include mobile-version {
     width: 300px;
   }
@@ -336,6 +340,11 @@ section {
   margin-bottom: 50px;
 }
 
+.service-examples {
+  background-color: $lightGrey;
+  display: flow-root;
+}
+
 .service-description {
   background-color: $lightGrey;
 
@@ -345,6 +354,15 @@ section {
 
   @include desktop-version {
     padding-top: 40px;
+    padding-bottom: 5px;
+  }
+}
+
+.native-service-description {
+  padding-bottom: 80px;
+
+  .content {
+    margin-bottom: 0;
   }
 }
 
@@ -390,8 +408,8 @@ ul.picture-list {
     }
 
     .image-wrapper {
-      width: 150px;
-      height: 150px;
+      width: 192px;
+      height: 192px;
 
       @include desktop-version {
         margin-left: 16px;

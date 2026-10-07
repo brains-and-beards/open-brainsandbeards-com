@@ -1,0 +1,62 @@
+---
+path: '/blog/2025-old-deps-are-not-vulns'
+date: '2025-02-06T14:20:00.000Z'
+title: 'Old dependencies are not vulnerabilities'
+image: clint-patterson-dYEuFB8KQJk-unsplash.jpg
+author: Wojciech Ogrodowczyk
+---
+
+I usually get triggered with [posts like that](https://bsky.app/profile/lukaszreszke.bsky.social/post/3lcfquw7q5s27).
+
+> There are two types of developers. One type is not afraid to upgrade dependencies. Second type is not afraid to live with vulnerabilities.
+
+First reason is probably the fact that (anti)social media is pretty useless to give advice of any kind, due to the very limited context we can operate on. Especially such general advice as "udpate your deps or get hacked". While I can imagine there's a category of posts that would be both useful AND true AND could fit within a short post, it would probably be limited to a template of "I did this thing and it worked". Not "you should do this thing", not "you should not do this other thing" and neither "this thing works".
+
+Second reason I found this post disturbing was probably the accumulated PTSD of discussing this exact issue with well-meaning, but overworked security teams. Instead of looking at a project's domain, they look at a language and try to fit it with some kind of code analysis tool that they could run automatically to get a report or number of some kind. That usually leads to an awkward conversation similar to:
+
+> \- Hey, I ran this tool and it says the app you're building is not secure. Please, fix it ASAP, so that my tool says it's secure.
+>
+> \- Sure, but let's slow down a bit. Could you explain what's not secure? What are we vulnerable to actually?
+>
+> \- I don't have time for that, but the report is all red and it should be mostly green or yellow.
+>
+> \- Okay, if you don't have the time then let's pick this conversation up when you do and in the meantime you can trust us that we know what we're doing.
+
+That gets repeated every year.
+
+But let's get back to the topic. Isn't it true that outdated dependencies leave us open to attacks?
+
+## Are outdated dependencies dangerous?
+
+Important note: in this post we're going to operate in the context of what Brains & Beards specialises in - building mobile apps in React Native. This advice does not apply to building backends, nor websites.
+
+In the context of mobile apps in general, usually you're as vulnerable as the backend that you're working with. Of course there are practises that are recommended to follow, like for example SSL certificate pinning, or aspects of your app that you should pay particular attention to, like data storage or authentication. But in the end what we're usually doing is making API calls that any attacker could just as well do manually using `curl`. And if somebody wants to get data off our app, they'll usually have to physically steal the phone. Not really a scalable attack vector.
+
+I'm not saying that mobile apps can't be vulnerable. They can and they should be protected appropriately to the domain we're working in. But the type of vulnerabilities we face are different than code injections on the backend, or XSS on the web. The real vulnerabilities on mobile don't come from old versions of packages that pop up in red when running `npm audit`.
+
+## What does pop up in red, though?
+
+I've just made an experiment and ran the audit on an app I'm working on right now and some of the high / red results (potentially vulnerable outdated dependencies) include:
+
+* A vulnerability in an XML parsing library when my app doesn't use XML for any network communication
+* Regular expression DoS vulnerability in a process spawning library that's used in my dev tools and linter
+* Potential uncontrollable resource consumption in one of the dependencies that my linter uses
+* My CLI can be DoSed when flooded with many HTTP headers
+
+Due to the particular nature of JS development (tendency to use many small packages), the chances of finding _some_ high level issue in one of your dependencies' dependencies is pretty high. And due to the nature of working with mobile apps, the chances of this issue being actually exploitable in any way in the build are very very low.
+
+Unfortunately, most often the effort of updating all of them is rather significant.
+
+## But it's still worth fixing, right?
+
+No.
+
+I wouldn't go as far as Mitchell Hashimoto (of Vagrant, Terraform, and now Ghostty fame) [in a recent interview](https://www.youtube.com/watch?v=YQnz7L6x068) he gave where (if memory serves me right) he mentioned that he sometimes even avoids updating some dependencies, because he's worried that this will actually bring vulnerabilities into his codebase. This could happen when a new feature (that he does not use) gets introduced. But maybe that's a completely valid approach for the kind of problems he solves and the part of the stack that he works with.
+
+However, in the context of building mobile apps in React Native we're facing the pain of performing the upgrades, the maintenance effort required to keep your codebase on the bleeding edge of your dependencies and the testing required to make sure everything still works. And there's the opportunity cost of what else could you be doing for your app instead. All of that goes in the red column of costs, while the green column of benefits would usually be empty.
+
+## Conclusion
+
+Should our apps be secure? Definitely.
+
+But let's talk about actual vulnerabilities of our apps and the attack vectors that our domains face rather than cross something off a list a generic JS code analysis tool gave us.

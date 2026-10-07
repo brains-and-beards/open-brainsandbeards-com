@@ -1,0 +1,73 @@
+---
+import { Image } from 'astro:assets'
+import contactIllustration from '../../assets/illustrations/contact-us.png'
+
+interface Props {
+  title?: string
+  subtitle?: string
+  main?: boolean
+  footerSeparator?: boolean
+}
+
+const {
+  title = 'Contact us',
+  subtitle = 'Got something amazing for us? Fill in the form below to start a new project!',
+  main = false,
+  footerSeparator = false
+} = Astro.props
+const titleClass = title.length > 15 ? 'small-headline' : ''
+---
+
+<section class:list={['contact-form', { 'footer-separator': footerSeparator }]}>
+  <form method="post" data-netlify="true" name="contact" action="/message-sent">
+    <input type="hidden" name="form-name" value="contact" />
+    <div class="content">
+      <div class="contact-content">
+        <div>
+          <Image
+            src={contactIllustration}
+            width={192}
+            densities={[1, 2]}
+            quality={90}
+            alt="Contact us"
+            format="webp"
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
+        {main ? (
+          <h1 class:list={['center', 'small-h1', titleClass]}>{title}</h1>
+        ) : (
+          <h3 class:list={['center', titleClass]}>{title}</h3>
+        )}
+        <p class="sub2 amazing">{subtitle}</p>
+        <label for="contact-email">Email address</label>
+        <input id="contact-email" type="text" name="email" data-email-validation />
+        <label for="contact-phone">Phone number (not necessary)</label>
+        <input id="contact-phone" type="text" name="phone" />
+        <label for="contact-text">How can we help you ?</label>
+        <textarea id="contact-text" name="text"></textarea>
+        <button disabled class="cta-action">
+          Send
+        </button>
+      </div>
+    </div>
+  </form>
+</section>
+
+<script>
+  const emailPattern =
+    /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+  document.querySelectorAll<HTMLInputElement>('[data-email-validation]').forEach(input => {
+    const form = input.closest('form')
+    const button = form?.querySelector<HTMLButtonElement>(
+      'button[type="submit"], button:not([type])'
+    )
+    if (!button) return
+    const validate = () => {
+      button.disabled = !emailPattern.test(input.value.toLowerCase())
+    }
+    input.addEventListener('input', validate)
+    validate()
+  })
+</script>
