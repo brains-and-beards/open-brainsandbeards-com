@@ -11,6 +11,7 @@ import { getImage, Image } from 'astro:assets'
 import crossPlatformIcon from '../assets/illustrations/services-cross-platform-icon.png'
 import nativeIcon from '../assets/illustrations/services-native-icon.png'
 import staffIcon from '../assets/illustrations/services-staff-icon.png'
+import aiSlopIcon from '../assets/illustrations/ai-spaghetti.png'
 import rotatingBadge from '../assets/illustrations/experts-in.svg?url'
 import reactNativeBadge from '../assets/illustrations/rn.svg?url'
 import manoManoHero from '../assets/case-studies/manomano/manomano-hero-banner.png'
@@ -181,6 +182,26 @@ const testimonials = await Promise.all(
           <p class="quote">Staff Augmentation</p>
           <p class="service-info">
             Additional developers for your existing team to help dynamically scale your efforts
+          </p>
+          <ReadMore text="Read more" />
+        </a>
+      </div>
+       <div class="serviceContainer">
+        <a href="/services/ai-slop/">
+          <Image
+            src={aiSlopIcon}
+            class="image-wrapper"
+            alt="AI slop emergency"
+            width={192}
+            densities={[1, 2]}
+            quality={90}
+            format="webp"
+            loading="lazy"
+            decoding="async"
+          />
+          <p class="quote">AI Slop Emergency</p>
+          <p class="service-info">
+            Is your app getting harder and harder to modify?
           </p>
           <ReadMore text="Read more" />
         </a>
