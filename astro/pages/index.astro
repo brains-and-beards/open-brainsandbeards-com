@@ -224,6 +224,17 @@ const testimonials = await Promise.all(
       </li>
     </ul>
   </section>
+  <section class="homepage-ai-stand" aria-labelledby="ai-stand-title">
+    <h2 id="ai-stand-title">We use AI. We don't let it drive.</h2>
+    <p class="sub2">
+      AI tools are part of our everyday work. They help us move faster, but the real value comes from
+      over ten years of building mobile apps, which is what tells us when the AI gets it wrong. And if
+      AI-generated code has left your app in a mess, we're happy to help you untangle it.
+    </p>
+    <a class="ai-stand-link" href="/services/ai-slop/">
+      <ReadMore text="Talk to us about cleanup" />
+    </a>
+  </section>
   <CalloutBar title="Build your product <br/>with Brains & Beards" />
   <section class="clients">
     <div class="content">
@@ -263,3 +274,44 @@ const testimonials = await Promise.all(
   </section>
   <ContactForm />
 </BaseLayout>
+
+<style lang="scss">
+  @use '../assets/stylesheets/colors' as colors;
+
+  .homepage-ai-stand {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 104px 24px 112px;
+    background-color: colors.$lightGrey;
+    text-align: center;
+
+    h2 {
+      margin: 0 0 33px;
+    }
+
+    > p {
+      width: 100%;
+      max-width: 614px;
+      margin: 0 0 41px;
+    }
+
+    .ai-stand-link {
+      display: inline-block;
+
+      &:focus-visible {
+        outline: 2px solid colors.$black;
+        outline-offset: 6px;
+      }
+    }
+
+    :global(.read-more-container),
+    :global(.read-more) {
+      margin-block: 0;
+    }
+
+    @media screen and (max-width: 690px) {
+      padding-block: 64px;
+    }
+  }
+</style>
