@@ -226,6 +226,17 @@
   flex-wrap: wrap;
   justify-content: space-around;
   padding: 0 5px;
+
+  @include mobile-version {
+    .blogpost-preview {
+      padding-bottom: 0;
+      margin-bottom: 0;
+
+      img.separator {
+        margin-block: 42px;
+      }
+    }
+  }
 }
 
 #load-more {

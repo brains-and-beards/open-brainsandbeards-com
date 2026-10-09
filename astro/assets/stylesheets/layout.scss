@@ -53,17 +53,7 @@ a {
   display: flex;
   justify-content: center;
 
-  @include mobile-version {
-    padding: 51px 0 45px;
-  }
-
-  @include tablet-version {
-    padding: 51px 0 45px;
-  }
-
-  @include desktop-version {
-    padding: 89px 20px 71px;
-  }
+  padding: 51px 0 45px;
 
   &.grey {
     background-color: $paleYellow;

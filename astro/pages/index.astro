@@ -11,7 +11,8 @@ import { getImage, Image } from 'astro:assets'
 import crossPlatformIcon from '../assets/illustrations/services-cross-platform-icon.png'
 import nativeIcon from '../assets/illustrations/services-native-icon.png'
 import staffIcon from '../assets/illustrations/services-staff-icon.png'
-import rotatingBadge from '../assets/illustrations/also-in.svg?url'
+import aiSlopIcon from '../assets/illustrations/ai-spaghetti.png'
+import rotatingBadge from '../assets/illustrations/experts-in.svg?url'
 import reactNativeBadge from '../assets/illustrations/rn.svg?url'
 import manoManoHero from '../assets/case-studies/manomano/manomano-hero-banner.png'
 import manoManoLogo from '../assets/case-studies/manomano/manomano-logo-colour.png'
@@ -99,12 +100,12 @@ const testimonials = await Promise.all(
           <h1 class="text-center-mobile">We deliver great mobile applications</h1>
           <RandomHero mobile />
           <p class="about-us">
-            Brains & Beards is an unpretentious mobile studio that solves business problems through
-            a mix of design and technology.
+            Brains & Beards is an unpretentious mobile studio.
+            We build cross‑platform apps in React Native and because we spent years shipping native iOS and Android apps first,
+            we drop down to native code whenever your product needs it.
           </p>
           <p class="about-us">
-            We are a remote team of experienced developers spread all over Europe who know how to
-            get a great product shipped.
+            We are a remote team of experienced developers spread all over Europe who know how to get a great product shipped.
           </p>
         </div>
         <div class="hero-right-col center">
@@ -185,6 +186,26 @@ const testimonials = await Promise.all(
           <ReadMore text="Read more" />
         </a>
       </div>
+       <div class="serviceContainer">
+        <a href="/services/ai-slop/">
+          <Image
+            src={aiSlopIcon}
+            class="image-wrapper"
+            alt="AI slop emergency"
+            width={192}
+            densities={[1, 2]}
+            quality={90}
+            format="webp"
+            loading="lazy"
+            decoding="async"
+          />
+          <p class="quote">AI Slop Emergency</p>
+          <p class="service-info">
+            Is your app getting harder and harder to modify?
+          </p>
+          <ReadMore text="Read more" />
+        </a>
+      </div>
     </div>
   </section>
   <section class="trustBar">
@@ -202,6 +223,17 @@ const testimonials = await Promise.all(
         <p class="sub2">average years of programming experience on our team</p>
       </li>
     </ul>
+  </section>
+  <section class="homepage-ai-stand" aria-labelledby="ai-stand-title">
+    <h2 id="ai-stand-title">We use AI. We don't let it drive.</h2>
+    <p class="sub2">
+      AI tools are part of our everyday work. They help us move faster, but the real value comes from
+      over ten years of building mobile apps, which is what tells us when the AI gets it wrong. And if
+      AI-generated code has left your app in a mess, we're happy to help you untangle it.
+    </p>
+    <a class="ai-stand-link" href="/services/ai-slop/">
+      <ReadMore text="Talk to us about cleanup" />
+    </a>
   </section>
   <CalloutBar title="Build your product <br/>with Brains & Beards" />
   <section class="clients">
@@ -242,3 +274,44 @@ const testimonials = await Promise.all(
   </section>
   <ContactForm />
 </BaseLayout>
+
+<style lang="scss">
+  @use '../assets/stylesheets/colors' as colors;
+
+  .homepage-ai-stand {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 104px 24px 112px;
+    background-color: colors.$lightGrey;
+    text-align: center;
+
+    h2 {
+      margin: 0 0 33px;
+    }
+
+    > p {
+      width: 100%;
+      max-width: 614px;
+      margin: 0 0 41px;
+    }
+
+    .ai-stand-link {
+      display: inline-block;
+
+      &:focus-visible {
+        outline: 2px solid colors.$black;
+        outline-offset: 6px;
+      }
+    }
+
+    :global(.read-more-container),
+    :global(.read-more) {
+      margin-block: 0;
+    }
+
+    @media screen and (max-width: 690px) {
+      padding-block: 64px;
+    }
+  }
+</style>

@@ -132,21 +132,6 @@ ol.estimate-list {
 
   input[type='text'] {
     margin-right: 0;
-    font-size: 14px;
-    padding: 0 16px;
-    &:focus {
-      border-width: 2px;
-    }
-  }
-
-  textarea {
-    font-size: 14px;
-    font-family: 'Neutrif';
-    padding: 16px;
-    flex: 1;
-    &:focus {
-      border-width: 2px;
-    }
   }
 
   .radio label {
@@ -202,10 +187,10 @@ ol.estimate-list {
     input[type='text'],
     textarea {
       min-width: 0;
-      font-size: 16px;
     }
   }
 
+  @extend %form-fields;
   @extend %form-elements;
 
   button {
