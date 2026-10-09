@@ -200,19 +200,18 @@
   @include darken-link-on-hover;
 }
 
-.contact-form {
-  background-color: $paleYellow;
-  padding-bottom: 0;
-  margin-top: 60px;
+.footer-divider {
+  margin: 0 auto;
+  border: 0;
+}
 
-  &:last-child .content {
-    border-bottom: 1px solid $black;
-  }
+.footer-divider,
+.contact-form:last-child .content,
+.contact-form.footer-separator .content {
+  border-bottom: 1px solid $black;
+}
 
-  &.footer-separator .content {
-    border-bottom: 1px solid $black;
-  }
-
+%form-fields {
   input[type='text'] {
     font-size: 14px;
     padding: 0 16px;
@@ -236,6 +235,14 @@
       border-width: 2px;
     }
   }
+}
+
+.contact-form {
+  background-color: $paleYellow;
+  padding-bottom: 0;
+  margin-top: 60px;
+
+  @extend %form-fields;
 
   h3 {
     font-family: 'Recoleta';
