@@ -1,0 +1,90 @@
+---
+import MarketingPage from '../../layouts/MarketingPage.astro'
+import FeatureList from '../../components/ui/FeatureList.astro'
+import CalloutBar from '../../components/ui/CalloutBar.astro'
+import hero from '../../assets/illustrations/ai-spaghetti.png'
+import codeSpill from '../../assets/illustrations/ai-code-spill.png'
+import jenga from '../../assets/illustrations/ai-jenga.png'
+import patchwork from '../../assets/illustrations/ai-patchwork.png'
+
+const description =
+  "AI tools helped you ship fast. Now every change takes longer than the last. We'll help you untangle the code, so your team can move with confidence again."
+---
+
+<MarketingPage
+  title="Get your app back under control"
+  description={description}
+  heroImage={hero}
+  heroImageAlt="A robot untangling code from an app window"
+  columns
+  simpleNavbar
+  pageClass="ai-slop-service"
+>
+  <div class="service-description native-service-description">
+    <div class="content narrow-column">
+      <h3>
+        Does this sound
+        <br />
+        familiar?
+      </h3>
+      <FeatureList
+        items={[
+          {
+            title: 'Code piles up faster than anyone can read it',
+            image: codeSpill,
+            imageAlt: '',
+            paragraphs: [
+              'AI assistants can generate thousands of lines in an afternoon. Reviewing them properly takes much longer, so a lot of code ends up in your app that nobody on the team fully understands.'
+            ]
+          },
+          {
+            title: 'Every fix breaks something else',
+            image: jenga,
+            imageAlt: '',
+            paragraphs: [
+              'Generated code tends to duplicate logic and skip tests. Small changes ripple through the app in unexpected ways, and every release starts to feel risky.'
+            ]
+          },
+          {
+            title: 'Nobody knows how it fits together',
+            image: patchwork,
+            imageAlt: '',
+            paragraphs: [
+              'Features were stitched together one prompt at a time, without a shared architecture. Onboarding new developers is slow and estimates keep slipping.'
+            ]
+          }
+        ]}
+      />
+      <h3>How we work</h3>
+      <p>
+        We start with a short audit. We read the code, run the app and talk to your team, then show
+        you where the real risks are and what can safely wait.
+      </p>
+      <p>
+        From there we clean up step by step, without putting feature work on hold. We add tests
+        around the critical flows, remove dead and duplicated code, and bring the architecture back
+        to something your team can reason about.
+      </p>
+      <p>
+        We also help you set up review practices that fit your team, so AI tools keep speeding you
+        up instead of slowing you down.
+      </p>
+    </div>
+  </div>
+  <CalloutBar title="Let's find out how deep<br/>the mess goes" href="/contact-us/" tonedDown />
+  <hr class="content footer-divider" />
+</MarketingPage>
+
+<style lang="scss">
+  @use '../../assets/stylesheets/colors' as colors;
+
+  .footer-divider {
+    margin: 0 auto;
+    border: 0;
+    border-bottom: 1px solid colors.$black;
+  }
+
+  :global(.ai-slop-service .picture-list img) {
+    mix-blend-mode: multiply;
+  }
+</style>
