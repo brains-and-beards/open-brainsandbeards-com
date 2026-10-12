@@ -1,0 +1,29 @@
+---
+export interface TrustItem {
+  value: string
+  label: string
+}
+
+interface Props {
+  trustItems?: TrustItem[]
+}
+
+const {
+  trustItems = [
+    { value: '11', label: 'years on the market' },
+    { value: '52 months', label: 'longest ongoing client engagement' },
+    { value: '9+', label: 'average years of programming experience on our team' }
+  ]
+} = Astro.props
+---
+
+<section class="trustBar">
+  <ul class="trustBarList row">
+    {trustItems.map(({ value, label }: TrustItem) => (
+      <li class="trustBarItem">
+        <h2>{value}</h2>
+        <p class="sub2">{label}</p>
+      </li>
+    ))}
+  </ul>
+</section>

@@ -2,6 +2,7 @@
 import TestimonialsCarousel from '../components/interactive/TestimonialsCarousel'
 import RandomHero from '../components/interactive/RandomHero.astro'
 import CalloutBar from '../components/ui/CalloutBar.astro'
+import TrustBar from '../components/ui/TrustBar.astro'
 import ReadMore from '../components/ui/ReadMore.astro'
 import BaseLayout from '../layouts/BaseLayout.astro'
 import CaseStudyCard from '../components/case-studies/CaseStudyCard.astro'
@@ -207,22 +208,7 @@ const testimonials = await Promise.all(
       </div>
     </div>
   </section>
-  <section class="trustBar">
-    <ul class="trustBarList row">
-      <li class="trustBarItem">
-        <h2>11</h2>
-        <p class="sub2">years on the market</p>
-      </li>
-      <li class="trustBarItem">
-        <h2>52 months</h2>
-        <p class="sub2">longest ongoing client engagement</p>
-      </li>
-      <li class="trustBarItem">
-        <h2>9+</h2>
-        <p class="sub2">average years of programming experience on our team</p>
-      </li>
-    </ul>
-  </section>
+  <TrustBar />
   <section class="homepage-ai-stand" aria-labelledby="ai-stand-title">
     <h2 id="ai-stand-title">We use AI. We don't let it drive.</h2>
     <p class="sub2">
