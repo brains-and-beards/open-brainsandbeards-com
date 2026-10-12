@@ -11,14 +11,7 @@ interface Props {
   trustBar?: boolean
   trustItems?: TrustItem[]
 }
-const {
-  title,
-  description,
-  hero,
-  heroAlt = '',
-  trustBar = false,
-  trustItems
-} = Astro.props
+const { title, description, hero, heroAlt = '', trustBar = false, trustItems } = Astro.props
 ---
 
 <MarketingPage title={title} description={description} simpleNavbar projects>
