@@ -1,22 +1,25 @@
 .animated-number {
+  position: relative;
   display: inline-grid;
   height: 1lh;
   overflow: hidden;
   vertical-align: bottom;
   font-variant-numeric: tabular-nums;
 
-  &__sizer,
-  &__track {
-    grid-area: 1 / 1;
-  }
-
   &__sizer {
+    // Overlap every value to reserve the widest row before, during and after counting.
+    display: grid;
     visibility: hidden;
+
+    > span {
+      grid-area: 1 / 1;
+    }
   }
 
   &__track {
-    height: 1lh;
-    min-width: 0;
+    position: absolute;
+    inset: 0;
+    height: 100%;
 
     > span {
       display: block;

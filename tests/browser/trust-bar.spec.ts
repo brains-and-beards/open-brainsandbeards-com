@@ -5,11 +5,27 @@ test('numbers count upward vertically on visibility for 1500 ms and settle once'
 }) => {
   await page.emulateMedia({ reducedMotion: 'no-preference' })
   await page.goto('/')
+  await page.evaluate(() => document.fonts.ready)
   const number = page.locator('[data-animated-number]').first()
   const track = number.locator('.animated-number__track')
   const value = await number.getAttribute('data-animated-number')
   const heading = number.locator('xpath=ancestor::h2')
   const label = await heading.getAttribute('aria-label')
+
+  const measurePositions = () =>
+    page.locator('.trustBarItem h2').evaluateAll(headings =>
+      headings.map(heading => {
+        const number = heading.querySelector('[data-animated-number]')!
+        const unit = heading.querySelector(':scope > span')
+        return {
+          numberWidth: number.getBoundingClientRect().width,
+          unitOffset: unit
+            ? unit.getBoundingClientRect().left - heading.getBoundingClientRect().left
+            : null
+        }
+      })
+    )
+  const initialPositions = await measurePositions()
 
   await expect(track).toHaveText(value!)
   expect(await track.evaluate(element => element.getAnimations().length)).toBe(0)
@@ -43,11 +59,13 @@ test('numbers count upward vertically on visibility for 1500 ms and settle once'
   expect(spinning.overflow).toBe('hidden')
   expect(spinning.rowHeight).toBe(spinning.viewportHeight)
   expect(spinning.fullyVisible).toBeLessThanOrEqual(1)
+  expect(await measurePositions()).toEqual(initialPositions)
   await expect(heading).toHaveAccessibleName(label!)
 
   await track.evaluate(element => element.getAnimations()[0].play())
   await expect(track).toHaveText(value!)
   expect(await track.evaluate(element => element.getAnimations().length)).toBe(0)
+  expect(await measurePositions()).toEqual(initialPositions)
   await page.evaluate(() => window.scrollTo(0, 0))
   await expect(number).not.toBeInViewport()
   await number.scrollIntoViewIfNeeded()
