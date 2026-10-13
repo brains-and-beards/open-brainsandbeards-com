@@ -14,7 +14,7 @@ type Props = Omit<ComponentProps<typeof Image>, 'src' | 'widths' | 'densities' |
   sizes?: string
 }
 
-const { src, preset, maxWidth, sizes, ...attributes } = Astro.props
+const { src, preset, maxWidth, sizes, loading = "lazy", ...attributes } = Astro.props
 const responsive = responsiveImageProps(src, preset, { maxWidth, sizes })
 ---
 
@@ -22,7 +22,7 @@ const responsive = responsiveImageProps(src, preset, { maxWidth, sizes })
   src={src}
   layout="none"
   format="webp"
-  loading="lazy"
+  loading={loading}
   decoding="async"
   data-responsive-preset={preset}
   {...attributes}
