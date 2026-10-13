@@ -1,0 +1,36 @@
+.animated-number {
+  display: inline-grid;
+  height: 1lh;
+  overflow: hidden;
+  vertical-align: bottom;
+  font-variant-numeric: tabular-nums;
+
+  &__sizer,
+  &__track {
+    grid-area: 1 / 1;
+  }
+
+  &__sizer {
+    visibility: hidden;
+  }
+
+  &__track {
+    height: 1lh;
+    min-width: 0;
+
+    > span {
+      display: block;
+      height: 1lh;
+      white-space: nowrap;
+    }
+  }
+
+  &__accessible {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+}
