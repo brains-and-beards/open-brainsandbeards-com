@@ -9,20 +9,21 @@ interface Props extends Omit<HTMLAttributes<'img'>, 'src' | 'alt'> {
   alt: string
 }
 
-const { src, alt, ...attributes } = Astro.props
+const { src, alt, width, height, sizes, ...attributes } = Astro.props
 const image = await src
 ---
 
 {typeof image === 'string' ? (
-  <img src={image} alt={alt} {...attributes} />
+  <img src={image} alt={alt} width={width} height={height} sizes={sizes} {...attributes} />
 ) : image.format === 'gif' ? (
-  <Image src={image} alt={alt} {...attributes} />
+  <Image src={image} alt={alt} sizes={sizes ?? undefined} {...attributes} />
 ) : (
   <ResponsiveImage
     src={image}
     alt={alt}
     preset="article"
     maxWidth={Math.min(image.width, 1600)}
+    sizes={sizes ?? undefined}
     {...attributes}
   />
 )}
