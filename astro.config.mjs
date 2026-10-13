@@ -19,6 +19,7 @@ export default defineConfig({
 
           // Keep prebundled React dependencies on the same runtime as development JSX.
           return {
+            cacheDir: 'node_modules/.vite/astro-development',
             optimizeDeps: {
               rolldownOptions: {
                 transform: {

@@ -1,46 +1,15 @@
 ---
-import _ from 'lodash'
+import TrustBarItems, { type TrustItem } from '../interactive/TrustBarItems'
 
-import AnimatedNumber from '../interactive/AnimatedNumber'
-
-export interface TrustItem {
-  value: number
-  unit?: string
-  label: string
-}
+export type { TrustItem } from '../interactive/TrustBarItems'
 
 interface Props {
   trustItems?: TrustItem[]
 }
 
-const calculatedCompanyAge = new Date().getFullYear() - 2015
-
-const {
-  trustItems = [
-    { value: calculatedCompanyAge, label: 'years on the market' },
-    { value: 6, unit: 'years', label: 'longest ongoing client engagement' },
-    { value: 16, label: 'satisfied clients' },
-    { value: 12, unit: '+', label: 'average years of programming experience on our team' },
-    { value: 4.76, unit: 'stars', label: 'average store rating of our mobile apps' },
-    { value: 2, label: 'in-house open-source projects' }
-  ]
-} = Astro.props
-
-const selectedItems = _.shuffle(trustItems).slice(-3)
-
-const formatUnit = (unit?: string) => (unit ? `${unit === '+' ? '' : ' '}${unit}` : '')
+const { trustItems } = Astro.props
 ---
 
 <section class="trustBar">
-  <ul class="trustBarList row">
-    {selectedItems.map(({ value, unit, label }: TrustItem) => (
-      <li class="trustBarItem">
-        <h2 aria-label={`${value}${formatUnit(unit)}`}>
-          <AnimatedNumber value={value} client:load />
-          {unit && <span aria-hidden="true">{formatUnit(unit)}</span>}
-        </h2>
-        <p class="sub2">{label}</p>
-      </li>
-    ))}
-  </ul>
+  <TrustBarItems trustItems={trustItems} client:load />
 </section>
