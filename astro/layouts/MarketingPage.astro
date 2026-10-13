@@ -52,13 +52,16 @@ const {
         imageAlt={heroImageAlt}
         columns={columns}
       >
-        {headerActionLabel && (
-          <div slot="subtitle" class="button estimate-link header-cta">
-            <a class="center" href={headerActionHref}>
-              {headerActionLabel}
-            </a>
-          </div>
-        )}
+        <Fragment slot="subtitle">
+          <slot name="header-subtitle" />
+          {headerActionLabel && (
+            <div class="button estimate-link header-cta">
+              <a class="center" href={headerActionHref}>
+                {headerActionLabel}
+              </a>
+            </div>
+          )}
+        </Fragment>
       </PageHeader>
     </div>
   </div>
