@@ -1,0 +1,113 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro'
+import ReadMore from '../../components/ui/ReadMore.astro'
+import { stories, storyDate } from '../../lib/stories'
+import '../../assets/stylesheets/stories.scss'
+
+const latest = stories[0]
+const months = [...new Set(stories.map(story => story.date.slice(0, 7)))]
+const mailUrl =
+  'https://brainsandbeards.us10.list-manage.com/subscribe?u=1866d0ed0d86fc67762d34be5&id=7080aab9c0'
+---
+
+<BaseLayout
+  title="Stories"
+  description="A few paragraphs on building software, working together, and the things we learn along the way."
+  includeFooter={false}
+>
+  <div class="stories-page">
+    <div class="stories-content">
+      <header class="stories-introduction">
+        <p class="stories-overline">From the studio</p>
+        <h1>
+          Small stories. <br />
+          <span>Useful thoughts.</span>
+        </h1>
+        <p class="stories-description">
+          A few paragraphs on building software, working together, and the things we learn along the
+          way.
+        </p>
+        <div class="stories-subscriptions">
+          <div class="stories-read-more-links">
+            <a href={mailUrl}>
+              <ReadMore text="Get them by email" />
+            </a>
+            <a href="/stories/feed.xml">
+              <ReadMore text="RSS" />
+            </a>
+          </div>
+        </div>
+      </header>
+
+      <article class="stories-latest" aria-labelledby="latest-story-title" id={latest.id}>
+        <p class="stories-overline">
+          The latest story ·{' '}
+          <time datetime={latest.date}>
+            {storyDate(latest.date, { day: '2-digit', month: 'short', year: 'numeric' })}
+          </time>
+        </p>
+        <h2 id="latest-story-title">{latest.title}</h2>
+        <p class="stories-author">{latest.author}</p>
+        <div class="stories-body">{latest.paragraphs?.map(paragraph => <p>{paragraph}</p>)}</div>
+      </article>
+
+      <div class="stories-archive" aria-label="Story archive">
+        {months.map(month => (
+          <section class="stories-month" aria-labelledby={`month-${month}`}>
+            <h2 id={`month-${month}`}>
+              {storyDate(`${month}-01`, { month: 'long', year: 'numeric' })}
+            </h2>
+            <div class="stories-list">
+              {stories
+                .filter(story => story.date.startsWith(month))
+                .map(story => (
+                  <details class="stories-entry" id={`archive-${story.id}`}>
+                    <summary>
+                      <time datetime={story.date}>
+                        {storyDate(story.date, { day: '2-digit', month: 'short' })}
+                      </time>
+                      <span class="stories-entry-title">{story.title}</span>
+                      <span class="stories-expand" aria-hidden="true"></span>
+                    </summary>
+                    <div class="stories-entry-body stories-body">
+                      {story.author && <p class="stories-author">{story.author}</p>}
+                      {story.paragraphs ? (
+                        story.paragraphs.map(paragraph => <p>{paragraph}</p>)
+                      ) : (
+                        <p>This story will be available soon.</p>
+                      )}
+                    </div>
+                  </details>
+                ))}
+            </div>
+          </section>
+        ))}
+      </div>
+
+      <nav class="stories-pagination" aria-label="Story archive pagination">
+        <button type="button" disabled>
+          ← Previous
+        </button>
+        <span class="stories-current-page" aria-current="page">
+          1
+        </span>
+        <button type="button" disabled title="More archive pages are coming soon">
+          2
+        </button>
+        <button type="button" disabled title="More archive pages are coming soon">
+          3
+        </button>
+        <span class="stories-pagination-ellipsis">…</span>
+        <button type="button" disabled>
+          Next →
+        </button>
+      </nav>
+
+      <p class="stories-closing-note">A little less noise. A little more perspective.</p>
+      <footer class="stories-footer">
+        <p>Brains &amp; Beards · Stories</p>
+        <p>Short reads from a mobile studio.</p>
+      </footer>
+    </div>
+  </div>
+</BaseLayout>
