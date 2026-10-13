@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import React, { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 
 import './AnimatedNumber.scss'
 
@@ -29,6 +29,7 @@ const AnimatedNumber = ({ value, duration = 1500 }: Props) => {
   const trackRef = useRef<HTMLSpanElement>(null)
   const [countUpValues, setCountUpValues] = useState<string[] | null>(null)
   const finalValue = String(value)
+  const sequence = useMemo(() => createCountUpValues(finalValue), [finalValue])
 
   useEffect(() => {
     setCountUpValues(null)
@@ -42,14 +43,13 @@ const AnimatedNumber = ({ value, duration = 1500 }: Props) => {
         observer.disconnect()
         if (reducedMotion.matches) return
 
-        const values = createCountUpValues(finalValue)
-        if (values.length > 1) setCountUpValues(values)
+        if (sequence.length > 1) setCountUpValues(sequence)
       },
       { threshold: 0.5 }
     )
     observer.observe(viewport)
     return () => observer.disconnect()
-  }, [finalValue])
+  }, [sequence])
 
   useLayoutEffect(() => {
     const track = trackRef.current
@@ -87,7 +87,9 @@ const AnimatedNumber = ({ value, duration = 1500 }: Props) => {
     <span className="animated-number" data-animated-number={value} ref={viewportRef}>
       <span className="animated-number__accessible">{finalValue}</span>
       <span className="animated-number__sizer" aria-hidden="true">
-        {finalValue}
+        {sequence.map((row, index) => (
+          <span key={row}>{row}</span>
+        ))}
       </span>
       <span className="animated-number__track" aria-hidden="true" ref={trackRef}>
         {(countUpValues ?? [finalValue]).map((row, index) => (
