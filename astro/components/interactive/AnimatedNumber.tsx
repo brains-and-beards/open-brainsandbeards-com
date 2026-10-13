@@ -87,13 +87,13 @@ const AnimatedNumber = ({ value, duration = 1500 }: Props) => {
     <span className="animated-number" data-animated-number={value} ref={viewportRef}>
       <span className="animated-number__accessible">{finalValue}</span>
       <span className="animated-number__sizer" aria-hidden="true">
-        {sequence.map((row, index) => (
+        {sequence.map(row => (
           <span key={row}>{row}</span>
         ))}
       </span>
       <span className="animated-number__track" aria-hidden="true" ref={trackRef}>
-        {(countUpValues ?? [finalValue]).map((row, index) => (
-          <span key={index}>{row}</span>
+        {(countUpValues ?? [finalValue]).map(row => (
+          <span key={row}>{row}</span>
         ))}
       </span>
     </span>
