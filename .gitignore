@@ -25,3 +25,5 @@ dist-astro/
 # Browser test artifacts
 playwright-report/
 test-results/
+
+AGENTS.md
