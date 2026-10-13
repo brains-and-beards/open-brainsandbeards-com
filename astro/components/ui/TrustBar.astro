@@ -1,37 +1,15 @@
 ---
+import TrustBarItems, { type TrustItem } from '../interactive/TrustBarItems'
 
-import _ from 'lodash'
-
-export interface TrustItem {
-  value: string
-  label: string
-}
+export type { TrustItem } from '../interactive/TrustBarItems'
 
 interface Props {
   trustItems?: TrustItem[]
 }
 
-const calculatedCompanyAge = new Date().getFullYear() - 2015
-
-const {
-  trustItems = [
-    { value: calculatedCompanyAge.toString(), label: 'years on the market' },
-    { value: '6 years', label: 'longest ongoing client engagement' },
-    { value: '16', label: 'satisfied clients' },
-    { value: '12+', label: 'average years of programming experience on our team' },
-    { value: '4.76 stars', label: 'average store rating of our mobile apps' },
-    { value: '2', label: 'in-house open-source projects' }
-  ]
-} = Astro.props
+const { trustItems } = Astro.props
 ---
 
 <section class="trustBar">
-  <ul class="trustBarList row">
-    {_.shuffle(trustItems).slice(-3).map(({ value, label }: TrustItem) => (
-      <li class="trustBarItem">
-        <h2>{value}</h2>
-        <p class="sub2">{label}</p>
-      </li>
-    ))}
-  </ul>
+  <TrustBarItems trustItems={trustItems} client:load />
 </section>
