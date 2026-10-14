@@ -6,6 +6,8 @@ export interface Story {
 	paragraphs?: string[];
 }
 
+export const storiesPerPage = 10;
+
 // The archive titles and latest story are supplied by the Figma design.
 // Add the remaining story bodies here when the editorial content is available.
 export const stories: Story[] = [

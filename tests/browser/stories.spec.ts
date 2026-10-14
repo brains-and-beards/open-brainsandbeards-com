@@ -9,7 +9,7 @@ test('stories archive expands with the keyboard and fits the viewport', async ({
     'Small stories. Useful thoughts.'
   )
   await expect(page.locator('.menu-links li').last()).toHaveText('Stories')
-  await expect(page.locator('.stories-entry')).toHaveCount(8)
+  await expect(page.locator('.stories-entry')).toHaveCount(10)
 
   const latest = page.locator('.stories-entry').first()
   await latest.locator('summary').focus()
@@ -42,4 +42,40 @@ test('stories archive expands with the keyboard and fits the viewport', async ({
   const feed = await page.request.get('/stories/feed.xml')
   expect(feed.ok()).toBeTruthy()
   expect(await feed.text()).toContain('The feature we decided not to build')
+})
+
+test('stories pagination opens the first older story and supports direct visits', async ({ page }) => {
+  await page.goto('/stories/')
+  await expect(page.locator('.stories-latest')).toBeVisible()
+  await expect(page.getByRole('button', { name: '← Previous' })).toBeDisabled()
+  const firstPageIds = await page.locator('.stories-entry').evaluateAll(entries =>
+    entries.map(entry => entry.id)
+  )
+
+  await page.getByRole('link', { name: 'Next →' }).click()
+  await expect(page).toHaveURL(/\/stories\/2\/?$/)
+  await expect(page.locator('.stories-latest')).toHaveCount(0)
+  await expect(page.locator('.stories-entry')).toHaveCount(7)
+  await expect(page.locator('.stories-entry[open]')).toHaveCount(1)
+  await expect(page.locator('.stories-entry').first()).toHaveAttribute('open', '')
+  await expect(page.locator('[aria-current="page"]')).toHaveText('2')
+  await expect(page.getByRole('button', { name: 'Next →' })).toBeDisabled()
+  const olderIds = await page.locator('.stories-entry').evaluateAll(entries =>
+    entries.map(entry => entry.id)
+  )
+  expect(olderIds.every(id => !firstPageIds.includes(id))).toBeTruthy()
+  expect(new Set([...firstPageIds, ...olderIds]).size).toBe(17)
+
+  await page.reload()
+  await expect(page.locator('.stories-entry').first()).toHaveAttribute('open', '')
+  await page.locator('.stories-entry').first().locator('summary').click()
+  await expect(page.locator('.stories-entry[open]')).toHaveCount(0)
+
+  await page.getByRole('link', { name: '← Previous' }).click()
+  await expect(page).toHaveURL(/\/stories\/$/)
+  await expect(page.locator('.stories-latest')).toBeVisible()
+  await expect(page.locator('.stories-entry')).toHaveCount(10)
+  await expect(page.locator('.stories-entry[open]')).toHaveCount(0)
+  await page.getByRole('link', { name: 'Page 2', exact: true }).click()
+  await expect(page.locator('.stories-entry').first()).toHaveAttribute('open', '')
 })

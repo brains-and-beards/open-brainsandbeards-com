@@ -221,6 +221,7 @@
   font-family: 'Neutrif Medium';
 
   button,
+  a,
   .stories-current-page {
     min-width: 40px;
     border: 0;
@@ -231,13 +232,14 @@
     font: inherit;
     line-height: 24px;
     text-align: center;
+    text-decoration: none;
   }
 
-  button:first-child {
+  > :first-child {
     width: 116px;
   }
 
-  button:last-child {
+  > :last-child {
     width: 86px;
   }
 
@@ -308,14 +310,15 @@
     gap: 2px;
 
     button,
+    a,
     .stories-current-page {
       min-width: 30px;
       padding: 8px 4px;
       font-size: 14px;
     }
 
-    button:first-child,
-    button:last-child {
+    > :first-child,
+    > :last-child {
       width: auto;
     }
   }
