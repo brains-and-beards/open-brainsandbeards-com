@@ -79,3 +79,46 @@ test('stories pagination opens the first older story and supports direct visits'
   await page.getByRole('link', { name: 'Page 2', exact: true }).click()
   await expect(page.locator('.stories-entry').first()).toHaveAttribute('open', '')
 })
+
+test('story height animates in both directions and handles interrupted toggles', async ({ page }) => {
+  await page.goto('/stories/')
+  const entry = page.locator('.stories-entry').first()
+  // Wait for the React component to hydrate before interacting.
+  await page.locator('astro-island[component-export="default"]').first().evaluate(async island => {
+    if (island.hasAttribute('ssr')) {
+      await new Promise(resolve => island.addEventListener('astro:hydrate', resolve, { once: true }))
+    }
+  })
+  const closedHeight = await entry.evaluate(element => element.getBoundingClientRect().height)
+  await entry.locator('summary').click()
+  const openingHeight = await entry.evaluate(element => {
+    const animation = element.getAnimations()[0]
+    if (!animation) throw new Error('Expected an expand animation')
+    animation.pause()
+    animation.currentTime = 150
+    return element.getBoundingClientRect().height
+  })
+  expect(openingHeight).toBeGreaterThan(closedHeight)
+
+  // Reverse the animation while the story is still partly expanded.
+  await entry.locator('summary').click()
+  const closingHeight = await entry.evaluate(element => {
+    const animation = element.getAnimations()[0]
+    if (!animation) throw new Error('Expected a collapse animation')
+    animation.pause()
+    animation.currentTime = 150
+    return element.getBoundingClientRect().height
+  })
+  expect(closingHeight).toBeLessThan(openingHeight)
+  expect(closingHeight).toBeGreaterThan(closedHeight)
+  await entry.evaluate(element => element.getAnimations()[0].finish())
+  await expect(entry).not.toHaveAttribute('open', '')
+  expect(await entry.evaluate(element => element.getBoundingClientRect().height)).toBeCloseTo(closedHeight)
+
+  await page.emulateMedia({ reducedMotion: 'reduce' })
+  await entry.locator('summary').click()
+  await expect(entry).toHaveAttribute('open', '')
+  expect(await entry.evaluate(element => element.getAnimations().length)).toBe(0)
+  await entry.locator('summary').click()
+  await expect(entry).not.toHaveAttribute('open', '')
+})

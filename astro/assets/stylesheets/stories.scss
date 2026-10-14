@@ -141,6 +141,7 @@
 }
 
 .stories-entry {
+  box-sizing: border-box;
   border-bottom: 1px solid rgba($black, 0.14);
 
   &:last-child {
