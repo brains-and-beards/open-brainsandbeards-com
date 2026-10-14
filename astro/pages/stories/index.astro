@@ -66,7 +66,9 @@ const mailUrl =
                       <time datetime={story.date}>
                         {storyDate(story.date, { day: '2-digit', month: 'short' })}
                       </time>
-                      <span class="stories-entry-title">{story.title}</span>
+                      <span class="stories-entry-title">
+                        <span class="stories-entry-title-text">{story.title}</span>
+                      </span>
                       <span class="stories-expand" aria-hidden="true"></span>
                     </summary>
                     <div class="stories-entry-body stories-body">
