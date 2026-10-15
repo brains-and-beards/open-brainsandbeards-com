@@ -163,7 +163,8 @@
 
     &:hover .stories-entry-title-text,
     &:focus-visible .stories-entry-title-text {
-      background-size: 100% 2px;
+      background-size: 100% 6px;
+      background-position-y: 14px;
     }
   }
 
@@ -184,9 +185,11 @@
   background-image: linear-gradient($yellow, $yellow);
   background-repeat: no-repeat;
   background-position: left bottom;
-  background-size: 0% 6px;
-  background-position-y: 19px;
-  transition: background-size 0.3s linear;
+  background-size: 0% 18px;
+  background-position-y: 4px;
+  transition:
+    background-size 0.3s linear,
+    background-position-y 0.3s linear;
 }
 
 @media (prefers-reduced-motion: reduce) {
