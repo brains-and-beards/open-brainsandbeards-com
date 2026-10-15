@@ -14,7 +14,7 @@ const pageCount = Math.ceil(stories.length / storiesPerPage)
 const pageStories = stories.slice((currentPage - 1) * storiesPerPage, currentPage * storiesPerPage)
 const latest = stories[0]
 const months = [...new Set(pageStories.map(story => story.date.slice(0, 7)))]
-const pageUrl = (page: number) => page === 1 ? '/stories/' : `/stories/${page}/`
+const pageUrl = (page: number) => (page === 1 ? '/stories/' : `/stories/${page}/`)
 const mailUrl =
   'https://brainsandbeards.us10.list-manage.com/subscribe?u=1866d0ed0d86fc67762d34be5&id=7080aab9c0'
 ---
@@ -85,21 +85,33 @@ const mailUrl =
 
       <nav class="stories-pagination" aria-label="Story archive pagination">
         {currentPage > 1 ? (
-          <a href={pageUrl(currentPage - 1)} rel="prev">← Previous</a>
+          <a href={pageUrl(currentPage - 1)} rel="prev">
+            ← Previous
+          </a>
         ) : (
-          <button type="button" disabled>← Previous</button>
+          <button type="button" disabled>
+            ← Previous
+          </button>
         )}
-        {Array.from({ length: pageCount }, (_, index) => index + 1).map(page => (
+        {Array.from({ length: pageCount }, (_, index) => index + 1).map(page =>
           page === currentPage ? (
-            <span class="stories-current-page" aria-current="page">{page}</span>
+            <span class="stories-current-page" aria-current="page">
+              {page}
+            </span>
           ) : (
-            <a href={pageUrl(page)} aria-label={`Page ${page}`}>{page}</a>
+            <a href={pageUrl(page)} aria-label={`Page ${page}`}>
+              {page}
+            </a>
           )
-        ))}
+        )}
         {currentPage < pageCount ? (
-          <a href={pageUrl(currentPage + 1)} rel="next">Next →</a>
+          <a href={pageUrl(currentPage + 1)} rel="next">
+            Next →
+          </a>
         ) : (
-          <button type="button" disabled>Next →</button>
+          <button type="button" disabled>
+            Next →
+          </button>
         )}
       </nav>
 

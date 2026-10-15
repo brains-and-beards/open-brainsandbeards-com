@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react'
 
-import { storyDate, type Story } from '../../lib/stories'
+import { type Story, storyDate } from '../../lib/stories'
 
 interface Props {
   story: Story
@@ -36,7 +36,8 @@ const StoryEntry = ({ story, initiallyOpen }: Props) => {
     details.open = true
     const fullHeight = details.getBoundingClientRect().height
     const summary = details.querySelector('summary')!
-    const closedHeight = summary.getBoundingClientRect().height + details.offsetHeight - details.clientHeight
+    const closedHeight =
+      summary.getBoundingClientRect().height + details.offsetHeight - details.clientHeight
     details.style.height = `${startHeight}px`
     details.style.overflow = 'hidden'
 
@@ -55,7 +56,12 @@ const StoryEntry = ({ story, initiallyOpen }: Props) => {
   }
 
   return (
-    <details className="stories-entry" id={`archive-${story.id}`} open={initiallyOpen} ref={detailsRef}>
+    <details
+      className="stories-entry"
+      id={`archive-${story.id}`}
+      open={initiallyOpen}
+      ref={detailsRef}
+    >
       <summary onClick={toggle}>
         <time dateTime={story.date}>
           {storyDate(story.date, { day: '2-digit', month: 'short' })}
