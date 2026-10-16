@@ -6,6 +6,11 @@ module.exports = {
     'plugin:react/recommended'
   ],
   plugins: ['@typescript-eslint', 'react-hooks', 'react', 'prettier', 'eslint-comments'],
+  settings: {
+    react: {
+      version: 'detect'
+    }
+  },
   env: {
     es6: true,
     jest: true,

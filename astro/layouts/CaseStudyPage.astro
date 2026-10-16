@@ -2,26 +2,16 @@
 import MarketingPage from './MarketingPage.astro'
 import CalloutBar from '../components/ui/CalloutBar.astro'
 import ResponsiveImage from '../components/ui/ResponsiveImage.astro'
+import TrustBar, { type TrustItem } from '../components/ui/TrustBar.astro'
 interface Props {
   title: string
   description: string
   hero?: any
   heroAlt?: string
   trustBar?: boolean
-  trustItems?: Array<{ value: string; label: string }>
+  trustItems?: TrustItem[]
 }
-const {
-  title,
-  description,
-  hero,
-  heroAlt = '',
-  trustBar = false,
-  trustItems = [
-    { value: '11', label: 'years on the market' },
-    { value: '52 months', label: 'longest ongoing client engagement' },
-    { value: '9+', label: 'average years of programming experience on our team' }
-  ]
-} = Astro.props
+const { title, description, hero, heroAlt = '', trustBar = false, trustItems } = Astro.props
 ---
 
 <MarketingPage title={title} description={description} simpleNavbar projects>
@@ -41,17 +31,6 @@ const {
     )}
     <slot />
   </article>
-  {trustBar && (
-    <section class="trustBar">
-      <ul class="trustBarList row">
-        {trustItems.map(({ value, label }: { value: string; label: string }) => (
-          <li class="trustBarItem">
-            <h2>{value}</h2>
-            <p class="sub2">{label}</p>
-          </li>
-        ))}
-      </ul>
-    </section>
-  )}
+  {trustBar && <TrustBar trustItems={trustItems} />}
   <CalloutBar title="Let us craft a custom solution<br/>for your product" />
 </MarketingPage>

@@ -10,6 +10,28 @@ export default defineConfig({
   publicDir: './static',
   outDir: './dist-astro',
   trailingSlash: 'ignore',
+  vite: {
+    plugins: [
+      {
+        name: 'react-development-runtime',
+        config(_config, { command, mode }) {
+          if (command !== 'serve' || mode !== 'development') return
+
+          // Keep prebundled React dependencies on the same runtime as development JSX.
+          return {
+            cacheDir: 'node_modules/.vite/astro-development',
+            optimizeDeps: {
+              rolldownOptions: {
+                transform: {
+                  define: { 'process.env.NODE_ENV': JSON.stringify('development') }
+                }
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
   markdown: {
     shikiConfig: {
       theme: 'solarized-light'

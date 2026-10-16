@@ -1,10 +1,5 @@
 node_modules/
 
-# Gatsby stuff
-src/gatsby-types.d.ts
-public/
-.cache/
-
 # Astro build artifacts
 .astro/
 dist-astro/

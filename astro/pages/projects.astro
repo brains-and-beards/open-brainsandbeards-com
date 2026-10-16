@@ -3,6 +3,7 @@ import MarketingPage from '../layouts/MarketingPage.astro'
 import CaseStudyCard from '../components/case-studies/CaseStudyCard.astro'
 import ClientLogos from '../components/case-studies/ClientLogos.astro'
 import CalloutBar from '../components/ui/CalloutBar.astro'
+import TrustBar from '../components/ui/TrustBar.astro'
 import { Image } from 'astro:assets'
 import manoHero from '../assets/case-studies/manomano/manomano-hero-banner.png'
 import manoLogo from '../assets/case-studies/manomano/manomano-logo-colour.png'
@@ -141,21 +142,6 @@ import rakutenLogo from '../assets/client-logos/rakuten-alt.png'
       <ClientLogos />
     </div>
   </div>
-  <section class="trustBar">
-    <ul class="trustBarList row">
-      <li class="trustBarItem">
-        <h2>11</h2>
-        <p class="sub2">years on the market</p>
-      </li>
-      <li class="trustBarItem">
-        <h2>52 months</h2>
-        <p class="sub2">longest ongoing client engagement</p>
-      </li>
-      <li class="trustBarItem">
-        <h2>9+</h2>
-        <p class="sub2">average years of programming experience on our team</p>
-      </li>
-    </ul>
-  </section>
+  <TrustBar />
   <CalloutBar title="Want to start a great project?" />
 </MarketingPage>

@@ -1,0 +1,15 @@
+---
+import TrustBarItems, { type TrustItem } from '../interactive/TrustBarItems'
+
+export type { TrustItem } from '../interactive/TrustBarItems'
+
+interface Props {
+  trustItems?: TrustItem[]
+}
+
+const { trustItems } = Astro.props
+---
+
+<section class="trustBar">
+  <TrustBarItems trustItems={trustItems} client:load />
+</section>
