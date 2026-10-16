@@ -1,0 +1,125 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro'
+import ReadMore from '../../components/ui/ReadMore.astro'
+import StoryEntry from './StoryEntry'
+import { stories, storyDate, storiesPerPage } from '../../lib/stories'
+import '../../assets/stylesheets/stories.scss'
+
+interface Props {
+  currentPage: number
+}
+
+const { currentPage } = Astro.props
+const pageCount = Math.ceil(stories.length / storiesPerPage)
+const pageStories = stories.slice((currentPage - 1) * storiesPerPage, currentPage * storiesPerPage)
+const latest = stories[0]
+const months = [...new Set(pageStories.map(story => story.date.slice(0, 7)))]
+const pageUrl = (page: number) => (page === 1 ? '/stories/' : `/stories/${page}/`)
+const mailUrl =
+  'https://brainsandbeards.us10.list-manage.com/subscribe?u=1866d0ed0d86fc67762d34be5&id=7080aab9c0'
+---
+
+<BaseLayout
+  title="Stories"
+  description="A few paragraphs on building software, working together, and the things we learn along the way."
+  includeFooter={false}
+>
+  <div class="stories-page">
+    <div class="stories-content">
+      <header class="stories-introduction">
+        <p class="stories-overline">From the studio</p>
+        <h1>
+          Small stories. <br />
+          <span>Useful thoughts.</span>
+        </h1>
+        <p class="stories-description">
+          A few paragraphs on building software, working together, and the things we learn along the
+          way.
+        </p>
+        <div class="stories-subscriptions">
+          <div class="stories-read-more-links">
+            <a href={mailUrl}>
+              <ReadMore text="Get them by email" />
+            </a>
+            <a href="/stories/feed.xml">
+              <ReadMore text="RSS" />
+            </a>
+          </div>
+        </div>
+      </header>
+
+      {currentPage === 1 && (
+        <article class="stories-latest" aria-labelledby="latest-story-title" id={latest.id}>
+          <p class="stories-overline">
+            The latest story ·{' '}
+            <time datetime={latest.date}>
+              {storyDate(latest.date, { day: '2-digit', month: 'short', year: 'numeric' })}
+            </time>
+          </p>
+          <h2 id="latest-story-title">{latest.title}</h2>
+          <p class="stories-author">{latest.author}</p>
+          <div class="stories-body">{latest.paragraphs?.map(paragraph => <p>{paragraph}</p>)}</div>
+        </article>
+      )}
+
+      <div class="stories-archive" aria-label="Story archive">
+        {months.map(month => (
+          <section class="stories-month" aria-labelledby={`month-${month}`}>
+            <h2 id={`month-${month}`}>
+              {storyDate(`${month}-01`, { month: 'long', year: 'numeric' })}
+            </h2>
+            <div class="stories-list">
+              {pageStories
+                .filter(story => story.date.startsWith(month))
+                .map(story => (
+                  <StoryEntry
+                    story={story}
+                    initiallyOpen={currentPage > 1 && story.id === pageStories[0].id}
+                    client:load
+                  />
+                ))}
+            </div>
+          </section>
+        ))}
+      </div>
+
+      <nav class="stories-pagination" aria-label="Story archive pagination">
+        {currentPage > 1 ? (
+          <a href={pageUrl(currentPage - 1)} rel="prev">
+            ← Previous
+          </a>
+        ) : (
+          <button type="button" disabled>
+            ← Previous
+          </button>
+        )}
+        {Array.from({ length: pageCount }, (_, index) => index + 1).map(page =>
+          page === currentPage ? (
+            <span class="stories-current-page" aria-current="page">
+              {page}
+            </span>
+          ) : (
+            <a href={pageUrl(page)} aria-label={`Page ${page}`}>
+              {page}
+            </a>
+          )
+        )}
+        {currentPage < pageCount ? (
+          <a href={pageUrl(currentPage + 1)} rel="next">
+            Next →
+          </a>
+        ) : (
+          <button type="button" disabled>
+            Next →
+          </button>
+        )}
+      </nav>
+
+      <p class="stories-closing-note">A little less noise. A little more perspective.</p>
+      <footer class="stories-footer">
+        <p>Brains &amp; Beards · Stories</p>
+        <p>Short reads from a mobile studio.</p>
+      </footer>
+    </div>
+  </div>
+</BaseLayout>
