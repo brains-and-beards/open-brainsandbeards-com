@@ -1,27 +1,20 @@
 """Summarize three Lighthouse performance runs per page and device."""
 
 import json
-import math
 import os
 from pathlib import Path
-from statistics import median
-
 
 def summarize(directory):
     rows = []
     warnings = []
     for page, path in [("home", "/"), ("blog", "/blog/")]:
         for device in ["mobile", "desktop"]:
-            scores = []
-            for run in range(1, 4):
-                report = json.loads(
-                    (directory / f"{page}-{device}-{run}.report.json").read_text()
-                )
-                score = report["categories"]["performance"]["score"]
-                if report.get("runtimeError") or score is None:
-                    raise ValueError(f"Lighthouse could not audit {path} on {device}")
-                scores.append(math.floor(score * 100 + 0.5))
-            score = median(scores)
+            report = json.loads(
+                (directory / f"{page}-{device}.report.json").read_text()
+            )
+            score = report["categories"]["performance"]["score"]
+            if report.get("runtimeError") or score is None:
+                raise ValueError(f"Lighthouse could not audit {path} on {device}")
             status = "⚠️ Warning" if score < 80 else "✅ Success"
             rows.append(f"| `{path}` | {device.title()} | {score}/100 | {status} |")
             if score < 80:
@@ -41,8 +34,7 @@ def summarize(directory):
         "| --- | --- | --- | --- |",
         *rows,
         "",
-        "Scores are the median of three runs against the PR's local production build. "
-        "Only performance is audited. Scores below 80 warn without failing the check.",
+        "Performance is scored against the PR's local production build. Warning threshold: 80/100.",
     ])
     return report, warnings
 

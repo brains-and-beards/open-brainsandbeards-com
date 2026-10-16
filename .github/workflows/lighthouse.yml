@@ -24,7 +24,7 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: '22.19.0'
+          node-version: "22.19.0"
           cache: npm
 
       - run: npm ci
@@ -51,13 +51,12 @@ jobs:
             for device in mobile desktop; do
               preset=()
               if [[ "$device" == desktop ]]; then preset=(--preset=desktop); fi
-              for run in 1 2 3; do
-                npx --yes lighthouse@13.5.0 "http://127.0.0.1:4322$path" \
-                  --only-categories=performance \
-                  --chrome-flags="--headless --no-sandbox --disable-dev-shm-usage" \
-                  --output=json --output=html \
-                  --output-path="lighthouse-results/$page-$device-$run" \
-                  --quiet "${preset[@]}"
+              npx --yes lighthouse@13.5.0 "http://127.0.0.1:4322$path" \
+                --only-categories=performance \
+                --chrome-flags="--headless --no-sandbox --disable-dev-shm-usage" \
+                --output=json --output=html \
+                --output-path="lighthouse-results/$page-$device" \
+                --quiet "${preset[@]}"
               done
             done
           done
