@@ -1,0 +1,103 @@
+name: Lighthouse performance
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: lighthouse-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    outputs:
+      comment: ${{ steps.summary.outputs.comment }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.19.0'
+          cache: npm
+
+      - run: npm ci
+      - run: npm run astro:build
+
+      - name: Run performance audits
+        shell: bash
+        run: |
+          mkdir -p lighthouse-results
+          python3 -m http.server 4322 --bind 127.0.0.1 --directory dist-astro > "$RUNNER_TEMP/lighthouse-server.log" 2>&1 &
+          preview_pid=$!
+          trap 'kill "$preview_pid" 2>/dev/null || true' EXIT
+          for attempt in {1..30}; do
+            if curl --fail --silent http://127.0.0.1:4322/ > /dev/null; then
+              break
+            fi
+            sleep 1
+          done
+          curl --fail --silent http://127.0.0.1:4322/ > /dev/null
+
+          for page in home blog; do
+            path=/
+            if [[ "$page" == blog ]]; then path=/blog/; fi
+            for device in mobile desktop; do
+              preset=()
+              if [[ "$device" == desktop ]]; then preset=(--preset=desktop); fi
+              for run in 1 2 3; do
+                npx --yes lighthouse@13.5.0 "http://127.0.0.1:4322$path" \
+                  --only-categories=performance \
+                  --chrome-flags="--headless --no-sandbox --disable-dev-shm-usage" \
+                  --output=json --output=html \
+                  --output-path="lighthouse-results/$page-$device-$run" \
+                  --quiet "${preset[@]}"
+              done
+            done
+          done
+
+      - name: Summarize scores
+        id: summary
+        env:
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: python3 .github/scripts/lighthouse-summary.py
+
+      - name: Save Lighthouse reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lighthouse-reports
+          path: lighthouse-results/
+          retention-days: 14
+
+  comment:
+    needs: audit
+    if: github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+    steps:
+      - name: Update PR comment
+        uses: actions/github-script@v7
+        env:
+          REPORT: ${{ needs.audit.outputs.comment }}
+        with:
+          script: |
+            const marker = '<!-- lighthouse-performance -->';
+            const body = `${marker}\n${process.env.REPORT}\n\n[Full reports](${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId})`;
+            const issue = { ...context.repo, issue_number: context.issue.number };
+            const comments = await github.paginate(github.rest.issues.listComments, issue);
+            const previous = comments.find(comment =>
+              comment.user.login === 'github-actions[bot]' && comment.body.includes(marker)
+            );
+            if (previous) {
+              await github.rest.issues.updateComment({ ...context.repo, comment_id: previous.id, body });
+            } else {
+              await github.rest.issues.createComment({ ...issue, body });
+            }
