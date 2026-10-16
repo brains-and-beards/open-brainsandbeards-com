@@ -30,10 +30,6 @@ export default function TrustBarItems({ trustItems }: Props) {
 
 	useEffect(() => {
 		const availableItems = trustItems ?? [
-			{
-				value: new Date().getFullYear() - 2015,
-				label: "years on the market",
-			},
 			{ value: 6, unit: "years", label: "longest ongoing client engagement" },
 			{ value: 25, label: "satisfied clients" },
 			{
