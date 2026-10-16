@@ -12,7 +12,7 @@ def summarize(directory):
             report = json.loads(
                 (directory / f"{page}-{device}.report.json").read_text()
             )
-            score = report["categories"]["performance"]["score"]
+            score = report["categories"]["performance"]["score"]*100
             if report.get("runtimeError") or score is None:
                 raise ValueError(f"Lighthouse could not audit {path} on {device}")
             status = "⚠️ Warning" if score < 80 else "✅ Success"
