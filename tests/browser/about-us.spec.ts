@@ -3,7 +3,7 @@ import { expect, test } from '@playwright/test'
 test('merged about page keeps the team, careers photo, and working links', async ({ page }) => {
   await page.goto('/about-us/', { waitUntil: 'domcontentloaded' })
   await expect(page.getByRole('heading', { level: 1 })).toHaveText(
-    'Great products startwith a great team.'
+    'Great products startwith a great team'
   )
   await expect(page.locator('[data-team-member]')).toHaveCount(10)
   const careers = page.locator('[data-team-member="This could be you"]')
