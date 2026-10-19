@@ -49,7 +49,7 @@ Probably, there's a lot of ways. The one I like is to use a piece of software th
 
 First, you'll probably want to add it as a development dependency in your project, for example with: `yarn add "brains-and-beards/mimic-server#v0.10.0"` (make sure you install the v0.10.0 tag from GitHub,there's no package yet on npm).
 
-Then you'll have to prepare a basic configuration file for the mocking server. A good starting point would be the [example configuration in the project](https://github.com/brains-and-beards/mimic-server/blob/master/apimocker.json). You'll need to create different config files for different "stages" of your app. The whole point is we want to be able to dynamically change mocks while the detox tests are running (otherwise we could have just hard-coded the responses using the [detox mocking mechanism](https://github.com/wix/Detox/blob/master/docs/Guide.Mocking.md)).
+Then you'll have to prepare a basic configuration file for the mocking server. A good starting point would be the [example configuration in the project](https://github.com/brains-and-beards/mimic-server/blob/master/apimocker.json). You'll need to create different config files for different "stages" of your app. The whole point is we want to be able to dynamically change mocks while the detox tests are running (otherwise we could have just hard-coded the responses using the [detox mocking mechanism](https://wix.github.io/Detox/docs/guide/mocking/)).
 
 Then you'll need a bit of glue code that would allow you to juggle the configs (possibly synchronously!) while the tests are running:
 

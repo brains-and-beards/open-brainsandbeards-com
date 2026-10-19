@@ -107,7 +107,7 @@ So while it is possible to encrypt the data with mmkv there are better ways to d
 
 It's significally harder to extract the master encryption key. Taking for example Android keystore - it lets you create and use such a key, but the actual key stays unknown even to your app. I also think using platform standards is the simplest way to security.
 
-Luckily both mobile platforms come with such module ([iOS keychain](https://developer.apple.com/documentation/security/keychain_services/) / [Android EncryptedSharedPreferences](https://developer.android.com/reference/androidx/security/crypto/EncryptedSharedPreferences)) and we have a number of libraries that wrap it, so we can easily use it from react-native's JS thread. (Although the most secure option would be not to rely on community-maintained packages in this part of your app and keep the full control over it.)
+Luckily both mobile platforms come with such module ([iOS keychain](https://developer.apple.com/documentation/security/keychain-services) / [Android EncryptedSharedPreferences](https://developer.android.com/reference/androidx/security/crypto/EncryptedSharedPreferences)) and we have a number of libraries that wrap it, so we can easily use it from react-native's JS thread. (Although the most secure option would be not to rely on community-maintained packages in this part of your app and keep the full control over it.)
 
 ### EncryptedStorage + mmkv + redux-persist
 
