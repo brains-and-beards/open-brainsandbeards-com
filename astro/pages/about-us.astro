@@ -1,190 +1,596 @@
 ---
+import BaseLayout from '../layouts/BaseLayout.astro'
 import ResponsiveImage from '../components/ui/ResponsiveImage.astro'
-import MarketingPage from '../layouts/MarketingPage.astro'
-import FeatureList from '../components/ui/FeatureList.astro'
+import TeamMemberCard from '../components/interactive/TeamMemberCard.astro'
 import { Image } from 'astro:assets'
-import PortfolioForm from '../components/forms/PortfolioForm.astro'
+import { members } from '../lib/team'
 import photo from '../assets/photos/patryk-and-wojtek.jpg'
-import teamIcon from '../assets/illustrations/about-team-icon.png'
-import workflowIcon from '../assets/illustrations/about-workflow-icon.png'
+import versatility from '../assets/illustrations/team-versatility-icon.png'
+import reliability from '../assets/illustrations/team-reliability-icon.png'
+import diversity from '../assets/illustrations/team-diversity-icon.png'
+import noOutsourcing from '../assets/illustrations/team-no-outsourcing.png'
 import brains from '../assets/illustrations/about-brains-icon.png'
 import beards from '../assets/illustrations/about-beards-icon.png'
-import hands from '../assets/illustrations/about-hands-icon.png'
+import natalia from '../assets/testimonials/team-natalia.jpg'
+
+const traits = [
+  {
+    title: 'Versatility',
+    image: versatility,
+    text: 'Native iOS, Android and React Native experience helps us choose the right approach for each product.'
+  },
+  {
+    title: 'Reliability',
+    image: reliability,
+    text: 'We take ownership, manage our work and focus on the priorities that make a difference.'
+  },
+  {
+    title: 'Diversity',
+    image: diversity,
+    text: 'Different backgrounds and perspectives help us ask better questions and build better products.'
+  }
+]
+const pillars = [
+  {
+    title: 'Brains',
+    image: brains,
+    text: 'Creativity, innovation and a fresh perspective on your challenge.'
+  },
+  {
+    title: 'Beards',
+    image: beards,
+    text: 'Experience, perspective and knowledge shared across the team.'
+  }
+]
+const channels = [
+  {
+    title: 'No Brainers',
+    video: 'udnxfH9me1Q',
+    videoTitle: 'Expectations Management',
+    href: 'https://www.youtube.com/@brains-and-beards-nobrainers',
+    description:
+      'Curated look at new technologies, tools and ideas that will improve your daily work.'
+  },
+  {
+    title: 'Brain Picks',
+    video: 'grR9UmbjpsQ',
+    videoTitle: 'ListView Animations',
+    href: 'https://www.youtube.com/@brains-and-beards',
+    description: 'A place where we offer easy solutions to common problems in everyday development.'
+  }
+]
 ---
 
-<MarketingPage
-  title="Our story"
-  description="Learn what drives us and what's the vision behind our company."
-  headerSubtitle="Read on to learn what drives us and what's the vision behind our company."
+<BaseLayout
+  title="About us"
+  description="Meet the people behind Brains & Beards. Our story, our team and the thoughtful ways we build better digital products."
 >
-  <div class="content-page">
-    <div class="big-part-yellow">
-      <ResponsiveImage
-        preset="case-study-hero"
-        src={photo}
-        alt="Patryk and Wojciech with motorbikes"
-        class="our-story-header"
-        width={1000}
-        loading="eager"
-        fetchpriority="high"
-      />
-    </div>
-    <div class="narrow-column text-format">
-      <h3 class="center">Why did we start Brains & Beards?</h3>
-      <p>
-        The company was started by two developers: Patryk and Wojtek. They've met years ago working
-        for a big German professional networking site. As it happens pretty often, at some point in
-        our careers they grew tired by the restraints of working in structured organisations and
-        decided to become more independent. After some conversations they've decided they share a
-        lot of ideas and principles, so they teamed up and started Brains & Beards together.
-      </p>
-      <p>
-        One of those ideas was that we want to help others build better digital products faster.
-        Over the years of working with different organisations on different products, we saw a lot
-        of different teams and gather plenty of experience what works well. We want to share this
-        knowledge by helping our clients not only by delivering great software, but also showing how
-        effective a good team can be.
-      </p>
-      <p class="quote center narrow">
-        That's why Brains & Beards is a consultancy.
-        <br /> It lets us focus on constant improvement in the two most important areas.
-      </p>
-      <FeatureList
-        items={[
-          {
-            title: 'Building a great team',
-            image: teamIcon,
-            imageAlt: '',
-            paragraphs: [
-              'Our employees are our greatest asset, so we do our best to help them become even better versions of themselves. We treat everybody individually, because every person brings their own perspective and you can never see the full picture without many points of view.'
-            ]
-          },
-          {
-            title: 'Finding the best workflow',
-            image: workflowIcon,
-            imageAlt: '',
-            paragraphs: [
-              "As there are no silver bullets, similarly there are no perfect workflows. Instead, every team figures out their own way of working and that's what we're trying to do - find the best possible way that works for us. We document our processes, standardise common tasks, and define our own way of working. That gives us a possibility of iterative improvement of our ways."
-            ]
-          }
-        ]}
-      />
-      <p>
-        We understand that when building a product it's difficult to decide on tradeoffs between
-        time spent on improving your product and time spent improving your development speed, or
-        smoothing the processes. That's why we want to come and help you with an experienced team
-        that already works great together. This way we can focus 100% on improving your business.
-      </p>
-      <h3 class="center small-margin">Why remote?</h3>
-      <p class="quote inset center">
-        Because remote work is the future
-        <br />
-        and we like living in the future 🚀
-      </p>
-      <p>
-        Of course, living in the future is not all unicorns and rainbows and it's often painful.
-        It's like getting an electric car, or a laptop with only USB-C ports. It takes some getting
-        used to and the transition is often annoying, but once you get past the initial pains, you
-        can feel all the benefits.
-      </p>
-      <p>
-        For people who work remotely the benefits are clear: avoiding the commute to the office
-        leads to lower stress levels, being able to cook your own meal at home and go to the gym
-        (when it's not completely full!) improves overall health, and being able to setup our own
-        perfect work environment allows for maximum productivity. It also allows us as parents to
-        fully enjoy the time with young kids, observing as they grow and learn.
-      </p>
-      <p>
-        Of course, like everything else in software development, it's a tradeoff. Pair-programming
-        is more difficult, meetings are harder to organise, and you can't just drop by somebody's
-        desk for a quick question. But all of those are just growing pains, they can all be tackled.
-        Remote teams work in asynchronous manner and that means you need to put extra effort to
-        remove any potential roadblocks before they occur and keep clear communication on what we're
-        trying to achieve. As a side effect, this usually results in work that goes smoother and
-        much fewer surprises.
-      </p>
-      <p>
-        Last thing that makes us excited about the remote work is that it makes it much easier to do{' '}
-        <i>deep work</i>. A lot of times, teams which are co-located in an office aren't really more
-        productive, they just <i>seem</i> more productive, because it's much easier to be engaged in
-        so-called <i>shallow work</i> (discussing unimportant details, having meetings, etc.).
-        However, to deliver milestones that actually push the project forward you need deep work:
-        uninterrupted periods of time when you can focus on a single (hard!) problem and get it
-        solved.
-      </p>
-    </div>
-    <PortfolioForm />
-    <div class="narrow-column text-format center name-origin">
-      <h3>PS. Where does the name come from?</h3>
-      <p class="sub2">
-        When organisations decide to outsource a project (or parts of it), they're usually looking
-        for one of three things:
-      </p>
-      <div class="row">
-        <div class="serviceContainer">
-          <Image
-            src={brains}
-            alt="Brains"
-            class="image-wrapper"
-            width={192}
-            densities={[1, 2]}
-            quality={90}
-            format="webp"
-            loading="lazy"
-            decoding="async"
-          />
-          <p class="sub1">Brains</p>
-          <p>
-            This means trying to find a creative solution from outside of their own culture. For us,
-            it stands for creativity, innovation, and problem-solving.
+  <div class="about-page">
+    <section class="about-hero">
+      <div class="about-container hero-grid">
+        <div class="intro">
+          <p class="overline">About Brains &amp; Beards</p>
+          <h1>
+            Great products start
+            <br />
+            with a great team.
+          </h1>
+          <p class="lead">
+            We’re developers, collaborators and curious people. Here’s how we came together and what
+            keeps us moving.
           </p>
+          <nav class="section-links" aria-label="On this page">
+            <a href="#our-story">Our story</a>
+            <span aria-hidden="true">·</span>
+            <a href="#our-people">Our people</a>
+            <span aria-hidden="true">·</span>
+            <a href="#how-we-work">How we work</a>
+          </nav>
         </div>
-        <div class="serviceContainer">
-          <Image
-            src={beards}
-            alt="Beards"
-            class="image-wrapper"
-            width={192}
-            densities={[1, 2]}
-            quality={90}
-            format="webp"
-            loading="lazy"
-            decoding="async"
-          />
-          <p class="sub1">Beards</p>
+        <ResponsiveImage
+          preset="case-study-hero"
+          src={photo}
+          alt="Patryk and Wojciech with motorbikes"
+          width={520}
+          maxWidth={590}
+          sizes="(max-width: 760px) calc((100vw - 48px) * 1.134), (max-width: 1000px) calc((100vw - 80px) * 0.604), min(calc((100vw - 112px) * 0.604), 590px)"
+          loading="eager"
+          fetchpriority="high"
+          class="founders-photo"
+        />
+      </div>
+    </section>
+
+    <section class="about-section" id="our-story">
+      <div class="about-container story-grid">
+        <div class="section-heading">
+          <p class="overline">Our story</p>
+          <h2>
+            Two developers.
+            <br />A shared idea.
+          </h2>
+        </div>
+        <div class="story-copy lead">
           <p>
-            A symbol of experience and wisdom. Like Gandalf, or a Shaolin <i>sensei</i> with their
-            stereotypical grey beards, we want to share the knowledge we gained working on many
-            different projects to help deliver the best solution to client's needs.
+            Patryk and Wojtek met while working at a professional networking company in Germany.
+            They wanted more independence and a better way to build digital products.
           </p>
-        </div>
-        <div class="serviceContainer">
-          <Image
-            src={hands}
-            alt="Hands"
-            class="image-wrapper"
-            width={192}
-            densities={[1, 2]}
-            quality={90}
-            format="webp"
-            loading="lazy"
-            decoding="async"
-          />
-          <p class="sub1">Hands</p>
           <p>
-            This means that an organisation knows what they're doing, knows how to build it, they
-            just need some extra hands to assemble the parts.
+            So they started Brains &amp; Beards: a consultancy built around a great team, thoughtful
+            workflows and the freedom to keep improving. Today, that same idea brings all of us
+            together.
           </p>
         </div>
       </div>
-      <p class="text-left">
-        We pride ourselves on our intellectual curiosity, so only the first two categories are
-        interesting for us. When you look at Apple's products you'll always find{' '}
-        <em> Designed in California. Assembled in China. </em>written somewhere on the back. Apple
-        doesn't consider their products as <em> made in China </em>, because it's only where the
-        hands are. But it's where the brains and the beards are, that matters.
-      </p>
-      <p class="text-left">That's how Brains &amp; Beards got its name.</p>
-    </div>
+    </section>
+
+    <section class="about-section" id="our-people">
+      <div class="about-container section-stack">
+        <p class="overline">Our people</p>
+        <h2>The people behind the work.</h2>
+        <p class="lead">
+          Different backgrounds. Shared curiosity. A team that already works well together.
+        </p>
+        <div class="people-grid" id="Brains&Beards">
+          {members.map(([name, image, bio], index) => (
+            <TeamMemberCard
+              name={name}
+              image={image}
+              bio={bio}
+              careers={index === members.length - 1}
+            />
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="about-section" id="how-we-work">
+      <div class="about-container section-stack">
+        <p class="overline">How we work</p>
+        <h2>Thoughtful ways of working.</h2>
+        <p class="lead">
+          We invest in our team, share what we learn and keep improving the way we build.
+        </p>
+        <div class="three-columns traits">
+          {traits.map(({ title, image, text }) => (
+            <div class="trait">
+              <Image
+                src={image}
+                alt=""
+                width={88}
+                height={88}
+                densities={[1, 2]}
+                format="webp"
+                loading="lazy"
+              />
+              <h3>{title}</h3>
+              <p>{text}</p>
+            </div>
+          ))}
+        </div>
+        <aside class="direct-collaboration">
+          <div>
+            <h3>The team you meet is the team you work with.</h3>
+            <p>We never outsource any part of our projects to third parties.</p>
+          </div>
+          <Image
+            src={noOutsourcing}
+            alt=""
+            width={104}
+            height={104}
+            densities={[1, 2]}
+            format="webp"
+            loading="lazy"
+          />
+        </aside>
+      </div>
+    </section>
+
+    <section class="cream compact-section">
+      <div class="about-container three-columns name-grid">
+        <div class="name-story">
+          <p class="overline">Our name</p>
+          <h2>
+            Curiosity meets
+            <br />
+            experience.
+          </h2>
+          <p class="lead">
+            Brains for creative problem-solving. Beards for the knowledge that comes from
+            experience. Both shape the way we work.
+          </p>
+        </div>
+        {pillars.map(({ title, image, text }) => (
+          <div class="pillar">
+            <Image
+              src={image}
+              alt=""
+              width={160}
+              height={160}
+              densities={[1, 2]}
+              format="webp"
+              loading="lazy"
+            />
+            <h3>{title}</h3>
+            <p>{text}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <section class="cream compact-section testimonial-section" aria-label="Life on the team">
+      <div class="about-container">
+        <div class="testimonial-divider"></div>
+        <figure class="team-quote">
+          <Image
+            src={natalia}
+            alt="Natalia Majkowska-Stewart"
+            width={100}
+            height={100}
+            densities={[1, 2]}
+            format="webp"
+            loading="lazy"
+          />
+          <div>
+            <blockquote>
+              “It was a pleasure working at Brains &amp; Beards - a company where everyone is
+              treated equally, fairly, and without discrimination. There was always time to develop
+              yourself. I developed amazingly working with everyone on the team and gained valuable
+              experience as a remote software engineer. In addition, my colleagues were always
+              approachable and I'd always be eager to start a new working day.”
+            </blockquote>
+            <figcaption>
+              Natalia Majkowska-Stewart · React Native Developer, former Brains &amp; Beards
+            </figcaption>
+          </div>
+        </figure>
+      </div>
+    </section>
+
+    <section class="compact-section">
+      <div class="about-container section-stack">
+        <p class="overline">Beyond the bio</p>
+        <h2>Get to know us a little better.</h2>
+        <p class="lead">We share what we learn through No Brainers and Brain Picks.</p>
+        <div class="video-grid">
+          {channels.map(({ title, video, videoTitle, href, description }) => (
+            <article class="video-card">
+              <div class="video-embed">
+                <iframe
+                  src={`https://www.youtube.com/embed/${video}`}
+                  title={videoTitle}
+                  loading="lazy"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowfullscreen
+                ></iframe>
+              </div>
+              <h3>
+                <a href={href}>{title}</a>
+              </h3>
+              <p>{description}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="about-cta compact-section">
+      <div class="about-container cta-grid">
+        <div>
+          <h2>Let’s build something together.</h2>
+          <p class="lead">
+            Tell us what you have in mind. We’ll bring the curiosity and experience.
+          </p>
+        </div>
+        <div class="contact-actions">
+          <div class="button">
+            <a href="/hire-us/">Get in touch</a>
+          </div>
+          <a class="deck-link" href="/portfolio/">
+            Prefer an introduction? Get our company deck →
+          </a>
+        </div>
+      </div>
+    </section>
   </div>
-</MarketingPage>
+</BaseLayout>
+
+<style lang="scss">
+  @use '../assets/stylesheets/colors' as *;
+  @media (min-width: 761px) {
+    :global(body:has(.about-page) .menu-container) {
+      padding-block: 28px;
+    }
+  }
+  :global(body:has(.about-page) .menu-link a[aria-current='page']) {
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+  .about-page {
+    background: $lightGrey;
+  }
+  .about-page :is(h1, h2, h3, p, figure, blockquote) {
+    margin: 0;
+  }
+  .about-page h1,
+  .about-page h2 {
+    font-size: 40px;
+    line-height: 48px;
+  }
+  .about-page h3 {
+    padding: 0;
+    font: 24px/32px 'Neutrif Medium';
+  }
+  .about-container {
+    max-width: 1040px;
+    margin-inline: auto;
+    width: calc(100% - 48px);
+  }
+  .about-hero,
+  .about-cta {
+    background: $yellow;
+  }
+  .about-hero {
+    padding-block: 64px;
+  }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 456fr) minmax(0, 520fr);
+    gap: 64px;
+    align-items: start;
+  }
+  .intro {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+  .overline {
+    font: 12px/24px 'Neutrif Medium';
+    text-transform: uppercase;
+  }
+  .lead {
+    font-size: 18px;
+    line-height: 32px;
+  }
+  .section-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    font-family: 'Neutrif Medium';
+  }
+  .about-page a:not(.button a):hover {
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+  .about-page :global(.founders-photo) {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 520 / 340;
+    object-fit: cover;
+  }
+  .about-section {
+    padding-block: 80px;
+    scroll-margin-top: 24px;
+  }
+  .compact-section {
+    padding-block: 64px;
+  }
+  .story-grid {
+    display: grid;
+    grid-template-columns: 320fr 656fr;
+    gap: 64px;
+  }
+  .section-heading {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+  .story-copy {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .section-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+  .people-grid,
+  .video-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 32px 40px;
+  }
+  .three-columns {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 40px;
+  }
+  .trait {
+    padding-left: 16px;
+  }
+  .trait img {
+    display: block;
+    object-fit: contain;
+    margin-bottom: 20px;
+  }
+  .trait h3 {
+    margin-bottom: 16px;
+  }
+  .trait p,
+  .pillar p {
+    font-size: 18px;
+    line-height: 24px;
+  }
+  .direct-collaboration {
+    background: $paleYellow;
+    padding: 28px 32px;
+    display: flex;
+    justify-content: space-between;
+    gap: 40px;
+    align-items: start;
+  }
+  .direct-collaboration h3 {
+    font-family: 'Recoleta';
+    margin-bottom: 8px;
+  }
+  .direct-collaboration img {
+    flex-shrink: 0;
+    object-fit: contain;
+  }
+  .cream {
+    background: $paleYellow;
+  }
+  .name-story {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .pillar {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .pillar img {
+    object-fit: contain;
+  }
+  .testimonial-section {
+    padding-top: 0;
+  }
+  .testimonial-divider {
+    border-top: 1px solid #d8d5c3;
+    margin-bottom: 64px;
+  }
+  .team-quote {
+    display: flex;
+    align-items: start;
+    gap: 48px;
+  }
+  .team-quote img {
+    flex-shrink: 0;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  .team-quote blockquote {
+    font: 24px/40px 'Recoleta';
+    color: $black;
+    border: 0;
+    padding: 0;
+  }
+  figcaption {
+    margin-top: 20px;
+    font-size: 14px;
+    line-height: 24px;
+  }
+  .video-card {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .video-embed {
+    width: 100%;
+    max-width: 400px;
+    aspect-ratio: 16 / 9;
+  }
+  .video-embed iframe {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+  .cta-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 640fr) minmax(0, 336fr);
+    gap: 64px;
+  }
+  .cta-grid h2 {
+    margin-bottom: 16px;
+  }
+  .contact-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: 20px;
+  }
+  .contact-actions .button {
+    margin: 0;
+    padding: 0;
+    background: $black;
+    border-radius: 8px;
+    color: white;
+  }
+  .contact-actions .button a {
+    display: inline-block;
+    padding: 16px 30px;
+    font-size: 18px;
+    line-height: 24px;
+  }
+  .deck-link {
+    font-size: 14px;
+    line-height: 24px;
+  }
+  @media (max-width: 1000px) {
+    .hero-grid,
+    .story-grid,
+    .cta-grid {
+      gap: 32px;
+    }
+    .three-columns {
+      gap: 24px;
+    }
+  }
+  @media (max-width: 760px) {
+    .about-hero,
+    .about-section,
+    .compact-section {
+      padding-block: 48px;
+    }
+    .hero-grid,
+    .story-grid,
+    .people-grid,
+    .three-columns,
+    .video-grid,
+    .cta-grid {
+      grid-template-columns: 1fr;
+      gap: 32px;
+    }
+    .about-page h1,
+    .about-page h2 {
+      font-size: 32px;
+      line-height: 40px;
+    }
+    .about-page h1 br {
+      display: none;
+    }
+    .section-stack,
+    .intro {
+      gap: 24px;
+    }
+    .trait {
+      padding-left: 0;
+    }
+    .direct-collaboration {
+      padding: 24px;
+      gap: 20px;
+      flex-direction: column;
+    }
+    .team-quote {
+      flex-direction: column;
+      gap: 24px;
+    }
+    .team-quote blockquote {
+      font-size: 20px;
+      line-height: 32px;
+    }
+    .testimonial-section {
+      padding-top: 0;
+    }
+    .testimonial-divider {
+      margin-bottom: 48px;
+    }
+    .video-embed {
+      max-width: none;
+    }
+  }
+</style>

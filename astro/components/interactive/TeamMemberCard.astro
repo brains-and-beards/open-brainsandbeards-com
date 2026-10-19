@@ -1,19 +1,85 @@
 ---
+import type { LocalImage } from '../../lib/responsive-images'
 import ResponsiveImage from '../ui/ResponsiveImage.astro'
-import ImagePriority from '../ui/ImagePriority.astro'
+
 interface Props {
   name: string
   bio: string
-  image: any
-  priority?: boolean
+  image: LocalImage
+  careers?: boolean
 }
 
-const { name, bio, image, priority = false } = Astro.props
+const { name, bio, image, careers = false } = Astro.props
 ---
 
-<div class="team-member" id={name} data-team-member={name}>
-  <ResponsiveImage preset="team" src={image} alt={`member: ${name}`} width={280} />
-  {priority && <ImagePriority media="(min-width: 691px)" />}
-  <p class="sub1">{name}</p>
-  <p>{bio}</p>
-</div>
+<article class="person" id={name} data-team-member={name}>
+  <ResponsiveImage
+    preset="team"
+    src={image}
+    alt={careers ? 'This could be you' : name}
+    width={88}
+    maxWidth={88}
+    sizes="88px"
+  />
+  <div>
+    <h3>{careers ? <a href="/jobs/">{name}</a> : name}</h3>
+    <p>{bio}</p>
+    {careers && (
+      <a class="careers-link" href="/jobs/">
+        Explore careers →
+      </a>
+    )}
+  </div>
+</article>
+
+<style>
+  .person {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    border-top: 1px solid #e4e2d6;
+    padding: 16px 0 24px;
+    scroll-margin-top: 24px;
+    min-width: 0;
+  }
+  .person :global(img) {
+    width: 88px;
+    height: 120px;
+    flex-shrink: 0;
+    object-fit: cover;
+    border-radius: 8px;
+    filter: grayscale(0.6);
+    transition: filter 0.35s ease-in-out;
+  }
+  .person:hover :global(img),
+  .person:target :global(img),
+  .person:focus-within :global(img),
+  :global([id='Brains&Beards']:target) .person :global(img) {
+    filter: grayscale(0);
+  }
+  h3 {
+    font-family: 'Neutrif Medium';
+    font-size: 18px;
+    line-height: 24px;
+    padding: 0;
+    margin: 0 0 6px;
+  }
+  p {
+    margin: 0;
+    font-size: 16px;
+    line-height: 24px;
+  }
+  .careers-link {
+    display: inline-block;
+    margin-top: 12px;
+  }
+  a:hover {
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .person :global(img) {
+      transition: none;
+    }
+  }
+</style>
