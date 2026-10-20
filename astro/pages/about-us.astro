@@ -131,14 +131,10 @@ const channels = [
           Different backgrounds. Shared curiosity. A team that already works well together.
         </p>
         <div class="people-grid" id="Brains&Beards">
-          {members.map(([name, image, bio], index) => (
-            <TeamMemberCard
-              name={name}
-              image={image}
-              bio={bio}
-              careers={index === members.length - 1}
-            />
-          ))}
+          {members.map(([name, image, bio], index) => {
+            const careers = index === members.length - 1
+            return <TeamMemberCard name={name} image={image} bio={bio} careers={careers} />
+          })}
         </div>
       </div>
     </section>

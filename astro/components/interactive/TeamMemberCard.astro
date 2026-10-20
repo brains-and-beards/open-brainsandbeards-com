@@ -15,7 +15,7 @@ const { name, bio, image, careers = false } = Astro.props
 
 <article class="person" id={name} data-team-member={name}>
   <ResponsiveImage
-    class="person-portrait"
+    class={`person-portrait ${careers ? 'careers' : ''}`}
     preset="team"
     src={image}
     alt={careers ? 'This could be you' : name}
@@ -54,6 +54,11 @@ const { name, bio, image, careers = false } = Astro.props
     border-radius: 8px;
     filter: grayscale(0.6);
     transition: filter 0.35s ease-in-out;
+  }
+  .person :global(.person-portrait.careers) {
+    border: 1px dashed #2d2d2d;
+    background-color: #ffde1a;
+    filter: none;
   }
   .person:hover :global(.person-portrait),
   .person:target :global(.person-portrait),
