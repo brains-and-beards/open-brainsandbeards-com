@@ -1,6 +1,7 @@
 ---
 import type { LocalImage } from '../../lib/responsive-images'
 import ResponsiveImage from '../ui/ResponsiveImage.astro'
+import ReadMoreLink from '../ui/ReadMoreLink.astro'
 
 interface Props {
   name: string
@@ -14,6 +15,7 @@ const { name, bio, image, careers = false } = Astro.props
 
 <article class="person" id={name} data-team-member={name}>
   <ResponsiveImage
+    class="person-portrait"
     preset="team"
     src={image}
     alt={careers ? 'This could be you' : name}
@@ -22,13 +24,9 @@ const { name, bio, image, careers = false } = Astro.props
     sizes="88px"
   />
   <div>
-    <h3>{careers ? <a href="/jobs/">{name}</a> : name}</h3>
+    <h3>{careers ? <a href="https://brainsandbeards.com/jobs/">{name}</a> : name}</h3>
     <p>{bio}</p>
-    {careers && (
-      <a class="careers-link" href="/jobs/">
-        Explore careers →
-      </a>
-    )}
+    {careers && <ReadMoreLink class="careers-link" href="https://brainsandbeards.com/jobs" text="Explore careers" />}
   </div>
 </article>
 
@@ -42,7 +40,7 @@ const { name, bio, image, careers = false } = Astro.props
     scroll-margin-top: 24px;
     min-width: 0;
   }
-  .person :global(img) {
+  .person :global(.person-portrait) {
     width: 88px;
     height: 120px;
     flex-shrink: 0;
@@ -51,10 +49,10 @@ const { name, bio, image, careers = false } = Astro.props
     filter: grayscale(0.6);
     transition: filter 0.35s ease-in-out;
   }
-  .person:hover :global(img),
-  .person:target :global(img),
-  .person:focus-within :global(img),
-  :global([id='Brains&Beards']:target) .person :global(img) {
+  .person:hover :global(.person-portrait),
+  .person:target :global(.person-portrait),
+  .person:focus-within :global(.person-portrait),
+  :global([id='Brains&Beards']:target) .person :global(.person-portrait) {
     filter: grayscale(0);
   }
   h3 {
@@ -69,16 +67,15 @@ const { name, bio, image, careers = false } = Astro.props
     font-size: 16px;
     line-height: 24px;
   }
-  .careers-link {
-    display: inline-block;
-    margin-top: 12px;
+  .person :global(.careers-link) {
+    margin-top: 20px;
   }
-  a:hover {
+  a:not(.read-more-link):hover {
     text-decoration: underline;
     text-underline-offset: 4px;
   }
   @media (prefers-reduced-motion: reduce) {
-    .person :global(img) {
+    .person :global(.person-portrait) {
       transition: none;
     }
   }

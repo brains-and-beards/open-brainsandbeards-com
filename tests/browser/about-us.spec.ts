@@ -7,8 +7,14 @@ test('merged about page keeps the team, careers photo, and working links', async
   )
   await expect(page.locator('[data-team-member]')).toHaveCount(10)
   const careers = page.locator('[data-team-member="This could be you"]')
-  await expect(careers.locator('img')).toHaveAttribute('src', /open-positions/)
-  await expect(careers.getByRole('link', { name: 'Explore careers' })).toHaveAttribute(
+  await expect(careers.locator(':scope > img')).toHaveAttribute('src', /open-positions/)
+  await expect(careers.locator('.read-more-image')).toHaveCSS('width', '5px')
+  await expect(careers.locator('.read-more-image')).toHaveCSS('height', '10px')
+  await expect(page.locator('.menu-links a[aria-current="page"]')).toHaveCSS(
+    'text-decoration-line',
+    'none'
+  )
+  await expect(careers.getByRole('link', { name: /Explore careers/i })).toHaveAttribute(
     'href',
     '/jobs/'
   )
@@ -21,7 +27,7 @@ test('merged about page keeps the team, careers photo, and working links', async
     'href',
     '/hire-us/'
   )
-  await expect(page.getByRole('link', { name: /Get our company deck/ })).toHaveAttribute(
+  await expect(page.getByRole('link', { name: /Get our company deck/i })).toHaveAttribute(
     'href',
     '/portfolio/'
   )

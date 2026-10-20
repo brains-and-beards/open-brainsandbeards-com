@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro'
 import ResponsiveImage from '../components/ui/ResponsiveImage.astro'
+import ReadMoreLink from '../components/ui/ReadMoreLink.astro'
 import TeamMemberCard from '../components/interactive/TeamMemberCard.astro'
 import { Image } from 'astro:assets'
 import { members } from '../lib/team'
@@ -80,11 +81,9 @@ const channels = [
             keeps us moving.
           </p>
           <nav class="section-links" aria-label="On this page">
-            <a href="#our-story">Our story</a>
-            <span aria-hidden="true">·</span>
-            <a href="#our-people">Our people</a>
-            <span aria-hidden="true">·</span>
-            <a href="#how-we-work">How we work</a>
+            <ReadMoreLink href="#our-story" text="Our story" />
+            <ReadMoreLink href="#our-people" text="Our people" />
+            <ReadMoreLink href="#how-we-work" text="How we work" />
           </nav>
         </div>
         <ResponsiveImage
@@ -286,9 +285,7 @@ const channels = [
           <div class="button">
             <a href="/hire-us/">Get in touch</a>
           </div>
-          <a class="deck-link" href="/portfolio/">
-            Prefer an introduction? Get our company deck →
-          </a>
+          <ReadMoreLink href="/portfolio/" text="Prefer an introduction? Get our company deck" />
         </div>
       </div>
     </section>
@@ -301,10 +298,6 @@ const channels = [
     :global(body:has(.about-page) .menu-container) {
       padding-block: 28px;
     }
-  }
-  :global(body:has(.about-page) .menu-link a[aria-current='page']) {
-    text-decoration: underline;
-    text-underline-offset: 4px;
   }
   .about-page {
     background: $lightGrey;
@@ -355,10 +348,10 @@ const channels = [
   .section-links {
     display: flex;
     flex-wrap: wrap;
-    gap: 12px;
+    gap: 20px;
     font-family: 'Neutrif Medium';
   }
-  .about-page a:not(.button a):hover {
+  .about-page a:not(.button a, .read-more-link):hover {
     text-decoration: underline;
     text-underline-offset: 4px;
   }
@@ -524,10 +517,6 @@ const channels = [
     display: inline-block;
     padding: 16px 30px;
     font-size: 18px;
-    line-height: 24px;
-  }
-  .deck-link {
-    font-size: 14px;
     line-height: 24px;
   }
   @media (max-width: 1000px) {
