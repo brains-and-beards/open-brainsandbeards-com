@@ -29,11 +29,6 @@ const traits = [
     title: 'Diversity',
     image: diversity,
     text: 'Different backgrounds and perspectives help us ask better questions and build better products.'
-  },
-  {
-    title: 'No Outsourcing',
-    image: houseManProgrammer,
-    text: 'The team you meet is the team you work with. We never outsource any part of our projects to third parties.'
   }
 ]
 const pillars = [
@@ -155,7 +150,7 @@ const channels = [
         <p class="lead">
           We invest in our team, share what we learn and keep improving the way we build.
         </p>
-        <div class="traits">
+        <div class="three-columns traits">
           {traits.map(({ title, image, text }) => (
             <div class="trait">
               <Image
@@ -176,6 +171,25 @@ const channels = [
     </section>
 
     <section class="cream compact-section">
+      <div class="about-container outsourcing-content">
+        <div>
+          <h2>NO OUTSOURCING POLICY</h2>
+          <p class="outsourcing-subtitle">The team you meet is the team you work with.</p>
+          <p>We pride ourselves on the quality of our work and it's our top priority to ensure you get the best results. For this reason, we never outsource any parts of our projects to 3rd parties.</p>
+        </div>
+        <Image
+          src={houseManProgrammer}
+          alt=""
+          width={240}
+          height={240}
+          densities={[1, 2]}
+          format="webp"
+          loading="lazy"
+        />
+      </div>
+    </section>
+
+    <section class="name-section compact-section">
       <div class="about-container three-columns name-grid">
         <div class="name-story">
           <p class="overline">Our name</p>
@@ -390,13 +404,30 @@ const channels = [
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 40px;
   }
-  #how-we-work {
+  #how-we-work,
+  .name-section {
     background: white;
   }
-  .traits {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 40px;
+  .outsourcing-content {
+    position: relative;
+    padding-right: 288px;
+    min-height: 112px;
+  }
+  .outsourcing-content h3 {
+    font-family: 'Recoleta';
+    margin-bottom: 16px;
+  }
+  .outsourcing-content .outsourcing-subtitle {
+    font: 18px/28px 'Neutrif Medium';
+    margin-bottom: 8px;
+  }
+  .outsourcing-content img {
+    position: absolute;
+    top: -96px;
+    right: 0;
+    width: 240px;
+    height: 240px;
+    object-fit: contain;
   }
   .trait {
     padding-left: 16px;
@@ -526,8 +557,14 @@ const channels = [
       grid-template-columns: 1fr;
       gap: 32px;
     }
-    .traits {
-      gap: 32px 24px;
+    .outsourcing-content {
+      padding-right: 0;
+      padding-top: 88px;
+    }
+    .outsourcing-content img {
+      top: -72px;
+      width: 144px;
+      height: 144px;
     }
     .about-page h1,
     .about-page h2 {
