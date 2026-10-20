@@ -417,7 +417,7 @@ const channels = [
     padding-right: 288px;
     min-height: 112px;
   }
-  .outsourcing-content h3 {
+  .outsourcing-content h2 {
     font-family: 'Recoleta';
     margin-bottom: 16px;
   }
@@ -427,22 +427,26 @@ const channels = [
   }
   .outsourcing-content img {
     position: absolute;
-    top: -96px;
+    top: -50px;
     right: 0;
     width: 240px;
     height: 240px;
     object-fit: contain;
   }
   .trait {
+    display: grid;
+    grid-template-columns: 88px minmax(0, 1fr);
+    align-items: center;
+    gap: 20px 16px;
     padding-left: 16px;
   }
   .trait img {
     display: block;
     object-fit: contain;
-    margin-bottom: 20px;
   }
-  .trait h3 {
-    margin-bottom: 16px;
+  .trait p {
+    grid-column: 1 / -1;
+    align-self: start;
   }
   .trait p,
   .pillar p {
