@@ -9,7 +9,7 @@ import photo from '../assets/photos/patryk-and-wojtek.jpg'
 import versatility from '../assets/illustrations/team-versatility-icon.png'
 import reliability from '../assets/illustrations/team-reliability-icon.png'
 import diversity from '../assets/illustrations/team-diversity-icon.png'
-import noOutsourcing from '../assets/illustrations/team-no-outsourcing.png'
+import houseManProgrammer from '../assets/illustrations/team-no-outsourcing.png'
 import brains from '../assets/illustrations/about-brains-icon.png'
 import beards from '../assets/illustrations/about-beards-icon.png'
 import natalia from '../assets/testimonials/team-natalia.jpg'
@@ -29,6 +29,11 @@ const traits = [
     title: 'Diversity',
     image: diversity,
     text: 'Different backgrounds and perspectives help us ask better questions and build better products.'
+  },
+  {
+    title: 'No Outsourcing',
+    image: houseManProgrammer,
+    text: 'The team you meet is the team you work with. We never outsource any part of our projects to third parties.'
   }
 ]
 const pillars = [
@@ -150,7 +155,7 @@ const channels = [
         <p class="lead">
           We invest in our team, share what we learn and keep improving the way we build.
         </p>
-        <div class="three-columns traits">
+        <div class="traits">
           {traits.map(({ title, image, text }) => (
             <div class="trait">
               <Image
@@ -167,21 +172,6 @@ const channels = [
             </div>
           ))}
         </div>
-        <aside class="direct-collaboration">
-          <div>
-            <h3>The team you meet is the team you work with</h3>
-            <p>We never outsource any part of our projects to third parties.</p>
-          </div>
-          <Image
-            src={noOutsourcing}
-            alt=""
-            width={104}
-            height={104}
-            densities={[1, 2]}
-            format="webp"
-            loading="lazy"
-          />
-        </aside>
       </div>
     </section>
 
@@ -217,7 +207,7 @@ const channels = [
       </div>
     </section>
 
-      <section class="cream compact-section testimonial-section" aria-label="Life on the team">
+    <section class="cream compact-section testimonial-section" aria-label="Life on the team">
       <div class="about-container">
         <div class="testimonial-divider"></div>
         <figure class="team-quote">
@@ -246,7 +236,7 @@ const channels = [
       </div>
     </section>
 
-      <section class="compact-section">
+    <section class="compact-section">
       <div class="about-container section-stack">
         <p class="overline">Beyond the bio</p>
         <h2>Get to know us a little better</h2>
@@ -272,8 +262,6 @@ const channels = [
         </div>
       </div>
     </section>
-
-    
 
     <section class="about-cta compact-section">
       <div class="about-container cta-grid">
@@ -402,6 +390,14 @@ const channels = [
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 40px;
   }
+  #how-we-work {
+    background: white;
+  }
+  .traits {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 40px;
+  }
   .trait {
     padding-left: 16px;
   }
@@ -417,22 +413,6 @@ const channels = [
   .pillar p {
     font-size: 18px;
     line-height: 24px;
-  }
-  .direct-collaboration {
-    background: $paleYellow;
-    padding: 28px 32px;
-    display: flex;
-    justify-content: space-between;
-    gap: 40px;
-    align-items: start;
-  }
-  .direct-collaboration h3 {
-    font-family: 'Recoleta';
-    margin-bottom: 8px;
-  }
-  .direct-collaboration img {
-    flex-shrink: 0;
-    object-fit: contain;
   }
   .cream {
     background: $paleYellow;
@@ -546,6 +526,9 @@ const channels = [
       grid-template-columns: 1fr;
       gap: 32px;
     }
+    .traits {
+      gap: 32px 24px;
+    }
     .about-page h1,
     .about-page h2 {
       font-size: 32px;
@@ -560,11 +543,6 @@ const channels = [
     }
     .trait {
       padding-left: 0;
-    }
-    .direct-collaboration {
-      padding: 24px;
-      gap: 20px;
-      flex-direction: column;
     }
     .team-quote {
       flex-direction: column;

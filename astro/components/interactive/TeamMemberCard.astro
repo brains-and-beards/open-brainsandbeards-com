@@ -26,7 +26,13 @@ const { name, bio, image, careers = false } = Astro.props
   <div>
     <h3>{careers ? <a href="https://brainsandbeards.com/jobs/">{name}</a> : name}</h3>
     <p>{bio}</p>
-    {careers && <ReadMoreLink class="careers-link" href="https://brainsandbeards.com/jobs" text="Explore careers" />}
+    {careers && (
+      <ReadMoreLink
+        class="careers-link"
+        href="https://brainsandbeards.com/jobs"
+        text="Explore careers"
+      />
+    )}
   </div>
 </article>
 
