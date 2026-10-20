@@ -20,7 +20,7 @@ So, in this blog post I’d like to write in more detail how such a platform-sen
 
 #### iOS
 
-Easy, just use [the provided API.](https://github.com/wix/Detox/blob/master/docs/APIRef.DeviceObjectAPI.md#devicelaunchappparams) It lets us launch the app in a mode where detox will take care of accepting particular permissions as they are being asked for.
+Easy, just use [the provided API.](https://wix.github.io/Detox/docs/api/device/) It lets us launch the app in a mode where detox will take care of accepting particular permissions as they are being asked for.
 
 In that case, we can specify in our test whether we’re going to accept or deny permissions and handle both cases accordingly.
 
@@ -28,7 +28,7 @@ In that case, we can specify in our test whether we’re going to accept or deny
 
 However, the API described above relies on using [AppleSimUtils](https://github.com/wix/AppleSimulatorUtils), so it won’t work when we run our tests on the Android platform. We’ll need a different solution for that. Here enters detox’s take on mocking.
 
-Detox doesn’t allow for per-test mocking, because the idea is that we make a single build of the app, deploy it to an emulator (or a device) and run multiple scenarios against this one build. So, if we want to have something mocked, we need to prepare an alternative file to be used. The details are of course described [in the docs](https://github.com/wix/Detox/blob/master/docs/Guide.Mocking.md).
+Detox doesn’t allow for per-test mocking, because the idea is that we make a single build of the app, deploy it to an emulator (or a device) and run multiple scenarios against this one build. So, if we want to have something mocked, we need to prepare an alternative file to be used. The details are of course described [in the docs](https://wix.github.io/Detox/docs/guide/mocking/).
 
 But let’s dive a bit deeper into an example that will let us walk through this process.
 

@@ -160,7 +160,7 @@ Because our JSON file is a resource, we need to include it in `pubspec.yaml`. Th
     - assets/beers.json
 ```
 
-Okay, now we need to add the beer list to one of our screens. In screens, create a folder called `beer_list` and inside create a file called `beer_list.dart`. To build list we use [ListView widget](https://docs.flutter.io/flutter/widgets/ListView-class.html).
+Okay, now we need to add the beer list to one of our screens. In screens, create a folder called `beer_list` and inside create a file called `beer_list.dart`. To build list we use [ListView widget](https://api.flutter.dev/flutter/widgets/ListView-class.html).
 
 ```javascript:numberLines=true
 return new ListView.builder(
@@ -199,7 +199,7 @@ ListView has two main properties:
 
 To load the data from the JSON file, we use `DefaultAssetBundle`. We then have to decode the data from a JSON format. It’s asynchronous code so to handle it we use the FutureBuilder widget.
 
-> The FutureBuilder widget is essentially a widget that returns another widget based on the result of a Future’s execution. The builder callback defines the strategy for what is rendered based on the information in the snapshot from the asynchronous computation (Future). You can read more about the FutureBuilder API [here](https://docs.flutter.io/flutter/widgets/FutureBuilder-class.html).
+> The FutureBuilder widget is essentially a widget that returns another widget based on the result of a Future’s execution. The builder callback defines the strategy for what is rendered based on the information in the snapshot from the asynchronous computation (Future). You can read more about the FutureBuilder API [here](https://api.flutter.dev/flutter/widgets/FutureBuilder-class.html).
 
 ```javascript:numberLines=true
 child: new FutureBuilder(

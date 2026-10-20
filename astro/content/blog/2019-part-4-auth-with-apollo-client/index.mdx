@@ -153,7 +153,7 @@ const resolvers = {
 };
 ```
 
-> Please note this tutorial won’t go into detail about checking the JSON Web Token on subsequent requests to the GraphQL Server. Ideally, you’ll want to verify the token and make a decision based on the validity of the token. This can be done using authentication middleware for your GraphQL Server, e.g. [Passport.js](http://www.passportjs.org/docs/username-password)
+> Please note this tutorial won’t go into detail about checking the JSON Web Token on subsequent requests to the GraphQL Server. Ideally, you’ll want to verify the token and make a decision based on the validity of the token. This can be done using authentication middleware for your GraphQL Server, e.g. [Passport.js](https://www.passportjs.org/packages/passport-jwt/)
 
 To use your custom mutations, `graphql-yoga` recommends Heroku, so we’ll go with that. You can find step-by-step instructions on how to do this [here](https://github.com/prisma/graphql-yoga).
 
