@@ -85,6 +85,11 @@ const { name, bio, image, careers = false } = Astro.props
     text-decoration: underline;
     text-underline-offset: 4px;
   }
+  @media (max-width: 1000px), (hover: none), (pointer: coarse) {
+    .person :global(.person-portrait) {
+      filter: none;
+    }
+  }
   @media (prefers-reduced-motion: reduce) {
     .person :global(.person-portrait) {
       transition: none;
