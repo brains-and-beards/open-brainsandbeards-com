@@ -10,6 +10,8 @@ test('careers portrait flips around its vertical axis and respects reduced motio
   const button = careers.getByRole('button', { name: 'Show another random portrait' })
   const portrait = button.locator('img')
   const previous = await portrait.getAttribute('src')
+  await expect(button).toHaveCSS('box-shadow', 'none')
+  await expect(portrait).toHaveCSS('box-shadow', 'rgba(0, 0, 0, 0.1) 0px 2px 4px 0px')
   await button.click()
   await expect(button).toHaveAttribute('aria-busy', 'true')
   await expect(portrait).toHaveAttribute('data-flip', 'out')
