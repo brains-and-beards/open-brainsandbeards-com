@@ -1,6 +1,31 @@
 import { expect, test } from '@playwright/test'
 import { readdirSync } from 'node:fs'
 
+test('careers portrait restores grayscale after clicking and moving the pointer away', async ({
+  page
+}, testInfo) => {
+  test.skip(testInfo.project.name !== 'desktop', 'Hover filtering applies to desktop pointers')
+  await page.goto('/about-us/', { waitUntil: 'domcontentloaded' })
+  const careers = page.locator('[data-team-member]').last()
+  await expect(careers.locator('astro-island:not([ssr])')).toHaveCount(1)
+  const button = careers.getByRole('button', { name: 'Show another random portrait' })
+  const portrait = button.locator('img')
+
+  await button.scrollIntoViewIfNeeded()
+  await page.mouse.move(0, 0)
+  await expect(portrait).toHaveCSS('filter', 'grayscale(0.6)')
+  await button.hover()
+  await expect(portrait).toHaveCSS('filter', 'grayscale(0)')
+  await button.click()
+  await page.mouse.move(0, 0)
+  await expect(portrait).toHaveCSS('filter', 'grayscale(0.6)')
+
+  await button.press('Tab')
+  await page.keyboard.press('Shift+Tab')
+  await expect(button).toBeFocused()
+  await expect(portrait).toHaveCSS('filter', 'grayscale(0)')
+})
+
 test('careers portrait changes to a different image on click and keyboard activation', async ({
   page
 }) => {

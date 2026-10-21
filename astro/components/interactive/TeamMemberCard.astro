@@ -94,7 +94,7 @@ const portraits = await Promise.all(
   }
   .person:hover :global(.person-portrait),
   .person:target :global(.person-portrait),
-  .person:focus-within :global(.person-portrait),
+  .person:has(:global(:focus-visible)) :global(.person-portrait),
   :global([id='Brains&Beards']:target) .person :global(.person-portrait) {
     filter: grayscale(0);
   }
