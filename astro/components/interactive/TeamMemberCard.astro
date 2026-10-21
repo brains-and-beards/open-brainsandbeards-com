@@ -1,5 +1,7 @@
 ---
-import type { LocalImage } from '../../lib/responsive-images'
+import { getImage } from 'astro:assets'
+import { responsiveImageProps, type LocalImage } from '../../lib/responsive-images'
+import RandomTeamPortrait from './RandomTeamPortrait'
 import ResponsiveImage from '../ui/ResponsiveImage.astro'
 import ReadMoreLink from '../ui/ReadMoreLink.astro'
 
@@ -8,21 +10,37 @@ interface Props {
   bio: string
   image: LocalImage
   careers?: boolean
+  randomImages?: LocalImage[]
 }
 
-const { name, bio, image, careers = false } = Astro.props
+const { name, bio, image, careers = false, randomImages = [] }: Props = Astro.props
+const portraits = await Promise.all(
+  randomImages.map(async src => {
+    const optimized = await getImage({
+      src,
+      width: 88,
+      format: 'webp',
+      ...responsiveImageProps(src, 'team', { maxWidth: 88, sizes: '88px' })
+    })
+    return { src: optimized.src, srcSet: optimized.srcSet.attribute }
+  })
+)
 ---
 
 <article class="person" id={name} data-team-member={name}>
-  <ResponsiveImage
-    class={`person-portrait ${careers ? 'careers' : ''}`}
-    preset="team"
-    src={image}
-    alt={careers ? 'This could be you' : name}
-    width={88}
-    maxWidth={88}
-    sizes="88px"
-  />
+  {portraits.length > 0 ? (
+    <RandomTeamPortrait client:load images={portraits} alt={name} />
+  ) : (
+    <ResponsiveImage
+      class={`person-portrait ${careers ? 'careers' : ''}`}
+      preset="team"
+      src={image}
+      alt={careers ? 'This could be you' : name}
+      width={88}
+      maxWidth={88}
+      sizes="88px"
+    />
+  )}
   <div>
     <h3>{careers ? <a href="https://brainsandbeards.com/jobs/">{name}</a> : name}</h3>
     <p>{bio}</p>
@@ -58,7 +76,21 @@ const { name, bio, image, careers = false } = Astro.props
   .person :global(.person-portrait.careers) {
     border: 1px dashed #2d2d2d;
     background-color: #ffde1a;
-    filter: none;
+  }
+  .person :global(.random-team-portrait) {
+    display: block;
+    flex-shrink: 0;
+    width: 88px;
+    height: 120px;
+    padding: 0;
+    border: 0;
+    border-radius: 8px;
+    background: none;
+    cursor: pointer;
+  }
+  .person :global(.random-team-portrait:focus-visible) {
+    outline: 2px solid #2d2d2d;
+    outline-offset: 4px;
   }
   .person:hover :global(.person-portrait),
   .person:target :global(.person-portrait),

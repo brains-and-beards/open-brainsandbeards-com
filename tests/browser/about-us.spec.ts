@@ -1,4 +1,61 @@
 import { expect, test } from '@playwright/test'
+import { readdirSync } from 'node:fs'
+
+test('careers portrait changes to a different image on click and keyboard activation', async ({
+  page
+}) => {
+  await page.goto('/about-us/', { waitUntil: 'domcontentloaded' })
+  const careers = page.locator('[data-team-member="This could be you"]')
+  await expect(careers.locator('astro-island:not([ssr])')).toHaveCount(1)
+  const button = careers.getByRole('button', { name: 'Show another random portrait' })
+  const portrait = button.locator('img')
+
+  for (let click = 0; click < 10; click++) {
+    const previous = await portrait.getAttribute('src')
+    await button.click()
+    await expect(portrait).not.toHaveAttribute('src', previous!)
+  }
+
+  for (const key of ['Enter', 'Space']) {
+    const previous = await portrait.getAttribute('src')
+    await button.focus()
+    await button.press(key)
+    await expect(portrait).not.toHaveAttribute('src', previous!)
+  }
+})
+
+test('careers portrait is selected in the browser on each page load', async ({ page }) => {
+  await page.addInitScript(() => {
+    Math.random = () => Number(sessionStorage.getItem('portrait-random') ?? '0')
+  })
+  await page.goto('/about-us/', { waitUntil: 'domcontentloaded' })
+  const careers = page.locator('[data-team-member="This could be you"]')
+  const portrait = careers.locator('img.person-portrait')
+  const sources = new Set<string>()
+
+  const imageCount = readdirSync('astro/assets/team/you').filter(name =>
+    /\.(jpg|jpeg|png|webp|avif)$/.test(name)
+  ).length
+
+  for (let index = 0; index < imageCount; index++) {
+    const random = (index + 0.5) / imageCount
+    await page.evaluate(value => sessionStorage.setItem('portrait-random', String(value)), random)
+    await page.reload({ waitUntil: 'domcontentloaded' })
+    await expect(careers.locator('astro-island:not([ssr])')).toHaveCount(1)
+    await portrait.scrollIntoViewIfNeeded()
+    await expect
+      .poll(() =>
+        portrait.evaluate(
+          image =>
+            (image as HTMLImageElement).complete && (image as HTMLImageElement).naturalWidth > 0
+        )
+      )
+      .toBe(true)
+    sources.add((await portrait.getAttribute('src'))!)
+  }
+
+  expect(sources.size).toBe(imageCount)
+})
 
 test('merged about page keeps the team, careers photo, and working links', async ({ page }) => {
   await page.goto('/about-us/', { waitUntil: 'domcontentloaded' })
@@ -6,8 +63,13 @@ test('merged about page keeps the team, careers photo, and working links', async
     'Great products startwith a great team'
   )
   await expect(page.locator('[data-team-member]')).toHaveCount(10)
-  const careers = page.locator('[data-team-member="This could be you"]')
-  await expect(careers.locator(':scope > img')).toHaveAttribute('src', /open-positions/)
+  const careers = page.locator('[data-team-member]').last()
+  await expect(careers).toHaveAttribute('data-team-member', 'This could be you')
+  await expect(careers.locator('img.person-portrait')).toHaveAttribute('alt', 'This could be you')
+  await expect(careers.locator('p').first()).toHaveText(
+    'Ready to take the next step in your career? Drop us a message to see if you could join our team.'
+  )
+  await expect(page.locator('[data-team-member="Dávid"] .careers')).toHaveCount(0)
   await expect(careers.locator('.read-more-image')).toHaveCSS('width', '5px')
   await expect(careers.locator('.read-more-image')).toHaveCSS('height', '10px')
   await expect(page.locator('.menu-links a[aria-current="page"]')).toHaveCSS(
@@ -16,7 +78,7 @@ test('merged about page keeps the team, careers photo, and working links', async
   )
   await expect(careers.getByRole('link', { name: /Explore careers/i })).toHaveAttribute(
     'href',
-    '/jobs/'
+    'https://brainsandbeards.com/jobs'
   )
   await expect(page.locator('a[href^="/team"]')).toHaveCount(0)
   await expect(
@@ -42,7 +104,7 @@ test('team anchors preserve the colour effect and images fit the page', async ({
   await expect(portrait).toHaveCSS('filter', 'grayscale(0)')
   await expect(page.locator('[data-team-member="Wojciech"] img')).toHaveCSS(
     'filter',
-    'grayscale(0.6)'
+    testInfo.project.name === 'desktop' ? 'grayscale(0.6)' : 'none'
   )
   if (testInfo.project.name === 'desktop') {
     await page.locator('[data-team-member="Wojciech"]').hover()

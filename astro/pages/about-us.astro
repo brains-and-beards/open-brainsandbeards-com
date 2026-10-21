@@ -13,6 +13,13 @@ import houseManProgrammer from '../assets/illustrations/team-no-outsourcing.png'
 import brains from '../assets/illustrations/about-brains-icon.png'
 import beards from '../assets/illustrations/about-beards-icon.png'
 import natalia from '../assets/testimonials/team-natalia.jpg'
+import type { LocalImage } from '../lib/responsive-images'
+
+const careersImages = Object.values(
+  import.meta.glob<{ default: LocalImage }>('../assets/team/you/*.{jpg,jpeg,png,webp,avif}', {
+    eager: true
+  })
+).map(image => image.default)
 
 const traits = [
   {
@@ -131,10 +138,16 @@ const channels = [
           Different backgrounds. Shared curiosity. A team that already works well together.
         </p>
         <div class="people-grid" id="Brains&Beards">
-          {members.map(([name, image, bio], index) => {
-            const careers = index === members.length - 1
-            return <TeamMemberCard name={name} image={image} bio={bio} careers={careers} />
-          })}
+          {members.map(([name, image, bio]) => (
+            <TeamMemberCard name={name} image={image} bio={bio} />
+          ))}
+          <TeamMemberCard
+            name="This could be you"
+            bio="Ready to take the next step in your career? Drop us a message to see if you could join our team."
+            image={careersImages[0]}
+            randomImages={careersImages}
+            careers
+          />
         </div>
       </div>
     </section>
