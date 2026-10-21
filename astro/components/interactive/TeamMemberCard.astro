@@ -87,6 +87,32 @@ const portraits = await Promise.all(
     border-radius: 8px;
     background: none;
     cursor: pointer;
+    perspective: 600px;
+  }
+  .person :global(.random-team-portrait img) {
+    display: block;
+  }
+  .person :global([data-flip='out']) {
+    animation: portrait-flip-out 200ms ease-in forwards;
+  }
+  .person :global([data-flip='in']) {
+    animation: portrait-flip-in 200ms ease-out forwards;
+  }
+  @keyframes portrait-flip-out {
+    from {
+      transform: rotateY(0deg);
+    }
+    to {
+      transform: rotateY(90deg);
+    }
+  }
+  @keyframes portrait-flip-in {
+    from {
+      transform: rotateY(-90deg);
+    }
+    to {
+      transform: rotateY(0deg);
+    }
   }
   .person :global(.random-team-portrait:focus-visible) {
     outline: 2px solid #2d2d2d;
@@ -123,6 +149,9 @@ const portraits = await Promise.all(
     }
   }
   @media (prefers-reduced-motion: reduce) {
+    .person :global([data-flip]) {
+      animation-duration: 1ms;
+    }
     .person :global(.person-portrait) {
       transition: none;
     }

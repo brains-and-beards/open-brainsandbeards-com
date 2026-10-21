@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 
 interface Portrait {
   src: string
@@ -12,16 +12,31 @@ interface Props {
 
 export default function RandomTeamPortrait({ images, alt }: Props) {
   const [index, setIndex] = useState(0)
+  const [flip, setFlip] = useState<'idle' | 'out' | 'in'>('idle')
+  const nextIndex = useRef(0)
 
   useEffect(() => {
     setIndex(Math.floor(Math.random() * images.length))
   }, [images])
 
   const changePortrait = () => {
-    if (images.length < 2) return
-    setIndex(
-      current => (current + 1 + Math.floor(Math.random() * (images.length - 1))) % images.length
-    )
+    if (images.length < 2 || flip !== 'idle') return
+    nextIndex.current =
+      (index + 1 + Math.floor(Math.random() * (images.length - 1))) % images.length
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      setIndex(nextIndex.current)
+      return
+    }
+    setFlip('out')
+  }
+
+  const finishFlip = () => {
+    if (flip === 'out') {
+      setIndex(nextIndex.current)
+      setFlip('in')
+    } else {
+      setFlip('idle')
+    }
   }
 
   return (
@@ -31,6 +46,7 @@ export default function RandomTeamPortrait({ images, alt }: Props) {
       aria-label="Show another random portrait"
       onClick={changePortrait}
       disabled={images.length < 2}
+      aria-busy={flip !== 'idle'}
     >
       <img
         className="person-portrait careers"
@@ -43,6 +59,8 @@ export default function RandomTeamPortrait({ images, alt }: Props) {
         loading="lazy"
         decoding="async"
         data-responsive-preset="team"
+        data-flip={flip}
+        onAnimationEnd={finishFlip}
       />
     </button>
   )

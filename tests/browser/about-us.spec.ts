@@ -1,6 +1,31 @@
 import { expect, test } from '@playwright/test'
 import { readdirSync } from 'node:fs'
 
+test('careers portrait flips around its vertical axis and respects reduced motion', async ({
+  page
+}) => {
+  await page.goto('/about-us/', { waitUntil: 'domcontentloaded' })
+  const careers = page.locator('[data-team-member]').last()
+  await expect(careers.locator('astro-island:not([ssr])')).toHaveCount(1)
+  const button = careers.getByRole('button', { name: 'Show another random portrait' })
+  const portrait = button.locator('img')
+  const previous = await portrait.getAttribute('src')
+  await button.click()
+  await expect(button).toHaveAttribute('aria-busy', 'true')
+  await expect(portrait).toHaveAttribute('data-flip', 'out')
+  await expect(portrait).toHaveAttribute('src', previous!)
+  await expect(portrait).not.toHaveAttribute('src', previous!)
+  await expect(button).toHaveAttribute('aria-busy', 'false')
+  await expect(portrait).toHaveCSS('transform', 'none')
+
+  await page.emulateMedia({ reducedMotion: 'reduce' })
+  const beforeReducedMotion = await portrait.getAttribute('src')
+  await button.click()
+  await expect(portrait).not.toHaveAttribute('src', beforeReducedMotion!)
+  await expect(portrait).toHaveAttribute('data-flip', 'idle')
+  await expect(button).toHaveAttribute('aria-busy', 'false')
+})
+
 test('careers portrait restores grayscale after clicking and moving the pointer away', async ({
   page
 }, testInfo) => {
@@ -39,6 +64,7 @@ test('careers portrait changes to a different image on click and keyboard activa
     const previous = await portrait.getAttribute('src')
     await button.click()
     await expect(portrait).not.toHaveAttribute('src', previous!)
+    await expect(button).toHaveAttribute('aria-busy', 'false')
   }
 
   for (const key of ['Enter', 'Space']) {
@@ -46,6 +72,7 @@ test('careers portrait changes to a different image on click and keyboard activa
     await button.focus()
     await button.press(key)
     await expect(portrait).not.toHaveAttribute('src', previous!)
+    await expect(button).toHaveAttribute('aria-busy', 'false')
   }
 })
 
