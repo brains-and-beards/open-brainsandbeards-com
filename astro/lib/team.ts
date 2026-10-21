@@ -55,10 +55,5 @@ export const members: [string, LocalImage, string][] = [
     'Dávid',
     david,
     'Full-stack product builder focused on turning ideas into useful, well-crafted products. Enjoys working across technology and teams, spending time with dogs and tackling challenges with a tabletop strategist’s mindset.'
-  ],
-  [
-    'This could be you',
-    openPositions,
-    'Ready to take the next step in your career? Drop us a message to see if you could join our team.'
   ]
 ]
