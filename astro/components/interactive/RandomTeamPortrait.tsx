@@ -48,20 +48,20 @@ export default function RandomTeamPortrait({ images, alt }: Props) {
       disabled={images.length < 2}
       aria-busy={flip !== 'idle'}
     >
-      <img
-        className="person-portrait careers"
-        src={images[index].src}
-        srcSet={images[index].srcSet}
-        sizes="88px"
-        width={88}
-        height={120}
-        alt={alt}
-        loading="lazy"
-        decoding="async"
-        data-responsive-preset="team"
-        data-flip={flip}
-        onAnimationEnd={finishFlip}
-      />
+      <span className="careers" data-flip={flip} onAnimationEnd={finishFlip}>
+        <img
+          className="person-portrait"
+          src={images[index].src}
+          srcSet={images[index].srcSet}
+          sizes="88px"
+          width={88}
+          height={120}
+          alt={alt}
+          loading="lazy"
+          decoding="async"
+          data-responsive-preset="team"
+        />
+      </span>
     </button>
   )
 }

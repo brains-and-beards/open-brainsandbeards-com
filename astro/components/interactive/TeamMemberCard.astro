@@ -74,10 +74,11 @@ const portraits = await Promise.all(
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
     transition: filter 0.35s ease-in-out;
   }
-  /* .person :global(.person-portrait.careers) {
-    border: 1px dashed #2d2d2d;
-    background-color: #ffde1a;
-  } */
+  .person :global(.careers) {
+    display: block;
+    border-radius: 8px;
+    outline: 5px dashed #ffde1a;
+  }
   .person :global(.random-team-portrait) {
     display: block;
     flex-shrink: 0;
