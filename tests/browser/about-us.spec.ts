@@ -1,6 +1,41 @@
 import { expect, test } from '@playwright/test'
 import { readdirSync } from 'node:fs'
 
+test('careers portrait waits for the next image to decode before flipping', async ({ page }) => {
+  await page.addInitScript(() => {
+    Math.random = () => 0
+    const decode = HTMLImageElement.prototype.decode
+    const portraitWindow = window as typeof window & { releasePortrait: () => void }
+    const ready = new Promise<void>(resolve => {
+      portraitWindow.releasePortrait = resolve
+    })
+    HTMLImageElement.prototype.decode = async function () {
+      if (!this.isConnected) await ready
+      return decode.call(this)
+    }
+  })
+  await page.goto('/about-us/', { waitUntil: 'domcontentloaded' })
+  const careers = page.locator('[data-team-member="This could be you"]')
+  await expect(careers.locator('astro-island:not([ssr])')).toHaveCount(1)
+  const button = careers.getByRole('button', { name: 'Show another random portrait' })
+  const portrait = button.locator('img')
+  const frame = button.locator('.careers')
+  const previous = await portrait.getAttribute('src')
+
+  await button.click()
+  await expect(button).toHaveAttribute('aria-busy', 'true')
+  await expect(frame).toHaveAttribute('data-flip', 'loading')
+  await expect(frame).toHaveCSS('transform', 'none')
+  await expect(portrait).toHaveAttribute('src', previous!)
+
+  await page.evaluate(() => {
+    ;(window as typeof window & { releasePortrait: () => void }).releasePortrait()
+  })
+  await expect(portrait).not.toHaveAttribute('src', previous!)
+  await expect(button).toHaveAttribute('aria-busy', 'false')
+  expect(await portrait.evaluate(image => image.complete && image.naturalWidth > 0)).toBe(true)
+})
+
 test('careers portrait flips around its vertical axis and respects reduced motion', async ({
   page
 }) => {
