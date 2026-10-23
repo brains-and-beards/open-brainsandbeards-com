@@ -12,25 +12,68 @@ interface Props {
 
 export default function RandomTeamPortrait({ images, alt }: Props) {
   const [index, setIndex] = useState(0)
-  const [flip, setFlip] = useState<'idle' | 'out' | 'in'>('idle')
+  const [flip, setFlip] = useState<'idle' | 'loading' | 'out' | 'in'>('idle')
   const nextIndex = useRef(0)
+  const preparedPortrait = useRef<Promise<number | null> | null>(null)
+  const changing = useRef(false)
   const timer = useRef<number | undefined>(undefined)
 
   useEffect(() => {
     setIndex(Math.floor(Math.random() * images.length))
   }, [images])
 
+  useEffect(() => {
+    let cancelled = false
+    const prepare = async () => {
+      const candidates = images
+        .map((_, candidate) => candidate)
+        .filter(candidate => candidate !== index)
+      const start = Math.floor(Math.random() * candidates.length)
+      for (let attempt = 0; attempt < candidates.length; attempt++) {
+        if (cancelled) return null
+        const candidate = candidates[(start + attempt) % candidates.length]
+        const image = new Image()
+        image.sizes = '88px'
+        image.srcset = images[candidate].srcSet
+        image.src = images[candidate].src
+        try {
+          await image.decode()
+          return candidate
+        } catch {
+          // Keep the current portrait if a replacement cannot be loaded.
+        }
+      }
+      return null
+    }
+    preparedPortrait.current = prepare()
+    return () => {
+      cancelled = true
+      preparedPortrait.current = null
+    }
+  }, [images, index])
+
   const resetTimer = () => {
     window.clearInterval(timer.current)
     timer.current = window.setInterval(() => changePortraitRef.current(), 3500)
   }
 
-  const changePortrait = () => {
-    if (images.length < 2 || flip !== 'idle') return
-    nextIndex.current =
-      (index + 1 + Math.floor(Math.random() * (images.length - 1))) % images.length
+  const changePortrait = async () => {
+    if (images.length < 2 || flip !== 'idle' || changing.current) return
+    const prepared = preparedPortrait.current
+    if (!prepared) return
+    changing.current = true
+    setFlip('loading')
+    const candidate = await prepared
+    changing.current = false
+    if (preparedPortrait.current !== prepared) return
+    if (candidate === null) {
+      setFlip('idle')
+      return
+    }
+    nextIndex.current = candidate
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       setIndex(nextIndex.current)
+      setFlip('idle')
       return
     }
     setFlip('out')
