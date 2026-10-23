@@ -42,12 +42,12 @@ const pillars = [
   {
     title: 'Brains',
     image: brains,
-    text: 'Creativity, innovation and a problem solving skills. You give us a challenge, we provide the solution.'
+    text: 'Creativity, innovation and a problem solving skills.<br/>You give us a challenge, we provide the solution.'
   },
   {
     title: 'Beards',
     image: beards,
-    text: 'Experience, perspective and wisdom. We share our knowledge across the whole team.'
+    text: 'Experience, perspective and wisdom.<br/>We share our knowledge across the whole team.'
   }
 ]
 const channels = [
@@ -233,7 +233,7 @@ const channels = [
               />
               <div class="pillar-copy">
                 <h3>{title}</h3>
-                <p>{text}</p>
+                <p set:html={text} />
               </div>
             </div>
           ))}
