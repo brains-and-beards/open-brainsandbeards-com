@@ -15,7 +15,6 @@ const menuLinks = [
   { url: '/', label: 'Home' },
   { url: '/projects/', label: 'Projects' },
   { url: '/about-us/', label: 'About us' },
-  { url: '/team/', label: 'Team' },
   { url: 'https://brainsandbeards.com/jobs', label: 'Careers' },
   { url: '/blog/', label: 'Blog' },
   { url: 'https://podcast.brainsandbeards.com', label: 'Podcast' }
@@ -46,7 +45,16 @@ const backLabel = `Back to ${projects ? 'projects' : 'homepage'}`
         <ul class="menu-links">
           {menuLinks.map(({ url, label }) => (
             <li class="menu-link">
-              <a href={url}>{label}</a>
+              <a
+                href={url}
+                aria-current={
+                  Astro.url.pathname.replace(/\/$/, '') === url.replace(/\/$/, '')
+                    ? 'page'
+                    : undefined
+                }
+              >
+                {label}
+              </a>
             </li>
           ))}
         </ul>
@@ -80,7 +88,16 @@ const backLabel = `Back to ${projects ? 'projects' : 'homepage'}`
           <ul>
             {menuLinks.map(({ url, label }) => (
               <li class="menu-link mobile-menu-link">
-                <a href={url}>{label}</a>
+                <a
+                  href={url}
+                  aria-current={
+                    Astro.url.pathname.replace(/\/$/, '') === url.replace(/\/$/, '')
+                      ? 'page'
+                      : undefined
+                  }
+                >
+                  {label}
+                </a>
               </li>
             ))}
           </ul>

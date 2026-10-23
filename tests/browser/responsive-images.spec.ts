@@ -19,7 +19,7 @@ test('image candidates stay sorted, unique, and within source resolution', () =>
 
 const routes = [
   '/',
-  '/team/',
+  '/about-us/',
   '/hire-us/',
   '/projects/',
   '/projects/manomano/',
