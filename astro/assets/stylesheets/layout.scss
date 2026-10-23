@@ -64,7 +64,8 @@ a {
   display: inline-block;
   padding: 0 10px;
   a:hover,
-  a[aria-current='page'] {
+  a[aria-current='page'],
+  a[aria-current='location'] {
     @include underlined-link;
   }
 

@@ -11,6 +11,15 @@ interface Props {
 }
 
 const { simple = false, grey = false, projects = false } = Astro.props
+const pathname = Astro.url.pathname.replace(/\/$/, '')
+const currentLocation = (url: string) => {
+  const path = url.replace(/\/$/, '')
+  if (pathname === path) return 'page'
+  if ((path === '/blog' || path === '/projects') && pathname.startsWith(`${path}/`)) {
+    return 'location'
+  }
+  return undefined
+}
 const menuLinks = [
   { url: '/', label: 'Home' },
   { url: '/projects/', label: 'Projects' },
@@ -47,11 +56,7 @@ const backLabel = `Back to ${projects ? 'projects' : 'homepage'}`
             <li class="menu-link">
               <a
                 href={url}
-                aria-current={
-                  Astro.url.pathname.replace(/\/$/, '') === url.replace(/\/$/, '')
-                    ? 'page'
-                    : undefined
-                }
+                aria-current={currentLocation(url)}
               >
                 {label}
               </a>
@@ -90,11 +95,7 @@ const backLabel = `Back to ${projects ? 'projects' : 'homepage'}`
               <li class="menu-link mobile-menu-link">
                 <a
                   href={url}
-                  aria-current={
-                    Astro.url.pathname.replace(/\/$/, '') === url.replace(/\/$/, '')
-                      ? 'page'
-                      : undefined
-                  }
+                  aria-current={currentLocation(url)}
                 >
                   {label}
                 </a>
