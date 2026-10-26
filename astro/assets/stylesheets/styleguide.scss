@@ -27,13 +27,13 @@ h2 {
 h3 {
   font-size: 32px;
   line-height: 40px;
+  padding-top: 48px;
+  margin-bottom: 48px;
+  margin-top: 0px;
   @include mobile-version {
     font-size: 24px;
     line-height: 32px;
   }
-  padding-top: 48px;
-  margin-bottom: 48px;
-  margin-top: 0px;
 }
 
 h4 {
