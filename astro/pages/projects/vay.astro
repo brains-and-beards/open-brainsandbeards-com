@@ -1,11 +1,40 @@
 ---
 import CaseStudyPage from '../../layouts/CaseStudyPage.astro'
+import ResponsiveImage from '../../components/ui/ResponsiveImage.astro'
+import rentByTheMinute from '../../assets/case-studies/vay/rent-by-the-minute.png'
+import carDelivery from '../../assets/case-studies/vay/car-delivery.png'
+import driverlessArrival from '../../assets/case-studies/vay/driverless-arrival.png'
+import unlockAndDrive from '../../assets/case-studies/vay/unlock-and-drive.png'
+
+// First four mobile screenshots from Vay's Google Play listing, in store order.
+const screenshots = [
+  { src: rentByTheMinute, alt: 'Rent cars by the minute. Delivered driverless.' },
+  { src: carDelivery, alt: 'Your car comes to you: set a delivery spot on the map.' },
+  { src: driverlessArrival, alt: 'Delivered driverless: track your car arriving in minutes.' },
+  { src: unlockAndDrive, alt: 'Unlock and drive: view your trip, route and rental price.' }
+]
 ---
 
 <CaseStudyPage
   title="Case study: Vay"
   description="Creating a customer-facing mobile app for remote controlled cars in Las Vegas."
 >
+  <div class="big-part-yellow">
+    <div class="heading-pic vay-screenshots">
+      {screenshots.map(({ src, alt }, index) => (
+        <ResponsiveImage
+          preset="case-study-hero"
+          src={src}
+          alt={alt}
+          width={241}
+          maxWidth={241}
+          sizes="(max-width: 690px) 70px, (max-width: 1199px) 117px, 241px"
+          loading="eager"
+          fetchpriority={index === 0 ? 'high' : 'auto'}
+        />
+      ))}
+    </div>
+  </div>
   <p>
     Founded in 2018 with a mission of redefining urban mobility, Vay is today a successfully
     operating company with with $200M+ funding and over 250 employees. The main idea behind their
@@ -207,3 +236,20 @@ import CaseStudyPage from '../../layouts/CaseStudyPage.astro'
     lot about working in a complex environment.
   </p>
 </CaseStudyPage>
+
+<style>
+  .vay-screenshots {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 2%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .vay-screenshots :global(img) {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 8% / 4.5%;
+  }
+</style>
