@@ -27,7 +27,7 @@ const { Content } = post ? await render(post) : { Content: null }
 
 {page ? (
   <BlogList posts={await getBlogPosts()} currentPage={page} />
-) : (
+) : post && Content && (
   <BlogPost post={post}>
     <Content components={{ img: MarkdownImage }} />
   </BlogPost>
