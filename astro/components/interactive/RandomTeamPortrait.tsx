@@ -1,4 +1,4 @@
-import _ from 'lodash'
+import { shuffle } from 'lodash'
 import React, { useEffect, useRef, useState } from 'react'
 
 interface Portrait {
@@ -22,7 +22,7 @@ export default function RandomTeamPortrait({ images, alt }: Props) {
 
   useEffect(() => {
     const first = Math.floor(Math.random() * images.length)
-    remaining.current = _.shuffle(
+    remaining.current = shuffle(
       images.map((_, candidate) => candidate).filter(candidate => candidate !== first)
     )
     setIndex(first)
@@ -33,7 +33,7 @@ export default function RandomTeamPortrait({ images, alt }: Props) {
     let cancelled = false
     const prepare = async () => {
       if (remaining.current.length === 0) {
-        remaining.current = _.shuffle(images.map((_, candidate) => candidate))
+        remaining.current = shuffle(images.map((_, candidate) => candidate))
         const last = remaining.current.length - 1
         if (remaining.current[last] === index) {
           // Start the new stack with a different portrait from the previous one.
