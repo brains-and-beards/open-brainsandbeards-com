@@ -28,6 +28,7 @@ jobs:
           cache: npm
 
       - run: npm ci
+      - run: npm run astro:check
       - run: npm run astro:build
 
       - name: Run performance audits
