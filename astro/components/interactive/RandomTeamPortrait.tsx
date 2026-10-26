@@ -1,4 +1,4 @@
-import { shuffle } from 'lodash'
+import shuffle from 'lodash/shuffle'
 import React, { useEffect, useRef, useState } from 'react'
 
 interface Portrait {
