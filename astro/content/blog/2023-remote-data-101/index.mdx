@@ -90,7 +90,7 @@ I mentioned earlier in this article that sometimes you'll need to decide what to
 
 - File an error. If you get an object that you can’t use, it means there’s an error _somewhere_. Either a technical one (in data validation on one of the sides), or a communication one (there’s a misunderstanding about the contract between the systems). Usually we’d use the same [Sentry reporting system](https://docs.sentry.io/platforms/react-native/) that we use for handling any other exception.
 
-```tsx{5,7-11,29}
+```tsx {5,7-11,29}
 import z from 'zod'
 
 const mapBEToFE = (hero: HeroBE): Hero | undefined => {
