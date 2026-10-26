@@ -1,6 +1,8 @@
 ---
 import CaseStudyPage from '../../layouts/CaseStudyPage.astro'
 import ResponsiveImage from '../../components/ui/ResponsiveImage.astro'
+import Testimonial from '../../components/case-studies/Testimonial.astro'
+import vayLogo from '../../assets/client-logos/vay.png'
 import rentByTheMinute from '../../assets/case-studies/vay/rent-by-the-minute.png'
 import carDelivery from '../../assets/case-studies/vay/car-delivery.png'
 import driverlessArrival from '../../assets/case-studies/vay/driverless-arrival.png'
@@ -65,6 +67,13 @@ const screenshots = [
     allowing the user to hop out of the car at the destination without worrying about finding a
     long-term parking space.
   </p>
+  <Testimonial
+    image={vayLogo}
+    quote="Placeholder quote: Brains & Beards helped us turn an ambitious mobility concept into a reliable mobile experience. Their technical expertise and close collaboration across teams have made them a valuable partner throughout Vay’s journey."
+    name="Kiril Vuchkov"
+    position="Senior Engineering Manager"
+    company="Vay"
+  />
   <h3>Challenges</h3>
   <p>
     Most of the difficulties concerning this project stemmed from its size and the level of
@@ -235,9 +244,26 @@ const screenshots = [
     of view. We believe we not only contributed to Vay's development as a company but also learned a
     lot about working in a complex environment.
   </p>
+  <Testimonial
+    image={vayLogo}
+    quote="Placeholder quote: Working with Brains & Beards feels like having experienced teammates who care about the product as much as we do. From map performance to Bluetooth integration, they bring practical solutions and take ownership of the details that matter to our users."
+    name="Olha Plisko"
+    position="Mobile Team Leader"
+    company="Vay"
+    final
+  />
 </CaseStudyPage>
 
 <style>
+  :global(#case-study .testimonial .photo img) {
+    box-sizing: border-box;
+    width: 152px;
+    height: 152px;
+    padding: 24px;
+    object-fit: contain;
+    background: white;
+  }
+
   .vay-screenshots {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
