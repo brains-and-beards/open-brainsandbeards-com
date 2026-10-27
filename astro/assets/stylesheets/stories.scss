@@ -47,6 +47,22 @@
   text-transform: uppercase;
 }
 
+.stories-subheading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  h3 {
+    font-size: 20px;
+    font-weight: 500;
+    font-family: 'Recoleta';
+  }
+
+  p.stories-year {
+    font-size: 10px;
+  }
+}
+
 .stories-description {
   max-width: 490px;
   font-size: 18px;
