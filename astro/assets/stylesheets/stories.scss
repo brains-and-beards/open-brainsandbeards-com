@@ -38,8 +38,11 @@
 
 .stories-overline {
   font-family: 'Neutrif Medium';
+  color: var(--text-ink, #2d2d2d);
   font-size: 11px;
-  line-height: 18px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 18px; /* 163.636% */
   letter-spacing: 1.32px;
   text-transform: uppercase;
 }
