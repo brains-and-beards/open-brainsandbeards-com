@@ -8,7 +8,7 @@ author: "Wojciech Ogrodowczyk"
 
 I’ve been working recently with modal popups in React Native (again!) and realised it’s a recurring pattern in a lot of applications that’s worth writing a bit about. So, here’s a few of my lessons learnt over implementing modal dialogs over and over again 📣
 
-Note: For a lot of cases you might be just fine using the built-in [Modal](https://facebook.github.io/react-native/docs/modal.html) component from React Native. If that solves your problem, all the power to you! 💪 However, in this post I’ll focus on handling situation where you’d like to have more control over the modal component and customise it completely.
+Note: For a lot of cases you might be just fine using the built-in [Modal](https://reactnative.dev/docs/modal) component from React Native. If that solves your problem, all the power to you! 💪 However, in this post I’ll focus on handling situation where you’d like to have more control over the modal component and customise it completely.
 
 ### Basic version
 
@@ -65,7 +65,7 @@ So, let’s add a few improvements here 💪
 
 One of the things that would make it easier to extract such a dialog into a global component would be to completely separate it from the screen where it’s embedded. A good step to cut any _local state_ ties is to just make it a separate screen that is shown like any other — with a navigation transition.
 
-In this example I’ll show how we can achieve this using [React Navigation](https://reactnavigation.org/), which I believe is the most popular navigation solution nowadays. When we read the documentation we can see [an example how to implement a fullscreen modal](https://reactnavigation.org/docs/en/modal.html). We can easily follow it and add our own global navigator stack that will decide whether we render the content of our application (normal screens), or our modal:
+In this example I’ll show how we can achieve this using [React Navigation](https://reactnavigation.org/), which I believe is the most popular navigation solution nowadays. When we read the documentation we can see [an example how to implement a fullscreen modal](https://reactnavigation.org/docs/1.x/modal/). We can easily follow it and add our own global navigator stack that will decide whether we render the content of our application (normal screens), or our modal:
 
 ```javascript:numberLines=true
 const contentNavigator = createStackNavigator(

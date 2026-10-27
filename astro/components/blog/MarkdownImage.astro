@@ -1,12 +1,15 @@
 ---
-import { Image } from 'astro:assets'
+import { Image, type LocalImageProps } from 'astro:assets'
 import type { HTMLAttributes } from 'astro/types'
 import type { LocalImage } from '../../lib/responsive-images'
 import ResponsiveImage from '../ui/ResponsiveImage.astro'
 
-interface Props extends Omit<HTMLAttributes<'img'>, 'src' | 'alt'> {
+interface Props extends Omit<HTMLAttributes<'img'>, 'src' | 'alt' | 'width' | 'height' | 'sizes'> {
   src: string | LocalImage | Promise<LocalImage>
   alt: string
+  width?: LocalImageProps['width']
+  height?: LocalImageProps['height']
+  sizes?: string
 }
 
 const { src, alt, ...attributes } = Astro.props

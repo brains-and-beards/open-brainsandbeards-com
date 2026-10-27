@@ -30,12 +30,12 @@ export default function TrustBarItems({ trustItems }: Props) {
   const [items, setItems] = useState<TrustItem[]>([])
 
   useEffect(() => {
-    const availableItems = trustItems ?? [
+    const availableItems: TrustItem[] = trustItems ?? [
       { value: 6, unit: 'years', label: 'longest ongoing client engagement' },
       { value: 25, label: 'satisfied clients' },
       {
         value: 4.8,
-        unit: <span style={{ position: 'relative', top: -2 }}>⭑</span>,
+        unit: '⭑',
         label: 'average store rating of our mobile apps'
       }
       // { value: 2, label: "in-house open-source projects" },
@@ -48,12 +48,16 @@ export default function TrustBarItems({ trustItems }: Props) {
     <ul className="trustBarList row">
       {items.map(({ value, unit, label }) => (
         <li className="trustBarItem" key={label}>
-          <h2 aria-label={`${value}${unit}`}>
+          <h2 aria-label={`${value}${unit ?? ''}`}>
             <AnimatedNumber value={value} />
             {unit && (
               <span aria-hidden="true">
-                {!`${unit}`.startsWith('+') && ' '}
-                {unit}
+                {!unit.startsWith('+') && ' '}
+                {unit === '⭑' ? (
+                  <span style={{ position: 'relative', top: -2 }}>{unit}</span>
+                ) : (
+                  unit
+                )}
               </span>
             )}
           </h2>

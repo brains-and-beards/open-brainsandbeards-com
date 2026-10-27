@@ -1,19 +1,162 @@
 ---
+import { getImage } from 'astro:assets'
+import { responsiveImageProps, type LocalImage } from '../../lib/responsive-images'
+import RandomTeamPortrait from './RandomTeamPortrait'
 import ResponsiveImage from '../ui/ResponsiveImage.astro'
-import ImagePriority from '../ui/ImagePriority.astro'
+import ReadMoreLink from '../ui/ReadMoreLink.astro'
+
 interface Props {
   name: string
   bio: string
-  image: any
-  priority?: boolean
+  image: LocalImage
+  careers?: boolean
+  randomImages?: LocalImage[]
 }
 
-const { name, bio, image, priority = false } = Astro.props
+const { name, bio, image, careers = false, randomImages = [] }: Props = Astro.props
+const portraits = await Promise.all(
+  randomImages.map(async src => {
+    const optimized = await getImage({
+      src,
+      width: 88,
+      format: 'webp',
+      ...responsiveImageProps(src, 'team', { maxWidth: 88, sizes: '88px' })
+    })
+    return { src: optimized.src, srcSet: optimized.srcSet.attribute }
+  })
+)
 ---
 
-<div class="team-member" id={name} data-team-member={name}>
-  <ResponsiveImage preset="team" src={image} alt={`member: ${name}`} width={280} />
-  {priority && <ImagePriority media="(min-width: 691px)" />}
-  <p class="sub1">{name}</p>
-  <p>{bio}</p>
-</div>
+<article class="person" id={name} data-team-member={name}>
+  {portraits.length > 0 ? (
+    <RandomTeamPortrait client:load images={portraits} alt={name} />
+  ) : (
+    <ResponsiveImage
+      class={`person-portrait ${careers ? 'careers' : ''}`}
+      preset="team"
+      src={image}
+      alt={careers ? 'This could be you' : name}
+      width={88}
+      maxWidth={88}
+      sizes="88px"
+    />
+  )}
+  <div>
+    <h3>{careers ? <a href="https://brainsandbeards.com/jobs/">{name}</a> : name}</h3>
+    <p>{bio}</p>
+    {careers && (
+      <ReadMoreLink
+        class="careers-link"
+        href="https://brainsandbeards.com/jobs"
+        text="Explore careers"
+      />
+    )}
+  </div>
+</article>
+
+<style>
+  .person {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    border-top: 1px solid #e4e2d6;
+    padding: 16px 0 24px;
+    scroll-margin-top: 24px;
+    min-width: 0;
+  }
+  .person :global(.person-portrait) {
+    width: 88px;
+    height: 120px;
+    flex-shrink: 0;
+    object-fit: cover;
+    border-radius: 8px;
+    filter: grayscale(0.6);
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+    transition: filter 0.35s ease-in-out;
+  }
+  .person :global(.careers) {
+    display: block;
+    border-radius: 8px;
+    outline: 5px dashed #ffde1a;
+  }
+  .person :global(.random-team-portrait) {
+    display: block;
+    flex-shrink: 0;
+    width: 88px;
+    height: 120px;
+    padding: 0;
+    border: 0;
+    border-radius: 8px;
+    background: none;
+    box-shadow: none;
+    cursor: pointer;
+    perspective: 600px;
+  }
+  .person :global(.random-team-portrait img) {
+    display: block;
+  }
+  .person :global([data-flip='out']) {
+    animation: portrait-flip-out 200ms ease-in forwards;
+  }
+  .person :global([data-flip='in']) {
+    animation: portrait-flip-in 200ms ease-out forwards;
+  }
+  @keyframes portrait-flip-out {
+    from {
+      transform: rotateY(0deg);
+    }
+    to {
+      transform: rotateY(90deg);
+    }
+  }
+  @keyframes portrait-flip-in {
+    from {
+      transform: rotateY(-90deg);
+    }
+    to {
+      transform: rotateY(0deg);
+    }
+  }
+  .person :global(.random-team-portrait:focus-visible) {
+    outline: 2px solid #2d2d2d;
+    outline-offset: 4px;
+  }
+  .person:hover :global(.person-portrait),
+  .person:target :global(.person-portrait),
+  .person:has(:global(:focus-visible)) :global(.person-portrait),
+  :global([id='Brains&Beards']:target) .person :global(.person-portrait) {
+    filter: grayscale(0);
+  }
+  h3 {
+    font-family: 'Neutrif Medium';
+    font-size: 18px;
+    line-height: 24px;
+    padding: 0;
+    margin: 0 0 6px;
+  }
+  p {
+    margin: 0;
+    font-size: 16px;
+    line-height: 24px;
+  }
+  .person :global(.careers-link) {
+    margin-top: 20px;
+  }
+  a:not(.read-more-link):hover {
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+  @media (max-width: 1000px), (hover: none), (pointer: coarse) {
+    .person :global(.person-portrait) {
+      filter: none;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .person :global([data-flip]) {
+      animation-duration: 1ms;
+    }
+    .person :global(.person-portrait) {
+      transition: none;
+    }
+  }
+</style>

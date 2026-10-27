@@ -12,7 +12,7 @@ Whether you’re migrating from UIWebView or just starting out with the new stuf
 
 #### Limits
 
-WKWebViews have limits on what the JavaScript you inject is allowed to do. You can’t use _alert()_ or _confirm()_, for example. Anything that obstructs the user’s experience (so typical debugging tools) are off-limits. What you should do instead is use [WKScriptMessageHandler protocol](https://developer.apple.com/library/prerelease/ios/documentation/WebKit/Reference/WKScriptMessageHandler_Ref/index.html) to send messages back to your app and them NSLog them there. This way you’ll have some basic printf-debugging capabilities.
+WKWebViews have limits on what the JavaScript you inject is allowed to do. You can’t use _alert()_ or _confirm()_, for example. Anything that obstructs the user’s experience (so typical debugging tools) are off-limits. What you should do instead is use [WKScriptMessageHandler protocol](https://developer.apple.com/documentation/webkit/wkscriptmessagehandler) to send messages back to your app and them NSLog them there. This way you’ll have some basic printf-debugging capabilities.
 
 Also, keep in mind that there’s a limit to the length of the message that you’re allowed to send back, so you can’t just do _document.body.outerHTML_. Focus on the parts that you need to work on.
 
@@ -46,6 +46,6 @@ private func postMakingHTML(url: String, payload: String) -> String {
 
 ![](success.jpeg)
 
-Final note, when [injecting your JavaScript](https://developer.apple.com/library/prerelease/ios/documentation/WebKit/Reference/WKUserScript_Ref/index.html) be sure you’re working in small increments. Write the smallest amount of code that does \*anything\*, verify it works, write the smallest change possible, verify, etc. This is because of the fact that when you make a small syntax error (missing semicolon — those are the worst for a develper who already got used to Swift!) everything just stops working, with no error message. It helps **a lot** when you know what was the exact change you did that broke it.
+Final note, when [injecting your JavaScript](https://developer.apple.com/documentation/webkit/wkuserscript) be sure you’re working in small increments. Write the smallest amount of code that does \*anything\*, verify it works, write the smallest change possible, verify, etc. This is because of the fact that when you make a small syntax error (missing semicolon — those are the worst for a develper who already got used to Swift!) everything just stops working, with no error message. It helps **a lot** when you know what was the exact change you did that broke it.
 
 As you can see, working with web views is not all roses and butterflies, but sometimes there’s no other way. Hope this small list of undocumented WKWebView behaviour helps you when your time comes to jump into this swamp.
