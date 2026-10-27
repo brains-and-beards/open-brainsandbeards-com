@@ -114,6 +114,40 @@ test('careers portrait changes to a different image on click and keyboard activa
   }
 })
 
+test('careers portrait shows every image once per shuffled stack', async ({ page }) => {
+  await page.addInitScript(() => {
+    Math.random = () => 0
+  })
+  await page.emulateMedia({ reducedMotion: 'reduce' })
+  await page.goto('/about-us/', { waitUntil: 'domcontentloaded' })
+  const careers = page.locator('[data-team-member="This could be you"]')
+  await expect(careers.locator('astro-island:not([ssr])')).toHaveCount(1)
+  const button = careers.getByRole('button', { name: 'Show another random portrait' })
+  const portrait = button.locator('img')
+  const imageCount = readdirSync('astro/assets/team/you').filter(name =>
+    /\.(jpg|jpeg|png|webp|avif)$/.test(name)
+  ).length
+  let previous = (await portrait.getAttribute('src'))!
+  const stacks: Set<string>[] = []
+
+  for (let stack = 0; stack < 3; stack++) {
+    const sources = new Set<string>()
+    for (let image = 0; image < imageCount; image++) {
+      if (stack > 0 || image > 0) {
+        await button.click()
+        await expect(portrait).not.toHaveAttribute('src', previous)
+        await expect(button).toHaveAttribute('aria-busy', 'false')
+      }
+      previous = (await portrait.getAttribute('src'))!
+      sources.add(previous)
+    }
+    expect(sources.size).toBe(imageCount)
+    stacks.push(sources)
+  }
+  expect(stacks[1]).toEqual(stacks[0])
+  expect(stacks[2]).toEqual(stacks[0])
+})
+
 test('careers portrait is selected in the browser on each page load', async ({ page }) => {
   await page.addInitScript(() => {
     Math.random = () => Number(sessionStorage.getItem('portrait-random') ?? '0')

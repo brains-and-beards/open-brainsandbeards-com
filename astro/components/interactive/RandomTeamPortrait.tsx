@@ -1,3 +1,4 @@
+import shuffle from 'lodash/shuffle'
 import React, { useEffect, useRef, useState } from 'react'
 
 interface Portrait {
@@ -11,7 +12,8 @@ interface Props {
 }
 
 export default function RandomTeamPortrait({ images, alt }: Props) {
-  const [index, setIndex] = useState(0)
+  const [index, setIndex] = useState<number | null>(null)
+  const remaining = useRef<number[]>([])
   const [flip, setFlip] = useState<'idle' | 'loading' | 'out' | 'in'>('idle')
   const nextIndex = useRef(0)
   const preparedPortrait = useRef<Promise<number | null> | null>(null)
@@ -19,19 +21,32 @@ export default function RandomTeamPortrait({ images, alt }: Props) {
   const timer = useRef<number | undefined>(undefined)
 
   useEffect(() => {
-    setIndex(Math.floor(Math.random() * images.length))
+    const first = Math.floor(Math.random() * images.length)
+    remaining.current = shuffle(
+      images.map((_, candidate) => candidate).filter(candidate => candidate !== first)
+    )
+    setIndex(first)
   }, [images])
 
   useEffect(() => {
+    if (index === null || images.length < 2) return
     let cancelled = false
     const prepare = async () => {
-      const candidates = images
-        .map((_, candidate) => candidate)
-        .filter(candidate => candidate !== index)
-      const start = Math.floor(Math.random() * candidates.length)
-      for (let attempt = 0; attempt < candidates.length; attempt++) {
+      if (remaining.current.length === 0) {
+        remaining.current = shuffle(images.map((_, candidate) => candidate))
+        const last = remaining.current.length - 1
+        if (remaining.current[last] === index) {
+          // Start the new stack with a different portrait from the previous one.
+          const swap = Math.floor(Math.random() * last)
+          ;[remaining.current[last], remaining.current[swap]] = [
+            remaining.current[swap],
+            remaining.current[last]
+          ]
+        }
+      }
+      while (remaining.current.length > 0) {
         if (cancelled) return null
-        const candidate = candidates[(start + attempt) % candidates.length]
+        const candidate = remaining.current.pop()!
         const image = new Image()
         image.sizes = '88px'
         image.srcset = images[candidate].srcSet
@@ -114,8 +129,8 @@ export default function RandomTeamPortrait({ images, alt }: Props) {
       <span className="careers" data-flip={flip} onAnimationEnd={finishFlip}>
         <img
           className="person-portrait"
-          src={images[index].src}
-          srcSet={images[index].srcSet}
+          src={images[index ?? 0].src}
+          srcSet={images[index ?? 0].srcSet}
           sizes="88px"
           width={88}
           height={120}
