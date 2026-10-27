@@ -23,6 +23,10 @@
 
 .stories-introduction {
   padding: 62px 0 52px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-end;
 
   h1 {
     font-size: 48px;
@@ -67,10 +71,7 @@
   max-width: 490px;
   font-size: 18px;
   line-height: 1.65;
-}
-
-.stories-subscriptions {
-  margin-top: 20px;
+  padding-bottom: 12px;
 }
 
 .stories-text-links {
@@ -88,6 +89,7 @@
 .stories-read-more-links {
   display: flex;
   gap: 32px;
+  margin-bottom: 18px;
 
   .read-more-container {
     display: flex;
