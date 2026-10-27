@@ -1,3 +1,7 @@
+@use './colors' as *;
+@use './mixins' as *;
+@use './team';
+
 .narrow-column {
   @include desktop-version {
     width: 65%;

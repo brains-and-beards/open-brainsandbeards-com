@@ -1,3 +1,7 @@
+@use './mixins' as *;
+@use './layout';
+@use './mobile-layout';
+
 .no-outsourcing {
   @include mobile-version {
     text-align: center;

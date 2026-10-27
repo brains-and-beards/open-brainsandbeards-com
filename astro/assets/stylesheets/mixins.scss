@@ -1,3 +1,5 @@
+@use './colors' as *;
+
 @mixin mobile-version() {
   @media screen and (max-width: 690px) {
     @content;
