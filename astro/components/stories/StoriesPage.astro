@@ -65,25 +65,26 @@ const mailUrl =
         </article>
       )}
 
-      <div class="row stories-subheading">
-        <h3>Previously, at the studio</h3>
-        <p class="stories-year">{new Date(pageStories[0].date).getFullYear()}</p>
-      </div>
+      <h3 class="stories-subheading">Previously, at the studio</h3>
 
       <div class="stories-archive" aria-label="Story archive">
         {months.map(month => (
-          <div class="stories-list">
-            {pageStories
-              .filter(story => story.date.startsWith(month))
-              .map(story => (
-                <StoryEntry
-                  story={story}
-                  initiallyOpen={currentPage > 1 && story.id === pageStories[0].id}
-                  client:load
-                />
-              ))}
-          </div>
-          // </section>
+          <section class="stories-month" aria-labelledby={`month-${month}`}>
+            <h2 id={`month-${month}`}>
+              {storyDate(`${month}-01`, { month: 'long', year: 'numeric' })}
+            </h2>
+            <div class="stories-list">
+              {pageStories
+                .filter(story => story.date.startsWith(month))
+                .map(story => (
+                  <StoryEntry
+                    story={story}
+                    initiallyOpen={currentPage > 1 && story.id === pageStories[0].id}
+                    client:load
+                  />
+                ))}
+            </div>
+          </section>
         ))}
       </div>
 
