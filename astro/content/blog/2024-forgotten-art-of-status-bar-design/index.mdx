@@ -134,7 +134,7 @@ This is how the current scroll view position can be tracked. The `scrollY` value
 </div>
 
 A more sophisticated solution would be to use a semitransparent gradient background that gives a little bit of extra contrast for the status bar content. This preserves the nice aesthetics of scrolling all the way to the top screen edge while maximizing the screen space utilization. We can modify our AppStatusBar using [react-native-linear-gradient](https://github.com/react-native-linear-gradient/react-native-linear-gradient) to achieve a similar effect
-```tsx{3-6,12}
+```tsx {3-6,12}
 const AppStatusBar: React.FC<AppStatusBarProps> = () => {
   return (
     <LinearGradient
@@ -196,7 +196,7 @@ The StatusBar component supports some basic predefined animations via boolean `a
 
 Those optional iOS animations are enabled by default on Android and remain unmodifiable, so I don’t see a reason to not make it more cross platform here as well and set this flag to `true`. With this adjustment, our true cross-platform status bar props count rounds up to three at minimum:
 
-```tsx{5-7}
+```tsx {5-7}
 const AppStatusBar: React.FC<AppStatusBarProps> = () => {
   return (
     <StatusBar

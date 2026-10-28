@@ -1,6 +1,7 @@
 import mdx from '@astrojs/mdx'
 import react from '@astrojs/react'
 import sitemap from '@astrojs/sitemap'
+import expressiveCode from 'astro-expressive-code'
 import { defineConfig } from 'astro/config'
 
 export default defineConfig({
@@ -32,10 +33,5 @@ export default defineConfig({
       }
     ]
   },
-  markdown: {
-    shikiConfig: {
-      theme: 'solarized-light'
-    }
-  },
-  integrations: [mdx(), react(), sitemap()]
+  integrations: [expressiveCode(), mdx(), react(), sitemap()]
 })

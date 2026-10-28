@@ -25,7 +25,7 @@ Now, it’s up to you how to handle any sort of discrepancies. Probably it would
 
 - Generic parser that logs errors and takes contract specific mapper
 
-```ts:numberLines=true
+```ts showLineNumbers
 const safeParser = <InputType, ResultType>(
  mapper: (item: InputType) => ResultType,
  item: InputType,
@@ -44,7 +44,7 @@ const safeParser = <InputType, ResultType>(
 
 - Assuming following type definition:
 
-```ts:numberLines=true
+```ts showLineNumbers
 type Apple = {
  cultivar: string;
  trivia: {
@@ -57,7 +57,7 @@ type Apple = {
 
 - And a matching mapper that will model the structure according to the needs
 
-```ts:numberLines=true
+```ts showLineNumbers
 const appleMapper = (apple: Apple) => {
  if (!apple.cultivar) {
    throw new Error('Bad Apple!');
@@ -76,7 +76,7 @@ const appleMapper = (apple: Apple) => {
 
 - Given the following API response:
 
-```ts:numberLines=true
+```ts showLineNumbers
 const response = {
  content: [
    {
@@ -97,7 +97,7 @@ const response = {
 
 - You are ready to tackle anything thrown at you
 
-```ts:numberLines=true
+```ts showLineNumbers
 const validateApples = ({ content = [] }: { content: Apple[] }) =>
   content
     .map((apple) => safeParser(appleMapper, apple))
