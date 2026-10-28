@@ -1,8 +1,10 @@
 ---
+import { render } from 'astro:content'
 import BaseLayout from '../../layouts/BaseLayout.astro'
 import ReadMore from '../../components/ui/ReadMore.astro'
 import StoryEntry from './StoryEntry'
-import { stories, storyDate, storiesPerPage } from '../../lib/stories'
+import { storyDate, storiesPerPage } from '../../lib/stories'
+import { getStories } from '../../lib/storyContent'
 import '../../assets/stylesheets/stories.scss'
 
 interface Props {
@@ -10,9 +12,20 @@ interface Props {
 }
 
 const { currentPage } = Astro.props
+const stories = await getStories()
 const pageCount = Math.ceil(stories.length / storiesPerPage)
-const pageStories = stories.slice((currentPage - 1) * storiesPerPage, currentPage * storiesPerPage)
-const latest = stories[0]
+const pageStories = await Promise.all(
+  stories
+    .slice((currentPage - 1) * storiesPerPage, currentPage * storiesPerPage)
+    .map(async story => ({
+      ...story.data,
+      id: story.id,
+      hasBody: Boolean(story.body?.trim()),
+      Content: (await render(story)).Content
+    }))
+)
+const latest = pageStories[0]
+const LatestContent = latest?.Content
 const months = [...new Set(pageStories.map(story => story.date.slice(0, 7)))]
 const pageUrl = (page: number) => (page === 1 ? '/stories/' : `/stories/${page}/`)
 const mailUrl =
@@ -52,7 +65,7 @@ const mailUrl =
         </div>
       </header>
 
-      {currentPage === 1 && (
+      {currentPage === 1 && latest && LatestContent && (
         <article class="stories-latest" aria-labelledby="latest-story-title" id={latest.id}>
           <p class="stories-overline">
             The latest story ·{' '}
@@ -62,7 +75,9 @@ const mailUrl =
           </p>
           <h2 id="latest-story-title">{latest.title}</h2>
           <p class="stories-author">{latest.author}</p>
-          <div class="stories-body">{latest.paragraphs?.map(paragraph => <p>{paragraph}</p>)}</div>
+          <div class="stories-body">
+            <LatestContent />
+          </div>
         </article>
       )}
 
@@ -77,12 +92,14 @@ const mailUrl =
             <div class="stories-list">
               {pageStories
                 .filter(story => story.date.startsWith(month))
-                .map(story => (
+                .map(({ Content, hasBody, ...story }) => (
                   <StoryEntry
                     story={story}
                     initiallyOpen={currentPage > 1 && story.id === pageStories[0].id}
                     client:load
-                  />
+                  >
+                    {hasBody ? <Content /> : <p>This story will be available soon.</p>}
+                  </StoryEntry>
                 ))}
             </div>
           </section>

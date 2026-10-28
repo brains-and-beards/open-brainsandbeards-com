@@ -5,9 +5,10 @@ import { type Story, storyDate } from '../../lib/stories'
 interface Props {
   story: Story
   initiallyOpen: boolean
+  children: React.ReactNode
 }
 
-const StoryEntry = ({ story, initiallyOpen }: Props) => {
+const StoryEntry = ({ story, initiallyOpen, children }: Props) => {
   const detailsRef = useRef<HTMLDetailsElement>(null)
   const animationRef = useRef<Animation | null>(null)
   const expandedRef = useRef(initiallyOpen)
@@ -73,11 +74,7 @@ const StoryEntry = ({ story, initiallyOpen }: Props) => {
       </summary>
       <div className="stories-entry-body stories-body">
         {story.author && <p className="stories-author">{story.author}</p>}
-        {story.paragraphs ? (
-          story.paragraphs.map((paragraph, index) => <p key={index}>{paragraph}</p>)
-        ) : (
-          <p>This story will be available soon.</p>
-        )}
+        {children}
       </div>
     </details>
   )
