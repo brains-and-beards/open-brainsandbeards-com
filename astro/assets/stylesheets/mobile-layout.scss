@@ -1,3 +1,6 @@
+@use './colors' as *;
+@use './mixins' as *;
+
 @include mobile-version {
   .row {
     flex-direction: column;

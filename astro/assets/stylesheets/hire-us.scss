@@ -1,3 +1,6 @@
+@use './colors' as *;
+@use './mixins' as *;
+
 .hire-us {
   .speaker-image {
     margin: 0 25px;

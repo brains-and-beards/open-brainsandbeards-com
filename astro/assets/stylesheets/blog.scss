@@ -1,3 +1,7 @@
+@use './colors' as *;
+@use './mixins' as *;
+@use './team';
+
 .narrow-column {
   @include desktop-version {
     width: 65%;
@@ -466,35 +470,8 @@
     }
   }
 
-  // Astro's Shiki output uses an inline dark background by default. Keep the
-  // existing Solarized-light code treatment used by the Gatsby site.
-  pre.astro-code {
-    background-color: #fdf6e3 !important;
-    color: #657b83 !important;
-    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
-    font-size: 1em;
-    line-height: 1.5;
-    white-space: pre !important;
-    overflow-wrap: normal;
-    word-break: normal;
-    padding: 1em !important;
+  .expressive-code {
     margin: 0.5em 0;
-    overflow: auto;
-    border-radius: 0.3em;
-  }
-
-  @media screen and (max-width: 1199px) {
-    pre,
-    pre.astro-code {
-      min-width: 0;
-      white-space: pre-wrap !important;
-      overflow-wrap: anywhere;
-
-      code {
-        white-space: inherit;
-        overflow-wrap: inherit;
-      }
-    }
   }
 
   :not(pre) > code {

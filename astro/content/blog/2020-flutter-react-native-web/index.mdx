@@ -55,7 +55,7 @@ In the screenshot you can see:
 
 Implementation in Flutter:
 
-```javascript:numberLines=true
+```javascript showLineNumbers
     Card(
         margin: new EdgeInsets.only(left: 0, right: 0, top: margin),
         child: CheckboxListTile(
@@ -88,7 +88,7 @@ Flutter comes with an extensive list of Widgets to use out-of-the-box. Each one 
 
 In React Native Web it wasn't so easy. Both technologies are still under development, so it wasn't surprising that I couldn't find a `CardView` library that works well with React Native Web and I had to define my own `CardView` component.
 
-```javascript:numberLines=true
+```javascript showLineNumbers
 import React, { Component } from 'react'
 import { View, StyleProp, ViewStyle } from 'react-native'
 
@@ -141,7 +141,7 @@ export default class CardView extends Component<IProps> {
 
 Source: <a href="https://github.com/Kishanjvaghela/react-native-cardview/tree/master/libs" target="_blank">https://github.com/Kishanjvaghela/react-native-cardview/tree/master/libs</a>
 
-```javascript:numberLines=true
+```javascript showLineNumbers
  <CardView
             style={{ width: Dimensions.get('window').width - 200, height: 50 }}
             cardElevation={2}
@@ -163,7 +163,7 @@ Source: <a href="https://github.com/Kishanjvaghela/react-native-cardview/tree/ma
 
 Then I declared `ReminderItem`:
 
-```javascript:numberLines=true
+```javascript showLineNumbers
 export const ReminderItem: FC<IProps> = (props) => {
   const { reminder } = props;
 

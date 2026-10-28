@@ -1,3 +1,7 @@
+@use './colors' as *;
+@use './mixins' as *;
+@use './shared_components';
+
 .estimate-project-form {
   background-color: $lightGrey;
 

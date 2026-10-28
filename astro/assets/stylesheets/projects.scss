@@ -1,3 +1,6 @@
+@use './colors' as *;
+@use './mixins' as *;
+
 .case-studies-container {
   background-color: $lightGrey;
   @include tablet-version {

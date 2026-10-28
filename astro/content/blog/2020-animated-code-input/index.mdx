@@ -43,7 +43,7 @@ A component has three required properties: `code`, `onChangeText`, and `onSubmit
 
 ##### Simple Example
 
-```javascript:numberLines=true
+```javascript showLineNumbers
    <AnimatedCodeInput
               value={value}
               numberOfInputs={5} // default value 1
@@ -73,7 +73,7 @@ Here are some examples using above properties:
 
 Example 1:
 
-```javascript:numberLines=true
+```javascript showLineNumbers
 <AnimatedCodeInput
     value={code}
     numberOfInputs={NUMBER_OF_INPUTS}
@@ -112,7 +112,7 @@ simplyActiveCodeContainer: {
 
 Example 2:
 
-```javascript:numberLines=true
+```javascript showLineNumbers
   <AnimatedCodeInput
     value={value}
     numberOfInputs={NUMBER_OF_INPUTS}
@@ -146,7 +146,7 @@ Example 2:
 
 Example 3:
 
-```javascript:numberLines=true
+```javascript showLineNumbers
 <AnimatedCodeInput
     value={code}
     numberOfInputs={NUMBER_OF_INPUTS}
@@ -195,7 +195,7 @@ I wrote a simple function `readFromClipboard` that is responsible for checking a
 
 Here is a full example and demo:
 
-```javascript:numberLines=true
+```javascript showLineNumbers
 import React, { FC, useState, useCallback, useEffect } from "react";
 import {
   Text,
