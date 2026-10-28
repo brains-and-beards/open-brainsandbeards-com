@@ -5,10 +5,7 @@ test('stories archive expands with the keyboard and fits the viewport', async ({
 }, testInfo) => {
   await page.goto('/stories/')
   await page.evaluate(() => document.fonts.ready)
-  await expect(page.getByRole('heading', { level: 1 })).toHaveText(
-    'Small stories. Useful thoughts.'
-  )
-  await expect(page.locator('.menu-links li').last()).toHaveText('Stories')
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Stories worth a small pause')
   await expect(page.locator('.stories-entry')).toHaveCount(10)
 
   const latest = page.locator('.stories-entry').first()
@@ -16,6 +13,13 @@ test('stories archive expands with the keyboard and fits the viewport', async ({
   await page.keyboard.press('Enter')
   await expect(latest).toHaveAttribute('open', '')
   await expect(latest.locator('.stories-entry-body')).toContainText('Good software takes work.')
+  await expect(latest.locator('.stories-entry-body p')).toHaveCount(4)
+  await expect(page.locator('.stories-latest .stories-body')).toHaveText(
+    await latest
+      .locator('.stories-entry-body')
+      .innerText()
+      .then(text => text.replace('Patryk Peszko', '').trim())
+  )
   await page.keyboard.press('Enter')
   await expect(latest).not.toHaveAttribute('open', '')
 
@@ -44,13 +48,15 @@ test('stories archive expands with the keyboard and fits the viewport', async ({
   expect(await feed.text()).toContain('The feature we decided not to build')
 })
 
-test('stories pagination opens the first older story and supports direct visits', async ({ page }) => {
+test('stories pagination opens the first older story and supports direct visits', async ({
+  page
+}) => {
   await page.goto('/stories/')
   await expect(page.locator('.stories-latest')).toBeVisible()
   await expect(page.getByRole('button', { name: '← Previous' })).toBeDisabled()
-  const firstPageIds = await page.locator('.stories-entry').evaluateAll(entries =>
-    entries.map(entry => entry.id)
-  )
+  const firstPageIds = await page
+    .locator('.stories-entry')
+    .evaluateAll(entries => entries.map(entry => entry.id))
 
   await page.getByRole('link', { name: 'Next →' }).click()
   await expect(page).toHaveURL(/\/stories\/2\/?$/)
@@ -60,9 +66,9 @@ test('stories pagination opens the first older story and supports direct visits'
   await expect(page.locator('.stories-entry').first()).toHaveAttribute('open', '')
   await expect(page.locator('[aria-current="page"]')).toHaveText('2')
   await expect(page.getByRole('button', { name: 'Next →' })).toBeDisabled()
-  const olderIds = await page.locator('.stories-entry').evaluateAll(entries =>
-    entries.map(entry => entry.id)
-  )
+  const olderIds = await page
+    .locator('.stories-entry')
+    .evaluateAll(entries => entries.map(entry => entry.id))
   expect(olderIds.every(id => !firstPageIds.includes(id))).toBeTruthy()
   expect(new Set([...firstPageIds, ...olderIds]).size).toBe(17)
 
@@ -80,15 +86,22 @@ test('stories pagination opens the first older story and supports direct visits'
   await expect(page.locator('.stories-entry').first()).toHaveAttribute('open', '')
 })
 
-test('story height animates in both directions and handles interrupted toggles', async ({ page }) => {
+test('story height animates in both directions and handles interrupted toggles', async ({
+  page
+}) => {
   await page.goto('/stories/')
   const entry = page.locator('.stories-entry').first()
   // Wait for the React component to hydrate before interacting.
-  await page.locator('astro-island[component-export="default"]').first().evaluate(async island => {
-    if (island.hasAttribute('ssr')) {
-      await new Promise(resolve => island.addEventListener('astro:hydrate', resolve, { once: true }))
-    }
-  })
+  await page
+    .locator('astro-island[component-export="default"]')
+    .first()
+    .evaluate(async island => {
+      if (island.hasAttribute('ssr')) {
+        await new Promise(resolve =>
+          island.addEventListener('astro:hydrate', resolve, { once: true })
+        )
+      }
+    })
   const closedHeight = await entry.evaluate(element => element.getBoundingClientRect().height)
   await entry.locator('summary').click()
   const openingHeight = await entry.evaluate(element => {
@@ -113,7 +126,9 @@ test('story height animates in both directions and handles interrupted toggles',
   expect(closingHeight).toBeGreaterThan(closedHeight)
   await entry.evaluate(element => element.getAnimations()[0].finish())
   await expect(entry).not.toHaveAttribute('open', '')
-  expect(await entry.evaluate(element => element.getBoundingClientRect().height)).toBeCloseTo(closedHeight)
+  expect(await entry.evaluate(element => element.getBoundingClientRect().height)).toBeCloseTo(
+    closedHeight
+  )
 
   await page.emulateMedia({ reducedMotion: 'reduce' })
   await entry.locator('summary').click()
