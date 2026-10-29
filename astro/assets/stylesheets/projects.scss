@@ -1,29 +1,6 @@
 @use './colors' as *;
 @use './mixins' as *;
 
-.case-studies-container {
-  background-color: $lightGrey;
-  @include tablet-version {
-    .content:first-child {
-      padding-top: 60px;
-    }
-  }
-
-  .top-part-yellow {
-    background-size: 100% 120px;
-  }
-}
-
-.awesome-people {
-  margin: 120px 20% 56px;
-  text-align: center;
-
-  @include mobile-version {
-    margin-left: 0;
-    margin-right: 0;
-  }
-}
-
 .inset {
   @include desktop-version {
     padding: 24px 48px;

@@ -5,9 +5,8 @@ import CalloutBar from '../components/ui/CalloutBar.astro'
 import TrustBar from '../components/ui/TrustBar.astro'
 import ReadMore from '../components/ui/ReadMore.astro'
 import BaseLayout from '../layouts/BaseLayout.astro'
-import CaseStudyCard from '../components/case-studies/CaseStudyCard.astro'
+import HomepageProjects from '../components/case-studies/HomepageProjects.astro'
 import ClientLogos from '../components/case-studies/ClientLogos.astro'
-import ContactForm from '../components/forms/ContactForm.astro'
 import { getImage, Image } from 'astro:assets'
 import crossPlatformIcon from '../assets/illustrations/services-cross-platform-icon.png'
 import nativeIcon from '../assets/illustrations/services-native-icon.png'
@@ -15,8 +14,6 @@ import staffIcon from '../assets/illustrations/services-staff-icon.png'
 import aiSlopIcon from '../assets/illustrations/ai-spaghetti.png'
 import rotatingBadge from '../assets/illustrations/experts-in.svg?url'
 import reactNativeBadge from '../assets/illustrations/rn.svg?url'
-import manoManoHero from '../assets/case-studies/manomano/manomano-hero-banner.png'
-import manoManoLogo from '../assets/case-studies/manomano/manomano-logo-colour.png'
 import marcImage from '../assets/case-studies/manomano/marc-manomano.png'
 import sergioImage from '../assets/testimonials/rakuten-sergio.jpg'
 import feyyazImage from '../assets/testimonials/sharoo-feyyaz.jpg'
@@ -109,6 +106,9 @@ const testimonials = await Promise.all(
             We are a remote team of experienced developers spread all over Europe who know how to
             get a great product shipped.
           </p>
+          <a class="button hero-action" href="/hire-us/">
+            Let’s build your app
+          </a>
         </div>
         <div class="hero-right-col center">
           <div class="badge-container">
@@ -126,6 +126,28 @@ const testimonials = await Promise.all(
       <img class="badge" src={reactNativeBadge} alt="React Native" />
     </div>
   </div>
+  <div class="homepage-trusted-by">
+    <div class="content">
+      <ClientLogos short />
+    </div>
+  </div>
+  <HomepageProjects />
+  <section class="homepage-references" aria-label="What our clients say">
+    <div class="content references">
+      <TestimonialsCarousel
+        label="Client references"
+        items={testimonials}
+        client:visible={{ rootMargin: '300px' }}
+      />
+    </div>
+  </section>
+  <section class="homepage-client-logos">
+    <div class="content">
+      <h3>We've helped some pretty great people at some pretty awesome companies:</h3>
+      <ClientLogos />
+    </div>
+  </section>
+  <TrustBar />
   <section class="center homepage-services">
     <h2>What can we help you with?</h2>
     <p>Pick a category to learn more:</p>
@@ -208,7 +230,6 @@ const testimonials = await Promise.all(
       </div>
     </div>
   </section>
-  <TrustBar />
   <section class="homepage-ai-stand" aria-labelledby="ai-stand-title">
     <h2 id="ai-stand-title">We use AI. We don't let it drive.</h2>
     <p class="sub2">
@@ -220,55 +241,54 @@ const testimonials = await Promise.all(
       <ReadMore text="Talk to us about cleanup" />
     </a>
   </section>
-  <CalloutBar title="Build your product <br/>with Brains & Beards" />
-  <section class="clients">
-    <div class="content">
-      <h2>Our clients</h2>
-      <p class="sub2">
-        We help technology-driven organizations – from start-ups to large enterprises – develop
-        software more efficiently.
-      </p>
-      <CaseStudyCard
-        home
-        href="/projects/manomano/"
-        title="Ecommerce app for a French unicorn"
-        description="Turning a quick prototype into a fully-fledged ecommerce app for several European markets."
-        image={manoManoHero}
-        imageAlt="ManoMano screens"
-      >
-        <Image
-          slot="logo"
-          src={manoManoLogo}
-          alt="ManoMano logo"
-          height={22}
-          densities={[1, 2]}
-          format="webp"
-          loading="lazy"
-          decoding="async"
-        />
-      </CaseStudyCard>
-      <ClientLogos short />
-      <div class="references">
-        <TestimonialsCarousel
-          label="Client references"
-          items={testimonials}
-          client:visible={{ rootMargin: '300px' }}
-        />
-      </div>
-    </div>
-  </section>
-  <ContactForm />
+  <CalloutBar title="Want to start a great project?" />
 </BaseLayout>
 
 <style lang="scss">
   @use '../assets/stylesheets/colors' as colors;
+
+  .homepage-trusted-by,
+  .homepage-references,
+  .homepage-client-logos {
+    .content {
+      padding-inline: 0;
+    }
+  }
+
+  .hero-action {
+    display: inline-block;
+    margin-top: 8px;
+    padding: 16px 30px;
+  }
+
+  .homepage-trusted-by {
+    padding: 0 24px;
+    background: colors.$lightGrey;
+  }
+
+  .homepage-references {
+    padding: 56px 24px;
+    background: colors.$paleYellow;
+  }
+
+  .homepage-client-logos {
+    padding: 56px 24px;
+    background: colors.$lightGrey;
+
+    h3 {
+      max-width: 614px;
+      margin: 0 auto 40px;
+      padding: 0;
+      text-align: center;
+    }
+  }
 
   .homepage-ai-stand {
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 104px 24px 112px;
-    background-color: colors.$lightGrey;
+    background-color: white;
     text-align: center;
 
     h2 {
