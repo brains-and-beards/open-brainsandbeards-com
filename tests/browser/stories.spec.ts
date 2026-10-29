@@ -6,22 +6,23 @@ test('stories archive expands with the keyboard and fits the viewport', async ({
   await page.goto('/stories/')
   await page.evaluate(() => document.fonts.ready)
   await expect(page.getByRole('heading', { level: 1 })).toHaveText('Stories worth a small pause')
-  await expect(page.locator('.stories-entry')).toHaveCount(10)
+  await expect(page.locator('.stories-entry')).toHaveCount(9)
+  const featured = page.locator('.stories-latest')
+  await expect(featured.locator('.stories-body')).toContainText('Good software takes work.')
+  await expect(featured.locator('.stories-body p')).toHaveCount(3)
+  const featuredId = await featured.getAttribute('id')
+  const archiveIds = await page
+    .locator('.stories-entry')
+    .evaluateAll(entries => entries.map(entry => entry.id))
+  expect(archiveIds).not.toContain(featuredId)
 
-  const latest = page.locator('.stories-entry').first()
-  await latest.locator('summary').focus()
+  const entry = page.locator('.stories-entry').first()
+  await entry.locator('summary').focus()
   await page.keyboard.press('Enter')
-  await expect(latest).toHaveAttribute('open', '')
-  await expect(latest.locator('.stories-entry-body')).toContainText('Good software takes work.')
-  await expect(latest.locator('.stories-entry-body p')).toHaveCount(4)
-  await expect(page.locator('.stories-latest .stories-body')).toHaveText(
-    await latest
-      .locator('.stories-entry-body')
-      .innerText()
-      .then(text => text.replace('Patryk Peszko', '').trim())
-  )
+  await expect(entry).toHaveAttribute('open', '')
+  await expect(entry.locator('.stories-entry-body')).toContainText('This story will be available soon.')
   await page.keyboard.press('Enter')
-  await expect(latest).not.toHaveAttribute('open', '')
+  await expect(entry).not.toHaveAttribute('open', '')
 
   expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(
     await page.evaluate(() => window.innerWidth)
@@ -55,7 +56,7 @@ test('stories pagination opens the first older story and supports direct visits'
   await expect(page.locator('.stories-latest')).toBeVisible()
   await expect(page.getByRole('button', { name: '← Previous' })).toBeDisabled()
   const firstPageIds = await page
-    .locator('.stories-entry')
+    .locator('.stories-latest, .stories-entry')
     .evaluateAll(entries => entries.map(entry => entry.id))
 
   await page.getByRole('link', { name: 'Next →' }).click()
@@ -80,7 +81,7 @@ test('stories pagination opens the first older story and supports direct visits'
   await page.getByRole('link', { name: '← Previous' }).click()
   await expect(page).toHaveURL(/\/stories\/$/)
   await expect(page.locator('.stories-latest')).toBeVisible()
-  await expect(page.locator('.stories-entry')).toHaveCount(10)
+  await expect(page.locator('.stories-entry')).toHaveCount(9)
   await expect(page.locator('.stories-entry[open]')).toHaveCount(0)
   await page.getByRole('link', { name: 'Page 2', exact: true }).click()
   await expect(page.locator('.stories-entry').first()).toHaveAttribute('open', '')

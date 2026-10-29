@@ -26,7 +26,8 @@ const pageStories = await Promise.all(
 )
 const latest = pageStories[0]
 const LatestContent = latest?.Content
-const months = [...new Set(pageStories.map(story => story.date.slice(0, 7)))]
+const archiveStories = currentPage === 1 ? pageStories.slice(1) : pageStories
+const months = [...new Set(archiveStories.map(story => story.date.slice(0, 7)))]
 const pageUrl = (page: number) => (page === 1 ? '/stories/' : `/stories/${page}/`)
 const mailUrl =
   'https://brainsandbeards.us10.list-manage.com/subscribe?u=1866d0ed0d86fc67762d34be5&id=7080aab9c0'
@@ -90,7 +91,7 @@ const mailUrl =
               {storyDate(`${month}-01`, { month: 'long', year: 'numeric' })}
             </h2>
             <div class="stories-list">
-              {pageStories
+              {archiveStories
                 .filter(story => story.date.startsWith(month))
                 .map(({ Content, hasBody, ...story }) => (
                   <StoryEntry
