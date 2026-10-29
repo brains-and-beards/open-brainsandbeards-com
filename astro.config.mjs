@@ -33,5 +33,12 @@ export default defineConfig({
       }
     ]
   },
-  integrations: [expressiveCode(), mdx(), react(), sitemap()]
+  integrations: [
+    expressiveCode(),
+    mdx(),
+    react(),
+    sitemap({
+      filter: (page) => !/^\/stories(?:\/|$)/.test(new URL(page).pathname)
+    })
+  ]
 })

@@ -1,0 +1,149 @@
+---
+import { render } from 'astro:content'
+import BaseLayout from '../../layouts/BaseLayout.astro'
+import ReadMore from '../../components/ui/ReadMore.astro'
+import StoryEntry from './StoryEntry'
+import { storyDate, storiesPerPage } from '../../lib/stories'
+import { getStories } from '../../lib/storyContent'
+import '../../assets/stylesheets/stories.scss'
+
+interface Props {
+  currentPage: number
+}
+
+const { currentPage } = Astro.props
+const stories = await getStories()
+const pageCount = Math.ceil(stories.length / storiesPerPage)
+const pageStories = await Promise.all(
+  stories
+    .slice((currentPage - 1) * storiesPerPage, currentPage * storiesPerPage)
+    .map(async story => ({
+      ...story.data,
+      id: story.id,
+      hasBody: Boolean(story.body?.trim()),
+      Content: (await render(story)).Content
+    }))
+)
+const latest = pageStories[0]
+const LatestContent = latest?.Content
+const archiveStories = currentPage === 1 ? pageStories.slice(1) : pageStories
+const months = [...new Set(archiveStories.map(story => story.date.slice(0, 7)))]
+const pageUrl = (page: number) => (page === 1 ? '/stories/' : `/stories/${page}/`)
+const mailUrl =
+  'https://brainsandbeards.us10.list-manage.com/subscribe?u=1866d0ed0d86fc67762d34be5&id=7080aab9c0'
+---
+
+<BaseLayout
+  title="Stories"
+  description="Notes on software, people and getting the important things right."
+  includeFooter={false}
+>
+  <div class="stories-page">
+    <div class="stories-content">
+      <header class="stories-introduction">
+        <div>
+          <p class="stories-overline">From the studio</p>
+          <h1>
+            Stories worth <br />
+            <span>a small pause</span>
+          </h1>
+          <div class="stories-read-more-links">
+            <a href={mailUrl}>
+              <ReadMore text="Get them by email" />
+            </a>
+            <a href="/stories/feed.xml">
+              <ReadMore text="RSS" />
+            </a>
+          </div>
+        </div>
+
+        <div>
+          <p class="stories-description">
+            Notes on software, people and
+            <br />
+            getting the important things right.
+          </p>
+        </div>
+      </header>
+
+      {currentPage === 1 && latest && LatestContent && (
+        <article class="stories-latest" aria-labelledby="latest-story-title" id={latest.id}>
+          <p class="stories-overline">
+            The latest story ·{' '}
+            <time datetime={latest.date}>
+              {storyDate(latest.date, { day: '2-digit', month: 'short', year: 'numeric' })}
+            </time>
+          </p>
+          <h2 id="latest-story-title">{latest.title}</h2>
+          <p class="stories-author">{latest.author}</p>
+          <div class="stories-body">
+            <LatestContent />
+          </div>
+        </article>
+      )}
+
+      <h3 class="stories-subheading">Previously, at the studio</h3>
+
+      <div class="stories-archive" aria-label="Story archive">
+        {months.map(month => (
+          <section class="stories-month" aria-labelledby={`month-${month}`}>
+            <h2 id={`month-${month}`}>
+              {storyDate(`${month}-01`, { month: 'long', year: 'numeric' })}
+            </h2>
+            <div class="stories-list">
+              {archiveStories
+                .filter(story => story.date.startsWith(month))
+                .map(({ Content, hasBody, ...story }) => (
+                  <StoryEntry
+                    story={story}
+                    initiallyOpen={currentPage > 1 && story.id === pageStories[0].id}
+                    client:load
+                  >
+                    {hasBody ? <Content /> : <p>This story will be available soon.</p>}
+                  </StoryEntry>
+                ))}
+            </div>
+          </section>
+        ))}
+      </div>
+
+      <nav class="stories-pagination" aria-label="Story archive pagination">
+        {currentPage > 1 ? (
+          <a href={pageUrl(currentPage - 1)} rel="prev">
+            ← Previous
+          </a>
+        ) : (
+          <button type="button" disabled>
+            ← Previous
+          </button>
+        )}
+        {Array.from({ length: pageCount }, (_, index) => index + 1).map(page =>
+          page === currentPage ? (
+            <span class="stories-current-page" aria-current="page">
+              {page}
+            </span>
+          ) : (
+            <a href={pageUrl(page)} aria-label={`Page ${page}`}>
+              {page}
+            </a>
+          )
+        )}
+        {currentPage < pageCount ? (
+          <a href={pageUrl(currentPage + 1)} rel="next">
+            Next →
+          </a>
+        ) : (
+          <button type="button" disabled>
+            Next →
+          </button>
+        )}
+      </nav>
+
+      <p class="stories-closing-note">A little less noise. A little more perspective.</p>
+      <footer class="stories-footer">
+        <p>Brains &amp; Beards · Stories</p>
+        <p>Good ideas don't always need a long read.</p>
+      </footer>
+    </div>
+  </div>
+</BaseLayout>

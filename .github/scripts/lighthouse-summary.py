@@ -7,7 +7,7 @@ from pathlib import Path
 def summarize(directory):
     rows = []
     warnings = []
-    for page, path in [("home", "/"), ("blog", "/blog/")]:
+    for page, path in [("home", "/"), ("blog", "/blog/"), ("stories", "/stories/")]:
         for device in ["mobile", "desktop"]:
             report = json.loads(
                 (directory / f"{page}-{device}.report.json").read_text()

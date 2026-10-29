@@ -27,6 +27,7 @@ const menuLinks = [
   { url: 'https://brainsandbeards.com/jobs', label: 'Careers' },
   { url: '/blog/', label: 'Blog' },
   { url: 'https://podcast.brainsandbeards.com', label: 'Podcast' }
+  // { url: '/stories/', label: 'Stories' }
 ]
 const backUrl = projects ? '/projects/' : '/'
 const backLabel = `Back to ${projects ? 'projects' : 'homepage'}`
@@ -54,10 +55,7 @@ const backLabel = `Back to ${projects ? 'projects' : 'homepage'}`
         <ul class="menu-links">
           {menuLinks.map(({ url, label }) => (
             <li class="menu-link">
-              <a
-                href={url}
-                aria-current={currentLocation(url)}
-              >
+              <a href={url} aria-current={currentLocation(url)}>
                 {label}
               </a>
             </li>
@@ -93,10 +91,7 @@ const backLabel = `Back to ${projects ? 'projects' : 'homepage'}`
           <ul>
             {menuLinks.map(({ url, label }) => (
               <li class="menu-link mobile-menu-link">
-                <a
-                  href={url}
-                  aria-current={currentLocation(url)}
-                >
+                <a href={url} aria-current={currentLocation(url)}>
                   {label}
                 </a>
               </li>
