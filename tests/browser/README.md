@@ -1,14 +1,16 @@
-Browser tests use the running Astro site, Google Chrome, and
-Playwright's WebKit and Firefox browsers. Install the latter once:
+Browser tests build the Astro site and start a production preview on port 4322.
+Playwright stops the preview after the run. This keeps development updates from
+interrupting tests. Tests use Google Chrome and Playwright's WebKit and Firefox
+browsers. Install the latter once:
 
 ```sh
 npx playwright install webkit firefox
-npm run astro:dev
-# In another terminal:
 npm test
 ```
 
-Set `CAROUSEL_BASE_URL` to test another server. The suite covers desktop Chrome
+Set `PLAYWRIGHT_BASE_URL` to test an already running server instead, for example
+`PLAYWRIGHT_BASE_URL=http://localhost:4321 npm test`. This skips the build and preview.
+The suite covers desktop Chrome
 and mobile widths in Chrome, WebKit, and Firefox: arrows, keyboard controls,
 desktop pagination, mouse dragging, Chrome touch swipes, and mobile touch taps.
 It checks multiple complete laps in both directions, reversing direction, and

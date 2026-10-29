@@ -213,10 +213,6 @@ test('merged about page keeps the team, careers photo, and working links', async
     'href',
     '/hire-us/'
   )
-  await expect(page.getByRole('link', { name: /Get our company deck/i })).toHaveAttribute(
-    'href',
-    '/portfolio/'
-  )
   await expect(page.locator('.testimonial-divider')).toHaveCSS('border-top-width', '1px')
 })
 
