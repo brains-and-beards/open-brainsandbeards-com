@@ -4,10 +4,10 @@ import { responsiveImageProps } from '../../astro/lib/responsive-images'
 
 test('image candidates stay sorted, unique, and within source resolution', () => {
   for (const width of [40, 300, 1240, 3000]) {
-    const result = responsiveImageProps({ width }, 'home-project')
+    const result = responsiveImageProps({ width }, 'project-featured')
     expect(result.widths).toEqual([...new Set(result.widths)].sort((a, b) => a - b))
     expect(result.widths[0]).toBeGreaterThan(0)
-    expect(result.widths.at(-1)).toBe(Math.min(width, 642 * 3))
+    expect(result.widths.at(-1)).toBe(Math.min(width, 600 * 3))
   }
   const custom = responsiveImageProps({ width: 2000 }, 'speaker', {
     maxWidth: 333,
@@ -113,7 +113,7 @@ test('retina phones download appropriately sized hero and project images', async
   try {
     const page = await context.newPage()
     await page.goto('/')
-    for (const preset of ['home-hero-mobile', 'home-project']) {
+    for (const preset of ['home-hero-mobile', 'project-featured']) {
       const image = page.locator(`img[data-responsive-preset="${preset}"]:visible`).first()
       await image.scrollIntoViewIfNeeded()
       await expect

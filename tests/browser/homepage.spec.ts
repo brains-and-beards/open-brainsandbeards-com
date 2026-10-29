@@ -48,8 +48,5 @@ test('old projects index leads to the homepage project section', async ({ page }
   await expect(page).toHaveURL(/\/#projects$/)
   await expect(page.getByRole('heading', { name: 'Our work speaks for us' })).toBeVisible()
   await page.goto('/projects/manomano/')
-  await expect(page.getByRole('link', { name: 'Case studies', exact: true })).toHaveAttribute(
-    'href',
-    '/#projects'
-  )
+  await expect(page.getByRole('heading', { name: 'Case study: ManoMano', level: 1 })).toBeVisible()
 })
