@@ -9,7 +9,7 @@ test('homepage combines the projects index with services and client references',
   for (const slug of ['manomano', 'femtasy', 'lokalportal', 'sharoo', 'clincase', 'rakuten']) {
     await expect(page.locator(`main a[href="/projects/${slug}/"]`)).toHaveCount(1)
   }
-  await expect(page.locator('.homepage-client-logos img')).toHaveCount(16)
+  await expect(page.locator('.homepage-client-logos img')).toHaveCount(19)
   await expect(page.locator('.homepage-trusted-by img')).toHaveCount(4)
   await expect(page.locator('.homepage-services .serviceContainer')).toHaveCount(4)
   await expect(page.locator('.homepage-ai-stand')).toHaveCSS(
