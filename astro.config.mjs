@@ -11,6 +11,9 @@ export default defineConfig({
   publicDir: './static',
   outDir: './dist-astro',
   trailingSlash: 'ignore',
+  redirects: {
+    '/projects': { status: 301, destination: '/#projects' }
+  },
   vite: {
     plugins: [
       {

@@ -13,17 +13,10 @@ interface Props {
   noIndex?: boolean
   simpleNavbar?: boolean
   greyNavbar?: boolean
-  projects?: boolean
   includeFooter?: boolean
 }
 
-const {
-  includeFooter = true,
-  simpleNavbar = false,
-  greyNavbar = false,
-  projects = false,
-  ...seo
-} = Astro.props
+const { includeFooter = true, simpleNavbar = false, greyNavbar = false, ...seo } = Astro.props
 ---
 
 <!doctype html>
@@ -41,7 +34,7 @@ const {
     ></script>
   </head>
   <body>
-    <Navigation simple={simpleNavbar} grey={greyNavbar} projects={projects} />
+    <Navigation simple={simpleNavbar} grey={greyNavbar} />
     <slot name="header" />
     <main>
       <slot />
