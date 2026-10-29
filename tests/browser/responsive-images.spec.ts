@@ -33,7 +33,7 @@ for (const route of routes) {
   test(`responsive sources fit their rendered containers on ${route}`, async ({ page }) => {
     await page.goto(route)
     const images = page.locator('img[data-responsive-preset]:visible')
-    expect(await images.count()).toBeGreaterThan(0)
+    await expect(images).not.toHaveCount(0)
     const presets = await images.evaluateAll(elements => [
       ...new Set(elements.map(image => (image as HTMLElement).dataset.responsivePreset!))
     ])
@@ -152,8 +152,8 @@ for (const route of ['/blog/2024-boosting-map-vay/', '/blog/to-persist-or-not-to
       const imageGate = new Promise<void>(resolve => {
         releaseImages = resolve
       })
-      await page.route('**/_image?*', async route => {
-        await imageGate
+      await page.route('**/*', async route => {
+        if (route.request().resourceType() === 'image') await imageGate
         await route.continue()
       })
       try {
