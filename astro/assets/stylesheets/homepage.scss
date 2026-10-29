@@ -271,25 +271,6 @@ section {
   }
 }
 
-.clients {
-  background-color: $lightGrey;
-
-  h2 {
-    letter-spacing: -0.5px;
-    text-align: center;
-    padding: 84px 0 40px;
-  }
-
-  .sub2 {
-    width: 60%;
-    text-align: center;
-    margin: auto;
-    @include mobile-version {
-      width: auto;
-    }
-  }
-}
-
 .read-more-container {
   display: flex;
   flex-direction: row;
@@ -399,20 +380,6 @@ a:hover span.inner-text {
     img {
       max-width: 100%;
       width: 100%;
-    }
-  }
-}
-
-.clients {
-  @include mobile-version {
-    padding-bottom: 0px;
-  }
-  .sub2 {
-    margin-top: 32px;
-    margin-bottom: 80px;
-
-    @include mobile-version {
-      line-height: 32px;
     }
   }
 }

@@ -1,5 +1,6 @@
 ---
 import { Image } from 'astro:assets'
+import type { LocalImage } from '../../lib/responsive-images'
 import rakuten from '../../assets/client-logos/rakuten.png'
 import manoMano from '../../assets/client-logos/mano-mano.png'
 import xing from '../../assets/client-logos/xing.png'
@@ -20,7 +21,7 @@ interface Props {
   short?: boolean
 }
 const { short = false } = Astro.props
-const logos: [string, any, number][] = [
+const logos: [string, LocalImage, number][] = [
   ['Rakuten', rakuten, 50],
   ['ManoMano', manoMano, 50],
   ['XING', xing, 60],
@@ -40,7 +41,7 @@ const logos: [string, any, number][] = [
 ]
 ---
 
-<div class="clients client-logos-grid">
+<div class="client-logos-grid">
   {logos.slice(0, short ? 4 : logos.length).map(([name, image, height]) => (
     <div class="client-logo">
       <Image
@@ -57,12 +58,15 @@ const logos: [string, any, number][] = [
 </div>
 
 <style lang="scss">
+  @use '../../assets/stylesheets/colors' as colors;
+
   .client-logos-grid {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
     align-items: center;
     gap: 40px 20px;
     padding-block: 40px;
+    background-color: colors.$lightGrey;
 
     .client-logo {
       display: flex;
