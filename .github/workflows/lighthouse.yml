@@ -46,9 +46,10 @@ jobs:
           done
           curl --fail --silent http://127.0.0.1:4322/ > /dev/null
 
-          for page in home blog; do
+          for page in home blog stories; do
             path=/
             if [[ "$page" == blog ]]; then path=/blog/; fi
+            if [[ "$page" == stories ]]; then path=/stories/; fi
             for device in mobile desktop; do
               preset=()
               if [[ "$device" == desktop ]]; then preset=(--preset=desktop); fi

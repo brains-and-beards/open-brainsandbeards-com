@@ -1,0 +1,19 @@
+---
+import StoriesPage from '../../components/stories/StoriesPage.astro'
+import { storiesPerPage } from '../../lib/stories'
+import { getStories } from '../../lib/storyContent'
+
+export async function getStaticPaths() {
+  const stories = await getStories()
+  const pageCount = Math.ceil(stories.length / storiesPerPage)
+
+  return Array.from({ length: Math.max(0, pageCount - 1) }, (_, index) => ({
+    params: { page: String(index + 2) },
+    props: { currentPage: index + 2 }
+  }))
+}
+
+const { currentPage } = Astro.props
+---
+
+<StoriesPage currentPage={currentPage} />
