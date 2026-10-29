@@ -17,6 +17,9 @@ import saloodo from '../../assets/client-logos/saloodo.png'
 import sharoo from '../../assets/client-logos/sharoo.png'
 import clincase from '../../assets/client-logos/clincase.png'
 import visca from '../../assets/client-logos/visca.png'
+import bsdexLarge from '../../assets/client-logos/bsdex-large.png'
+import dreamin from '../../assets/client-logos/dreamin.png'
+import moodys from '../../assets/client-logos/moodys-white.png'
 interface Props {
   short?: boolean
 }
@@ -37,7 +40,10 @@ const logos: [string, LocalImage, number][] = [
   ['Saloodo', saloodo, 65],
   ['Sharoo', sharoo, 50],
   ['Clincase', clincase, 30],
-  ['Visca', visca, 45]
+  ['Visca', visca, 45],
+  ['BSDEX', bsdexLarge, 60],
+  ['Dreamin', dreamin, 45],
+  ['Moody’s', moodys, 40]
 ]
 ---
 
@@ -80,6 +86,7 @@ const logos: [string, LocalImage, number][] = [
       max-width: 100%;
       height: auto;
       object-fit: contain;
+      filter: grayscale(1);
     }
 
     @media screen and (max-width: 690px) {
