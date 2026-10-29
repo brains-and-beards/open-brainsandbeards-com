@@ -185,9 +185,11 @@ section {
 }
 
 .clients-pic {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
+  &.clients-pic {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
 
   img {
     max-width: 100%;
@@ -196,12 +198,6 @@ section {
 
   @include mobile-version {
     margin-bottom: 48px;
-  }
-
-  &.clients-pic {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
   }
 }
 
@@ -323,24 +319,6 @@ a:hover span.inner-text {
     @include mobile-version {
       align-items: flex-start;
       text-align: left;
-    }
-  }
-
-  h3 {
-    padding-top: 0px;
-    @include mobile-version {
-      font-size: 22px;
-      margin: 7px 0 8px;
-    }
-
-    @include tablet-version {
-      font-size: 26px;
-      margin: 7px 0 8px;
-    }
-
-    @include desktop-version {
-      font-size: 32px;
-      margin: 20px 0 8px;
     }
   }
 
