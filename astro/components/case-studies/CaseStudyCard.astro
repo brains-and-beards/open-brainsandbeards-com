@@ -7,7 +7,6 @@ interface Props {
   href: string
   title: string
   description: string
-  readMoreLabel?: string
   layout: 'featured' | 'tile' | 'compact'
   image: LocalImage
   imageAlt: string
@@ -15,17 +14,7 @@ interface Props {
   logoAlt: string
 }
 
-const {
-  href,
-  title,
-  description,
-  readMoreLabel = 'Read full story',
-  layout,
-  image,
-  imageAlt,
-  logo,
-  logoAlt
-} = Astro.props
+const { href, title, description, layout, image, imageAlt, logo, logoAlt } = Astro.props
 ---
 
 <a class:list={['project-card', `project-card--${layout}`]} href={href}>
@@ -49,7 +38,7 @@ const {
     </div>
     <h3>{title}</h3>
     <p>{description}</p>
-    <ReadMore text={readMoreLabel} />
+    <ReadMore text="Read full story" />
   </div>
 </a>
 
