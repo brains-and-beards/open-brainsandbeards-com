@@ -15,6 +15,7 @@
   max-width: 100%;
   min-width: 0;
   height: var(--active-slide-height, auto);
+  transition: height 250ms ease;
   overflow-x: auto;
   overflow-y: hidden;
   scroll-snap-type: x mandatory;
@@ -30,6 +31,10 @@
     cursor: grabbing;
     scroll-snap-type: none;
     user-select: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
   }
 }
 .astro-carousel__slide {
