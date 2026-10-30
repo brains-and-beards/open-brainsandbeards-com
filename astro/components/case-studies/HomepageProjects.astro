@@ -1,0 +1,162 @@
+---
+import CaseStudyCard from './CaseStudyCard.astro'
+import manoHero from '../../assets/case-studies/manomano/manomano-hero-banner.png'
+import manoLogo from '../../assets/case-studies/manomano/manomano-logo-colour.png'
+import femtasyHero from '../../assets/case-studies/femtasy/femtasy-header.png'
+import femtasyLogo from '../../assets/case-studies/femtasy/femtasy-logo.png'
+import lokalportalHero from '../../assets/case-studies/lokalportal/lokalportal-web.jpg'
+import lokalportalLogo from '../../assets/case-studies/lokalportal/logo_lokal_full.png'
+import sharooHero from '../../assets/case-studies/sharoo/sharoo-hero.jpg'
+import sharooLogo from '../../assets/case-studies/sharoo/sharoo-logo.png'
+import clincaseHero from '../../assets/case-studies/clincase/epro-logo.jpg'
+import clincaseLogo from '../../assets/client-logos/clincase.png'
+import rakutenHero from '../../assets/case-studies/rakuten-team.jpg'
+import rakutenLogo from '../../assets/client-logos/rakuten-alt.png'
+---
+
+<section id="projects" class="homepage-projects" aria-labelledby="projects-title">
+  <div class="content">
+    <h2 id="projects-title">Our work speaks for us</h2>
+    <p class="about-us projects-intro">
+      No two projects start in the same place. Sometimes it’s an idea and a clickable prototype.
+      Sometimes it’s an app with thousands of users and a codebase that needs some love. Wherever
+      you are in your journey, we can help you take the next step.
+    </p>
+    <CaseStudyCard
+      layout="featured"
+      href="/projects/manomano/"
+      title="Ecommerce for a French unicorn"
+      description="Turning a quick prototype into a fully-fledged ecommerce app for several European markets."
+      image={manoHero}
+      imageAlt="ManoMano app"
+      logo={manoLogo}
+      logoAlt="ManoMano logo"
+    />
+    <div class="featured-projects">
+      <CaseStudyCard
+        layout="tile"
+        href="/projects/femtasy/"
+        title="A streaming platform, made mobile"
+        description="Story of a successful launch of a mobile app for an award-winning streaming platform."
+        image={femtasyHero}
+        imageAlt="Femtasy app"
+        logo={femtasyLogo}
+        logoAlt="Femtasy logo"
+      />
+      <CaseStudyCard
+        layout="tile"
+        href="/projects/lokalportal/"
+        title="Local journalism, rebuilt for mobile"
+        description="How we helped speed up development by improving agile processes and setting up a resilient application architecture."
+        image={lokalportalHero}
+        imageAlt="Lokalportal app"
+        logo={lokalportalLogo}
+        logoAlt="Lokalportal logo"
+      />
+    </div>
+  </div>
+</section>
+<section class="more-projects" aria-labelledby="more-projects-title">
+  <div class="content">
+    <h3 id="more-projects-title">More teams we have helped</h3>
+    <div class="project-list">
+      <CaseStudyCard
+        layout="compact"
+        href="/projects/sharoo/"
+        title="Carsharing across Switzerland"
+        description="How we implemented unique mobile applications supporting renting and interacting with rented vehicles."
+        image={sharooHero}
+        imageAlt="Sharoo app"
+        logo={sharooLogo}
+        logoAlt="Sharoo logo"
+      />
+      <CaseStudyCard
+        layout="compact"
+        href="/projects/clincase/"
+        title="Medical data, now mobile"
+        description="Clincase is a long-standing company that has been handling medical data for their customers for fifteen years. We built them a mobile application that expanded their business to a whole new market."
+        image={clincaseHero}
+        imageAlt="Clincase app"
+        logo={clincaseLogo}
+        logoAlt="Clincase logo"
+      />
+      <CaseStudyCard
+        layout="compact"
+        href="/projects/rakuten/"
+        title="A premium shopping app, delivered on time"
+        description="How we built a native iOS app for FC Barcelona sponsor with enough time to spare to help with their Android version."
+        image={rakutenHero}
+        imageAlt="Rakuten team"
+        logo={rakutenLogo}
+        logoAlt="Rakuten logo"
+      />
+    </div>
+  </div>
+</section>
+
+<style lang="scss">
+  @use '../../assets/stylesheets/colors' as colors;
+
+  .content {
+    padding-inline: 0;
+  }
+
+  .homepage-projects {
+    padding: 64px 24px;
+    background: colors.$lightGrey;
+    scroll-margin-top: 24px;
+
+    h2 {
+      margin: 0 0 40px;
+    }
+
+    .projects-intro {
+      max-width: 760px;
+      margin: 0 0 48px;
+    }
+
+    @media screen and (max-width: 690px) {
+      padding-bottom: 48px;
+    }
+  }
+
+  .featured-projects {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 32px;
+    margin-top: 48px;
+
+    @media screen and (max-width: 690px) {
+      grid-template-columns: 1fr;
+      gap: 48px;
+    }
+  }
+
+  .more-projects {
+    padding: 56px 24px;
+    background: white;
+
+    h3 {
+      margin: 0 0 32px;
+      padding: 0;
+    }
+
+    @media screen and (max-width: 690px) {
+      padding-block: 0 64px;
+      background: colors.$lightGrey;
+
+      h3 {
+        display: none;
+      }
+    }
+  }
+
+  .project-list {
+    display: grid;
+    gap: 32px;
+
+    @media screen and (max-width: 690px) {
+      gap: 48px;
+    }
+  }
+</style>

@@ -25,13 +25,19 @@ export const imagePresets = {
     maxWidth: 740,
     sizes: max => `(max-width: 1199px) min(60vw, calc(100vw - 400px), ${max}px), ${max}px`
   },
-  'home-project': {
-    maxWidth: 642,
-    sizes: () => '(max-width: 690px) calc(100vw - 48px), (max-width: 1199px) 450px, 610px'
+  'project-featured': {
+    maxWidth: 600,
+    sizes: () =>
+      '(max-width: 690px) calc(100vw - 48px), (max-width: 1072px) calc((100vw - 104px) * 0.6), 580.8px'
   },
-  'project-card': {
-    maxWidth: 680,
-    sizes: max => `(max-width: 690px) calc(100vw - 48px), (max-width: 1199px) 450px, ${max - 10}px`
+  'project-tile': {
+    maxWidth: 496,
+    sizes: () =>
+      '(max-width: 690px) calc(100vw - 48px), (max-width: 1072px) calc((100vw - 80px) / 2), 496px'
+  },
+  'project-compact': {
+    maxWidth: 642,
+    sizes: () => '(max-width: 690px) calc(100vw - 48px), 180px'
   },
   'service-project': {
     maxWidth: 680,

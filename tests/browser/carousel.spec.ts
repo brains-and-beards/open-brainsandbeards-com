@@ -27,8 +27,7 @@ async function currentSlide(page: Page) {
 }
 
 async function clickArrow(page: Page, direction: number) {
-  const slide = await currentSlide(page)
-  const button = slide.locator(
+  const button = page.locator(
     direction === 1
       ? '.astro-carousel__chevron:not(.astro-carousel__chevron--previous)'
       : '.astro-carousel__chevron--previous'
@@ -47,6 +46,14 @@ test.beforeEach(async ({ page }) => {
 
 test('arrows keep cycling through multiple complete laps in both directions', async ({ page }) => {
   const count = await page.locator(dotsSelector).count()
+  const chevrons = page.locator('.astro-carousel__chevron')
+  await expect(chevrons).toHaveCount(2)
+  const positions = () => chevrons.evaluateAll(buttons => buttons.map(button => {
+    const rect = button.getBoundingClientRect()
+    const carousel = button.closest('.astro-carousel')!.getBoundingClientRect()
+    return { x: rect.x - carousel.x, y: rect.y - carousel.y }
+  }))
+  const initialPositions = await positions()
   let index = 0
   for (const direction of [1, -1]) {
     // Start the next transition as soon as the previous one finishes, before
@@ -55,6 +62,7 @@ test('arrows keep cycling through multiple complete laps in both directions', as
       await clickArrow(page, direction)
       index = (index + direction + count) % count
       await settled(page, index)
+      expect(await positions()).toEqual(initialPositions)
     }
   }
 })
@@ -96,7 +104,8 @@ test('touch swipes and mouse drags continue past both loop boundaries', async ({
       )
       const box = (await image.boundingBox())!
       const width = await page.locator(trackSelector).evaluate(track => track.clientWidth)
-      const startX = box.x + (direction === 1 ? box.width * 0.85 : box.width * 0.15)
+      const trackBox = (await page.locator(trackSelector).boundingBox())!
+      const startX = trackBox.x + width * (direction === 1 ? 0.85 : 0.15)
       const y = box.y + box.height / 2
       if (session) {
         await session.send('Input.dispatchTouchEvent', {
@@ -141,8 +150,7 @@ test('mobile touch taps keep advancing right and recover after reversing directi
   let index = 0
   for (const direction of [...Array(count * 2).fill(1), -1, -1, -1, ...Array(count * 2).fill(1)]) {
     await page.waitForTimeout(500)
-    const slide = await currentSlide(page)
-    const button = slide.locator(
+    const button = page.locator(
       direction === 1
         ? '.astro-carousel__chevron:not(.astro-carousel__chevron--previous)'
         : '.astro-carousel__chevron--previous'
@@ -174,7 +182,7 @@ test('quick swipes interrupting a previous animation always settle on a slide', 
   await track.evaluate(element => element.scrollIntoView({ block: 'start' }))
   const box = (await track.boundingBox())!
   const x = box.x + box.width / 2
-  const y = box.y + 260 // Quote area, away from chevron buttons.
+  const y = box.y + 20 // Quote area, away from chevron buttons.
   const swipe = async (distance: number) => {
     if (session) {
       await session.send('Input.dispatchTouchEvent', {
@@ -233,7 +241,7 @@ test('an interrupted pointer capture cannot leave the carousel between slides', 
   })
   const box = (await track.boundingBox())!
   const x = box.x + box.width / 2
-  const y = box.y + 260
+  const y = box.y + 20
   await page.mouse.move(x, y)
   await page.mouse.down()
   await expect(track).toHaveClass(/is-dragging/)

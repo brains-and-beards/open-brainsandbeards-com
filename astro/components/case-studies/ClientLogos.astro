@@ -1,5 +1,6 @@
 ---
 import { Image } from 'astro:assets'
+import type { LocalImage } from '../../lib/responsive-images'
 import rakuten from '../../assets/client-logos/rakuten.png'
 import manoMano from '../../assets/client-logos/mano-mano.png'
 import xing from '../../assets/client-logos/xing.png'
@@ -16,11 +17,14 @@ import saloodo from '../../assets/client-logos/saloodo.png'
 import sharoo from '../../assets/client-logos/sharoo.png'
 import clincase from '../../assets/client-logos/clincase.png'
 import visca from '../../assets/client-logos/visca.png'
+import bsdexLarge from '../../assets/client-logos/bsdex-large.png'
+import dreamin from '../../assets/client-logos/dreamin.png'
+import moodys from '../../assets/client-logos/moodys-white.png'
 interface Props {
   short?: boolean
 }
 const { short = false } = Astro.props
-const logos: [string, any, number][] = [
+const logos: [string, LocalImage, number][] = [
   ['Rakuten', rakuten, 50],
   ['ManoMano', manoMano, 50],
   ['XING', xing, 60],
@@ -36,26 +40,58 @@ const logos: [string, any, number][] = [
   ['Saloodo', saloodo, 65],
   ['Sharoo', sharoo, 50],
   ['Clincase', clincase, 30],
-  ['Visca', visca, 45]
+  ['Visca', visca, 45],
+  ['BSDEX', bsdexLarge, 60],
+  ['Dreamin', dreamin, 45],
+  ['Moody’s', moodys, 40]
 ]
 ---
 
-<div class="clients">
-  {Array.from({ length: short ? 1 : 4 }, (_, row) => (
-    <div class="logos">
-      {logos.slice(row * 4, row * 4 + 4).map(([name, image, height]) => (
-        <div class="logo">
-          <Image
-            src={image}
-            alt={name}
-            height={height}
-            densities={[1, 2]}
-            format="webp"
-            loading="lazy"
-            decoding="async"
-          />
-        </div>
-      ))}
+<div class="client-logos-grid">
+  {logos.slice(0, short ? 4 : logos.length).map(([name, image, height]) => (
+    <div class="client-logo">
+      <Image
+        src={image}
+        alt={name}
+        height={height}
+        densities={[1, 2]}
+        format="webp"
+        loading="lazy"
+        decoding="async"
+      />
     </div>
   ))}
 </div>
+
+<style lang="scss">
+  @use '../../assets/stylesheets/colors' as colors;
+
+  .client-logos-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    align-items: center;
+    gap: 40px 20px;
+    padding-block: 40px;
+    background-color: colors.$lightGrey;
+
+    .client-logo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 0;
+      min-height: 80px;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      object-fit: contain;
+      filter: grayscale(1);
+    }
+
+    @media screen and (max-width: 690px) {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 24px;
+    }
+  }
+</style>
