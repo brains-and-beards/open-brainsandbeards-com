@@ -36,8 +36,8 @@ export const imagePresets = {
       '(max-width: 690px) calc(100vw - 48px), (max-width: 1072px) calc((100vw - 80px) / 2), 496px'
   },
   'project-compact': {
-    maxWidth: 180,
-    sizes: () => '(max-width: 690px) min(40vw, 180px), 180px'
+    maxWidth: 642,
+    sizes: () => '(max-width: 690px) calc(100vw - 48px), 180px'
   },
   'service-project': {
     maxWidth: 680,
