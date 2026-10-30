@@ -227,36 +227,3 @@ section {
 a:hover span.inner-text {
   @include underlined-link;
 }
-
-.references {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  @include mobile-version {
-    padding-bottom: 16px;
-  }
-  .quote {
-    line-height: 40px;
-
-    @include mobile-version {
-      width: 100%;
-    }
-  }
-  .who {
-    font-size: 14px;
-    b {
-      font-size: 17px;
-    }
-  }
-}
-
-.photo {
-  width: 100%;
-  align-items: center;
-  justify-content: center;
-  margin: 40px 0;
-
-  img.round {
-    border-radius: 76px;
-  }
-}
