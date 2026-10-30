@@ -1,120 +1,161 @@
+@use '../../assets/stylesheets/colors' as colors;
+
 .astro-carousel {
   position: relative;
   width: 100%;
   max-width: 100%;
   min-width: 0;
+  padding: 0 42px;
+  color: colors.$black;
 }
 .astro-carousel__track {
   display: flex;
+  align-items: flex-start;
   width: 100%;
   max-width: 100%;
   min-width: 0;
+  height: var(--active-slide-height, auto);
   overflow-x: auto;
+  overflow-y: hidden;
   scroll-snap-type: x mandatory;
   scrollbar-width: none;
   touch-action: pan-y;
   cursor: grab;
-}
-.astro-carousel__track::-webkit-scrollbar {
-  display: none;
-}
-.astro-carousel__track.is-dragging {
-  cursor: grabbing;
-  scroll-snap-type: none;
-  user-select: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  &.is-dragging {
+    cursor: grabbing;
+    scroll-snap-type: none;
+    user-select: none;
+  }
 }
 .astro-carousel__slide {
   flex: 0 0 100%;
+  min-width: 0;
   scroll-snap-align: start;
-  text-align: center;
-  padding: 0 20% 10px;
+  text-align: left;
+}
+.astro-carousel__quote {
+  margin: 0 0 28px;
+  font-family: 'Recoleta', serif;
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 40px;
 }
 .astro-carousel__photo {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  margin: 40px 0;
+  align-items: flex-start;
+  gap: 24px;
 }
 .astro-carousel__image {
+  flex: 0 0 64px;
+  width: 64px;
+  height: 64px;
   border-radius: 50%;
   object-fit: cover;
 }
+.astro-carousel__author {
+  min-width: 0;
+  font-size: 12px;
+  line-height: 18px;
+
+  p {
+    margin: 0;
+  }
+
+  p + p {
+    margin-top: 2px;
+  }
+
+  .astro-carousel__name {
+    font-size: 17px;
+    font-weight: 700;
+    line-height: 24px;
+  }
+}
 .astro-carousel__chevron {
+  position: absolute;
+  top: 84px;
+  right: 0;
   display: grid;
-  flex: 0 0 44px;
-  place-items: center;
+  align-items: center;
+  justify-items: end;
   width: 44px;
   height: 44px;
-  margin: 0 9%;
+  margin: 0;
   padding: 0;
   border: 0;
   border-radius: 0;
   appearance: none;
   box-shadow: none;
   background: transparent;
-  color: #414141;
+  color: colors.$darkGrey;
   cursor: pointer;
-}
-.astro-carousel__chevron svg {
-  width: 14px;
-  height: 24px;
-}
-.astro-carousel__chevron path {
-  fill: none;
-  stroke: currentColor;
-  stroke-linecap: round;
-  stroke-linejoin: round;
+
+  svg {
+    width: 14px;
+    height: 24px;
+  }
+
+  path {
+    fill: none;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  &--previous {
+    right: auto;
+    left: 0;
+    justify-items: start;
+  }
 }
 .astro-carousel__pagination {
   display: flex;
   justify-content: center;
   gap: 8px;
+  margin-top: 28px;
 }
 .astro-carousel__dot {
-  width: 8px;
-  height: 8px;
+  width: 7px;
+  height: 7px;
   margin: 0;
   padding: 0;
   border: 0;
   border-radius: 50%;
   appearance: none;
   box-shadow: none;
-  background: #c4c4c4;
+  background: colors.$grey;
   cursor: pointer;
-}
-.astro-carousel__dot.is-active {
-  background: #414141;
+
+  &.is-active {
+    background: colors.$black;
+  }
 }
 .astro-carousel__chevron:focus-visible,
 .astro-carousel__dot:focus-visible {
-  outline: 2px solid #414141;
+  outline: 2px solid colors.$darkGrey;
   outline-offset: 3px;
 }
 
 @media (max-width: 690px) {
   .astro-carousel {
-    padding-bottom: 0;
-  }
-  .astro-carousel__track {
-    align-items: flex-start;
-    height: var(--active-slide-height, auto);
-    overflow-y: hidden;
-  }
-  .astro-carousel__slide {
-    padding: 0;
-  }
-  .astro-carousel__pagination {
-    display: none;
+    padding-inline: 28px;
   }
   .astro-carousel__chevron {
-    margin: 0;
+    top: 168px;
+  }
+  .astro-carousel__quote {
+    font-size: 20px;
+    line-height: 32px;
   }
   .astro-carousel__photo {
     gap: 16px;
   }
-  .astro-carousel__slide .quote {
-    width: 100%;
-    padding: 0 25px;
+  .astro-carousel__pagination {
+    display: none;
   }
 }

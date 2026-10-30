@@ -130,49 +130,27 @@ export default function TestimonialsCarousel({ label, items }: Props) {
       aria-roledescription="slide"
       aria-label={`${item.name}, ${item.company}`}
     >
+      <p className="astro-carousel__quote">{item.quote}</p>
       <div className="astro-carousel__photo">
-        <button
-          className="astro-carousel__chevron astro-carousel__chevron--previous"
-          type="button"
-          aria-label="Previous reference"
-          tabIndex={clone ? -1 : undefined}
-          onClick={() => move(-1)}
-        >
-          <svg aria-hidden="true" viewBox="0 0 14 24">
-            <path d="m13 0-12 12 12 12" />
-          </svg>
-        </button>
         {item.image && (
           <img
             className="astro-carousel__image"
             src={item.image.src}
             srcSet={item.image.srcSet}
             alt={item.imageAlt ?? ''}
-            width={152}
-            height={152}
+            width={64}
+            height={64}
             loading="lazy"
             decoding="async"
             draggable={false}
           />
         )}
-        <button
-          className="astro-carousel__chevron"
-          type="button"
-          aria-label="Next reference"
-          tabIndex={clone ? -1 : undefined}
-          onClick={() => move(1)}
-        >
-          <svg aria-hidden="true" viewBox="0 0 14 24">
-            <path d="m1 0 12 12-12 12" />
-          </svg>
-        </button>
+        <div className="astro-carousel__author">
+          <p className="astro-carousel__name">{item.name}</p>
+          <p>{item.position},</p>
+          <p>{item.company}</p>
+        </div>
       </div>
-      <p className="quote">{item.quote}</p>
-      <p className="who">
-        <b>{item.name}</b>,<br />
-        {item.position},<br />
-        {item.company}
-      </p>
     </article>
   )
 
@@ -195,7 +173,7 @@ export default function TestimonialsCarousel({ label, items }: Props) {
           move(event.key === 'ArrowLeft' ? -1 : 1)
         }}
         onPointerDown={event => {
-          if (event.button !== 0 || (event.target as HTMLElement).closest('button')) return
+          if (event.button !== 0) return
           clearTimeout(resetTimer.current)
           normalizeLoopPosition()
           drag.current = { x: event.clientX, left: event.currentTarget.scrollLeft }
@@ -215,6 +193,26 @@ export default function TestimonialsCarousel({ label, items }: Props) {
         {items.map(item => renderSlide(item))}
         {loop && renderSlide(items[0], 'first-clone')}
       </div>
+      <button
+        className="astro-carousel__chevron astro-carousel__chevron--previous"
+        type="button"
+        aria-label="Previous reference"
+        onClick={() => move(-1)}
+      >
+        <svg aria-hidden="true" viewBox="0 0 14 24">
+          <path d="m13 0-12 12 12 12" />
+        </svg>
+      </button>
+      <button
+        className="astro-carousel__chevron"
+        type="button"
+        aria-label="Next reference"
+        onClick={() => move(1)}
+      >
+        <svg aria-hidden="true" viewBox="0 0 14 24">
+          <path d="m1 0 12 12-12 12" />
+        </svg>
+      </button>
       <div className="astro-carousel__pagination" aria-label={`${label} pagination`}>
         {items.map((item, index) => (
           <button

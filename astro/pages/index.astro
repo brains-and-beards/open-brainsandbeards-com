@@ -77,8 +77,8 @@ const testimonials = await Promise.all(
   carouselItems.map(async ({ image, ...item }) => {
     const optimized = await getImage({
       src: image,
-      width: 152,
-      height: 152,
+      width: 64,
+      height: 64,
       densities: [1, 2],
       format: 'webp'
     })
@@ -133,7 +133,7 @@ const testimonials = await Promise.all(
   </div>
   <HomepageProjects />
   <section class="homepage-references" aria-label="What our clients say">
-    <div class="content references">
+    <div class="content testimonials">
       <TestimonialsCarousel
         label="Client references"
         items={testimonials}
@@ -269,6 +269,10 @@ const testimonials = await Promise.all(
   .homepage-references {
     padding: 56px 24px;
     background: colors.$paleYellow;
+
+    .testimonials {
+      max-width: 1108px;
+    }
   }
 
   .homepage-client-logos {
