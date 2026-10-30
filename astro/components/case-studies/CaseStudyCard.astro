@@ -116,18 +116,20 @@ const { href, title, description, layout, image, imageAlt, logo, logoAlt } = Ast
       }
     }
 
-    &--compact {
-      grid-template-columns: 180px 1fr;
-      align-items: start;
-      gap: 40px;
+    @media screen and (min-width: 691px) {
+      &--compact {
+        grid-template-columns: 180px 1fr;
+        align-items: start;
+        gap: 40px;
 
-      .project-card__copy {
-        gap: 8px;
-      }
+        .project-card__copy {
+          gap: 8px;
+        }
 
-      h3 {
-        font-size: 24px;
-        line-height: 32px;
+        h3 {
+          font-size: 24px;
+          line-height: 32px;
+        }
       }
     }
 
@@ -143,38 +145,11 @@ const { href, title, description, layout, image, imageAlt, logo, logoAlt } = Ast
       }
 
       &--compact {
-        grid-template-columns: minmax(0, 1fr) min(40vw, 180px);
-        gap: 8px 20px;
+        align-content: start;
 
         .project-card__image {
-          align-self: start;
-          grid-column: 2;
-          grid-row: 1 / 3;
-        }
-
-        .project-card__copy {
-          display: contents;
-        }
-
-        .project-card__logo {
-          grid-column: 1;
-          grid-row: 1;
-        }
-
-        h3 {
-          grid-column: 1;
-          grid-row: 2;
-        }
-
-        p {
-          grid-column: 1 / -1;
-          grid-row: 3;
-        }
-
-        :global(.read-more-container) {
-          justify-content: flex-start;
-          grid-column: 1 / -1;
-          grid-row: 4;
+          aspect-ratio: 496 / 296;
+          object-fit: contain;
         }
       }
     }

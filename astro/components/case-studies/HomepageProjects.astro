@@ -114,6 +114,10 @@ import rakutenLogo from '../../assets/client-logos/rakuten-alt.png'
       max-width: 760px;
       margin: 0 0 48px;
     }
+
+    @media screen and (max-width: 690px) {
+      padding-bottom: 48px;
+    }
   }
 
   .featured-projects {
@@ -136,10 +140,23 @@ import rakutenLogo from '../../assets/client-logos/rakuten-alt.png'
       margin: 0 0 32px;
       padding: 0;
     }
+
+    @media screen and (max-width: 690px) {
+      padding-block: 0 64px;
+      background: colors.$lightGrey;
+
+      h3 {
+        display: none;
+      }
+    }
   }
 
   .project-list {
     display: grid;
     gap: 32px;
+
+    @media screen and (max-width: 690px) {
+      gap: 48px;
+    }
   }
 </style>
