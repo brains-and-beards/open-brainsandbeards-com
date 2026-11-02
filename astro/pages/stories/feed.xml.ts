@@ -8,7 +8,7 @@ export async function GET(context: { site?: URL }) {
   return rss({
     title: 'Brains & Beards · Stories',
     description: 'Short reads from a mobile studio.',
-    site: context.site ?? 'https://brainsandbeards.com',
+    site: `${(context.site ?? 'https://brainsandbeards.com')}/stories`,
     items: stories
       .map((story, index) => ({ story, page: Math.floor(index / storiesPerPage) + 1 }))
       .filter(({ story }) => story.body?.trim())
