@@ -1,117 +1,157 @@
 ---
+import { Image } from 'astro:assets'
 import ResponsiveImage from '../ui/ResponsiveImage.astro'
 import ReadMore from '../ui/ReadMore.astro'
+import type { LocalImage } from '../../lib/responsive-images'
 interface Props {
   href: string
   title: string
   description: string
-  readMoreLabel?: string
-  flip?: boolean
-  image: any
+  layout: 'featured' | 'tile' | 'compact'
+  image: LocalImage
   imageAlt: string
-  imageWidth?: number
-  imageHeight?: number
-  eager?: boolean
-  home?: boolean
-  first?: boolean
+  logo: LocalImage
+  logoAlt: string
 }
 
-const {
-  href,
-  title,
-  description,
-  readMoreLabel = 'Read full story',
-  flip = false,
-  image,
-  imageAlt,
-  imageWidth = 680,
-  imageHeight,
-  eager = false,
-  home = false,
-  first = false
-} = Astro.props
+const { href, title, description, layout, image, imageAlt, logo, logoAlt } = Astro.props
 ---
 
-{home ? (
-  <a href={href}>
-    <div class="row client-details client-details-case-study">
-      <div class="clients-pic mobile-only">
-        <ResponsiveImage
-          preset="home-project"
-          src={image}
-          alt={imageAlt}
-          loading={eager ? 'eager' : 'lazy'}
-          fetchpriority={eager ? 'high' : 'auto'}
-        />
-      </div>
-      <div class="our-clients-left-col our-clients-any-element">
-        <div class="left-col">
-          <slot name="logo" />
-          <h3>{title}</h3>
-          <p>{description}</p>
-          <ReadMore text={readMoreLabel} />
-        </div>
-      </div>
-      <div class="our-clients-pic-first">
-        <div class="right-col clients-pic">
-          <ResponsiveImage
-            preset="home-project"
-            src={image}
-            alt={imageAlt}
-            width={620}
-            loading={eager ? 'eager' : 'lazy'}
-            fetchpriority={eager ? 'high' : 'auto'}
-          />
-        </div>
-      </div>
+<a class:list={['project-card', `project-card--${layout}`]} href={href}>
+  <ResponsiveImage
+    preset={`project-${layout}`}
+    src={image}
+    alt={imageAlt}
+    class="project-card__image"
+  />
+  <div class="project-card__copy">
+    <div class="project-card__logo">
+      <Image
+        src={logo}
+        alt={logoAlt}
+        height={22}
+        densities={[1, 2]}
+        format="webp"
+        loading="lazy"
+        decoding="async"
+      />
     </div>
-  </a>
-) : (
-  <a href={href}>
-    <div
-      class:list={[
-        'row',
-        'client-details',
-        'client-details-case-study',
-        { flip, 'client-details-case-study-elements': !first }
-      ]}
-    >
-      <div class:list={[first ? 'clients-pic-first' : 'clients-pic', 'mobile-only']}>
-        <ResponsiveImage
-          preset="project-card"
-          src={image}
-          alt={imageAlt}
-          loading={eager ? 'eager' : 'lazy'}
-          fetchpriority={eager ? 'high' : 'auto'}
-        />
-      </div>
-      <div
-        class:list={[
-          'our-clients-left-col',
-          first ? 'our-clients-first-element' : 'our-clients-any-element'
-        ]}
-      >
-        <div class="left-col">
-          <slot name="logo" />
-          <h3>{title}</h3>
-          <p>{description}</p>
-          <ReadMore text={readMoreLabel} />
-        </div>
-      </div>
-      <div class="our-clients-pic-first">
-        <div class="right-col clients-pic">
-          <ResponsiveImage
-            preset="project-card"
-            src={image}
-            alt={imageAlt}
-            width={imageWidth}
-            maxWidth={imageWidth}
-            {...(imageHeight ? { height: imageHeight } : {})}
-            loading={eager ? 'eager' : 'lazy'}
-            fetchpriority={eager ? 'high' : 'auto'}
-          />
-        </div>
-      </div>
-    </div>
-  </a>
-)}
+    <h3>{title}</h3>
+    <p>{description}</p>
+    <ReadMore text="Read full story" />
+  </div>
+</a>
+
+<style lang="scss">
+  .project-card {
+    display: grid;
+    gap: 24px;
+    min-width: 0;
+
+    &:focus-visible {
+      outline: 2px solid currentColor;
+      outline-offset: 8px;
+    }
+
+    .project-card__image {
+      display: block;
+      width: 100%;
+      height: auto;
+      align-self: center;
+    }
+
+    .project-card__copy {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 16px;
+      min-width: 0;
+    }
+
+    .project-card__logo {
+      display: flex;
+      align-items: center;
+      height: 22px;
+
+      img {
+        width: auto;
+        max-width: 100%;
+        height: 22px;
+        object-fit: contain;
+      }
+    }
+
+    h3,
+    p {
+      margin: 0;
+      padding: 0;
+    }
+
+    :global(.read-more-container) {
+      margin: 0;
+    }
+
+    &--featured {
+      grid-template-columns: 2fr 3fr;
+      align-items: center;
+      gap: 56px;
+
+      .project-card__image {
+        grid-column: 2;
+        grid-row: 1;
+      }
+
+      .project-card__copy {
+        grid-column: 1;
+        grid-row: 1;
+      }
+    }
+
+    &--tile {
+      align-content: start;
+
+      .project-card__image {
+        aspect-ratio: 496 / 296;
+        object-fit: contain;
+      }
+    }
+
+    @media screen and (min-width: 691px) {
+      &--compact {
+        grid-template-columns: 180px 1fr;
+        align-items: start;
+        gap: 40px;
+
+        .project-card__copy {
+          gap: 8px;
+        }
+
+        h3 {
+          font-size: 24px;
+          line-height: 32px;
+        }
+      }
+    }
+
+    @media screen and (max-width: 690px) {
+      &--featured {
+        grid-template-columns: 1fr;
+
+        .project-card__image,
+        .project-card__copy {
+          grid-column: auto;
+          grid-row: auto;
+        }
+      }
+
+      &--compact {
+        align-content: start;
+
+        .project-card__image {
+          aspect-ratio: 496 / 296;
+          object-fit: contain;
+        }
+      }
+    }
+  }
+</style>

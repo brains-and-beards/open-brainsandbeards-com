@@ -79,25 +79,12 @@
     h2 {
       margin-bottom: 56px;
     }
-
-    @include mobile-version {
-      padding-bottom: 84px;
-      margin: 0 auto;
-      width: 100%;
-    }
   }
 
   .cta-bar-image {
     width: 400px;
     height: 400px;
     margin: 32px 0 24px 0;
-
-    @include mobile-version {
-      height: auto;
-      width: 226px;
-      max-width: 100%;
-      margin: 24px 0 -32px 0;
-    }
   }
 }
 
@@ -110,11 +97,15 @@
 
     .content {
       flex-direction: column;
+      padding-bottom: 84px;
+      width: 100%;
     }
 
     .cta-bar-image {
+      width: 226px;
       max-width: 100%;
       height: auto;
+      margin: 24px 0 -32px;
     }
   }
 

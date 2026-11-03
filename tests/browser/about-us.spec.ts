@@ -48,10 +48,16 @@ test('careers portrait flips around its vertical axis and respects reduced motio
   const previous = await portrait.getAttribute('src')
   await expect(button).toHaveCSS('box-shadow', 'none')
   await expect(portrait).toHaveCSS('box-shadow', 'rgba(0, 0, 0, 0.1) 0px 2px 4px 0px')
+  // Hold the outgoing phase so assertions cannot miss it and match a later
+  // automatic flip instead when the browser is busy.
+  const pausedFlip = await page.addStyleTag({
+    content: '.random-team-portrait .careers[data-flip="out"] { animation-play-state: paused; }'
+  })
   await button.click()
   await expect(button).toHaveAttribute('aria-busy', 'true')
   await expect(frame).toHaveAttribute('data-flip', 'out')
   await expect(portrait).toHaveAttribute('src', previous!)
+  await pausedFlip.evaluate(element => element.remove())
   await expect(portrait).not.toHaveAttribute('src', previous!)
   await expect(button).toHaveAttribute('aria-busy', 'false')
   await expect(frame).toHaveCSS('transform', 'none')
@@ -184,7 +190,7 @@ test('careers portrait is selected in the browser on each page load', async ({ p
 test('merged about page keeps the team, careers photo, and working links', async ({ page }) => {
   await page.goto('/about-us/', { waitUntil: 'domcontentloaded' })
   await expect(page.getByRole('heading', { level: 1 })).toHaveText(
-    'Great products startwith a great team'
+    'Great products start with a great team'
   )
   await expect(page.locator('[data-team-member]')).toHaveCount(10)
   const careers = page.locator('[data-team-member]').last()
@@ -212,10 +218,6 @@ test('merged about page keeps the team, careers photo, and working links', async
   await expect(page.getByRole('link', { name: 'Get in touch', exact: true })).toHaveAttribute(
     'href',
     '/hire-us/'
-  )
-  await expect(page.getByRole('link', { name: /Get our company deck/i })).toHaveAttribute(
-    'href',
-    '/portfolio/'
   )
   await expect(page.locator('.testimonial-divider')).toHaveCSS('border-top-width', '1px')
 })

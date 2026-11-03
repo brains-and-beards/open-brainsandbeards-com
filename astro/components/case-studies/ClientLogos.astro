@@ -1,11 +1,11 @@
 ---
 import { Image } from 'astro:assets'
+import type { LocalImage } from '../../lib/responsive-images'
 import rakuten from '../../assets/client-logos/rakuten.png'
 import manoMano from '../../assets/client-logos/mano-mano.png'
 import xing from '../../assets/client-logos/xing.png'
 import metro from '../../assets/client-logos/metro.png'
 import mobilab from '../../assets/client-logos/mobilab.png'
-import bsdex from '../../assets/client-logos/bsdex.png'
 import liveArt from '../../assets/client-logos/live-art.png'
 import vay from '../../assets/client-logos/vay.png'
 import femtasy from '../../assets/client-logos/femtasy.png'
@@ -16,46 +16,88 @@ import saloodo from '../../assets/client-logos/saloodo.png'
 import sharoo from '../../assets/client-logos/sharoo.png'
 import clincase from '../../assets/client-logos/clincase.png'
 import visca from '../../assets/client-logos/visca.png'
+import bsdex from '../../assets/client-logos/bsdex.png'
+import dreaming from '../../assets/client-logos/dreaming.png'
+import moodys from '../../assets/client-logos/moodys-white.png'
+import kidPick from '../../assets/client-logos/kid-pick.png'
+import helloBetter from '../../assets/client-logos/hello-better.png'
+
 interface Props {
   short?: boolean
 }
 const { short = false } = Astro.props
-const logos: [string, any, number][] = [
-  ['Rakuten', rakuten, 50],
-  ['ManoMano', manoMano, 50],
-  ['XING', xing, 60],
+const logos: [string, LocalImage, number][] = [
+  ['BSDEX', bsdex, 75],
+  ['Rakuten', rakuten, 60],
+  ['XING', xing, 65],
+  ['Sharoo', sharoo, 50],
   ['Metro', metro, 45],
-  ['Mobilab', mobilab, 27],
-  ['BSDEX', bsdex, 70],
-  ['LiveArt', liveArt, 50],
-  ['Vay', vay, 30],
+  ['Moody’s', moodys, 30],
   ['Femtasy', femtasy, 50],
   ['Vermietet', vermietet, 50],
-  ['LokalPortal', lokalportal, 40],
-  ['Donut', donut, 40],
-  ['Saloodo', saloodo, 65],
-  ['Sharoo', sharoo, 50],
   ['Clincase', clincase, 30],
-  ['Visca', visca, 45]
+  ['LokalPortal', lokalportal, 40],
+  ['Dreaming Spanish', dreaming, 70],
+  ['Vay', vay, 60],
+  ['ManoMano', manoMano, 50],
+  ['Kid pick', kidPick, 70],
+  ['Saloodo', saloodo, 65],
+  ['HelloBetter', helloBetter, 40],
+  ['Mobilab', mobilab, 27],
+  ['Donut', donut, 40],
+  ['Visca', visca, 40],
+  ['LiveArt', liveArt, 45]
 ]
 ---
 
-<div class="clients">
-  {Array.from({ length: short ? 1 : 4 }, (_, row) => (
-    <div class="logos">
-      {logos.slice(row * 4, row * 4 + 4).map(([name, image, height]) => (
-        <div class="logo">
-          <Image
-            src={image}
-            alt={name}
-            height={height}
-            densities={[1, 2]}
-            format="webp"
-            loading="lazy"
-            decoding="async"
-          />
-        </div>
-      ))}
+<div class:list={['client-logos-grid', { 'client-logos-grid--short': short }]}>
+  {logos.slice(0, short ? 5 : logos.length).map(([name, image, height]) => (
+    <div class="client-logo">
+      <Image
+        src={image}
+        alt={name}
+        height={height}
+        densities={[1, 2]}
+        format="webp"
+        loading="lazy"
+        decoding="async"
+      />
     </div>
   ))}
 </div>
+
+<style lang="scss">
+  @use '../../assets/stylesheets/colors' as colors;
+
+  .client-logos-grid {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    align-items: center;
+    gap: 40px 20px;
+    padding-block: 40px;
+    background-color: colors.$lightGrey;
+
+    .client-logo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 0;
+      min-height: 80px;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      object-fit: contain;
+    }
+
+    @media screen and (max-width: 690px) {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 24px;
+
+      &--short .client-logo:last-child {
+        display: none;
+      }
+    }
+  }
+</style>

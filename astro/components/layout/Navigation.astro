@@ -7,30 +7,26 @@ import logoUrl from '../../assets/images/logo-draft.svg?url'
 interface Props {
   simple?: boolean
   grey?: boolean
-  projects?: boolean
 }
 
-const { simple = false, grey = false, projects = false } = Astro.props
+const { simple = false, grey = false } = Astro.props
 const pathname = Astro.url.pathname.replace(/\/$/, '')
 const currentLocation = (url: string) => {
   const path = url.replace(/\/$/, '')
   if (pathname === path) return 'page'
-  if ((path === '/blog' || path === '/projects') && pathname.startsWith(`${path}/`)) {
+  if (path === '/blog' && pathname.startsWith(`${path}/`)) {
     return 'location'
   }
   return undefined
 }
 const menuLinks = [
   { url: '/', label: 'Home' },
-  { url: '/projects/', label: 'Projects' },
   { url: '/about-us/', label: 'About us' },
   { url: 'https://brainsandbeards.com/jobs', label: 'Careers' },
   { url: '/blog/', label: 'Blog' },
   { url: 'https://podcast.brainsandbeards.com', label: 'Podcast' }
   // { url: '/stories/', label: 'Stories' }
 ]
-const backUrl = projects ? '/projects/' : '/'
-const backLabel = `Back to ${projects ? 'projects' : 'homepage'}`
 ---
 
 <nav class:list={['menu-container', { grey }]} aria-label="Primary navigation">
@@ -42,7 +38,7 @@ const backLabel = `Back to ${projects ? 'projects' : 'homepage'}`
       <div class="back-to-homepage">
         <img class="reverse" src={chevronUrl} alt="" aria-hidden="true" />
         <li class="menu-link">
-          <a href={backUrl}> {backLabel} </a>
+          <a href="/">Back to homepage</a>
         </li>
       </div>
     </div>

@@ -1,11 +1,25 @@
 import { defineConfig } from '@playwright/test'
 
+const externalBaseURL = process.env.PLAYWRIGHT_BASE_URL
+const previewURL = 'http://127.0.0.1:4322'
+const previewCommand = 'npm run astro:preview -- --host 127.0.0.1 --port 4322 --ignore-lock'
+const skipBuild = process.env.PLAYWRIGHT_SKIP_BUILD === '1'
+
 export default defineConfig({
   testDir: './tests/browser',
   timeout: 90_000,
   fullyParallel: true,
+  webServer: externalBaseURL
+    ? undefined
+    : {
+        command: skipBuild ? previewCommand : `npm run astro:build && ${previewCommand}`,
+        url: previewURL,
+        // Cold CI builds optimize thousands of images before preview can start.
+        timeout: skipBuild ? 60_000 : 600_000,
+        stdout: 'pipe'
+      },
   use: {
-    baseURL: process.env.CAROUSEL_BASE_URL ?? 'http://localhost:4321',
+    baseURL: externalBaseURL ?? previewURL,
     trace: 'retain-on-failure'
   },
   projects: [
