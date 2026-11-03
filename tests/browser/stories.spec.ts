@@ -20,9 +20,12 @@ test('stories archive expands with the keyboard and fits the viewport', async ({
   await entry.locator('summary').focus()
   await page.keyboard.press('Enter')
   await expect(entry).toHaveAttribute('open', '')
-  await expect(entry.locator('.stories-entry-body')).toContainText('This story will be available soon.')
+  const body = entry.locator('.stories-entry-body')
+  await expect(body).toBeVisible()
+  await expect(body).toHaveText(/\S/)
   await page.keyboard.press('Enter')
   await expect(entry).not.toHaveAttribute('open', '')
+  await expect(body).toBeHidden()
 
   expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(
     await page.evaluate(() => window.innerWidth)
