@@ -10,6 +10,11 @@ npm test
 
 Set `PLAYWRIGHT_BASE_URL` to test an already running server instead, for example
 `PLAYWRIGHT_BASE_URL=http://localhost:4321 npm test`. This skips the build and preview.
+
+CI builds the site once and shares `dist-astro` with browser tests and Lighthouse.
+It sets `PLAYWRIGHT_SKIP_BUILD=1` so Playwright only starts the preview server.
+You can use the same flag locally after running `npm run astro:build`.
+
 The suite covers desktop Chrome
 and mobile widths in Chrome, WebKit, and Firefox: arrows, keyboard controls,
 desktop pagination, mouse dragging, Chrome touch swipes, and mobile touch taps.
