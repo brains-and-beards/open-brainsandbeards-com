@@ -158,6 +158,13 @@ for (const route of ['/blog/2024-boosting-map-vay/', '/blog/to-persist-or-not-to
       })
       try {
         await page.goto(route, { waitUntil: 'domcontentloaded' })
+        // DOMContentLoaded can precede stylesheet loading in WebKit. Keep images
+        // blocked, but wait for the CSS that defines their unloaded dimensions.
+        await page.waitForFunction(() =>
+          [...document.querySelectorAll<HTMLLinkElement>('link[rel="stylesheet"]')].every(
+            link => link.sheet !== null
+          )
+        )
         const image = page.locator('.main-blog-image')
         await expect(image).toBeVisible()
         const measure = () =>

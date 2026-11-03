@@ -48,10 +48,16 @@ test('careers portrait flips around its vertical axis and respects reduced motio
   const previous = await portrait.getAttribute('src')
   await expect(button).toHaveCSS('box-shadow', 'none')
   await expect(portrait).toHaveCSS('box-shadow', 'rgba(0, 0, 0, 0.1) 0px 2px 4px 0px')
+  // Hold the outgoing phase so assertions cannot miss it and match a later
+  // automatic flip instead when the browser is busy.
+  const pausedFlip = await page.addStyleTag({
+    content: '.random-team-portrait .careers[data-flip="out"] { animation-play-state: paused; }'
+  })
   await button.click()
   await expect(button).toHaveAttribute('aria-busy', 'true')
   await expect(frame).toHaveAttribute('data-flip', 'out')
   await expect(portrait).toHaveAttribute('src', previous!)
+  await pausedFlip.evaluate(element => element.remove())
   await expect(portrait).not.toHaveAttribute('src', previous!)
   await expect(button).toHaveAttribute('aria-busy', 'false')
   await expect(frame).toHaveCSS('transform', 'none')

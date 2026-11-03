@@ -52,6 +52,46 @@ test('stories archive expands with the keyboard and fits the viewport', async ({
   expect(await feed.text()).toContain('The feature we decided not to build')
 })
 
+test('a story opened before hydration closes on the next keyboard activation', async ({ page }) => {
+  let releaseHydration!: () => void
+  const hydrationGate = new Promise<void>(resolve => {
+    releaseHydration = resolve
+  })
+  await page.route('**/StoryEntry.*', async route => {
+    await hydrationGate
+    await route.continue()
+  })
+
+  try {
+    await page.goto('/stories/', { waitUntil: 'domcontentloaded' })
+    const entry = page.locator('.stories-entry').first()
+    const summary = entry.locator('summary')
+    expect(
+      await entry.evaluate(element => element.closest('astro-island')!.hasAttribute('ssr'))
+    ).toBe(true)
+    await summary.focus()
+    await page.keyboard.press('Enter')
+    await expect(entry).toHaveAttribute('open', '')
+
+    releaseHydration()
+    await entry.evaluate(async element => {
+      const island = element.closest('astro-island')!
+      if (island.hasAttribute('ssr')) {
+        await new Promise(resolve =>
+          island.addEventListener('astro:hydrate', resolve, { once: true })
+        )
+      }
+    })
+    await expect(summary).toBeFocused()
+    await page.keyboard.press('Enter')
+    await expect(entry).not.toHaveAttribute('open', '')
+    await expect(entry.locator('.stories-entry-body')).toBeHidden()
+  } finally {
+    releaseHydration()
+    await page.unrouteAll({ behavior: 'wait' })
+  }
+})
+
 test('stories pagination opens the first older story and supports direct visits', async ({
   page
 }) => {
