@@ -13,7 +13,9 @@ export default defineConfig({
         command:
           'npm run astro:build && npm run astro:preview -- --host 127.0.0.1 --port 4322 --ignore-lock',
         url: previewURL,
-        timeout: 180_000
+        // Cold CI builds optimize thousands of images before preview can start.
+        timeout: 600_000,
+        stdout: 'pipe'
       },
   use: {
     baseURL: externalBaseURL ?? previewURL,
