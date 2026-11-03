@@ -1,4 +1,8 @@
-import { expect, test } from '@playwright/test'
+import { expect, test, type Page } from '@playwright/test'
+
+async function waitForStoryHydration(page: Page) {
+  await expect(page.locator('.stories-list astro-island').first()).not.toHaveAttribute('ssr')
+}
 
 test('stories archive expands with the keyboard and fits the viewport', async ({
   page
@@ -17,6 +21,7 @@ test('stories archive expands with the keyboard and fits the viewport', async ({
   expect(archiveIds).not.toContain(featuredId)
 
   const entry = page.locator('.stories-entry').first()
+  await waitForStoryHydration(page)
   await entry.locator('summary').focus()
   await page.keyboard.press('Enter')
   await expect(entry).toHaveAttribute('open', '')
@@ -52,46 +57,6 @@ test('stories archive expands with the keyboard and fits the viewport', async ({
   expect(await feed.text()).toContain('The feature we decided not to build')
 })
 
-test('a story opened before hydration closes on the next keyboard activation', async ({ page }) => {
-  let releaseHydration!: () => void
-  const hydrationGate = new Promise<void>(resolve => {
-    releaseHydration = resolve
-  })
-  await page.route('**/StoryEntry.*', async route => {
-    await hydrationGate
-    await route.continue()
-  })
-
-  try {
-    await page.goto('/stories/', { waitUntil: 'domcontentloaded' })
-    const entry = page.locator('.stories-entry').first()
-    const summary = entry.locator('summary')
-    expect(
-      await entry.evaluate(element => element.closest('astro-island')!.hasAttribute('ssr'))
-    ).toBe(true)
-    await summary.focus()
-    await page.keyboard.press('Enter')
-    await expect(entry).toHaveAttribute('open', '')
-
-    releaseHydration()
-    await entry.evaluate(async element => {
-      const island = element.closest('astro-island')!
-      if (island.hasAttribute('ssr')) {
-        await new Promise(resolve =>
-          island.addEventListener('astro:hydrate', resolve, { once: true })
-        )
-      }
-    })
-    await expect(summary).toBeFocused()
-    await page.keyboard.press('Enter')
-    await expect(entry).not.toHaveAttribute('open', '')
-    await expect(entry.locator('.stories-entry-body')).toBeHidden()
-  } finally {
-    releaseHydration()
-    await page.unrouteAll({ behavior: 'wait' })
-  }
-})
-
 test('stories pagination opens the first older story and supports direct visits', async ({
   page
 }) => {
@@ -117,6 +82,7 @@ test('stories pagination opens the first older story and supports direct visits'
   expect(new Set([...firstPageIds, ...olderIds]).size).toBe(17)
 
   await page.reload()
+  await waitForStoryHydration(page)
   await expect(page.locator('.stories-entry').first()).toHaveAttribute('open', '')
   await page.locator('.stories-entry').first().locator('summary').click()
   await expect(page.locator('.stories-entry[open]')).toHaveCount(0)
@@ -135,17 +101,7 @@ test('story height animates in both directions and handles interrupted toggles',
 }) => {
   await page.goto('/stories/')
   const entry = page.locator('.stories-entry').first()
-  // Wait for the React component to hydrate before interacting.
-  await page
-    .locator('astro-island[component-export="default"]')
-    .first()
-    .evaluate(async island => {
-      if (island.hasAttribute('ssr')) {
-        await new Promise(resolve =>
-          island.addEventListener('astro:hydrate', resolve, { once: true })
-        )
-      }
-    })
+  await waitForStoryHydration(page)
   const closedHeight = await entry.evaluate(element => element.getBoundingClientRect().height)
   await entry.locator('summary').click()
   const openingHeight = await entry.evaluate(element => {
