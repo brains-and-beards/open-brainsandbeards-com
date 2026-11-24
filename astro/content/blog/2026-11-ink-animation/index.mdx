@@ -49,7 +49,9 @@ First of all, we have to make one thing clear: while it might look like ink is a
 </View>
 ```
 
-As the animation proceeds, we apply an opacity mask on the overlay, slowly showing patches of transparency which expose the content beneath. The animation takes place inside the mask by changing the value of the alpha channel. White areas map to opaque background color (paper), while black ones become transparent.
+As the animation proceeds, we apply an opacity mask on the overlay, slowly showing patches of transparency by changing the value of the alpha channel. 
+
+We can see it clearly if we only show the mask, without the message in the background. White areas map to opaque background color (paper), while black ones become transparent, exposing the content beneath.
 
 <VideoComparison videos={[
   { src: fullMask, label: 'The animated opacity mask, white - opaque (alpha: 1), black - transparent (alpha: 0)' }
@@ -63,7 +65,7 @@ The clock is taken from [Reanimated](https://wcandillon.github.io/react-native-s
 import { Canvas, Fill, Shader, Skia } from '@shopify/react-native-skia';
 import { Easing, useDerivedValue, useSharedValue, withTiming } from 'react-native-reanimated';
 import { INK_SHADER } from './ink-shader';
-import { animSettings } from './anim-settings';
+import { animationSettings } from './anim-settings';
 (...)
 
 const effect = Skia.RuntimeEffect.Make(FULL_MESSAGE_INK_SHADER);
@@ -76,7 +78,7 @@ export function MessageInk({ color }: { color: string }) {
   const uniforms = useDerivedValue(() => ({
     time: time.value,
     paperColor,
-    ...animSettings
+    ...animationSettings
   }));
 
   useEffect(() => {
@@ -94,7 +96,10 @@ export function MessageInk({ color }: { color: string }) {
 }
 ```
 
-On the React Native side, we create a `uniforms` object with named variables, which are later accessible inside the shader. We can think of them as user-controlled global variables. In the simplest case, it's enough if we pass the `time` elapsed since the start of animation and the `paperColor` - the color of the overlay. We may also include any number of extra animation settings in that object. However, before we get into that later, let's see what the mysterious `effect` is for, and how to create it!
+On the React Native side, we create a `uniforms` object with named variables, which are later accessible inside the shader. We can think of them as user-controlled global variables. In the simplest case, it's enough if we pass the `time` elapsed since the start of animation and the `paperColor` - the color of the overlay.
+
+Later on, we will also include a number of extra `animationSettings` in that object. However, before we get into that, let's see what the mysterious `effect` is for, and how to create it!
+
 #### Minimal shader
 
 Before we move on, let's recall how pixel shaders work in general. The shader itself is a function that calculates the color (including opacity) for each pixel position on the canvas. In our case, it is implemented in [Skia Shading Language](https://wcandillon.github.io/react-native-skia/v2/docs/shaders/overview/) (SkSL), a custom language with a C-like syntax, similar to GLSL.
@@ -129,7 +134,7 @@ const ANIM_TIME = 2500;
 const ISLANDS_SPACING = 60;
 
 // These setting are later passed to the shader as part of the `uniforms` object
-const animSettings = {
+const animationSettings = {
 	islandSpacing: ISLAND_SPACING,
 	expansionSpeed: ISLANDS_SPACING / ANIM_TIME,
 }
@@ -262,7 +267,7 @@ We can easily make the animation looks much more natural and interesting if not 
 
 ``` typescript
 /** Time [ms] over which island seeds can be born */
-const animSettings = {
+const animationSettings = {
 	(...)
 	birthWindow: ANIM_TIME * 0.75,
 }
@@ -307,7 +312,7 @@ If we just made the transition a bit slower... Let's say that after the island g
 
 ``` typescript
 /** Time [ms] over which island seeds can be born */
-const animSettings = {
+const animationSettings = {
 	(...)
 	fadeDuration: 2000,
 }
