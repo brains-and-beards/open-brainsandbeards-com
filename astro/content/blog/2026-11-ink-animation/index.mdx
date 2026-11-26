@@ -17,7 +17,7 @@ import temporalMask from './temporal-mask.mov?url'
 import temporalWriting from './temporal-write.mov?url'
 import fullMask from './full.mov?url'
 import fadedWriting from './writing-fade-good1.mov?url'
-import finalApp from './final-app.mov?url'
+import finalApp from './final-app.mp4?url'
 import diaryGif from './riddle_diary_smoother_slower_corrected.gif?url'
 
 # A little magic in the chat: building the ink effect in Godka
@@ -352,7 +352,7 @@ All nice, but how did it work out in the end? Let's have a look at a real app me
 We admit: the handwriting might be a bit over the top for everyday messages in a corporate environment. But it was still fun to learn!
 
 
-<VideoComparison videos={[
+<VideoComparison loop={false} videos={[
   { src: finalApp, label: 'A new message, emerging from the background of your phone.' },
 ]} />
 
