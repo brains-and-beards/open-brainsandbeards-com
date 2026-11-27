@@ -338,7 +338,7 @@ const animationSettings = {
 But hey! We already have the code for that, and actually it's in our first shader!
 
 ``` c
-half alpha = 1.0 - smoothstep(0.0, 3.0, time);
+half alpha = 1.0 - smoothstep(0.0, 3000.0, time);
 ```
 
  We just need to tweak it a little bit. The first two arguments for the `smoothstep` function are the beginning and the end times of the opacity change animation. We just need to start this transition after the island reaches our pixel, and let it last for `fadeDuration` milliseconds.
