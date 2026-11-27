@@ -1,0 +1,50 @@
+---
+import { Image } from 'astro:assets'
+import type { ImageMetadata } from 'astro'
+
+interface Props {
+  images: { src: ImageMetadata; label: string }[]
+}
+
+const { images } = Astro.props
+---
+
+<div class:list={['image-comparison', { 'single-image': images.length === 1 }]}>
+  {images.map(({ src, label }) => (
+    <figure>
+      <Image src={src} alt={label} loading="lazy" />
+      <figcaption>{label}</figcaption>
+    </figure>
+  ))}
+</div>
+
+<style>
+  .image-comparison {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+    margin-block: 24px;
+  }
+
+  figure {
+    min-width: 0;
+    margin: 0;
+  }
+
+  img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  figcaption {
+    margin-top: 8px;
+    text-align: center;
+  }
+
+  .single-image {
+    grid-template-columns: minmax(0, 1fr);
+    max-width: 400px;
+    margin-inline: auto;
+  }
+</style>

@@ -7,6 +7,10 @@ author: Marek Waligórski
 ---
 
 import VideoComparison from '../../../components/blog/VideoComparison.astro'
+import ImageComparison from '../../../components/blog/ImageComparison.astro'
+import squareIslands from './grid-with-borders.png'
+import randomGood from './random-good.png'
+import randomBad from './random-bad.png'
 import uniformWriting from './uniform-write.mov?url'
 import uniformMask from './uniform-mask.mov?url'
 import NewsletterLink from '../../../components/interactive/NewsletterLink.astro'
@@ -57,7 +61,7 @@ As the animation proceeds, we apply an opacity mask on the overlay, slowly showi
 We can see it clearly if we only show the mask, without the message in the background. White areas map to opaque background color (paper), while black ones become transparent, exposing the content beneath.
 
 <VideoComparison autoplay videos={[
-  { src: fullMask, label: 'The animated opacity mask, white - opaque (alpha: 1), black - transparent (alpha: 0)' }
+  { src: fullMask, label: 'The animated opacity mask. White (alpha: 1) is opaque, black (alpha: 0) means transparent.' }
 ]} />
 
 Since Godka is built with React Native and Expo, we decided to use [React Native Skia](https://docs.expo.dev/versions/latest/sdk/skia/) to achieve this effect. The `MessageInk` component serves as a wrapper for the main pixel shader.  Its main goal is to get the animation time from `Reanimated` and pass it into the Shader.  
@@ -148,7 +152,9 @@ const animationSettings = {
 
 In the simplest case, we can place the expanding circles of transparency uniformly along the overlay. To do this, we divide it into square cells, each 60px (`ISLAND_SPACING`) long, and place a starting point in the center of each one.
 
-![Square islands](grid-with-borders.png)
+<ImageComparison images={[
+  { src: squareIslands, label: 'The land of Kanvas, neatly divided into square plots.' }
+]} />
 
 Knowing the island expansion speed, we can now calculate the exact time when each pixel becomes transparent. This depends on the relative position of the pixel inside its cell - the farther from the cell's center a pixel lies, the later it will become transparent. 
 
@@ -201,6 +207,11 @@ float random(float2 p) {
 	return fract(sin(dot(p, float2(127.1, 311.7))) * 43758.5453);
 }
 ```
+
+<ImageComparison images={[
+  { src: randomGood, label: 'Good noise randomness (127.1, 311.7)' },
+  { src: randomBad, label: 'Correlated noise (16.0, 24.0)' }
+]} />
 
 With this RNG ready, we can apply some jitter to the initial locations of the islands. Note that all pixels within a cell need to have the same, persistent value of jitter applied to the island center coordinates - otherwise the circles would jump around the canvas with every frame.
 
