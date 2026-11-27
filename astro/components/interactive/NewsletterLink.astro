@@ -1,0 +1,26 @@
+---
+import ReadMore from '../ui/ReadMore.astro'
+
+interface Props {
+  text: string
+  formId?: string
+  readMore?: boolean
+  class?: string
+}
+
+const { text, formId = 'f755e13cfb', readMore = false, class: className } = Astro.props
+const formUrl = `https://brains-beards.kit.com/${formId}`
+const locals = Astro.locals as { newsletterForms?: Set<string> }
+const forms = (locals.newsletterForms ??= new Set<string>())
+const includeEmbed = !forms.has(formId)
+
+// Share one embed between all links to this form during this page's render.
+forms.add(formId)
+---
+
+{includeEmbed && (
+  <script is:inline async data-uid={formId} src={`${formUrl}/index.js`}></script>
+)}
+<a data-formkit-toggle={formId} href={formUrl} class={className}>
+  {readMore ? <ReadMore text={text} /> : text}
+</a>

@@ -2,6 +2,7 @@
 import { render } from 'astro:content'
 import BaseLayout from '../../layouts/BaseLayout.astro'
 import ReadMore from '../../components/ui/ReadMore.astro'
+import NewsletterLink from '../interactive/NewsletterLink.astro'
 import StoryEntry from './StoryEntry'
 import { storyDate, storiesPerPage } from '../../lib/stories'
 import { getStories } from '../../lib/storyContent'
@@ -29,8 +30,6 @@ const LatestContent = latest?.Content
 const archiveStories = currentPage === 1 ? pageStories.slice(1) : pageStories
 const months = [...new Set(archiveStories.map(story => story.date.slice(0, 7)))]
 const pageUrl = (page: number) => (page === 1 ? '/stories/' : `/stories/${page}/`)
-const mailUrl =
-  'https://brainsandbeards.us10.list-manage.com/subscribe?u=1866d0ed0d86fc67762d34be5&id=7080aab9c0'
 ---
 
 <BaseLayout
@@ -48,9 +47,7 @@ const mailUrl =
             <span>a small pause</span>
           </h1>
           <div class="stories-read-more-links">
-            <a href={mailUrl}>
-              <ReadMore text="Get them by email" />
-            </a>
+            <NewsletterLink text="Get them by email" readMore />
             <a href="/stories/feed.xml">
               <ReadMore text="RSS" />
             </a>
