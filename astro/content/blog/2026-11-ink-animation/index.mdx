@@ -1,0 +1,376 @@
+---
+path: '/blog/2026-ink-animation'
+date: '2026-11-24T12:20:00.000Z'
+title: 'A little magic in the chat: building the ink effect in Godka'
+image: main.jpg
+author: Marek Waligórski
+---
+
+import VideoComparison from '../../../components/blog/VideoComparison.astro'
+import ImageComparison from '../../../components/blog/ImageComparison.astro'
+import squareIslands from './grid-with-borders.png'
+import randomGood from './random-good.png'
+import randomBad from './random-bad.png'
+import uniformWriting from './uniform-write.mov?url'
+import uniformMask from './uniform-mask.mov?url'
+import NewsletterLink from '../../../components/interactive/NewsletterLink.astro'
+import simpleWriting from './simple-cirles-writing.mov?url'
+import simpleMask from './simple-circles-black.mov?url'
+import bordersWriting from './borders-write.mov?url'
+import bordersMask from './borders-mask.mov?url'
+import jitterMask from './jitter-mask.mov?url'
+import jitterWriting from './jitter-write.mov?url'
+import temporalMask from './temporal-mask.mov?url'
+import temporalWriting from './temporal-write.mov?url'
+import fullMask from './full.mov?url'
+import fadedWriting from './writing-fade-good1.mov?url'
+import finalApp from './final-app.mp4?url'
+import diaryGif from './riddle_diary_smoother_slower_corrected.gif?url'
+
+# A little magic in the chat: building the ink effect in Godka
+
+We recently started to build our company's own internal chat client, _Godka_ (<NewsletterLink text="be the first to try it out!" />). One of the principles was for the conversations to feel pleasant and relaxed. After some brainstorming, Patryk came up with an unconventional idea: let's make the app feel more as if we were writing on paper.
+
+The original reference was the enchanted diary from _Harry Potter and the Chamber of Secrets_.
+
+<img src={diaryGif} alt="Writing appearing in Tom Riddle's enchanted diary" width="500" height="221" loading="lazy" style={{ display: 'block', marginInline: 'auto' }} />
+
+Readers familiar with the HP franchise might recall that the diary was in fact a horcrux - an object infused with dark magic, created by Lord Voldemort himself. However, Harry couldn't resist writing in this diary when he found it, and neither could we skip the opportunity to do a deep dive into the realm of pixel shader animations in React Native by re-creating this effect!
+
+<VideoComparison autoplay videos={[
+  { src: fadedWriting, label: 'The ink effect revealing a handwritten message' }
+]} />
+
+However, wiser wizards, like Arthur Weasley, knew that we should never trust magical items unless we understand how they work. Let's follow their advice!
+
+## Breaking down the magic
+
+#### Disappearing paper
+
+First of all, we have to make one thing clear: while it might look like ink is appearing on the page, what we actually do is render the message normally, but conceal it with an overlay in the same color as the background (`MessageInk` component).
+
+``` tsx
+<View>
+	<MessageMarkdown body={messageBody} />
+	<MessageInk color={theme.surfaceCard} />
+</View>
+```
+
+As the animation proceeds, we apply an opacity mask on the overlay, slowly showing patches of transparency by changing the value of the alpha channel. 
+
+We can see it clearly if we only show the mask, without the message in the background. White areas map to opaque background color (paper), while black ones become transparent, exposing the content beneath.
+
+<VideoComparison autoplay videos={[
+  { src: fullMask, label: 'The animated opacity mask. White (alpha: 1) is opaque, black (alpha: 0) means transparent.' }
+]} />
+
+Since Godka is built with React Native and Expo, we decided to use [React Native Skia](https://docs.expo.dev/versions/latest/sdk/skia/) to achieve this effect. The `MessageInk` component serves as a wrapper for the main pixel shader.  Its main goal is to get the animation time from `Reanimated` and pass it into the Shader.  
+
+The clock is taken from [Reanimated](https://wcandillon.github.io/react-native-skia/v2/docs/animations/animations/) via `withTiming`, resulting in a shared `time` value. This integration runs the animation on the UI thread, without requiring a React render for every frame. 
+
+``` tsx
+import { Canvas, Fill, Shader, Skia } from '@shopify/react-native-skia';
+import { Easing, useDerivedValue, useSharedValue, withTiming } from 'react-native-reanimated';
+import { INK_SHADER } from './ink-shader';
+import { animationSettings } from './anim-settings';
+(...)
+
+const effect = Skia.RuntimeEffect.Make(FULL_MESSAGE_INK_SHADER);
+
+export function MessageInk({ color }: { color: string }) {
+  const paperColor = useMemo(() => Skia.Color(color), [color]);
+  
+  const time = useSharedValue(0);
+  
+  const uniforms = useDerivedValue(() => ({
+    time: time.value,
+    paperColor,
+    ...animationSettings
+  }));
+
+  useEffect(() => {
+	time.set(withTiming(durationMs,
+			 { duration: durationMs, easing: Easing.linear }));
+  }, []);
+
+  return (
+	<Canvas style={StyleSheet.absoluteFill} accessible={false}>
+	  <Fill>
+		<Shader source={effect} uniforms={uniforms} />
+	  </Fill>
+	</Canvas>
+  );
+}
+```
+
+On the React Native side, we create a `uniforms` object with named variables, which are later accessible inside the shader. We can think of them as user-controlled global variables. In the simplest case, it's enough if we pass the `time` elapsed since the start of animation and the `paperColor` - the color of the overlay.
+
+Later on, we will also include a number of extra `animationSettings` in that object. However, before we get into that, let's see what the mysterious `effect` is for, and how to create it!
+
+#### Minimal shader
+
+Before we move on, let's recall how pixel shaders work in general. The shader itself is a function that calculates the color (including opacity) for each pixel position on the canvas. In our case, it is implemented in [Skia Shading Language](https://wcandillon.github.io/react-native-skia/v2/docs/shaders/overview/) (SkSL), a custom language with a C-like syntax, similar to GLSL.
+
+The neat trick on Skia's behalf is that, in order to see the effect, we just need to import the shader SkSL code as a plain string, compile it with `Skia.RuntimeEffect.Make()` and send it to the `Canvas` object. 
+
+Let's start with a dead simple example which reduces the value of the opacity (alpha channel of RGBA) of a pixel from 1 to 0 over 3 seconds. The [smoothstep](https://thebookofshaders.com/glossary/?search=smoothstep) function can interpolate the `alpha` channel value depending on the current `time` in a non-linear fashion.
+
+``` c
+// Time and all timing constants use elapsed real seconds.
+uniform float time;
+uniform half4 paperColor;
+
+half4 main(float2 xy) {
+	half alpha = 1.0 - smoothstep(0.0, 3000.0, time);
+	return half4(paperColor.rgb * alpha, alpha);
+}
+```
+
+As you can see, this shader doesn't even take `xy` into account, which is why we end up applying the same color to each pixel on the screen. I guess it's not the most impressive use of a shader, but it gives us something to work on.
+
+<VideoComparison autoplay videos={[
+  { src: uniformMask, label: 'Uniform opacity transition: mask' },
+  { src: uniformWriting, label: 'Uniform opacity transition: writing' }
+]} />
+
+#### Adding ink islands
+
+If you looked closely at the animation that we showed at the beginning, you probably remember that the transparency areas started out small and gradually increased as circular patches. We can imagine them as expanding "islands of transparency". 
+
+Let's start with determining two main settings - expected animation time and the distance (in pixels) between the islands. 
+
+``` typescript
+const ANIM_TIME = 2500; // ms
+const ISLANDS_SPACING = 60; // px
+
+// These setting are later passed to the shader as part of the `uniforms` object
+const animationSettings = {
+	islandSpacing: ISLAND_SPACING,
+	expansionSpeed: ISLANDS_SPACING / ANIM_TIME,
+}
+```
+
+In the simplest case, we can place the expanding circles of transparency uniformly along the overlay. To do this, we divide it into square cells, each 60px (`ISLAND_SPACING`) long, and place a starting point in the center of each one.
+
+<ImageComparison images={[
+  { src: squareIslands, label: 'The land of Kanvas, neatly divided into square plots.' }
+]} />
+
+Knowing the island expansion speed, we can now calculate the exact time when each pixel becomes transparent. This depends on the relative position of the pixel inside its cell - the farther from the cell's center a pixel lies, the later it will become transparent. 
+
+_displayTime = distanceFromIslandCenter / expansionSpeed_
+
+We could calculate the distance of pixel coordinates from the center manually by using good old Pythagorean theorem, but fortunately SkSL allows us to use a built-in [distance](https://thebookofshaders.com/glossary/?search=distance) function directly on the GPU. Let's see this in action.
+
+```c
+uniform float time;
+uniform half4 paperColor;
+
+uniform float islandSpacing;
+uniform float expansionSpeed;
+
+// Calculates at which time the given `p` coordinates should become transparent
+float islandArrival(float2 p) {
+	// Which cell are we in?
+	float2 cell = floor(p / islandSpacing);
+	// Determine the location of the current cell center
+	float2 center = (cell + 0.5) * islandSpacing;
+	
+	// Assume islands expanding uniformly in all directions at a constant speed.
+	// Return the time for the island to reach the given oordinates.
+	return distance(p, center) / expansionSpeed;
+}
+
+// Main shader: find the time when an island reaches the given pixel. If this 
+// time has passed, make the pixel transparent.
+half4 main(float2 xy) {
+	float islandArrivalTime = islandArrival(xy);
+	half alpha = paperColor.a * (islandArrivalTime > time ? 1.0 : 0.0);
+	
+	return half4(paperColor.rgb * alpha, alpha);
+}
+```
+
+<VideoComparison autoplay videos={[
+  { src: simpleMask, label: 'Expanding circles: mask' },
+  { src: simpleWriting, label: 'Expanding circles: writing' }
+]} />
+
+#### Making it more fun
+
+The current effect is still pretty far from the magic we could see in the Harry Potter movie. First of all, the circles are aligned in perfect rows and columns, which definitely looks unnatural. We would be much better off if we gave each one a slightly different starting position within the cell. This, however, poses a problem as there is no built-in random function available on the GPU.
+
+We can make our one, though, by following the implementation suggestions from [The Book of Shaders](https://thebookofshaders.com/10/). You can use different constants here, but some combinations (especially numbers that share common denominators) might lead to repeated patterns. We chose a set which provides a roughly uniform distribution of the pseudo-random numbers.
+
+``` c
+float random(float2 p) {
+	return fract(sin(dot(p, float2(127.1, 311.7))) * 43758.5453);
+}
+```
+
+<ImageComparison images={[
+  { src: randomGood, label: 'Good noise randomness (127.1, 311.7)' },
+  { src: randomBad, label: 'Correlated noise (16.0, 24.0)' }
+]} />
+
+With this RNG ready, we can apply some jitter to the initial locations of the islands. Note that all pixels within a cell need to have the same, persistent value of jitter applied to the island center coordinates - otherwise the circles would jump around the canvas with every frame.
+
+We need to generate two (seemingly) independent random numbers to account for the translation of the island's starting point from the center of the cell. Since our `random` function takes a 2D vector but only returns a single number, we need to call it twice with different parameters. 
+
+``` c
+// A spoof vector constant to decorrelate vertical from horizontal birth position. Can be almost anything.
+const float2 JITTER_SEED = float2(1.234,5.678);
+
+float islandArrival(float2 p) {
+	float2 cell = floor(p / islandSpacing);
+	
+	// Add some jitter [0,1) -- constant value for each cell.
+	float2 jitter = float2(random(cell), random(cell + JITTER_SEED));
+	// The center is now randomly aligned within the cell
+	float2 center = (cell + jitter) * islandSpacing;
+	
+	return distance(p, center) / expansionSpeed;
+}
+```
+
+<VideoComparison  autoplay videos={[
+  { src: bordersMask, label: 'Visible cell borders: mask' },
+  { src: bordersWriting, label: 'Visible cell borders: writing' }
+]} />
+
+Whoopsie-daisy! While the effect might look a bit better now at the beginning, we start to see the vertical and horizontal borders of the cells. This is because with the origins of the islands in random positions, we can no longer be certain that a given pixel will be reached by an island originating from the same cell. If there's an island within a neighboring cell which spawns next to the border, it might reach our pixel much quicker than the one from its original cell! 
+
+Turn out, we have to do a bit of checking and see if any of the 8 surrounding cells happens to reach the pixel earlier than the default circle from the pixel's cell. If so, turn the pixel transparent immediately.
+
+We have to check the previous (-1), this (0) and the next (+1) cells in each dimension, and choose the one where the island arrival time is the shortest:
+
+``` c
+float islandArrival(float2 p) {
+	// Cell contaning the current pixel
+	float2 myCell = floor(p / islandSpacing);
+		
+	float earliestTime = INFINITY;
+
+	// Check if any island from neighboring cells might reach the current pixel 
+	// before this one does. If so, use that island for animation.
+	for (int y = -1; y <= 1; y++) {
+		for (int x = -1; x <= 1; x++) {
+			// Cell number of either myCell or one of its neighbors
+			float2 cell = myCell + float2(float(x), float(y));
+			
+			// Calculate the randomly generated cell center like before
+			float2 jitter = float2(random(cell), random(cell + JITTER_SEED));
+			float2 center = (cell + jitter) * islandSpacing;
+			float arrivalTime = distance(p, center) / expansionSpeed;
+			
+			// Compare the 9 island arrival times and select the shortest one
+			earliestTime = min(earliestTime, arrivalTime);
+		}
+	}
+	
+	return earliestTime;
+}
+```
+
+
+<VideoComparison autoplay videos={[
+  { src: jitterMask, label: 'Neighboring islands: mask' },
+  { src: jitterWriting, label: 'Neighboring islands: writing' }
+]} />
+
+#### Please, take turns!
+
+We can easily make the animation looks much more natural and interesting if not all islands appear at the same time. Why restrict ourselves to spatial randomness if we can also add temporal one? 
+
+``` typescript
+/** Time [ms] over which island seeds can be born */
+const animationSettings = {
+	(...)
+	birthWindow: ANIM_TIME * 0.75,  // Less than 100% - let each island have some time to develop
+}
+```
+
+``` c
+uniform float birthWindow;
+
+float islandArrival(float2 p) {
+	(...)
+	for (int y = -1; y <= 1; y++) {
+		for (int x = -1; x <= 1; x++) {
+			float2 cell = myCell + float2(float(x), float(y));
+			float2 jitter = float2(random(cell), random(cell + JITTER_SEED));
+			float2 center = (cell + jitter) * islandSpacing;
+			
+			// Wait some random time before starting animation in this cell
+			float initialWait = random(cell) * birthWindow;
+			float arrivalTime = initialWait +
+									distance(p, center) / expansionSpeed;
+			
+			earliestTime = min(earliestTime, arrivalTime);
+		}
+	}
+	
+	return earliestTime;
+}
+```
+
+We can now see some islands spawning clearly much later than others, making the final impression look a bit less like expanding circles, and more like actual ink flowing across the page.
+
+<VideoComparison autoplay videos={[
+  { src: temporalMask, label: 'Staggered island starts: mask' },
+  { src: temporalWriting, label: 'Staggered island starts: writing' }
+]} />
+
+#### The first shall be last
+
+In the previous animations, the edges of the circles still look very sharp. For a more peaceful effect, we could add a bit of extra fade-in time for the ink to "soak" into the page.
+
+If we just made the transition a bit slower... Let's say that after the island growth reaches a pixel, let it animate its opacity for a few more seconds before becoming fully transparent...
+
+``` typescript
+/** Time [ms] over which island seeds can be born */
+const animationSettings = {
+	(...)
+	fadeDuration: 2000,
+}
+```
+
+But hey! We already have the code for that, and actually it's in our first shader!
+
+``` c
+half alpha = 1.0 - smoothstep(0.0, 3000.0, time);
+```
+
+ We just need to tweak it a little bit. The first two arguments for the `smoothstep` function are the beginning and the end times of the opacity change animation. We just need to start this transition after the island reaches our pixel, and let it last for `fadeDuration` milliseconds.
+
+``` c
+half4 main(float2 xy) {
+	float arrivalTime = islandArrival(xy);
+	
+	// Start: arrivalTime, End: arrivalTime + fadeDuration
+	half alpha = paperColor.a * smoothstep(arrivalTime, 
+										   arrivalTime + fadeDuration, time);
+
+	return half4(paperColor.rgb * alpha, alpha);
+}
+```
+
+Making each pixel fade in slowly results in nice, "soft" edges of the transparency islands. Neat!
+
+<VideoComparison autoplay videos={[
+  { src: fullMask, label: 'Soft island edges: mask' },
+  { src: fadedWriting, label: 'Soft island edges: writing' }
+]} />
+
+#### Application
+
+All nice, but how did it work out in the end? Let's have a look at a real app message!
+
+We admit: the handwriting might be a bit over the top for everyday messages in a corporate environment. But it was still fun to learn!
+
+
+<VideoComparison autoplay loop={false} videos={[
+  { src: finalApp, label: 'A new message, emerging from the background of your phone.' },
+]} />
+
+

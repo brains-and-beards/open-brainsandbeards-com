@@ -1,0 +1,56 @@
+---
+import VideoPlayer from './VideoPlayer'
+
+interface Props {
+  videos: { src: string; label: string }[]
+  autoplay?: boolean
+  loop?: boolean
+}
+
+const { videos, autoplay = false, loop = true } = Astro.props
+---
+
+<div class:list={['video-comparison', { 'single-video': videos.length === 1 }]}>
+  {videos.map(({ src, label }) => (
+    <figure>
+      <VideoPlayer src={src} label={label} autoplay={autoplay} loop={loop} client:load />
+      <figcaption>{label}</figcaption>
+    </figure>
+  ))}
+</div>
+
+<style>
+  .video-comparison {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+    margin-block: 24px;
+  }
+
+  figure {
+    min-width: 0;
+    margin: 0;
+  }
+
+  figure :global(video) {
+    display: block;
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: contain;
+  }
+
+  figcaption {
+    margin-top: 8px;
+    text-align: center;
+  }
+
+  .single-video {
+    grid-template-columns: minmax(0, 1fr);
+    max-width: 400px;
+    margin-inline: auto;
+  }
+
+  .single-video :global(video) {
+    aspect-ratio: auto;
+  }
+</style>
