@@ -7,6 +7,8 @@ author: Marek Waligórski
 ---
 
 import VideoComparison from '../../../components/blog/VideoComparison.astro'
+import uniformWriting from './uniform-write.mov?url'
+import uniformMask from './uniform-mask.mov?url'
 import simpleWriting from './simple-cirles-writing.mov?url'
 import simpleMask from './simple-circles-black.mov?url'
 import bordersWriting from './borders-write.mov?url'
@@ -114,14 +116,17 @@ uniform float time;
 uniform half4 paperColor;
 
 half4 main(float2 xy) {
-	half alpha = 1.0 - smoothstep(0.0, 3.0, time);
+	half alpha = 1.0 - smoothstep(0.0, 3000.0, time);
 	return half4(paperColor.rgb * alpha, alpha);
 }
 ```
 
 As you can see, this shader doesn't even take `xy` into account, which is why we end up applying the same color to each pixel on the screen. I guess it's not the most impressive use of a shader, but it gives us something to work on.
 
-[Anim mask].  [anim ink]
+<VideoComparison videos={[
+  { src: uniformMask, label: 'Expanding circles: mask' },
+  { src: uniformWriting, label: 'Expanding circles: writing' }
+]} />
 
 #### Adding ink islands
 
@@ -130,8 +135,8 @@ If you looked closely at the animation that we showed at the beginning, you prob
 Let's start with determining two main settings - expected animation time and the distance (in pixels) between the islands. 
 
 ``` typescript
-const ANIM_TIME = 2500;
-const ISLANDS_SPACING = 60;
+const ANIM_TIME = 2500; // ms
+const ISLANDS_SPACING = 60; // px
 
 // These setting are later passed to the shader as part of the `uniforms` object
 const animationSettings = {
@@ -180,8 +185,8 @@ half4 main(float2 xy) {
 ```
 
 <VideoComparison videos={[
-  { src: simpleWriting, label: 'Expanding circles: writing' },
-  { src: simpleMask, label: 'Expanding circles: mask' }
+  { src: simpleMask, label: 'Expanding circles: mask' },
+  { src: simpleWriting, label: 'Expanding circles: writing' }
 ]} />
 
 #### Making it more fun
@@ -217,8 +222,8 @@ float islandArrival(float2 p) {
 ```
 
 <VideoComparison videos={[
-  { src: bordersWriting, label: 'Visible cell borders: writing' },
-  { src: bordersMask, label: 'Visible cell borders: mask' }
+  { src: bordersMask, label: 'Visible cell borders: mask' },
+  { src: bordersWriting, label: 'Visible cell borders: writing' }
 ]} />
 
 Whoopsie-daisy! While the effect might look a bit better now at the beginning, we start to see the vertical and horizontal borders of the cells. This is because with the origins of the islands in random positions, we can no longer be certain that a given pixel will be reached by an island originating from the same cell. If there's an island within a neighboring cell which spawns next to the border, it might reach our pixel much quicker than the one from its original cell! 
@@ -269,7 +274,7 @@ We can easily make the animation looks much more natural and interesting if not 
 /** Time [ms] over which island seeds can be born */
 const animationSettings = {
 	(...)
-	birthWindow: ANIM_TIME * 0.75,
+	birthWindow: ANIM_TIME * 0.75,  // Less than 100% - let each island have some time to develop
 }
 ```
 
