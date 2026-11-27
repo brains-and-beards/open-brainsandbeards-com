@@ -1,4 +1,6 @@
 ---
+import VideoPlayer from './VideoPlayer'
+
 interface Props {
   videos: { src: string; label: string }[]
   autoplay?: boolean
@@ -11,7 +13,7 @@ const { videos, autoplay = false, loop = true } = Astro.props
 <div class:list={['video-comparison', { 'single-video': videos.length === 1 }]}>
   {videos.map(({ src, label }) => (
     <figure>
-      <video src={src} controls autoplay={autoplay} loop={loop} muted playsinline preload="metadata" aria-label={label} />
+      <VideoPlayer src={src} label={label} autoplay={autoplay} loop={loop} client:load />
       <figcaption>{label}</figcaption>
     </figure>
   ))}
@@ -30,7 +32,7 @@ const { videos, autoplay = false, loop = true } = Astro.props
     margin: 0;
   }
 
-  video {
+  figure :global(video) {
     display: block;
     width: 100%;
     aspect-ratio: 1;
@@ -48,7 +50,7 @@ const { videos, autoplay = false, loop = true } = Astro.props
     margin-inline: auto;
   }
 
-  .single-video video {
+  .single-video :global(video) {
     aspect-ratio: auto;
   }
 </style>
