@@ -33,7 +33,7 @@ The original reference was the enchanted diary from _Harry Potter and the Chambe
 
 Readers familiar with the HP franchise might recall that the diary was in fact a horcrux - an object infused with dark magic, created by Lord Voldemort himself. However, Harry couldn't resist writing in this diary when he found it, and neither could we skip the opportunity to do a deep dive into the realm of pixel shader animations in React Native by re-creating this effect!
 
-<VideoComparison videos={[
+<VideoComparison autoplay videos={[
   { src: fadedWriting, label: 'The ink effect revealing a handwritten message' }
 ]} />
 
@@ -56,7 +56,7 @@ As the animation proceeds, we apply an opacity mask on the overlay, slowly showi
 
 We can see it clearly if we only show the mask, without the message in the background. White areas map to opaque background color (paper), while black ones become transparent, exposing the content beneath.
 
-<VideoComparison videos={[
+<VideoComparison autoplay videos={[
   { src: fullMask, label: 'The animated opacity mask, white - opaque (alpha: 1), black - transparent (alpha: 0)' }
 ]} />
 
@@ -124,9 +124,9 @@ half4 main(float2 xy) {
 
 As you can see, this shader doesn't even take `xy` into account, which is why we end up applying the same color to each pixel on the screen. I guess it's not the most impressive use of a shader, but it gives us something to work on.
 
-<VideoComparison videos={[
-  { src: uniformMask, label: 'Expanding circles: mask' },
-  { src: uniformWriting, label: 'Expanding circles: writing' }
+<VideoComparison autoplay videos={[
+  { src: uniformMask, label: 'Uniform opacity transition: mask' },
+  { src: uniformWriting, label: 'Uniform opacity transition: writing' }
 ]} />
 
 #### Adding ink islands
@@ -185,7 +185,7 @@ half4 main(float2 xy) {
 }
 ```
 
-<VideoComparison videos={[
+<VideoComparison autoplay videos={[
   { src: simpleMask, label: 'Expanding circles: mask' },
   { src: simpleWriting, label: 'Expanding circles: writing' }
 ]} />
@@ -222,7 +222,7 @@ float islandArrival(float2 p) {
 }
 ```
 
-<VideoComparison videos={[
+<VideoComparison  autoplay videos={[
   { src: bordersMask, label: 'Visible cell borders: mask' },
   { src: bordersWriting, label: 'Visible cell borders: writing' }
 ]} />
@@ -262,7 +262,7 @@ float islandArrival(float2 p) {
 ```
 
 
-<VideoComparison videos={[
+<VideoComparison autoplay videos={[
   { src: jitterMask, label: 'Neighboring islands: mask' },
   { src: jitterWriting, label: 'Neighboring islands: writing' }
 ]} />
@@ -305,7 +305,7 @@ float islandArrival(float2 p) {
 
 We can now see some islands spawning clearly much later than others, making the final impression look a bit less like expanding circles, and more like actual ink flowing across the page.
 
-<VideoComparison videos={[
+<VideoComparison autoplay videos={[
   { src: temporalMask, label: 'Staggered island starts: mask' },
   { src: temporalWriting, label: 'Staggered island starts: writing' }
 ]} />
@@ -346,7 +346,7 @@ half4 main(float2 xy) {
 
 Making each pixel fade in slowly results in nice, "soft" edges of the transparency islands. Neat!
 
-<VideoComparison videos={[
+<VideoComparison autoplay videos={[
   { src: fullMask, label: 'Soft island edges: mask' },
   { src: fadedWriting, label: 'Soft island edges: writing' }
 ]} />
@@ -358,7 +358,7 @@ All nice, but how did it work out in the end? Let's have a look at a real app me
 We admit: the handwriting might be a bit over the top for everyday messages in a corporate environment. But it was still fun to learn!
 
 
-<VideoComparison loop={false} videos={[
+<VideoComparison autoplay loop={false} videos={[
   { src: finalApp, label: 'A new message, emerging from the background of your phone.' },
 ]} />
 
